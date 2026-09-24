@@ -99,6 +99,15 @@ def deco_extra(key, d, th):
         a = 9
         d.rectangle([(398 - a) * SS, 21 * SS, (398 + a) * SS, 27 * SS], fill=(255, 255, 255, 255))
         d.rectangle([395 * SS, (24 - a) * SS, 401 * SS, (24 + a) * SS], fill=(255, 255, 255, 255))
+    elif key == 'books':
+        for i, c in enumerate(((230, 80, 80), (60, 140, 230), (250, 200, 40), (80, 190, 90), (150, 80, 180), (240, 150, 40))):
+            h = 18 + (i % 3) * 3
+            d.rectangle([(350 + i * 12) * SS, (36 - h) * SS, (360 + i * 12) * SS, 36 * SS], fill=c + (255,))
+            d.rectangle([(350 + i * 12) * SS, (36 - h + 4) * SS, (360 + i * 12) * SS, (36 - h + 6) * SS], fill=(250, 240, 210, 255))
+    elif key in ('amulets', 'amuletui'):
+        for i, cx in enumerate((360, 386, 412)):
+            d.ellipse([(cx - 9) * SS, 15 * SS, (cx + 9) * SS, 33 * SS], fill=(232, 186, 60, 255), outline=(150, 110, 30, 255), width=SS)
+            d.ellipse([(cx - 4) * SS, 20 * SS, (cx + 4) * SS, 28 * SS], fill=(120, 30, 30, 255))
     elif key.startswith('seven'):
         for i, c in enumerate(((241, 107, 34), (0, 160, 100), (228, 30, 42))):
             d.rectangle([(352 + i * 24) * SS, 12 * SS, (372 + i * 24) * SS, 36 * SS], fill=c + (255,))

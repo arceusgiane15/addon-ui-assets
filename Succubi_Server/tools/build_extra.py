@@ -35,7 +35,7 @@ def product(f, ident):
     return {"key": f['key'], "id": ident, "name": f['name'], "price": f['price'], "food": f.get('food', 0),
             "saturation": f.get('sat', 0), "thirst": f.get('thirst', 0),
             "effects": [{"effect": e, "seconds": s, "amplifier": a} for e, s, a in f.get('effects', [])],
-            "cure": f.get('cure', []), "heal": f.get('heal', 0), "lore": lore(f)}
+            "cure": f.get('cure', []), "heal": f.get('heal', 0), "lore": lore(f), **({"short": f['short']} if f.get('short') else {})}
 
 
 def item_json(ident, icon, f, use, dur):
@@ -86,20 +86,23 @@ def build_items(bp, rp, item_tex, log):
     geos, products = [], []
     for f in EXTRA:
         key, ident = f['key'], f"succubi:{f['key']}"
-        parts = f['model']()
-        cubes, atlas, size = boxkit.build(parts, ppu=16)
         os.makedirs(f'{rp}/textures/entity/extra', exist_ok=True); os.makedirs(f'{rp}/textures/items/extra', exist_ok=True)
-        atlas.save(f'{rp}/textures/entity/extra/{key}.png')
-        icon_from(boxkit.render(parts, 256, ppu=16)).save(f'{rp}/textures/items/extra/{key}.png')
         item_tex[f'succubi_{key}'] = {"textures": f'textures/items/extra/{key}'}
-        geos.append(item_geometry(f'geometry.succubi_extra_{key}', parts, f['kind'], size, cubes))
-        wjson(f'{rp}/attachables/extra/{key}.json', attachable(ident, f'textures/entity/extra/{key}', f'geometry.succubi_extra_{key}', f'succubi_food.{f["kind"]}'))
+        if f.get('icon2d'):   # flat item (amulets): drawn icon, held like a vanilla item
+            f['icon2d']().save(f'{rp}/textures/items/extra/{key}.png')
+        else:
+            parts = f['model']()
+            cubes, atlas, size = boxkit.build(parts, ppu=16)
+            atlas.save(f'{rp}/textures/entity/extra/{key}.png')
+            icon_from(boxkit.render(parts, 256, ppu=16)).save(f'{rp}/textures/items/extra/{key}.png')
+            geos.append(item_geometry(f'geometry.succubi_extra_{key}', parts, f['kind'], size, cubes))
+            wjson(f'{rp}/attachables/extra/{key}.json', attachable(ident, f'textures/entity/extra/{key}', f'geometry.succubi_extra_{key}', f'succubi_food.{f["kind"]}'))
         dur = 1.0 if f['group'] == 'medical' else 1.6
         if f.get('reusable'):   # not eaten: a plain item the script reacts to on right-click
             wjson(f'{bp}/items/extra/{key}.json', {"format_version": "1.21.0", "minecraft:item": {
                 "description": {"identifier": ident, "menu_category": {"category": "equipment"}},
                 "components": {"minecraft:display_name": {"value": f"item.{ident}.name"}, "minecraft:icon": f'succubi_{key}',
-                               "minecraft:max_stack_size": 1}}})
+                               "minecraft:max_stack_size": f.get('max_stack', 1)}}})
         else:
             wjson(f'{bp}/items/extra/{key}.json', item_json(ident, f'succubi_{key}', f, f['use'], dur))
         products.append(product(f, ident))

@@ -303,7 +303,7 @@ def build(bp, rp, item_tex, log):
     js = open(pj, encoding='utf-8').read()
     old = "    return { ...p, price: price ?? p.price };"
     assert old in js
-    js = js.replace(old, "    return { ...p, short: SHORT_NAMES[id] ?? p.name, price: price ?? p.price };")
+    js = js.replace(old, "    return { ...p, short: SHORT_NAMES[id] ?? p.short ?? p.name, price: price ?? p.price };")
     js = js.replace("const menu = (entries) =>", f"const SHORT_NAMES = {json.dumps(SHORT, ensure_ascii=False, indent=2)};\n\nconst menu = (entries) =>", 1)
     open(pj, 'w', encoding='utf-8').write(js)
 
