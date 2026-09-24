@@ -16,7 +16,7 @@ def ev(expr, fp=True):
 def geo_by_id():
     out = {}
     import glob
-    for f in glob.glob(RP + 'models/entity/succubi_food*.geo.json'):
+    for f in glob.glob(RP + 'models/entity/succubi_food*.geo.json') + glob.glob(RP + 'models/entity/succubi_extra*.geo.json') + [RP + 'models/entity/succubi_food_snacks.geo.json']:
         for g in json.load(open(f))['minecraft:geometry']:
             out[g['description']['identifier']] = g
     return out
@@ -48,7 +48,7 @@ def render_attachable(path):
 
 if __name__ == '__main__':
     import glob
-    files = sorted(glob.glob(RP + 'attachables/food/*.json'))[:: int(sys.argv[1]) if len(sys.argv) > 1 else 1]
+    files = sorted(glob.glob(RP + 'attachables/' + (sys.argv[2] if len(sys.argv) > 2 else 'food') + '/*.json'))[:: int(sys.argv[1]) if len(sys.argv) > 1 else 1]
     files += [RP + 'attachables/succubi_food/drink_water_bottle.json', RP + 'attachables/succubi_food/snack_cookies.json']
     rows = [render_attachable(f) for f in files]
     for chunk in range(0, len(rows), 7):

@@ -91,6 +91,19 @@ def deco_header(key, d, th, W):
         d.line([404 * SS, 6 * SS, 400 * SS, 16 * SS], fill=(30, 30, 30, 255), width=2 * SS)
 
 
+def deco_extra(key, d, th):
+    if key == 'pharmacy':
+        for i, cx in enumerate((330, 360)):
+            d.rounded_rectangle([(cx - 11) * SS, 18 * SS, (cx + 11) * SS, 30 * SS], radius=6 * SS, fill=(250, 250, 250, 255))
+            d.rectangle([cx * SS, 18 * SS, (cx + 11) * SS, 30 * SS], fill=((230, 70, 70) if i == 0 else (60, 130, 220)) + (255,))
+        a = 9
+        d.rectangle([(398 - a) * SS, 21 * SS, (398 + a) * SS, 27 * SS], fill=(255, 255, 255, 255))
+        d.rectangle([395 * SS, (24 - a) * SS, 401 * SS, (24 + a) * SS], fill=(255, 255, 255, 255))
+    elif key.startswith('seven'):
+        for i, c in enumerate(((241, 107, 34), (0, 160, 100), (228, 30, 42))):
+            d.rectangle([(352 + i * 24) * SS, 12 * SS, (372 + i * 24) * SS, 36 * SS], fill=c + (255,))
+
+
 def star(d, cx, cy, r, fill):
     pts = []
     for i in range(10):
@@ -110,26 +123,28 @@ def leaf(d, cx, cy, a, b, ang, fill):
     d.polygon(pts, fill=fill)
 
 
-def background(key, th, kiosk_icon):
-    W, H = 560, 360
+def background(key, th, kiosk_icon, rows=5):
+    W, H = 560, 360 + 60 * (rows - 5)
+    ex = H - 360
     img = Image.new('RGBA', (W * SS, H * SS), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     base, dark, acc, glass = th['base'], th['dark'], th['accent'], th['glass']
     # drop shadow + body
-    rrect(d, (6, 8, 556, 358), 22, (0, 0, 0, 90))
-    rrect(d, (4, 4, 552, 352), 22, base + (255,), outline=darken(base, 0.45) + (255,), width=2)
-    rrect(d, (8, 8, 548, 348), 19, None, outline=lighten(base, 0.25) + (255,), width=1)
+    rrect(d, (6, 8, 556, H - 2), 22, (0, 0, 0, 90))
+    rrect(d, (4, 4, 552, H - 8), 22, base + (255,), outline=darken(base, 0.45) + (255,), width=2)
+    rrect(d, (8, 8, 548, H - 12), 19, None, outline=lighten(base, 0.25) + (255,), width=1)
     # header bar
     rrect(d, (14, 10, 424, 38), 8, dark + (255,))
     deco_header(key, d, th, W)
-    # menu board (behind the product grid: grid at 18,42 size 400x300)
-    rrect(d, (14, 40, 422, 346), 10, darken(dark, 0.25) + (255,), outline=lighten(dark, 0.2) + (255,), width=2)
-    for r in range(5):   # shelves between card rows
+    deco_extra(key, d, th)
+    # menu board (behind the product grid: grid at 18,42, 100x60 per card)
+    rrect(d, (14, 40, 422, H - 14), 10, darken(dark, 0.25) + (255,), outline=lighten(dark, 0.2) + (255,), width=2)
+    for r in range(rows):   # shelves between card rows
         y = 42 + 60 * (r + 1) - 3
-        if y < 344:
+        if y < H - 16:
             d.rectangle([18 * SS, y * SS, 418 * SS, (y + 2) * SS], fill=lighten(dark, 0.12) + (255,))
     # right column: register
-    rrect(d, (430, 40, 546, 346), 10, darken(base, 0.18) + (255,), outline=darken(base, 0.45) + (255,), width=2)
+    rrect(d, (430, 40, 546, H - 14), 10, darken(base, 0.18) + (255,), outline=darken(base, 0.45) + (255,), width=2)
     # LCD (text label drawn by the UI at 442,52 width 94)
     rrect(d, (438, 48, 540, 176), 7, glass + (255,), outline=lighten(glass, 0.3) + (255,), width=2)
     rrect(d, (442, 52, 536, 172), 5, darken(glass, 0.2) + (255,))
@@ -139,9 +154,9 @@ def background(key, th, kiosk_icon):
     rrect(d, (446, 210, 532, 226), 4, (30, 30, 34, 255))
     d.rectangle([452 * SS, 216 * SS, 526 * SS, 219 * SS], fill=(0, 0, 0, 255))
     # shop badge (the kiosk itself) in the tray
-    rrect(d, (442, 238, 534, 338), 8, lighten(base, 0.12) + (255,), outline=darken(base, 0.4) + (255,), width=2)
-    icon = kiosk_icon.convert('RGBA').resize((84 * SS, 84 * SS), Image.NEAREST)
-    img.alpha_composite(icon, (446 * SS, 246 * SS))
+    rrect(d, (442, 238 + ex, 534, 338 + ex), 8, lighten(base, 0.12) + (255,), outline=darken(base, 0.4) + (255,), width=2)
+    icon = kiosk_icon.convert('RGBA').resize((84 * SS, 84 * SS), Image.LANCZOS)
+    img.alpha_composite(icon, (446 * SS, (246 + ex) * SS))
     return img.resize((W, H), Image.LANCZOS)
 
 
