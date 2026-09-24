@@ -2,11 +2,11 @@
 usage: python3 tools/build.py <extracted v1.0.10 dir> <out dir>"""
 import json, os, shutil, sys, zipfile
 sys.path.insert(0, os.path.dirname(__file__))
-import build_food, build_shop, build_scripts, build_extra, build_sanity, build_v14, build_v15, build_v16, icons, optimize
+import build_food, build_shop, build_scripts, build_extra, build_sanity, build_v14, build_v15, build_v16, build_v17, icons, optimize
 from build_food import wjson
 from data import FOODS, SHOPS
 
-VERSION = [1, 0, 16]
+VERSION = [1, 0, 17]
 
 
 def log(msg):
@@ -110,11 +110,12 @@ def main(src, out):
         for pack in (rp,):
             p = f'{pack}/texts/{lang}.lang'
             s = open(p, encoding='utf-8').read().rstrip('\n')
-            open(p, 'w', encoding='utf-8').write(s + '\n' + '\n'.join(lang_lines(th) + build_extra.lang_lines(th) + build_sanity.lang_lines(th) + build_v14.lang_lines(th) + build_v16.lang_lines(th)) + '\n')
+            open(p, 'w', encoding='utf-8').write(s + '\n' + '\n'.join(lang_lines(th) + build_extra.lang_lines(th) + build_sanity.lang_lines(th) + build_v14.lang_lines(th) + build_v16.lang_lines(th) + build_v17.lang_lines(th)) + '\n')
     catalog(bp)
     build_extra.catalog(bp)
     build_v14.catalog(bp)
     build_v16.catalog(bp)
+    build_v17.catalog(bp)
 
     bp_uuid, rp_uuid = '344a2ed9-b5c1-4651-af5b-b888f88e66f0', '5485ae30-e95c-4ba6-8cf9-c50b4fb71226'
     bump(f'{bp}/manifest.json', {rp_uuid})
