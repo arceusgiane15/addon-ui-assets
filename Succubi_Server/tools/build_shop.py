@@ -21,14 +21,25 @@ def kiosk_entity(name):
     for k in ('minecraft:inventory', 'minecraft:is_chested', 'minecraft:tameable', 'minecraft:is_tamed', 'minecraft:rideable'):
         comps.pop(k, None)
     comps['minecraft:type_family']['family'] = ['kiosk', 'succubi_shop', 'structure', 'inanimate']
-    dismantle = comps['minecraft:interact']['interactions'][0]
-    comps['minecraft:interact']['interactions'] = [
-        dismantle,
-        {"on_interact": {"filters": {"all_of": [
-            {"test": "is_family", "subject": "other", "value": "player"},
-            {"test": "is_sneaking", "subject": "other", "value": False}]}},
-         "interact_text": "action.interact.succubi_shop"}]
+    comps['minecraft:interact'] = shop_interact("action.interact.dismantle")
+    ent = d['minecraft:entity']
+    ent.pop('component_groups', None)
+    ent['events'] = SHOP_EVENTS
     return d
+
+
+# Right-click -> entity event the script listens to (dataDrivenEntityTrigger); the script opens the shop / picks it up.
+# (The old way - `kill @s` - is blocked by the damage sensor that keeps shops from being broken by hits.)
+SHOP_EVENTS = {"succubi:shop_use": {}, "succubi:shop_pickup": {}}
+
+
+def shop_interact(pickup_text):
+    player = {"test": "is_family", "subject": "other", "value": "player"}
+    return {"interactions": [
+        {"on_interact": {"filters": {"all_of": [player, {"test": "is_sneaking", "subject": "other", "value": True}]}, "event": "succubi:shop_pickup", "target": "self"},
+         "interact_text": pickup_text, "play_sounds": "dig.wood", "swing": True},
+        {"on_interact": {"filters": {"all_of": [player, {"test": "is_sneaking", "subject": "other", "value": False}]}, "event": "succubi:shop_use", "target": "self"},
+         "interact_text": "action.interact.succubi_shop", "swing": True}]}
 
 
 def kiosk_item(name):
@@ -65,7 +76,13 @@ def vending_placers(bp, rp, item_tex, log):
     """the vending machines become placeable items in the shop group (spawn eggs removed)"""
     for m in ('drink', 'snack'):
         ent = f'{bp}/entities/succubi_{m}_vending_machine.json'
-        d = json.load(open(ent)); d['minecraft:entity']['description']['is_spawnable'] = False; wjson(ent, d)
+        d = json.load(open(ent)); d['minecraft:entity']['description']['is_spawnable'] = False
+        d['format_version'] = "1.20.50"
+        d['minecraft:entity']['components']['minecraft:interact'] = {"interactions": [
+            {"on_interact": {"filters": {"test": "is_family", "subject": "other", "value": "player"}, "event": "succubi:shop_use", "target": "self"},
+             "interact_text": "action.interact.succubi_vending", "swing": True}]}
+        d['minecraft:entity']['events'] = {"succubi:shop_use": {}}
+        wjson(ent, d)
         ident = f'succubi:{m}_vending_machine_placer'
         wjson(f'{bp}/items/succubi/{m}_vending_machine_placer.json', {"format_version": "1.21.0", "minecraft:item": {
             "description": {"identifier": ident, "menu_category": {"category": "equipment"}},

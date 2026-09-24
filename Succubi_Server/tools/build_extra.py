@@ -2,7 +2,7 @@
 import json, os
 import numpy as np
 from PIL import Image
-import boxkit, pose, shop_art, recolor
+import boxkit, pose, shop_art, recolor, build_shop
 from build_food import wjson
 from data import EFFECT_TH, ROMAN
 from data_extra import EXTRA, CHIP_FLAVOURS, SHOPS_EXTRA
@@ -126,7 +126,6 @@ def stand_entity(ident):
     short = ident.split(':')[1]
     return {"format_version": "1.20.50", "minecraft:entity": {
         "description": {"identifier": ident, "is_spawnable": False, "is_summonable": True, "is_experimental": False},
-        "component_groups": {"dismantle_death": {"minecraft:health": {"value": 0, "max": 100}}},
         "components": {
             "minecraft:type_family": {"family": ["succubi_shop", "structure", "inanimate"]},
             "minecraft:collision_box": {"width": STANDS[ident]['collision'][0], "height": STANDS[ident]['collision'][1]},
@@ -137,14 +136,8 @@ def stand_entity(ident):
             "minecraft:damage_sensor": {"triggers": {"cause": "all", "deals_damage": False}},
             "minecraft:fire_immune": True, "minecraft:persistent": {},
             "minecraft:loot": {"table": f"loot_tables/succubi_shops/{short}.json"},
-            "minecraft:interact": {"interactions": [
-                {"on_interact": {"filters": {"all_of": [{"test": "is_family", "subject": "other", "value": "player"},
-                                                        {"test": "is_sneaking", "subject": "other", "value": True}]}},
-                 "event": "succubi:dismantle", "target": "self", "interact_text": "action.interact.dismantle_stand", "play_sounds": "dig.wood"},
-                {"on_interact": {"filters": {"all_of": [{"test": "is_family", "subject": "other", "value": "player"},
-                                                        {"test": "is_sneaking", "subject": "other", "value": False}]}},
-                 "interact_text": "action.interact.succubi_shop"}]}},
-        "events": {"succubi:dismantle": {"add": {"component_groups": ["dismantle_death"]}, "queue_command": {"command": ["kill @s"]}}}}}
+            "minecraft:interact": build_shop.shop_interact("action.interact.dismantle_stand")},
+        "events": build_shop.SHOP_EVENTS}}
 
 
 def build_stands(bp, rp, item_tex, log):
@@ -265,6 +258,25 @@ def build_scripts(bp, products, log):
     edit(v, "    if (!MACHINES[entity?.typeId]) return;\n    system.runTimeout(",
          "    if (!MACHINES[entity?.typeId] && !FACE_ON_PLACE.includes(entity?.typeId)) return;\n    system.runTimeout(")
 
+    # ---- opening / picking up shops: player interact event + entity event fallback
+    js = open(v, encoding='utf-8').read()
+    start = js.index("export function initVending() {")
+    end = js.index("  // A freshly placed machine turns to face whoever placed it")
+    js = js[:start] + SHOP_USE_JS + "export function initVending() {\n" + INTERACT_JS + "\n" + js[end:]
+    old_hit = """    if (!MACHINES[machine?.typeId] || player?.typeId !== "minecraft:player" || !player.isSneaking) return;
+    try {
+      if (String(player.getGameMode?.()).toLowerCase() !== "creative") return;
+      machine.remove();
+      player.sendMessage("§e[ตู้] เก็บตู้ออกแล้ว");
+    } catch (e) {}"""
+    assert old_hit in js
+    js = js.replace(old_hit, """    if (!(MACHINES[machine?.typeId] || SHOPS[machine?.typeId]) || player?.typeId !== "minecraft:player" || !player.isSneaking) return;
+    try {
+      if (String(player.getGameMode?.()).toLowerCase() !== "creative") return;
+      pickUp(player, machine);
+    } catch (e) {}""")
+    open(v, 'w', encoding='utf-8').write(js)
+
     c = f'{sd}/consumables.js'
     edit(c, "  for (const e of product.effects) player.addEffect(e.effect, e.seconds * 20, { amplifier: e.amplifier, showParticles: true });\n",
          "  for (const e of product.effects) player.addEffect(e.effect, e.seconds * 20, { amplifier: e.amplifier, showParticles: true });\n"
@@ -308,3 +320,85 @@ def build(bp, rp, item_tex, log):
     icons = build_stands(bp, rp, item_tex, log)
     build_shop_ui(rp, icons, log)
     build_scripts(bp, products, log)
+
+
+SHOP_USE_JS = """const lastOpen = new Map(); // player id -> tick of the last shop screen, so both events don't open it twice
+const alive = (e) => { try { return typeof e.isValid === "function" ? e.isValid() : e.isValid; } catch (err) { return false; } };
+
+function openFor(player, entity) {
+  const machine = MACHINES[entity?.typeId] ?? SHOPS[entity?.typeId];
+  if (!machine || !player) return;
+  const now = system.currentTick;
+  if (now - (lastOpen.get(player.id) ?? -100) < 10) return;
+  lastOpen.set(player.id, now);
+  system.run(() => {
+    openMachine(player, machine).catch(() => {});
+  });
+}
+
+// Entity events don't say who clicked: the player looking at the shop, else the closest one
+function whoUsed(entity) {
+  try {
+    const near = entity.dimension.getPlayers({ location: entity.location, maxDistance: 10 });
+    for (const p of near) {
+      try {
+        if (p.getEntitiesFromViewDirection({ maxDistance: 10 }).some((hit) => hit.entity?.id === entity.id)) return p;
+      } catch (e) {}
+    }
+    return entity.dimension.getPlayers({ location: entity.location, closest: 1, maxDistance: 10 })[0];
+  } catch (e) {
+    return undefined;
+  }
+}
+
+// Picked-up shop goes back into the inventory as the item that places it
+export function pickUp(player, entity) {
+  if (!alive(entity)) return;
+  const id = entity.typeId;
+  const item = id.startsWith("kiosk:") ? id : `${id}_placer`;
+  const where = entity.location;
+  const dim = entity.dimension;
+  entity.remove();
+  try {
+    const leftover = player?.getComponent("minecraft:inventory")?.container?.addItem(new ItemStack(item, 1));
+    if (leftover || !player) dim.spawnItem(leftover ?? new ItemStack(item, 1), where);
+  } catch (e) {
+    try {
+      dim.spawnItem(new ItemStack(item, 1), where);
+    } catch (err) {}
+  }
+  player?.sendMessage("§e[ร้าน] เก็บร้านเข้ากระเป๋าแล้ว");
+  player?.playSound("random.pop");
+}
+
+"""
+
+INTERACT_JS = """  world.afterEvents.playerInteractWithEntity.subscribe((event) => {
+    const id = event.target?.typeId;
+    if (!MACHINES[id] && !SHOPS[id]) return;
+    if (SHOPS[id] && event.player.isSneaking) {
+      system.run(() => pickUp(event.player, event.target));
+      return;
+    }
+    openFor(event.player, event.target);
+  });
+
+  // Same click seen through the entity's own event (works even when the interact event above is not sent)
+  try {
+  world.afterEvents.dataDrivenEntityTrigger.subscribe(
+    (event) => {
+      const entity = event.entity;
+      if (!alive(entity)) return;
+      const player = whoUsed(entity);
+      if (event.eventId === "succubi:shop_pickup") {
+        if (SHOPS[entity.typeId]) system.run(() => pickUp(player, entity));
+      } else {
+        openFor(player, entity);
+      }
+    },
+    { eventTypes: ["succubi:shop_use", "succubi:shop_pickup"] }
+  );
+  } catch (e) {
+    console.warn("[Succubi] dataDrivenEntityTrigger unavailable: " + e);
+  }
+"""
