@@ -2,7 +2,7 @@
 usage: python3 tools/build.py <extracted v1.0.10 dir> <out dir>"""
 import json, os, shutil, sys, zipfile
 sys.path.insert(0, os.path.dirname(__file__))
-import build_food, build_shop, build_scripts, icons
+import build_food, build_shop, build_scripts, icons, optimize
 from build_food import wjson
 from data import FOODS, SHOPS
 
@@ -111,6 +111,7 @@ def main(src, out):
     bp_uuid, rp_uuid = '344a2ed9-b5c1-4651-af5b-b888f88e66f0', '5485ae30-e95c-4ba6-8cf9-c50b4fb71226'
     bump(f'{bp}/manifest.json', {rp_uuid})
     bump(f'{rp}/manifest.json', {bp_uuid})
+    optimize.run(out, log)
     contents(bp)
     log('done')
 

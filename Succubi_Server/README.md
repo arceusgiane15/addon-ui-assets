@@ -80,6 +80,14 @@
 | น้ำชาสูตรลับจากท่านฮารุโตะ | 89 ฿ | +2 | +14 | มองในที่มืด 45วิ, วิ่งเร็ว II 35วิ, ทนทาน 35วิ |
 | ชาเขียวญี่ปุ่น (จากตู้กด) | 35 ฿ | – | ตามตู้กด | ตามตู้กด |
 
+## ขนาดไฟล์
+ลดขนาดจาก 56.9 MB เหลือ **26.2 MB** โดยไม่แตะโมเดล (UV ของโมเดลอิงสัดส่วนภาพ ไม่ได้อิงจำนวนพิกเซล เลยย่อภาพได้โดยโมเดลไม่เพี้ยน):
+- เท็กซ์เจอร์อาหาร 1024 → 512 px และลดเหลือ 256 สี
+- เท็กซ์เจอร์ซุ้ม ยังเป็น 1024 px แต่ลดเหลือ 256 สี
+- ไอคอนแพ็ค 1024 → 256 px
+- เพลงร้านชา (11:55 นาที) เข้ารหัสใหม่จาก 160 เหลือประมาณ 64 kb/s ความยาวเท่าเดิม
+- ไฟล์เดิมของ Succubi Server (ปืน เสียงปืน HUD) ไม่ได้แก้
+
 ## ไฟล์ที่เปลี่ยนในแอดออน (ย่อ)
 - BP `scripts/succubi/shops.js` (ใหม่): บอกว่าซุ้มไหนเปิดเมนูไหน และใช้สกิน HUD ไหน
 - BP `scripts/succubi/products.js`: เพิ่ม `KIOSK_FOODS` กับ `SHOP_MENUS`
@@ -98,7 +106,7 @@
 unzip Succubi_Server_v1.0.10.mcaddon -d server
 unzip Food_Items_v1.0.4.mcaddon -d food
 unzip kiosk_shops_pack.zip -d kiosk
-pip install pillow numpy
+pip install pillow numpy imageio-ffmpeg
 python3 tools/build.py server out Succubi_Server_v1.0.11.mcaddon
 python3 tools/verify_out.py   # เรนเดอร์ท่าถือ/ท่ากินทุกเมนูไว้ที่ view/
 ```
