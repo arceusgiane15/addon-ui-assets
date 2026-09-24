@@ -2,11 +2,11 @@
 usage: python3 tools/build.py <extracted v1.0.10 dir> <out dir>"""
 import json, os, shutil, sys, zipfile
 sys.path.insert(0, os.path.dirname(__file__))
-import build_food, build_shop, build_scripts, build_extra, build_sanity, build_v14, icons, optimize
+import build_food, build_shop, build_scripts, build_extra, build_sanity, build_v14, build_v15, icons, optimize
 from build_food import wjson
 from data import FOODS, SHOPS
 
-VERSION = [1, 0, 14]
+VERSION = [1, 0, 15]
 
 
 def log(msg):
@@ -52,7 +52,7 @@ def catalog(bp):
 def bump(path, deps_to_bump):
     d = json.load(open(path))
     d['header']['version'] = VERSION
-    d['header']['description'] = d['header']['description'].replace('v1.0.10', 'v1.0.14')
+    d['header']['description'] = d['header']['description'].replace('v1.0.10', 'v1.0.15')
     for m in d['modules']:
         m['version'] = VERSION
     for dep in d.get('dependencies', []):
@@ -94,6 +94,7 @@ def main(src, out):
     build_extra.build(bp, rp, item_tex, log)
     build_sanity.build(bp, rp, item_tex, log)
     build_v14.build(bp, rp, item_tex, log)
+    build_v15.build(bp, rp, log)
 
     it_path = f'{rp}/textures/item_texture.json'
     it = json.load(open(it_path)); it['texture_data'].update(item_tex); wjson(it_path, it)
