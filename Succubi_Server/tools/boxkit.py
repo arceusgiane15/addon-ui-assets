@@ -161,8 +161,8 @@ def build(parts, ppu=8, max_w=1024):
         c = {"origin": [round(v, 4) for v in p['o']], "size": [round(v, 4) for v in p['s']], "uv": faces}
         if p.get('rot'):
             c["rotation"] = p['rot']; c["pivot"] = p.get('pivot', [p['o'][i] + p['s'][i] / 2 for i in range(3)])
-        if p.get('inflate'):
-            c["inflate"] = p['inflate']
+        # distinct tiny inflate per part: overlapping faces never share a plane (no flicker); later parts draw in front
+        c["inflate"] = p.get('inflate', round(0.004 * (pi % 40 + 1), 4))
         cubes.append(c)
     return cubes, atlas, (tw, th)
 

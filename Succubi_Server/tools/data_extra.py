@@ -177,6 +177,22 @@ def boiled_eggs():
             centred(1.8, 2.2, 1.8, y=0.6, x=1.1, paint=solid((250, 248, 240)))]
 
 
+def teddy_model():
+    fur, dark, snout = (170, 110, 60), (120, 74, 36), (230, 200, 160)
+    face = label(fur, icon=lambda d, w, h: (d.ellipse([w * 0.22, h * 0.3, w * 0.36, h * 0.44], fill=(20, 20, 20, 255)),
+                                            d.ellipse([w * 0.64, h * 0.3, w * 0.78, h * 0.44], fill=(20, 20, 20, 255))))
+    belly = label(fur, icon=lambda d, w, h: d.ellipse([w * 0.2, h * 0.15, w * 0.8, h * 0.85], fill=snout + (255,)))
+    P = [centred(4.2, 4.6, 3.2, y=0.8, paint=per_face(solid(fur), north=belly)),       # body
+         centred(4.0, 3.6, 3.4, y=5.4, paint=per_face(solid(fur), north=face)),          # head
+         centred(1.6, 1.0, 0.8, y=5.9, z=-2.0, paint=per_face(solid(snout), north=label(snout, icon=lambda d, w, h: d.ellipse([w * 0.3, h * 0.1, w * 0.7, h * 0.5], fill=(30, 20, 20, 255))))),
+         centred(1.2, 1.2, 0.8, y=8.8, x=-1.6, paint=solid(dark)), centred(1.2, 1.2, 0.8, y=8.8, x=1.6, paint=solid(dark)),  # ears
+         centred(1.3, 1.6, 1.6, y=0.0, x=-1.3, z=-0.6, paint=solid(dark)), centred(1.3, 1.6, 1.6, y=0.0, x=1.3, z=-0.6, paint=solid(dark)),  # legs
+         centred(1.2, 3.0, 1.4, y=2.4, x=-2.7, paint=solid(fur)), centred(1.2, 3.0, 1.4, y=2.4, x=2.7, paint=solid(fur)),  # arms
+         centred(3.0, 0.6, 3.3, y=5.0, paint=solid((200, 40, 60)))]  # ribbon
+    return P
+
+
+
 # key, name, en, kind (pose), use, model fn, stats
 EXTRA = [
     # --- pharmacy
@@ -229,6 +245,10 @@ EXTRA = [
 ]
 
 # chips flavours: recoloured Succubi chips bag (same model)
+EXTRA.append(dict(key="teddy_bear", name="ตุ๊กตาหมีกอดคลายเครียด", en="Comfort Teddy Bear", kind="hand", use="none", model=teddy_model,
+                  group="medical", reusable=True, price=99, food=0, sat=0, thirst=0, heal=0, effects=[], cure=[],
+                  desc="คลิกขวากอดเพื่อเพิ่มสติ +12 (ทุก 90 วินาที) ใช้ได้ไม่จำกัด"))
+
 CHIP_FLAVOURS = [
     dict(key="snack_chips_nori", name="มันฝรั่งทอดรสสาหร่าย", en="Nori Potato Chips", hue=100, price=20, food=4, sat=0.3, thirst=-1, desc="กรอบ หอมสาหร่าย"),
     dict(key="snack_chips_bbq", name="มันฝรั่งทอดรสบาร์บีคิว (ถุงใหญ่)", en="BBQ Potato Chips (big bag)", hue=8, price=33, food=6, sat=0.3, thirst=-2, desc="ถุงใหญ่ รสเข้มข้น"),
@@ -238,26 +258,26 @@ CHIP_FLAVOURS = [
 V = lambda k: ("succubi:" + k)
 
 SHOPS_EXTRA = [
-    dict(key="pharmacy", entity="succubi:pharmacy_stall", flag="§0§9§6§1", title="แผงขายยา", en="Pharmacy Stall", rows=6,
+    dict(key="pharmacy", entity="succubi:pharmacy_stall", flag="§0§9§6§1", title="แผงขายยา", en="Pharmacy Stall", rows=5, coin_buttons=False,
          slots=[1, 5, 10, 20, 50, 100, 500, 1000],
          menu=["x:med_paracetamol", "x:med_cough_syrup", "x:med_inhaler", "x:med_balm", "x:med_plaster", "x:med_ors",
                "x:med_vitamin_c", "x:med_motion", "x:med_antacid", "k:kotarus:bandage_blackpowder:35", "k:kotarus:syringe_blackpowder:150",
                "k:kotarus:medkit_blackpowder:590"],
          theme=dict(base=(232, 240, 234), dark=(0, 110, 70), accent=(0, 190, 110), glass=(18, 40, 30), cell=(30, 60, 46))),
-    dict(key="seven_snack", entity="succubi:store_snack_shelf", flag="§0§9§6§2", title="ร้านสะดวกซื้อ · ชั้นขนม", en="Convenience Store · Snacks", rows=6,
-         slots=[1, 5, 10, 20, 50, 100, 500],
+    dict(key="seven_snack", entity="succubi:store_snack_shelf", flag="§0§9§6§2", title="ร้านสะดวกซื้อ · ชั้นขนม", en="Convenience Store · Snacks", rows=5, coin_buttons=False,
+         slots=[1, 5, 10, 20, 50, 100, 500, 1000],
          menu=["v:snack_wafer", "v:snack_jelly", "v:snack_prawn_crackers", "v:snack_cream_bun", "v:snack_chips", "c:snack_chips_nori",
                "c:snack_chips_bbq", "v:snack_fish_strips", "v:snack_cookies", "v:snack_biscuit_sticks", "v:snack_seaweed", "v:snack_chocolate",
-               "v:snack_chips_tube", "x:snack_peanuts"],
+               "v:snack_chips_tube", "x:snack_peanuts", "x:teddy_bear"],
          theme=dict(base=(238, 238, 234), dark=(0, 120, 80), accent=(241, 107, 34), glass=(20, 30, 26), cell=(40, 48, 44))),
-    dict(key="seven_drink", entity="succubi:store_drink_fridge", flag="§0§9§6§3", title="ร้านสะดวกซื้อ · ตู้แช่เครื่องดื่ม", en="Convenience Store · Drinks", rows=6,
-         slots=[1, 5, 10, 20, 50, 100, 500],
+    dict(key="seven_drink", entity="succubi:store_drink_fridge", flag="§0§9§6§3", title="ร้านสะดวกซื้อ · ตู้แช่เครื่องดื่ม", en="Convenience Store · Drinks", rows=5, coin_buttons=False,
+         slots=[1, 5, 10, 20, 50, 100, 500, 1000],
          menu=["v:drink_water_bottle", "x:drink_m150", "x:drink_milk", "v:drink_pepsi", "v:drink_fanta_orange", "v:drink_sprite",
                "v:drink_coca_cola", "v:drink_schweppes", "v:drink_boss_coffee", "v:drink_pocari_sweat", "v:drink_redbull",
                "v:drink_green_tea", "v:drink_monster_energy"],
          theme=dict(base=(238, 238, 234), dark=(0, 120, 80), accent=(80, 170, 230), glass=(16, 26, 36), cell=(34, 44, 52))),
-    dict(key="seven_hot", entity="succubi:store_hot_counter", flag="§0§9§6§4", title="ร้านสะดวกซื้อ · อาหารพร้อมทาน", en="Convenience Store · Ready Meals", rows=6,
-         slots=[1, 5, 10, 20, 50, 100, 500],
+    dict(key="seven_hot", entity="succubi:store_hot_counter", flag="§0§9§6§4", title="ร้านสะดวกซื้อ · อาหารพร้อมทาน", en="Convenience Store · Ready Meals", rows=5, coin_buttons=False,
+         slots=[1, 5, 10, 20, 50, 100, 500, 1000],
          menu=["x:onigiri_tuna", "x:onigiri_salmon", "x:sandwich_ham", "x:toastie_ham", "x:dim_sum", "x:bao", "x:sausage",
                "x:rice_krapow", "x:rice_garlic_pork", "x:boiled_eggs"],
          theme=dict(base=(238, 238, 234), dark=(0, 120, 80), accent=(228, 30, 42), glass=(30, 20, 18), cell=(50, 40, 36))),

@@ -2,11 +2,11 @@
 usage: python3 tools/build.py <extracted v1.0.10 dir> <out dir>"""
 import json, os, shutil, sys, zipfile
 sys.path.insert(0, os.path.dirname(__file__))
-import build_food, build_shop, build_scripts, build_extra, icons, optimize
+import build_food, build_shop, build_scripts, build_extra, build_sanity, icons, optimize
 from build_food import wjson
 from data import FOODS, SHOPS
 
-VERSION = [1, 0, 12]
+VERSION = [1, 0, 13]
 
 
 def log(msg):
@@ -52,7 +52,7 @@ def catalog(bp):
 def bump(path, deps_to_bump):
     d = json.load(open(path))
     d['header']['version'] = VERSION
-    d['header']['description'] = d['header']['description'].replace('v1.0.10', 'v1.0.12')
+    d['header']['description'] = d['header']['description'].replace('v1.0.10', 'v1.0.13')
     for m in d['modules']:
         m['version'] = VERSION
     for dep in d.get('dependencies', []):
@@ -92,6 +92,7 @@ def main(src, out):
     menus = build_shop.shop_ui(rp, log)
     build_scripts.build(bp, menus, log)
     build_extra.build(bp, rp, item_tex, log)
+    build_sanity.build(bp, rp, item_tex, log)
 
     it_path = f'{rp}/textures/item_texture.json'
     it = json.load(open(it_path)); it['texture_data'].update(item_tex); wjson(it_path, it)
@@ -106,7 +107,7 @@ def main(src, out):
         for pack in (rp,):
             p = f'{pack}/texts/{lang}.lang'
             s = open(p, encoding='utf-8').read().rstrip('\n')
-            open(p, 'w', encoding='utf-8').write(s + '\n' + '\n'.join(lang_lines(th) + build_extra.lang_lines(th)) + '\n')
+            open(p, 'w', encoding='utf-8').write(s + '\n' + '\n'.join(lang_lines(th) + build_extra.lang_lines(th) + build_sanity.lang_lines(th)) + '\n')
     catalog(bp)
     build_extra.catalog(bp)
 

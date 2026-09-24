@@ -95,7 +95,13 @@ def build_items(bp, rp, item_tex, log):
         geos.append(item_geometry(f'geometry.succubi_extra_{key}', parts, f['kind'], size, cubes))
         wjson(f'{rp}/attachables/extra/{key}.json', attachable(ident, f'textures/entity/extra/{key}', f'geometry.succubi_extra_{key}', f'succubi_food.{f["kind"]}'))
         dur = 1.0 if f['group'] == 'medical' else 1.6
-        wjson(f'{bp}/items/extra/{key}.json', item_json(ident, f'succubi_{key}', f, f['use'], dur))
+        if f.get('reusable'):   # not eaten: a plain item the script reacts to on right-click
+            wjson(f'{bp}/items/extra/{key}.json', {"format_version": "1.21.0", "minecraft:item": {
+                "description": {"identifier": ident, "menu_category": {"category": "equipment"}},
+                "components": {"minecraft:display_name": {"value": f"item.{ident}.name"}, "minecraft:icon": f'succubi_{key}',
+                               "minecraft:max_stack_size": 1}}})
+        else:
+            wjson(f'{bp}/items/extra/{key}.json', item_json(ident, f'succubi_{key}', f, f['use'], dur))
         products.append(product(f, ident))
     wjson(f'{rp}/models/entity/succubi_extra_items.geo.json', {"format_version": "1.16.0", "minecraft:geometry": geos})
 
@@ -246,7 +252,7 @@ def build_scripts(bp, products, log):
     s_path = f'{sd}/shops.js'
     sj = open(s_path, encoding='utf-8').read().rstrip()
     assert sj.endswith('};')
-    extra = [f'  "{s["entity"]}": {{ flag: "{s["flag"]}", title: "{s["title"]}", products: SHOP_MENUS.{s["key"]}, prefix: "{s["key"]}", tex: "textures/ui/succubi_shops/", who: "ร้าน", slots: {json.dumps(s["slots"])} }}'
+    extra = [f'  "{s["entity"]}": {{ flag: "{s["flag"]}", title: "{s["title"]}", products: SHOP_MENUS.{s["key"]}, prefix: "{s["key"]}", tex: "textures/ui/succubi_shops/", who: "ร้าน", slots: {json.dumps(s["slots"])}, coinButtons: {"false" if s.get("coin_buttons") is False else "true"} }}'
              for s in SHOPS_EXTRA]
     sj = sj[:-2].rstrip() + ",\n" + ",\n".join(extra) + "\n};\n\n"
     sj += "// Stands built for this server turn to face whoever places them (the kiosks keep their own facing)\n"
@@ -257,6 +263,13 @@ def build_scripts(bp, products, log):
     edit(v, 'import { SHOPS } from "./shops.js";', 'import { SHOPS, FACE_ON_PLACE } from "./shops.js";')
     edit(v, "    if (!MACHINES[entity?.typeId]) return;\n    system.runTimeout(",
          "    if (!MACHINES[entity?.typeId] && !FACE_ON_PLACE.includes(entity?.typeId)) return;\n    system.runTimeout(")
+
+    # ---- shops without per-coin buttons (cash goes in with "ใส่หมด"; every note is accepted)
+    edit(v, "  const slots = machine.slots ?? COIN_SLOTS;\n", "  const slots = machine.slots ?? COIN_SLOTS;\n  const buttons = machine.coinButtons === false ? [] : slots; // coin buttons shown on the screen\n")
+    edit(v, "  for (const value of slots) {", "  for (const value of buttons) {")
+    edit(v, "  } else if (index <= count + slots.length) {\n    const value = slots[index - count - 1];",
+         "  } else if (index <= count + buttons.length) {\n    const value = buttons[index - count - 1];")
+    edit(v, "  } else if (index === count + slots.length + 1) {", "  } else if (index === count + buttons.length + 1) {")
 
     # ---- opening / picking up shops: player interact event + entity event fallback
     js = open(v, encoding='utf-8').read()
@@ -270,10 +283,11 @@ def build_scripts(bp, products, log):
       player.sendMessage("§e[ตู้] เก็บตู้ออกแล้ว");
     } catch (e) {}"""
     assert old_hit in js
-    js = js.replace(old_hit, """    if (!(MACHINES[machine?.typeId] || SHOPS[machine?.typeId]) || player?.typeId !== "minecraft:player" || !player.isSneaking) return;
+    js = js.replace(old_hit, """    if (!(MACHINES[machine?.typeId] || SHOPS[machine?.typeId]) || player?.typeId !== "minecraft:player") return;
+    shopLog("hit", machine.typeId);
     try {
-      if (String(player.getGameMode?.()).toLowerCase() !== "creative") return;
-      pickUp(player, machine);
+      if (player.isSneaking && String(player.getGameMode?.()).toLowerCase() === "creative") return pickUp(player, machine);
+      if (!player.isSneaking) openFor(player, machine); // hitting a shop opens it too
     } catch (e) {}""")
     open(v, 'w', encoding='utf-8').write(js)
 
@@ -322,7 +336,16 @@ def build(bp, rp, item_tex, log):
     build_scripts(bp, products, log)
 
 
-SHOP_USE_JS = """const lastOpen = new Map(); // player id -> tick of the last shop screen, so both events don't open it twice
+SHOP_USE_JS = """// First few shop clicks of each kind go to the content log, so a broken path can be told apart from a broken screen
+const logged = new Map();
+function shopLog(path, id) {
+  const n = logged.get(path) ?? 0;
+  if (n >= 3) return;
+  logged.set(path, n + 1);
+  console.warn(`[Succubi shop] ${path}: ${id}`);
+}
+
+const lastOpen = new Map(); // player id -> tick of the last shop screen, so both events don't open it twice
 const alive = (e) => { try { return typeof e.isValid === "function" ? e.isValid() : e.isValid; } catch (err) { return false; } };
 
 function openFor(player, entity) {
@@ -376,6 +399,7 @@ export function pickUp(player, entity) {
 INTERACT_JS = """  world.afterEvents.playerInteractWithEntity.subscribe((event) => {
     const id = event.target?.typeId;
     if (!MACHINES[id] && !SHOPS[id]) return;
+    shopLog("interact", id);
     if (SHOPS[id] && event.player.isSneaking) {
       system.run(() => pickUp(event.player, event.target));
       return;
@@ -389,6 +413,7 @@ INTERACT_JS = """  world.afterEvents.playerInteractWithEntity.subscribe((event) 
     (event) => {
       const entity = event.entity;
       if (!alive(entity)) return;
+      shopLog(event.eventId, entity.typeId);
       const player = whoUsed(entity);
       if (event.eventId === "succubi:shop_pickup") {
         if (SHOPS[entity.typeId]) system.run(() => pickUp(player, entity));
