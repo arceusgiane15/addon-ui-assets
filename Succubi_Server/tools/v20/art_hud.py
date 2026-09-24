@@ -1,97 +1,277 @@
-"""Succubi HUD v2: two rows of bars above the hotbar, in the place of the vanilla hearts / hunger.
-
-  [♥ ████████▒▒ 86]        [▒▒████████ 🍗]      bottom row: health (+number, poison/wither colours) | food
-  [💧 ██████▒▒▒▒   ]        [▒▒▒███████ 🧠]      top row:    thirst | sanity (hidden when switched off)
-  [🛡 8] armor badge left of the health bar, only while wearing armor
-
-Art is drawn at 2 art-pixels per GUI unit and saved 2x upscaled (4 texels per unit, nearest = crisp).
-Data comes from the title "shud:..." (see BP scripts/succubi/hud.js); a hidden control keeps the last
-value after the title fades, so the script only sends changes."""
+"""Succubi HUD v3: four round gauges above the hotbar (health, food | thirst, sanity), like v1.0.x but nicer,
+and alive:
+  - smooth gradient rings with rounded ends on a dark glass disc, 20 steps, pixel-art icon in the middle
+  - lose value  -> red flash, the icon shakes, health leaves a pale "damage trail" of what was lost
+  - gain value  -> bright glow in the gauge colour, the icon pops
+  - low value   -> slow pulsing glow
+  - status      -> regeneration sparkles orbit the heart, poison bubbles / green ring, wither smoke / dark ring,
+                   absorption gold halo, burning flames, hunger effect sick-green food ring,
+                   blood moon turns the sanity ring blood red
+  - health number on a small plate under the heart, armor badge left of it while wearing armor
+Data comes from the title "shud:..." (see BP scripts/succubi/hud.js); a hidden control keeps the last value
+after the title fades, so the script only sends changes."""
 import math, os
-from PIL import Image, ImageDraw
+import numpy as np
+from PIL import Image, ImageDraw, ImageFilter
 from registry import step
-from common import wjson, CORE_RP, GUNS_RP, rjson
+from common import wjson, CORE_RP, GUNS_RP
 import pixel as px
 
 TEX = 'textures/ui/succubi_hud/'
-D = 2                  # art pixels per GUI unit
-CELL_W, CELL_H = 82, 9  # GUI units
+S4 = 4                   # texels per GUI unit
+G = 22                   # gauge diameter (units)
+FX = 36                  # effect canvas around a gauge (units)
 ICON = 9
-BAR_W = CELL_W - ICON - 1   # 72 units: 1 frame + 70 inner + 1 frame
 STEPS = 20
+R_OUT, R_IN = 10.2, 7.0  # ring radii (units)
+INK = (10, 5, 9, 255)
 
 STATS = {
-    # key: (token letter, light, main, dark, side)
-    'health': ('H', (255, 134, 164), (232, 51, 94), (150, 18, 56), 'left'),
-    'health_poison': ('H', (170, 232, 110), (96, 178, 46), (52, 112, 24), 'left'),
-    'health_wither': ('H', (130, 130, 138), (70, 68, 76), (34, 32, 38), 'left'),
-    'food': ('F', (255, 214, 128), (240, 164, 49), (170, 104, 22), 'right'),
-    'thirst': ('T', (150, 228, 255), (51, 181, 240), (22, 110, 176), 'left'),
-    'sanity': ('S', (228, 176, 255), (176, 102, 240), (110, 52, 176), 'right'),
+    #                light            main             dark
+    'health': ((255, 150, 176), (240, 56, 104), (160, 16, 58)),
+    'health_poison': ((180, 240, 120), (96, 184, 46), (44, 110, 22)),
+    'health_wither': ((150, 144, 156), (80, 74, 88), (36, 32, 42)),
+    'food': ((255, 222, 140), (245, 168, 52), (178, 100, 18)),
+    'food_sick': ((214, 222, 120), (150, 164, 48), (86, 100, 22)),
+    'thirst': ((160, 234, 255), (48, 178, 242), (18, 100, 176)),
+    'sanity': ((236, 190, 255), (178, 104, 244), (104, 46, 176)),
+    'sanity_blood': ((255, 150, 150), (214, 36, 52), (110, 8, 22)),
 }
-TRACK_TOP, TRACK, TRACK_BOTTOM = (26, 14, 23, 235), (44, 24, 38, 235), (58, 33, 51, 235)
-FRAME = (10, 5, 9, 255)
+GLOW = {'health': (255, 70, 120), 'food': (255, 176, 60), 'thirst': (60, 180, 255), 'sanity': (190, 110, 255)}
 
 
-# ------------------------------------------------------------------------------------------ art
-def bar_frame(side):
-    """frame + empty track, BAR_W x CELL_H units, pill shaped, subtle segment ticks every 2 steps"""
-    w, h = BAR_W * D, CELL_H * D
-    im = px.canvas(w, h)
-    d = ImageDraw.Draw(im)
-    r = h // 2
-    d.rounded_rectangle([0, 0, w - 1, h - 1], radius=r, fill=FRAME)
-    d.rounded_rectangle([2, 2, w - 3, h - 3], radius=r - 2, fill=TRACK)
-    d.line([(r, 2), (w - r, 2)], fill=TRACK_TOP, width=1)
-    d.line([(r, h - 3), (w - r, h - 3)], fill=TRACK_BOTTOM, width=1)
-    return im
+# ------------------------------------------------------------------------------------------ drawing helpers (supersampled)
+def ss_canvas(units, ss=4):
+    n = int(units * S4 * ss)
+    return Image.new('RGBA', (n, n)), n
 
 
-def inner_box():
-    return 2, 2, BAR_W * D - 3, CELL_H * D - 3     # x0, y0, x1, y1 inside the frame (art px)
+def finish_ss(im, units):
+    n = int(units * S4)
+    return im.resize((n, n), Image.LANCZOS)
 
 
-def bar_fill(stat, steps, side):
-    """only the coloured part for `steps` of 20, same size as the frame"""
-    _, light, main, dark, _ = STATS[stat]
-    w, h = BAR_W * D, CELL_H * D
-    x0, y0, x1, y1 = inner_box()
-    full = x1 - x0 + 1
-    n = round(full * steps / STEPS)
-    im = px.canvas(w, h)
-    if n <= 0:
-        return im
-    fill = px.canvas(w, h)
-    d = ImageDraw.Draw(fill)
-    ih = y1 - y0 + 1
-    for yy in range(ih):
-        t = yy / max(1, ih - 1)
-        c = px.mix(light, main, min(1, t * 2.2)) if t < 0.45 else px.mix(main, dark, (t - 0.45) / 0.55)
-        d.line([(x0, y0 + yy), (x1, y0 + yy)], fill=px.rgba(c))
-    d.line([(x0 + 2, y0), (x1 - 2, y0)], fill=px.rgba(px.mix(light, (255, 255, 255), 0.55)))   # gloss
-    # segment ticks: 10 segments like the vanilla hearts
-    for i in range(1, 10):
-        tx = x0 + round(full * i / 10)
-        d.line([(tx, y0 + 1), (tx, y1)], fill=px.rgba(dark, 150))
-    # clip to the rounded inner shape and to n pixels from the fill side
-    mask = px.canvas(w, h)
-    md = ImageDraw.Draw(mask)
-    md.rounded_rectangle([x0, y0, x1, y1], radius=(ih) // 2, fill=(255, 255, 255, 255))
-    if side == 'left':
-        md.rectangle([x0 + n, 0, w, h], fill=(0, 0, 0, 0))
-    else:
-        md.rectangle([0, 0, x1 - n, h], fill=(0, 0, 0, 0))
-    im.paste(fill, (0, 0), mask.getchannel('A'))
-    # bright leading edge
-    ed = ImageDraw.Draw(im)
-    ex = x0 + n - 1 if side == 'left' else x1 - n + 1
-    if 0 < n < full:
-        ed.line([(ex, y0 + 1), (ex, y1 - 1)], fill=px.rgba(px.mix(light, (255, 255, 255), 0.4)))
-    return im
+def polar_grid(n, units):
+    c = n / 2
+    y, x = np.mgrid[0:n, 0:n] + 0.5
+    dx, dy = x - c, y - c
+    r = np.hypot(dx, dy) / n * units          # radius in units
+    ang = (np.degrees(np.arctan2(dx, -dy)) + 360) % 360   # 0 at 12 o'clock, clockwise
+    return r, ang
 
 
-def _shade_shape(mask, light, main, dark, glint=True):
-    """colour a 1-bit shape with a top-left light / bottom-right dark gradient, then outline it"""
+def shadow_layer(units=FX):
+    """soft drop shadow under a gauge, so it reads on snow and sand too"""
+    im, n = ss_canvas(units, 1)
+    r, _ = polar_grid(n, units)
+    r = np.hypot(*(np.mgrid[0:n, 0:n] + 0.5 - np.array([n / 2 + 1.2 * S4, n / 2]).reshape(2, 1, 1))) / n * units
+    a = np.zeros((n, n, 4))
+    a[..., 3] = np.clip(1 - (r - R_OUT) / 3.2, 0, 1) ** 1.5 * 150
+    return Image.fromarray(a.astype('uint8'), 'RGBA')
+
+
+def disc_layer(units=G):
+    im, n = ss_canvas(units)
+    r, ang = polar_grid(n, units)
+    a = np.zeros((n, n, 4))
+    inside = r <= R_OUT + 0.55
+    t = np.clip(r / (R_OUT + 0.55), 0, 1)
+    base = np.array([34, 18, 31]) * (1 - t[..., None]) + np.array([14, 7, 13]) * t[..., None]
+    # soft top-left light on the glass
+    light = np.clip(1 - np.hypot((r * np.sin(np.radians(ang)) + 4) / 9, (r * -np.cos(np.radians(ang)) + 4) / 9), 0, 1) * 18
+    a[..., :3] = base + light[..., None]
+    a[..., 3] = np.where(inside, 236, 0)
+    rim = (r > R_OUT + 0.15) & (r <= R_OUT + 0.55)
+    a[rim, :3] = [8, 4, 7]
+    a[rim, 3] = 255
+    im = Image.fromarray(a.astype('uint8'), 'RGBA')
+    return finish_ss(im, units)
+
+
+def ring_layer(steps, colors, alpha=255, units=G, track=False, glow_edge=True):
+    """arc from 12 o'clock clockwise, gradient along the arc, gloss, rounded ends"""
+    light, main, dark = colors
+    im, n = ss_canvas(units)
+    r, ang = polar_grid(n, units)
+    a = np.zeros((n, n, 4))
+    band = (r >= R_IN) & (r <= R_OUT)
+    if track:
+        a[band, :3] = [52, 30, 46]
+        a[band, 3] = 235
+        # subtle ticks every 2 steps
+        for k in range(10):
+            tick = band & (np.abs(((ang - k * 36 + 180) % 360) - 180) < 0.9)
+            a[tick, :3] = [30, 16, 26]
+        return finish_ss(Image.fromarray(a.astype('uint8'), 'RGBA'), units)
+    span = 360 * steps / STEPS
+    mid = (R_IN + R_OUT) / 2
+    half = (R_OUT - R_IN) / 2
+    on = band & (ang <= span)
+    # rounded caps
+    for cap_ang in ([0, span] if steps < STEPS else []):
+        cx = mid * math.sin(math.radians(cap_ang))
+        cy = -mid * math.cos(math.radians(cap_ang))
+        px_ = r * np.sin(np.radians(ang))
+        py_ = -r * np.cos(np.radians(ang))
+        on |= np.hypot(px_ - cx, py_ - cy) <= half
+    signed = np.where(ang > span + (360 - span) / 2, ang - 360, ang)      # the start cap sits just before 0 deg
+    t = np.clip(signed / max(span, 1e-6), 0, 1)
+    c0 = np.array(dark) * 0.45 + np.array(main) * 0.55
+    c1 = np.array(main) * 0.75 + np.array(light) * 0.25
+    main_c = c0 * (1 - t[..., None]) + c1 * t[..., None]
+    radial = np.clip((r - R_IN) / (R_OUT - R_IN), 0, 1)
+    shade = 1.12 - 0.35 * np.abs(radial - 0.35)            # gloss band a little outside the middle
+    col = main_c * shade[..., None]
+    gloss = on & (np.abs(radial - 0.72) < 0.1)
+    col[gloss] = col[gloss] * 0.5 + np.array(light) * 0.5
+    a[..., :3] = np.clip(col, 0, 255)
+    a[..., 3] = np.where(on, alpha, 0)
+    # glowing leading edge
+    if glow_edge and 0 < steps < STEPS:
+        lead = on & (np.abs(ang - span) < 7) & band
+        a[lead, :3] = a[lead, :3] * 0.4 + np.array([255, 255, 255]) * 0.6 * 0.6 + np.array(light) * 0.4 * 0.6
+    im = Image.fromarray(a.astype('uint8'), 'RGBA')
+    return finish_ss(im, units)
+
+
+def glow_ring(color, units=FX, r0=R_IN - 1.5, r1=R_OUT + 3.5, strength=210):
+    im, n = ss_canvas(units, 1)
+    r, _ = polar_grid(n, units)
+    mid, half = (r0 + r1) / 2, (r1 - r0) / 2
+    a = np.zeros((n, n, 4))
+    k = np.clip(1 - np.abs(r - mid) / half, 0, 1) ** 1.6
+    a[..., :3] = color
+    a[..., 3] = k * strength
+    return Image.fromarray(a.astype('uint8'), 'RGBA')
+
+
+def halo(color, units=FX, radius=R_OUT + 2.2, width=0.9):
+    im, n = ss_canvas(units)
+    r, ang = polar_grid(n, units)
+    a = np.zeros((n, n, 4))
+    k = np.clip(1 - np.abs(r - radius) / width, 0, 1)
+    a[..., :3] = color
+    a[..., 3] = k * 255
+    # soft outer bloom
+    b = np.clip(1 - np.abs(r - radius) / (width * 4), 0, 1) ** 2 * 90
+    a[..., 3] = np.maximum(a[..., 3], b)
+    return finish_ss(Image.fromarray(a.astype('uint8'), 'RGBA'), units)
+
+
+# ------------------------------------------------------------------------------------------ flip books (horizontal strips)
+def strip(frames):
+    w, h = frames[0].size
+    out = Image.new('RGBA', (w * len(frames), h))
+    for i, f in enumerate(frames):
+        out.alpha_composite(f, (i * w, 0))
+    return out
+
+
+def star(d, cx, cy, s, col):
+    d.polygon([(cx, cy - s), (cx + s * 0.28, cy - s * 0.28), (cx + s, cy), (cx + s * 0.28, cy + s * 0.28),
+               (cx, cy + s), (cx - s * 0.28, cy + s * 0.28), (cx - s, cy), (cx - s * 0.28, cy - s * 0.28)], fill=col)
+
+
+def fb_sparkles(n=12):
+    """regeneration: four sparkles orbiting the ring"""
+    frames = []
+    size = FX * S4
+    c = size / 2
+    for f in range(n):
+        im = Image.new('RGBA', (size * 2, size * 2))
+        d = ImageDraw.Draw(im)
+        for i in range(4):
+            a = math.radians(f * 360 / n / 2 + i * 90)
+            rr = (R_OUT + 1.6) * S4 * 2
+            x, y = c * 2 + rr * math.sin(a), c * 2 - rr * math.cos(a)
+            tw = 0.6 + 0.4 * math.sin((f + i * 3) / n * 2 * math.pi)
+            star(d, x, y, 2.6 * S4 * 2 * tw, (255, 236, 246, 255))
+            star(d, x, y, 1.2 * S4 * 2 * tw, (255, 120, 180, 255))
+            for k in range(1, 4):                          # trail
+                b = a - math.radians(k * 7)
+                tx, ty = c * 2 + rr * math.sin(b), c * 2 - rr * math.cos(b)
+                s = (3 - k) * 0.35 * S4 * 2
+                d.ellipse([tx - s, ty - s, tx + s, ty + s], fill=(255, 170, 210, 200 - k * 50))
+        frames.append(im.resize((size, size), Image.LANCZOS))
+    return strip(frames)
+
+
+def fb_bubbles(color, n=10, seed=3):
+    """poison / hunger: little bubbles rising over the gauge"""
+    rng = np.random.RandomState(seed)
+    bubbles = [(rng.uniform(-7, 7), rng.uniform(0, 1), rng.uniform(0.7, 1.6)) for _ in range(9)]
+    size = FX * S4
+    frames = []
+    for f in range(n):
+        im = Image.new('RGBA', (size * 2, size * 2))
+        d = ImageDraw.Draw(im)
+        for bx, phase, br in bubbles:
+            t = (phase + f / n) % 1.0
+            x = size + bx * S4 * 2 + math.sin(t * 6 + bx) * 1.5 * S4
+            y = size + (9 - t * 20) * S4 * 2
+            rr = br * S4 * 2 * (0.6 + 0.4 * t)
+            alpha = int(230 * math.sin(t * math.pi))
+            d.ellipse([x - rr, y - rr, x + rr, y + rr], outline=color + (alpha,), width=max(2, int(S4 * 0.8)))
+            d.ellipse([x - rr * 0.35 - rr * 0.3, y - rr * 0.6, x - rr * 0.3 + rr * 0.1, y - rr * 0.2], fill=(255, 255, 255, alpha))
+        frames.append(im.resize((size, size), Image.LANCZOS))
+    return strip(frames)
+
+
+def fb_smoke(n=10, seed=5):
+    """wither: dark wisps rising"""
+    rng = np.random.RandomState(seed)
+    puffs = [(rng.uniform(-8, 8), rng.uniform(0, 1), rng.uniform(1.8, 3.2)) for _ in range(8)]
+    size = FX * S4
+    frames = []
+    for f in range(n):
+        im = Image.new('RGBA', (size, size))
+        d = ImageDraw.Draw(im)
+        for bx, phase, br in puffs:
+            t = (phase + f / n) % 1.0
+            x = size / 2 + (bx + math.sin(t * 5 + bx) * 1.2) * S4
+            y = size / 2 + (8 - t * 18) * S4
+            rr = br * S4 * (0.5 + t)
+            alpha = int(170 * math.sin(t * math.pi))
+            d.ellipse([x - rr, y - rr, x + rr, y + rr], fill=(24, 18, 28, alpha))
+        frames.append(im.filter(ImageFilter.GaussianBlur(S4 * 0.8)))
+    return strip(frames)
+
+
+def fb_flames(n=8, seed=9):
+    """burning: flames licking around the ring"""
+    rng = np.random.RandomState(seed)
+    size = FX * S4
+    tongues = [(i * 360 / 14 + rng.uniform(-8, 8), rng.uniform(0, 1), rng.uniform(2.2, 4.2)) for i in range(14)]
+    frames = []
+    for f in range(n):
+        im = Image.new('RGBA', (size * 2, size * 2))
+        d = ImageDraw.Draw(im)
+        c = size
+        for a0, phase, ln in tongues:
+            t = (phase + f / n) % 1.0
+            h = ln * (0.55 + 0.45 * math.sin(t * 2 * math.pi)) * S4 * 2
+            a = math.radians(a0)
+            base_r = (R_OUT + 0.3) * S4 * 2
+            bx, by = c + base_r * math.sin(a), c - base_r * math.cos(a)
+            tipx, tipy = c + (base_r + h) * math.sin(a), c - (base_r + h) * math.cos(a) - h * 0.35
+            w = 1.3 * S4 * 2
+            nx, ny = math.cos(a) * w, math.sin(a) * w
+            for scale, col in ((1.0, (255, 110, 30, 220)), (0.55, (255, 220, 90, 240))):
+                d.polygon([(bx - nx * scale, by - ny * scale), (bx + (tipx - bx) * scale, by + (tipy - by) * scale),
+                           (bx + nx * scale, by + ny * scale)], fill=col)
+        frames.append(im.resize((size, size), Image.LANCZOS))
+    return strip(frames)
+
+
+def trail_layer(steps):
+    return ring_layer(steps, ((255, 255, 255), (255, 214, 226), (255, 190, 206)), alpha=235, glow_edge=False)
+
+
+# ------------------------------------------------------------------------------------------ icons (pixel art, 18 art px)
+D = 2
+
+
+def _shade_shape(mask, light, main, dark):
     w, h = mask.size
     im = px.canvas(w, h)
     p, m = im.load(), mask.load()
@@ -101,11 +281,11 @@ def _shade_shape(mask, light, main, dark, glint=True):
                 t = (x * 0.45 + y * 0.8) / (w * 0.45 + h * 0.8)
                 c = px.mix(light, main, min(1, t * 2)) if t < 0.5 else px.mix(main, dark, (t - 0.5) * 2)
                 p[x, y] = px.rgba(c)
-    return px.outline(im, FRAME)
+    return px.outline(im, INK)
 
 
 def icon_heart(light, main, dark):
-    s = ICON * D                                        # 18
+    s = ICON * D
     m = px.canvas(s, s)
     d = ImageDraw.Draw(m)
     d.ellipse([1, 2, 9, 10], fill=(255, 255, 255, 255))
@@ -122,7 +302,7 @@ def icon_drumstick():
     s = ICON * D
     m = px.canvas(s, s)
     d = ImageDraw.Draw(m)
-    d.ellipse([6, 1, 16, 11], fill=(255, 255, 255, 255))           # meat
+    d.ellipse([6, 1, 16, 11], fill=(255, 255, 255, 255))
     d.polygon([(7, 8), (10, 11), (5, 13)], fill=(255, 255, 255, 255))
     meat = _shade_shape(m, (255, 196, 120), (205, 110, 45), (120, 56, 20))
     bone = px.canvas(s, s)
@@ -130,7 +310,7 @@ def icon_drumstick():
     b.line([(3, 14), (7, 10)], fill=(236, 226, 214, 255), width=2)
     b.ellipse([1, 13, 4, 16], fill=(236, 226, 214, 255))
     b.ellipse([2, 14, 5, 17], fill=(236, 226, 214, 255))
-    bone = px.outline(bone, FRAME)
+    bone = px.outline(bone, INK)
     bone.alpha_composite(meat)
     q = bone.load()
     for (x, y) in ((9, 3), (10, 3), (9, 4)):
@@ -152,23 +332,28 @@ def icon_drop():
 
 
 def icon_brain():
-    s = ICON * D
-    m = px.canvas(s, s)
-    d = ImageDraw.Draw(m)
-    for box in ([1, 3, 9, 11], [8, 3, 16, 11], [2, 7, 10, 15], [7, 7, 15, 15], [4, 1, 13, 8]):
-        d.ellipse(box, fill=(255, 255, 255, 255))
-    im = _shade_shape(m, (255, 200, 236), (214, 120, 220), (120, 52, 150))
-    d2 = ImageDraw.Draw(im)
-    fold = (120, 52, 150, 255)
-    d2.line([(8, 3), (8, 14)], fill=fold)
-    d2.line([(4, 7), (6, 6)], fill=fold)
-    d2.line([(11, 6), (13, 8)], fill=fold)
-    d2.line([(4, 11), (6, 12)], fill=fold)
-    d2.line([(11, 12), (13, 11)], fill=fold)
-    q = im.load()
-    for (x, y) in ((5, 4), (6, 4)):
-        q[x, y] = px.WHITE
-    return im
+    rows = [
+        "....oooo.oooo.....",
+        "..ooLLLLoLLLLoo...",
+        ".oLLLMMLoLMMLLLo..",
+        "oLLMFFMMoMMFFMMLo.",
+        "oLMMMMFMoMFMMMMDo.",
+        "oLMFFMMMoMMMFFMDo.",
+        "oMMMMFFMoMFFMMMDo.",
+        "oMFMMMMMoMMMMMFDo.",
+        "oMMFFMMMoMMFFMDDo.",
+        ".oMMMMFMoMFMMDDo..",
+        ".oDMMMMMoMMMMDDo..",
+        "..oDDMMMoMMDDDo...",
+        "...ooDDDoDDDoo....",
+        ".....ooo.ooo......",
+        "..................",
+    ]
+    pal = {'o': INK, 'L': (255, 206, 240), 'M': (220, 130, 226), 'D': (150, 70, 176), 'F': (130, 52, 158)}
+    im = px.from_rows(rows, pal)
+    out = px.canvas(18, 18)
+    out.alpha_composite(im, (0, 2))
+    return out
 
 
 def icon_shield():
@@ -183,45 +368,6 @@ def icon_shield():
     return im
 
 
-def glow(color, size):
-    """soft round glow for the low-value pulse (not pixel art on purpose)"""
-    s = size * D * 2
-    im = Image.new('RGBA', (s, s))
-    p = im.load()
-    c = s / 2
-    for y in range(s):
-        for x in range(s):
-            r = math.hypot(x + 0.5 - c, y + 0.5 - c) / c
-            a = max(0.0, 1 - r) ** 1.6
-            p[x, y] = tuple(color[:3]) + (int(a * 200),)
-    return im
-
-
-def draw_all(rp):
-    d = os.path.join(rp, TEX)
-    for side in ('left', 'right'):
-        px.save(bar_frame(side), os.path.join(d, f'frame_{side}.png'), 2)
-    for stat, (_, light, main, dark, side) in STATS.items():
-        for n in range(1, STEPS + 1):
-            px.save(bar_fill(stat, n, side), os.path.join(d, f'fill_{stat}_{n:02d}.png'), 2)
-    px.save(icon_heart(*STATS['health'][1:4]), os.path.join(d, 'icon_health.png'), 2)
-    px.save(icon_heart(*STATS['health_poison'][1:4]), os.path.join(d, 'icon_health_poison.png'), 2)
-    px.save(icon_heart(*STATS['health_wither'][1:4]), os.path.join(d, 'icon_health_wither.png'), 2)
-    px.save(icon_drumstick(), os.path.join(d, 'icon_food.png'), 2)
-    px.save(icon_drop(), os.path.join(d, 'icon_thirst.png'), 2)
-    px.save(icon_brain(), os.path.join(d, 'icon_sanity.png'), 2)
-    px.save(icon_shield(), os.path.join(d, 'icon_armor.png'), 2)
-    for k, c in (('health', (255, 40, 90)), ('food', (255, 160, 40)), ('thirst', (40, 170, 255)), ('sanity', (190, 90, 255))):
-        glow(c, 12).save(os.path.join(d, f'glow_{k}.png'))
-    for ch in '0123456789':
-        px.save(digit_big(ch), os.path.join(d, f'num_{ch}.png'), 2)
-    # armor badge plate
-    plate = px.canvas(19 * D, CELL_H * D)
-    ImageDraw.Draw(plate).rounded_rectangle([0, 0, 19 * D - 1, CELL_H * D - 1], radius=CELL_H * D // 2, fill=(10, 5, 9, 200))
-    px.save(plate, os.path.join(d, 'armor_plate.png'), 2)
-
-
-# 5x7 digits (art px) with a 1px outline -> 7x9 art px = 3.5 x 4.5 units
 BIG = {
     '0': ['.###.', '#...#', '#..##', '#.#.#', '##..#', '#...#', '.###.'],
     '1': ['..#..', '.##..', '..#..', '..#..', '..#..', '..#..', '.###.'],
@@ -243,10 +389,57 @@ def digit_big(ch):
         for x, c in enumerate(r):
             if c == '#':
                 q[x + 1, y + 1] = px.WHITE
-    return px.outline(im, FRAME)
+    return px.outline(im, INK)
+
+
+def plate(w, h):
+    im = Image.new('RGBA', (w * S4, h * S4))
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle([0, 0, w * S4 - 1, h * S4 - 1], radius=h * S4 // 2, fill=(10, 5, 9, 235))
+    d.rounded_rectangle([2, 2, w * S4 - 3, h * S4 - 3], radius=h * S4 // 2 - 2, outline=(90, 40, 70, 255), width=2)
+    return im
+
+
+def draw_all(rp):
+    d = os.path.join(rp, TEX)
+    os.makedirs(d, exist_ok=True)
+    disc_layer().save(os.path.join(d, 'disc.png'))
+    shadow_layer().save(os.path.join(d, 'shadow.png'))
+    ring_layer(0, STATS['health'], track=True).save(os.path.join(d, 'track.png'))
+    for stat, cols in STATS.items():
+        for n in range(1, STEPS + 1):
+            ring_layer(n, cols).save(os.path.join(d, f'ring_{stat}_{n:02d}.png'))
+    for n in range(1, STEPS + 1):
+        trail_layer(n).save(os.path.join(d, f'trail_{n:02d}.png'))
+    for k, c in GLOW.items():
+        glow_ring(c).save(os.path.join(d, f'glow_{k}.png'))
+    glow_ring((255, 40, 40), strength=240).save(os.path.join(d, 'glow_hurt.png'))
+    glow_ring((255, 255, 255), strength=170).save(os.path.join(d, 'glow_white.png'))
+    halo((255, 214, 90)).save(os.path.join(d, 'halo_absorb.png'))
+    halo((214, 36, 52)).save(os.path.join(d, 'halo_blood.png'))
+    fb_sparkles().save(os.path.join(d, 'fx_sparkles.png'))
+    fb_bubbles((150, 235, 80)).save(os.path.join(d, 'fx_bubbles_poison.png'))
+    fb_bubbles((200, 214, 90), seed=8).save(os.path.join(d, 'fx_bubbles_hunger.png'))
+    fb_smoke().save(os.path.join(d, 'fx_smoke.png'))
+    fb_flames().save(os.path.join(d, 'fx_flames.png'))
+    px.save(icon_heart(*STATS['health']), os.path.join(d, 'icon_health.png'), 2)
+    px.save(icon_heart(*STATS['health_poison']), os.path.join(d, 'icon_health_poison.png'), 2)
+    px.save(icon_heart(*STATS['health_wither']), os.path.join(d, 'icon_health_wither.png'), 2)
+    px.save(icon_drumstick(), os.path.join(d, 'icon_food.png'), 2)
+    px.save(icon_drop(), os.path.join(d, 'icon_thirst.png'), 2)
+    px.save(icon_brain(), os.path.join(d, 'icon_sanity.png'), 2)
+    px.save(icon_shield(), os.path.join(d, 'icon_armor.png'), 2)
+    for ch in '0123456789':
+        px.save(digit_big(ch), os.path.join(d, f'num_{ch}.png'), 2)
+    plate(15, 7).save(os.path.join(d, 'plate_hp.png'))
+    plate(19, 9).save(os.path.join(d, 'plate_armor.png'))
+
+
+FLIPBOOKS = {'fx_sparkles': 12, 'fx_bubbles_poison': 10, 'fx_bubbles_hunger': 10, 'fx_smoke': 10, 'fx_flames': 8}
 
 
 # ------------------------------------------------------------------------------------------ JSON UI
+NS = 'succubi_hud'
 DATA = 'succubi_hud_data'
 P = '#preserved_text'
 
@@ -264,7 +457,7 @@ def vis(expr):
              "target_property_name": "#visible"}]
 
 
-def img(tex, size, offset=(0, 0), layer=1, expr=None, anchor='top_left', **kw):
+def img(tex, size, offset, layer, expr=None, anchor='center', **kw):
     c = {"type": "image", "texture": TEX + tex, "size": list(size), "offset": list(offset), "layer": layer,
          "anchor_from": anchor, "anchor_to": anchor}
     if expr:
@@ -273,65 +466,103 @@ def img(tex, size, offset=(0, 0), layer=1, expr=None, anchor='top_left', **kw):
     return c
 
 
-def cell(stat_key, letter, side, x, y, icon_variants, low_flag, glow_key, number=False):
-    """one stat: frame, 20 fills (visible by token), icon (+ variants), low pulse, optional number"""
-    ctl = []
-    bar_x = ICON + 1 if side == 'left' else 0
-    icon_x = 0 if side == 'left' else BAR_W + 1
-    ctl.append({"frame": img(f'frame_{side}', (BAR_W, CELL_H), (bar_x, 0), 2)})
-    fills = [(stat_key, None)] if stat_key != 'health' else [('health', 'Pn'), ('health_poison', 'Pp'), ('health_wither', 'Pw')]
-    for key, tint in fills:
+def fx(tex, expr, layer, fps=12, alpha=None):
+    frames = FLIPBOOKS[tex]
+    n = FX * S4
+    c = img(tex, (FX, FX), (0, 0), layer, expr, uv_size=[n, n], uv=f"@{NS}.fb_{tex}")
+    if alpha:
+        c["alpha"] = alpha
+    return c
+
+
+GAUGES = [
+    # key, token letter, x (left edge in root), fill variants [(stat key, condition)], icon variants, letter for flags
+    ('health', 'H', 0, [('health', 'Pn'), ('health_poison', 'Pp'), ('health_wither', 'Pw')],
+     [('icon_health', 'Pn'), ('icon_health_poison', 'Pp'), ('icon_health_wither', 'Pw')], 'h'),
+    ('food', 'F', 25, [('food', '!Qh'), ('food_sick', 'Qh')], [('icon_food', None)], 'f'),
+    ('thirst', 'T', 69, [('thirst', None)], [('icon_thirst', None)], 't'),
+    ('sanity', 'S', 94, [('sanity', '!Eb'), ('sanity_blood', 'Eb')], [('icon_sanity', None)], 's'),
+]
+ROOT_W = 94 + G
+
+
+def cond(tok):
+    if tok is None:
+        return None
+    return hasnt(tok[1:]) if tok.startswith('!') else has(tok)
+
+
+def and_(*xs):
+    xs = [x for x in xs if x]
+    return ' and '.join(xs) if xs else None
+
+
+def gauge(key, letter, x, fills, icons, f):
+    ctl = [{"shadow": img('shadow', (FX, FX), (0, 0), 0)},
+           {"disc": img('disc', (G, G), (0, 0), 1)},
+           {"track": img('track', (G, G), (0, 0), 2)}]
+    if key == 'health':
         for n in range(1, STEPS + 1):
-            expr = has(f'{letter}{n:02d}') + (f" and {has(tint)}" if tint else '')
-            ctl.append({f"fill_{key}_{n:02d}": img(f'fill_{key}_{n:02d}', (BAR_W, CELL_H), (bar_x, 0), 3, expr)})
-    ctl.append({"glow": img(f'glow_{glow_key}', (ICON * 2, ICON * 2), (icon_x - ICON / 2, -ICON / 2), 1, has(low_flag),
-                            alpha="@succubi_hud.pulse_out")})
-    for tex, expr in icon_variants:
-        ctl.append({f"icon_{tex}": img(tex, (ICON, ICON), (icon_x, 0), 4, expr)})
-    if number:
-        # health number, right end of the bar: ones / tens / hundreds (leading zeros hidden)
-        R = bar_x + BAR_W - 3
-        for pos, (letter_d, cond) in enumerate((('Z', None), ('Y', 'tens'), ('X', 'hundreds'))):
+            ctl.append({f"trail_{n:02d}": img(f'trail_{n:02d}', (G, G), (0, 0), 3, and_(has('-h'), has(f'G{n:02d}')),
+                                              alpha=f"@{NS}.trail_fade")})
+    for stat, tok in fills:
+        for n in range(1, STEPS + 1):
+            ctl.append({f"ring_{stat}_{n:02d}": img(f'ring_{stat}_{n:02d}', (G, G), (0, 0), 4, and_(has(f'{letter}{n:02d}'), cond(tok)))})
+    # glows (under the disc edge -> layer 0 so they bloom around it)
+    ctl.append({"glow_low": img(f'glow_{key}', (FX, FX), (0, 0), 0, has(f'!{f}'), alpha=f"@{NS}.pulse_slow_out")})
+    ctl.append({"glow_gain": img(f'glow_{key}', (FX, FX), (0, 0), 0, and_(has(f'+{f}'), hasnt(f'-{f}')), alpha=f"@{NS}.pulse_fast_out")})
+    ctl.append({"glow_gain_white": img('glow_white', (FX, FX), (0, 0), 5, and_(has(f'+{f}'), hasnt(f'-{f}')), alpha=f"@{NS}.flash_out")})
+    ctl.append({"glow_hurt": img('glow_hurt', (FX, FX), (0, 0), 0, has(f'-{f}'), alpha=f"@{NS}.pulse_fast_out")})
+    # status effects
+    if key == 'health':
+        ctl.append({"halo_absorb": img('halo_absorb', (FX, FX), (0, 0), 1, has('Ea'), alpha=f"@{NS}.pulse_slow_out")})
+        ctl.append({"fx_regen": fx('fx_sparkles', has('Er'), 7)})
+        ctl.append({"fx_poison": fx('fx_bubbles_poison', has('Pp'), 7)})
+        ctl.append({"fx_wither": fx('fx_smoke', has('Pw'), 7)})
+        ctl.append({"fx_fire": fx('fx_flames', has('Ef'), 8)})
+    if key == 'food':
+        ctl.append({"fx_hunger": fx('fx_bubbles_hunger', has('Qh'), 7)})
+    if key == 'sanity':
+        ctl.append({"halo_blood": img('halo_blood', (FX, FX), (0, 0), 1, has('Eb'), alpha=f"@{NS}.pulse_slow_out")})
+    # icon: still / shaking (lost value) / popping (gained value)
+    for tex, tok in icons:
+        base = cond(tok)
+        ctl.append({f"{tex}": img(tex, (ICON, ICON), (0, 0), 6, and_(base, hasnt(f'-{f}'), hasnt(f'+{f}')))})
+        ctl.append({f"{tex}_shake": img(tex, (ICON, ICON), (0, 0), 6, and_(base, has(f'-{f}')), anims=[f"@{NS}.shake_a"])})
+        ctl.append({f"{tex}_pop": img(tex, (ICON, ICON), (0, 0), 6, and_(base, has(f'+{f}'), hasnt(f'-{f}')), anims=[f"@{NS}.pop_a"])})
+    if key == 'health':
+        # health number on a plate under the heart: ones / tens / hundreds, leading zeros hidden
+        ctl.append({"plate": img('plate_hp', (15, 7), (0, 9.5), 9)})
+        # centred on the plate: 3 digits at -3.5 / 0 / +3.5, 2 digits at -1.75 / +1.75, 1 digit at 0
+        three, two, one = hasnt('X0'), and_(has('X0'), hasnt('Y0')), and_(has('X0'), has('Y0'))
+        slots = [('Z', three, 3.5), ('Z', two, 1.75), ('Z', one, 0), ('Y', three, 0), ('Y', two, -1.75), ('X', three, -3.5)]
+        for i, (ld, count, xoff) in enumerate(slots):
             for dgt in range(10):
-                if cond == 'hundreds' and dgt == 0:
+                if ld == 'X' and dgt == 0:
                     continue
-                expr = has(f'{letter_d}{dgt}')
-                if cond == 'tens' and dgt == 0:
-                    expr += f" and {hasnt('X0')}"
-                ctl.append({f"n{letter_d}{dgt}": img(f'num_{dgt}', (3.5, 4.5), (R - 3.5 * (pos + 1), 2.25), 6, expr)})
-    return {"type": "panel", "size": [CELL_W, CELL_H], "offset": [x, y], "anchor_from": "top_left", "anchor_to": "top_left",
-            "controls": ctl}
+                ctl.append({f"n{i}_{ld}{dgt}": img(f'num_{dgt}', (3.5, 4.5), (xoff, 9.5), 10, and_(has(f'{ld}{dgt}'), count))})
+    body = {"type": "panel", "size": [G, G], "offset": [x, 0], "anchor_from": "top_left", "anchor_to": "top_left", "controls": ctl}
+    if key == 'thirst':
+        body["bindings"] = vis(hasnt('Txx'))
+    if key == 'sanity':
+        body["bindings"] = vis(hasnt('Sxx'))
+    return body
 
 
 def hud_json():
-    root_ctl = []
-    gap = 182 - 2 * CELL_W                                # 18: room for the XP level number
-    row_top, row_bottom = 0, CELL_H + 2
-    root_ctl.append({"health": cell('health', 'H', 'left', 0, row_bottom,
-                                    [('icon_health', has('Pn')), ('icon_health_poison', has('Pp')), ('icon_health_wither', has('Pw'))],
-                                    '!h', 'health', number=True)})
-    root_ctl.append({"food": cell('food', 'F', 'right', CELL_W + gap, row_bottom, [('icon_food', None)], '!f', 'food')})
-    thirst = cell('thirst', 'T', 'left', 0, row_top, [('icon_thirst', None)], '!t', 'thirst')
-    thirst["bindings"] = vis(hasnt('Txx'))
-    sanity = cell('sanity', 'S', 'right', CELL_W + gap, row_top, [('icon_sanity', None)], '!s', 'sanity')
-    sanity["bindings"] = vis(hasnt('Sxx'))
-    root_ctl += [{"thirst": thirst}, {"sanity": sanity}]
-    # armor badge, left of the health bar
-    armor = {"type": "panel", "size": [19, CELL_H], "offset": [-21, row_bottom], "anchor_from": "top_left", "anchor_to": "top_left",
+    root_ctl = [{g[0]: gauge(*g)} for g in GAUGES]
+    armor = {"type": "panel", "size": [19, 9], "offset": [-21, 6.5], "anchor_from": "top_left", "anchor_to": "top_left",
              "bindings": vis(has('Ay')),
-             "controls": [{"plate": img('armor_plate', (19, CELL_H), (0, 0), 1)},
-                          {"icon": img('icon_armor', (ICON, ICON), (0, 0), 3)}]}
+             "controls": [{"plate": img('plate_armor', (19, 9), (0, 0), 1, anchor='top_left')},
+                          {"icon": img('icon_armor', (ICON, ICON), (0, 0), 3, anchor='top_left')}]}
     for dgt in range(10):
         if dgt:
-            armor["controls"].append({f"t{dgt}": img(f'num_{dgt}', (3.5, 4.5), (10, 2.25), 4, has(f'B{dgt}'))})
-        armor["controls"].append({f"o{dgt}": img(f'num_{dgt}', (3.5, 4.5), (13.5, 2.25), 4, has(f'C{dgt}'))})
+            armor["controls"].append({f"t{dgt}": img(f'num_{dgt}', (3.5, 4.5), (10, 2.25), 4, has(f'B{dgt}'), anchor='top_left')})
+        armor["controls"].append({f"o{dgt}": img(f'num_{dgt}', (3.5, 4.5), (13.5, 2.25), 4, has(f'C{dgt}'), anchor='top_left')})
     root_ctl.append({"armor": armor})
-
-    root = {"type": "panel", "anchor_from": "bottom_middle", "anchor_to": "bottom_middle", "offset": [0, -29],
-            "size": [182, 2 * CELL_H + 2], "layer": 30, "controls": root_ctl,
+    root = {"type": "panel", "anchor_from": "bottom_middle", "anchor_to": "bottom_middle", "offset": [0, -31],
+            "size": [ROOT_W, G], "layer": 30, "controls": root_ctl,
             "bindings": [{"binding_name": "#show_survival_ui", "binding_name_override": "#visible"}]}
-    # the HUD's own visibility ("off" = hidden by the player / creative) lives on an inner panel so the
-    # data keeper below never sits inside a hidden parent
     shown = {"type": "panel", "size": ["100%", "100%"], "controls": [{"hud_root": root}], "bindings": vis(hasnt('shud:off'))}
     data = {"type": "panel", "size": [0, 0], "bindings": [
         {"binding_name": "#hud_title_text_string"},
@@ -339,29 +570,47 @@ def hud_json():
         {"binding_type": "view",
          "source_property_name": f"((not (#hud_title_text_string = {P})) and (not ((#hud_title_text_string - 'shud:') = #hud_title_text_string)))",
          "target_property_name": "#visible"}]}
-    return {
-        "namespace": "succubi_hud",
-        "pulse_out": {"anim_type": "alpha", "easing": "in_out_sine", "duration": 0.55, "from": 1.0, "to": 0.15, "next": "@succubi_hud.pulse_in"},
-        "pulse_in": {"anim_type": "alpha", "easing": "in_out_sine", "duration": 0.55, "from": 0.15, "to": 1.0, "next": "@succubi_hud.pulse_out"},
-        "hud_layer": {"type": "panel", "size": ["100%", "100%"], "controls": [{DATA: data}, {"succubi_hud_shown": shown}]},
+    anims = {
+        "pulse_slow_out": {"anim_type": "alpha", "easing": "in_out_sine", "duration": 0.7, "from": 1.0, "to": 0.2, "next": f"@{NS}.pulse_slow_in"},
+        "pulse_slow_in": {"anim_type": "alpha", "easing": "in_out_sine", "duration": 0.7, "from": 0.2, "to": 1.0, "next": f"@{NS}.pulse_slow_out"},
+        "pulse_fast_out": {"anim_type": "alpha", "easing": "in_out_sine", "duration": 0.18, "from": 1.0, "to": 0.35, "next": f"@{NS}.pulse_fast_in"},
+        "pulse_fast_in": {"anim_type": "alpha", "easing": "in_out_sine", "duration": 0.18, "from": 0.35, "to": 1.0, "next": f"@{NS}.pulse_fast_out"},
+        "flash_out": {"anim_type": "alpha", "easing": "out_quad", "duration": 0.3, "from": 0.9, "to": 0.0, "next": f"@{NS}.flash_in"},
+        "flash_in": {"anim_type": "alpha", "easing": "linear", "duration": 0.3, "from": 0.0, "to": 0.9, "next": f"@{NS}.flash_out"},
+        "trail_fade": {"anim_type": "alpha", "easing": "in_out_sine", "duration": 0.35, "from": 0.95, "to": 0.45, "next": f"@{NS}.trail_back"},
+        "trail_back": {"anim_type": "alpha", "easing": "in_out_sine", "duration": 0.35, "from": 0.45, "to": 0.95, "next": f"@{NS}.trail_fade"},
+        # icon shake: left-right jitter around the centre
+        "shake_a": {"anim_type": "offset", "easing": "linear", "duration": 0.04, "from": [0, 0], "to": [1.2, -0.4], "next": f"@{NS}.shake_b"},
+        "shake_b": {"anim_type": "offset", "easing": "linear", "duration": 0.08, "from": [1.2, -0.4], "to": [-1.2, 0.4], "next": f"@{NS}.shake_c"},
+        "shake_c": {"anim_type": "offset", "easing": "linear", "duration": 0.04, "from": [-1.2, 0.4], "to": [0, 0], "next": f"@{NS}.shake_a"},
+        # icon pop: grows and settles
+        "pop_a": {"anim_type": "size", "easing": "out_back", "duration": 0.22, "from": [ICON, ICON], "to": [ICON * 1.45, ICON * 1.45], "next": f"@{NS}.pop_b"},
+        "pop_b": {"anim_type": "size", "easing": "in_out_sine", "duration": 0.3, "from": [ICON * 1.45, ICON * 1.45], "to": [ICON, ICON], "next": f"@{NS}.pop_a"},
     }
+    for tex, frames in FLIPBOOKS.items():
+        anims[f"fb_{tex}"] = {"anim_type": "flip_book", "initial_uv": [0, 0], "frame_count": frames, "frame_step": FX * S4,
+                              "fps": 12 if tex != 'fx_flames' else 14, "easing": "linear"}
+    out = {"namespace": NS}
+    out.update(anims)
+    out["hud_layer"] = {"type": "panel", "size": ["100%", "100%"], "controls": [{DATA: data}, {"succubi_hud_shown": shown}]}
+    return out
 
 
 def vanilla_bottom_panels():
-    """vanilla centered_gui_elements_at_bottom_middle(_touch) without hearts / armor / hunger,
-    air bubbles and horse hearts moved up one row so they sit above the Succubi bars"""
+    """vanilla centered_gui_elements_at_bottom_middle(_touch) without hearts / armor / hunger;
+    air bubbles and horse hearts moved up so they sit above the Succubi gauges"""
     def panel(width, binding):
         right = width
         return {
             "type": "panel", "anchor_from": "bottom_middle", "anchor_to": "bottom_middle", "size": [width, 50],
             "controls": [
-                {"horse_heart_rend_0@hud.horse_heart_renderer": {"offset": [right, -66], "anchor_from": "bottom_left", "anchor_to": "bottom_left",
+                {"horse_heart_rend_0@hud.horse_heart_renderer": {"offset": [right, -72], "anchor_from": "bottom_left", "anchor_to": "bottom_left",
                                                                  "bindings": [{"binding_name": "#creative_horse_hearts", "binding_name_override": "#visible"}]}},
-                {"horse_heart_rend_1@hud.horse_heart_renderer": {"offset": [right, -60], "anchor_from": "bottom_left", "anchor_to": "bottom_left",
+                {"horse_heart_rend_1@hud.horse_heart_renderer": {"offset": [right, -66], "anchor_from": "bottom_left", "anchor_to": "bottom_left",
                                                                  "bindings": [{"binding_name": "#survival_horse_hearts", "binding_name_override": "#visible"}]}},
-                {"bubbles_rend_0@hud.bubbles_renderer": {"offset": [right, -60], "anchor_from": "bottom_left", "anchor_to": "bottom_left",
+                {"bubbles_rend_0@hud.bubbles_renderer": {"offset": [right, -66], "anchor_from": "bottom_left", "anchor_to": "bottom_left",
                                                           "bindings": [{"binding_name": "#is_not_riding_bubbles", "binding_name_override": "#visible"}]}},
-                {"bubbles_rend_1@hud.bubbles_renderer": {"offset": [right, -60], "anchor_from": "bottom_left", "anchor_to": "bottom_left",
+                {"bubbles_rend_1@hud.bubbles_renderer": {"offset": [right, -66], "anchor_from": "bottom_left", "anchor_to": "bottom_left",
                                                           "bindings": [{"binding_name": "#is_riding_bubbles", "binding_name_override": "#visible"}]}},
                 {"exp_rend@hud.exp_progress_bar_and_hotbar": {}}],
             "bindings": [{"binding_name": binding, "binding_name_override": "#visible", "binding_type": "global"}]}
@@ -411,11 +660,10 @@ def build_hud(out, ctx, log):
     wjson(os.path.join(rp, 'ui/hud_screen.json'), hud_screen_core())
     defs = sorted(f'ui/{f}' for f in os.listdir(os.path.join(rp, 'ui')) if f.startswith('succubi_') and f.endswith('.json'))
     wjson(os.path.join(rp, 'ui/_ui_defs.json'), {"ui_defs": defs})
-    # blank armor icons too (fallback if a client ignores "ignored")
     blank = Image.new('RGBA', (9, 9))
     for n in ('armor_empty', 'armor_half', 'armor_full'):
         blank.save(os.path.join(rp, f'textures/ui/{n}.png'))
     grp = os.path.join(out, GUNS_RP)
     wjson(os.path.join(grp, 'ui/hud_screen.json'), hud_screen_guns())
     wjson(os.path.join(grp, 'ui/_ui_defs.json'), {"ui_defs": ["ui/hud/hud_elements.json"]})
-    log(f'HUD: {len(os.listdir(d))} textures, bars + armor badge + health number')
+    log(f'HUD: {len(os.listdir(d))} textures, 4 round gauges with change / status effects')

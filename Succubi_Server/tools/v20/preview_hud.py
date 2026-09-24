@@ -1,22 +1,25 @@
-"""Render the Succubi HUD from the generated ui/succubi_hud.json for given payloads, over a game-like scene
-with the vanilla hotbar, so the layout can be checked without the game.
+"""Render the Succubi HUD from the generated ui/succubi_hud.json, over a game-like scene with the vanilla
+hotbar. Plays the JSON UI animations (alpha / offset / size chains, flip books), so the change and status
+effects can be seen without the game.
 
-    python3 preview_hud.py <out dir> <vanilla textures/ui dir> <png>"""
-import json, os, re, sys
+    python3 preview_hud.py <out dir> <vanilla textures/ui dir> <png>      still frames of a few states
+    python3 preview_hud.py <out dir> <vanilla textures/ui dir> <gif> gif  animated tour of every effect"""
+import math, os, re, sys
 from PIL import Image, ImageDraw
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import CORE_RP, rjson
 
-G = 4          # screen pixels per GUI unit
-W, H = 300, 120  # GUI units shown
+G = 4             # screen pixels per GUI unit
+W, H = 240, 90    # GUI units shown
+ANCH = {'top_left': (0, 0), 'top_middle': (0.5, 0), 'top_right': (1, 0), 'left_middle': (0, 0.5), 'center': (0.5, 0.5),
+        'right_middle': (1, 0.5), 'bottom_left': (0, 1), 'bottom_middle': (0.5, 1), 'bottom_right': (1, 1)}
+_cache = {}
 
 
 def evaluate(expr, payload):
-    e = expr
-    e = re.sub(r"\(not \(\(#preserved_text - '([^']*)'\) = #preserved_text\)\)", lambda m: repr(m.group(1) in payload), e)
+    e = re.sub(r"\(not \(\(#preserved_text - '([^']*)'\) = #preserved_text\)\)", lambda m: repr(m.group(1) in payload), expr)
     e = re.sub(r"\(\(#preserved_text - '([^']*)'\) = #preserved_text\)", lambda m: repr(m.group(1) not in payload), e)
-    e = e.replace('false', 'False').replace('true', 'True')
-    return bool(eval(e))
+    return bool(eval(e.replace('false', 'False').replace('true', 'True')))
 
 
 def visible(ctl, payload):
@@ -27,39 +30,86 @@ def visible(ctl, payload):
     return True
 
 
-def draw(canvas, rp, ctl, x, y, payload):
+EASE = {
+    'linear': lambda t: t,
+    'in_out_sine': lambda t: -(math.cos(math.pi * t) - 1) / 2,
+    'out_quad': lambda t: 1 - (1 - t) ** 2,
+    'out_back': lambda t: 1 + 2.70158 * (t - 1) ** 3 + 1.70158 * (t - 1) ** 2,
+}
+
+
+def anim_value(ref, anims, t):
+    """value of a looping anim chain at time t (alpha -> float, offset/size -> [x, y])"""
+    name = ref.split('.')[-1]
+    chain, seen = [], set()
+    while name and name not in seen:
+        seen.add(name)
+        a = anims[name]
+        chain.append(a)
+        name = a.get('next', '').split('.')[-1] if a.get('next') else None
+    total = sum(a['duration'] for a in chain)
+    t = t % total if name else min(t, total)
+    for a in chain:
+        if t <= a['duration'] or a is chain[-1]:
+            k = EASE.get(a.get('easing', 'linear'), EASE['linear'])(min(1, t / a['duration']))
+            f, to = a['from'], a['to']
+            if isinstance(f, list):
+                return [f[i] + (to[i] - f[i]) * k for i in range(len(f))]
+            return f + (to - f) * k
+        t -= a['duration']
+
+
+def tex(rp, path):
+    if path not in _cache:
+        _cache[path] = Image.open(os.path.join(rp, path + '.png')).convert('RGBA')
+    return _cache[path]
+
+
+def draw(canvas, rp, anims, ctl, px_, py_, pw, ph, payload, t):
     if not visible(ctl, payload):
         return
-    w, h = ctl.get('size', [0, 0])
+    w, h = ctl.get('size', [pw, ph])
+    w = pw if w == '100%' else w
+    h = ph if h == '100%' else h
+    off = list(ctl.get('offset', [0, 0]))
+    for ref in ctl.get('anims', []):
+        a = anims[ref.split('.')[-1]]
+        if a['anim_type'] == 'offset':
+            off = anim_value(ref, anims, t)
+        if a['anim_type'] == 'size':
+            w, h = anim_value(ref, anims, t)
+    af, at = ANCH[ctl.get('anchor_from', 'center')], ANCH[ctl.get('anchor_to', 'center')]
+    x = px_ + af[0] * pw - at[0] * w + off[0]
+    y = py_ + af[1] * ph - at[1] * h + off[1]
     if ctl.get('type') == 'image':
-        tex = Image.open(os.path.join(rp, ctl['texture'] + '.png')).convert('RGBA')
-        tex = tex.resize((max(1, round(w * G)), max(1, round(h * G))), Image.NEAREST)
-        if 'alpha' in ctl:
-            a = tex.getchannel('A').point(lambda v: int(v * 0.75))
-            tex.putalpha(a)
-        canvas.alpha_composite(tex, (round(x * G), round(y * G)))
+        im = tex(rp, ctl['texture'])
+        if 'uv_size' in ctl:
+            uw, uh = ctl['uv_size']
+            fb = anims[ctl['uv'].split('.')[-1]]
+            frame = int(t * fb['fps']) % fb['frame_count']
+            im = im.crop((frame * fb['frame_step'], 0, frame * fb['frame_step'] + uw, uh))
+        im = im.resize((max(1, round(w * G)), max(1, round(h * G))), Image.LANCZOS)
+        if isinstance(ctl.get('alpha'), str):
+            a = max(0.0, min(1.0, anim_value(ctl['alpha'], anims, t)))
+            im = im.copy()
+            im.putalpha(im.getchannel('A').point(lambda v: int(v * a)))
+        canvas.append((ctl.get('layer', 0), im, (round(x * G), round(y * G))))
     for c in ctl.get('controls', []):
-        (name, body), = c.items()
-        ox, oy = body.get('offset', [0, 0])
-        draw(canvas, rp, body, x + ox, y + oy, payload)
+        (_, body), = c.items()
+        draw(canvas, rp, anims, body, x, y, w, h, payload, t)
 
 
 def scene(vanilla_ui):
     im = Image.new('RGBA', (W * G, H * G))
     d = ImageDraw.Draw(im)
-    for yy in range(H * G):             # sky -> grass
-        t = yy / (H * G)
-        c = (int(120 + 60 * t), int(170 + 40 * t), 235) if t < 0.55 else (86, 140, 58)
+    for yy in range(H * G):
+        tt = yy / (H * G)
+        c = (int(120 + 60 * tt), int(170 + 40 * tt), 235) if tt < 0.45 else (86, 140, 58)
         d.line([(0, yy), (W * G, yy)], fill=c + (255,))
-    for i in range(0, W * G, 24):
-        d.rectangle([i, int(H * G * 0.55), i + 11, int(H * G * 0.55) + 6], fill=(104, 160, 70, 255))
-    # vanilla hotbar + xp bar
-    hb_x = W / 2 - 91
-    hb_y = H - 22
-    slot = Image.open(os.path.join(vanilla_ui, 'hotbar_0.png')).convert('RGBA')
+    hb_x, hb_y = W / 2 - 91, H - 22
+    slot = Image.open(os.path.join(vanilla_ui, 'hotbar_0.png')).convert('RGBA').resize((20 * G, 22 * G), Image.NEAREST)
     for i in range(9):
-        s = slot.resize((20 * G, 22 * G), Image.NEAREST)
-        im.alpha_composite(s, (int((hb_x + 1 + i * 20) * G), int(hb_y * G)))
+        im.alpha_composite(slot, (int((hb_x + 1 + i * 20) * G), int(hb_y * G)))
     xe = Image.open(os.path.join(vanilla_ui, 'experiencebarempty.png')).convert('RGBA').resize((182 * G, 5 * G), Image.NEAREST)
     xf = Image.open(os.path.join(vanilla_ui, 'experiencebarfull.png')).convert('RGBA').resize((182 * G, 5 * G), Image.NEAREST)
     im.alpha_composite(xe, (int(hb_x * G), int((hb_y - 6) * G)))
@@ -67,34 +117,75 @@ def scene(vanilla_ui):
     return im
 
 
-def render(out, vanilla_ui, payload):
+def render(out, vanilla_ui, payload, t=0.0, bg=None):
     rp = os.path.join(out, CORE_RP)
     ui = rjson(os.path.join(rp, 'ui/succubi_hud.json'))
-    im = scene(vanilla_ui)
+    im = (bg or scene(vanilla_ui)).copy()
     layer = ui['hud_layer']
     shown = next(c['succubi_hud_shown'] for c in layer['controls'] if 'succubi_hud_shown' in c)
     if not visible(shown, payload):
         return im
-    root = shown['controls'][0]['hud_root']
-    rw, rh = root['size']
-    ox, oy = root['offset']
-    x = W / 2 - rw / 2 + ox
-    y = H - rh + oy
-    draw(im, rp, root, x, y, payload)
+    items = []
+    draw(items, rp, ui, shown['controls'][0]['hud_root'], 0, 0, W, H, payload, t)
+    for _, tile, pos in sorted(items, key=lambda i: i[0]):
+        im.alpha_composite(tile, pos) if pos[0] >= 0 and pos[1] >= 0 else paste_clip(im, tile, pos)
     return im
+
+
+def paste_clip(im, tile, pos):
+    x, y = pos
+    cx, cy = max(0, -x), max(0, -y)
+    im.alpha_composite(tile.crop((cx, cy, tile.width, tile.height)), (x + cx, y + cy))
+
+
+BASE = 'shud:H17F18T15S16PnX0Y8Z6An'
+STATES = [
+    ('ปกติ', BASE),
+    ('โดนตี: แดงกะพริบ หัวใจสั่น แถบจางๆ บอกเลือดที่เสียไป', 'shud:H11F18T15S16PnX0Y5Z4AyB0C8-hG17'),
+    ('ฟื้นเลือด (Regeneration): ประกายวิ่งรอบหัวใจ', 'shud:H14F18T15S16PnX0Y7Z0An+hEr'),
+    ('กินอาหาร: เรืองแสง ไอคอนเด้ง', 'shud:H17F20T15S16PnX0Y8Z6An+f'),
+    ('ดื่มน้ำ', 'shud:H17F18T20S16PnX0Y8Z6An+t'),
+    ('ติดพิษ: วงเขียว มีฟองลอย', 'shud:H12F18T15S16PpX0Y6Z0An'),
+    ('Wither: วงดำ มีควัน', 'shud:H09F18T15S16PwX0Y4Z5An'),
+    ('ไฟไหม้ตัว', 'shud:H13F18T15S16PnX0Y6Z5AnEf-h'),
+    ('Absorption: วงทองรอบหัวใจ', 'shud:H20F18T15S16PnX1Y0Z0AnEa'),
+    ('ติดหิว (Hunger): วงอาหารเขียวคล้ำ', 'shud:H17F09T15S16PnX0Y8Z6AnQh-f'),
+    ('คืนพระจันทร์เลือด + เจอเรื่องแปลก', 'shud:H17F18T15S07PnX0Y8Z6AnEb-s'),
+    ('ใกล้ตาย / หิว / คอแห้ง / สติหลุด', 'shud:H03F04T03S02PnX0Y1Z5An!h!f!t!s'),
+]
+
+
+def caption(im, text):
+    from art_ui import font
+    d = ImageDraw.Draw(im)
+    f = font(22, True)
+    d.rounded_rectangle([12, 10, 24 + d.textlength(text, font=f), 46], radius=8, fill=(10, 5, 9, 200))
+    d.text((18, 12), text, font=f, fill=(255, 220, 240))
+    return im
+
+
+def crop(im):
+    return im.crop((int((W / 2 - 100) * G), int((H - 80) * G), int((W / 2 + 100) * G), H * G))
 
 
 if __name__ == '__main__':
     out, vui, target = sys.argv[1:4]
-    payloads = [
-        'shud:H17F18T15S16PnX0Y8Z6An',
-        'shud:H04F05T03S04PpX0Y2Z0AyB0C8!h!f!t!s',
-        'shud:H20F20TxxSxxPwX1Y4Z0AyB2C0',
-    ]
-    frames = [render(out, vui, p) for p in payloads]
-    sheet = Image.new('RGBA', (W * G, H * G * len(frames)))
-    for i, f in enumerate(frames):
-        sheet.alpha_composite(f, (0, i * H * G))
-    sheet = sheet.crop((int((W / 2 - 120) * G), 0, int((W / 2 + 120) * G), H * G * len(frames)))
-    sheet.save(target)
-    print('saved', target)
+    bg = scene(vui)
+    if len(sys.argv) > 4 and sys.argv[4] == 'gif':
+        frames = []
+        fps, per = 12, 1.6
+        for label, payload in STATES:
+            for i in range(int(per * fps)):
+                t = i / fps
+                frames.append(caption(crop(render(out, vui, payload, t, bg)), label).convert('RGB').quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE))
+        frames[0].save(target, save_all=True, append_images=frames[1:], duration=int(1000 / fps), loop=0, optimize=True)
+        print('saved', target, len(frames), 'frames')
+    else:
+        shots = [caption(crop(render(out, vui, p, 0.1, bg)), label) for label, p in STATES]
+        cols = 3
+        w, h = shots[0].size
+        sheet = Image.new('RGBA', (w * cols, h * math.ceil(len(shots) / cols)))
+        for i, s in enumerate(shots):
+            sheet.alpha_composite(s, ((i % cols) * w, (i // cols) * h))
+        sheet.save(target)
+        print('saved', target)

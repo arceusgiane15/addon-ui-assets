@@ -3,18 +3,23 @@ import { getThirst, THIRST_MAX } from "./thirst.js";
 import { getSanity, SANITY_MAX } from "./sanity.js";
 import { enabled } from "./settings_store.js";
 import { ARMOR_POINTS } from "./armor_values.js";
+import { isBloodMoon } from "./bloodmoon.js";
 
-// The HUD is drawn by RP ui/succubi_hud.json. Its data travels in the title, which the RP never displays
-// and keeps (preserves) after the title fades, so a value is only sent when it changes:
-//   shud:H13F18T09S20Pn X0Y8Z6 An !t     (spaces only here for reading)
-//   H/F/T/S = health / food / thirst / sanity bar, 00-20 (Txx / Sxx = that system is switched off)
+// The HUD is drawn by RP ui/succubi_hud.json (four round gauges). Its data travels in the title, which the RP
+// never displays and keeps (preserves) after the title fades, so a value is only sent when it changes:
+//   shud:H13F18T09S20Pn X0Y8Z6 An !t -h G15 Er     (spaces only here for reading)
+//   H/F/T/S = health / food / thirst / sanity ring, 00-20 (Txx / Sxx = that system is switched off)
 //   P = health colour (n normal, p poison, w wither)   X Y Z = health number digits
-//   A = armor (n none, y shown with digits B C)         !h !f !t !s = low, pulses on screen
+//   A = armor (n none, y shown with digits B C)
+//   !x = low (slow pulse)   -x = just lost some (red flash, icon shakes)   +x = just gained (glow, icon pops)
+//   G = the health ring before the hit (pale damage trail)       x = h f t s
+//   Er regeneration sparkles, Ea absorption halo, Ef burning, Qh hunger effect, Eb blood moon
 //   "shud:off" hides the HUD (tag hide_hud, creative, spectator)
 // Map makers who show their own /title can pause the HUD: /scriptevent succubi:hud_pause 10
 const MARKER = "shud:";
 const FOOD_OBJECTIVE = "succubi_food"; // written by the "Succubi Server Link BP" pack
-const UPDATE_TICKS = 10;
+const UPDATE_TICKS = 5;
+const FLASH_TICKS = 30; // how long a +/- flash stays on screen
 const SAFETY_RESEND_TICKS = 1200; // once a minute, in case the client rebuilt its HUD
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -67,18 +72,81 @@ function healthTint(player) {
   return "n";
 }
 
-export function buildPayload(player) {
+function effectTokens(player) {
+  let s = "";
+  try {
+    if (player.getEffect("regeneration")) s += "Er";
+    if (player.getEffect("absorption")) s += "Ea";
+    if (player.getEffect("hunger")) s += "Qh";
+  } catch (e) {}
+  try {
+    if (player.getComponent("minecraft:onfire")) s += "Ef";
+  } catch (e) {}
+  try {
+    if (enabled("sanity") && isBloodMoon()) s += "Eb";
+  } catch (e) {}
+  return s;
+}
+
+// ---------------------------------------------------------------- change flashes
+// Only noticeable jumps flash (a hit, a meal, a drink, a scare) - not the slow drain of thirst or sanity.
+const RULES = {
+  h: { loss: 0.5, gain: 2 },
+  f: { loss: 2, gain: 0.5 },
+  t: { loss: 1.5, gain: 0.5 },
+  s: { loss: 2.5, gain: 2.5 }
+};
+const memory = new Map(); // player id -> { last: {h, f, t, s}, until: {"+h": tick, ...}, trail, trailUntil }
+
+function flashes(player, values, hpStep, tick) {
+  let m = memory.get(player.id);
+  if (!m) {
+    m = { last: { ...values }, until: {}, trail: 0, trailUntil: 0 };
+    memory.set(player.id, m);
+  }
+  for (const k of Object.keys(RULES)) {
+    const now = values[k];
+    const before = m.last[k];
+    if (typeof now !== "number" || typeof before !== "number") continue;
+    if (before - now >= RULES[k].loss) {
+      m.until["-" + k] = tick + FLASH_TICKS;
+      delete m.until["+" + k];
+      if (k === "h") {
+        // the trail shows the ring as it was before this run of hits
+        const beforeStep = toSteps(before, values.hmax);
+        m.trail = m.trailUntil > tick ? Math.max(m.trail, beforeStep) : beforeStep;
+        m.trailUntil = tick + FLASH_TICKS;
+      }
+    } else if (now - before >= RULES[k].gain) {
+      m.until["+" + k] = tick + FLASH_TICKS;
+      delete m.until["-" + k];
+    }
+    m.last[k] = now;
+  }
+  let s = "";
+  for (const [flag, until] of Object.entries(m.until)) {
+    if (until > tick) s += flag;
+    else delete m.until[flag];
+  }
+  if (m.trailUntil > tick && m.trail > hpStep) s += `G${pad2(m.trail)}`;
+  return s;
+}
+
+export function buildPayload(player, tick = system.currentTick) {
   const maxHp = getMaxHp(player);
   const hp = capHealth(player, maxHp);
   const hpNum = Math.max(0, Math.min(999, Math.ceil(hp)));
   const food = readFood(player);
   const thirstOn = enabled("thirst");
   const sanityOn = enabled("sanity");
-  const thirst = thirstOn ? toSteps(getThirst(player), THIRST_MAX) : 0;
-  const sanity = sanityOn ? toSteps(getSanity(player), SANITY_MAX) : 0;
+  const thirstRaw = thirstOn ? getThirst(player) : undefined;
+  const sanityRaw = sanityOn ? getSanity(player) : undefined;
+  const thirst = thirstOn ? toSteps(thirstRaw, THIRST_MAX) : 0;
+  const sanity = sanityOn ? toSteps(sanityRaw, SANITY_MAX) : 0;
+  const hpStep = toSteps(hp, maxHp);
   const armor = armorPoints(player);
   let s = MARKER;
-  s += `H${pad2(toSteps(hp, maxHp))}F${pad2(food)}`;
+  s += `H${pad2(hpStep)}F${pad2(food)}`;
   s += thirstOn ? `T${pad2(thirst)}` : "Txx";
   s += sanityOn ? `S${pad2(sanity)}` : "Sxx";
   s += `P${healthTint(player)}`;
@@ -88,6 +156,8 @@ export function buildPayload(player) {
   if (food <= 6) s += "!f";
   if (thirstOn && thirst <= 6) s += "!t";
   if (sanityOn && sanity <= 6) s += "!s";
+  s += flashes(player, { h: hp, hmax: maxHp, f: food, t: thirstRaw, s: sanityRaw }, hpStep, tick);
+  s += effectTokens(player);
   return s;
 }
 
@@ -113,7 +183,7 @@ export function updateHud(player, tick, force = false) {
     capHealth(player, getMaxHp(player));
     payload = MARKER + "off";
   } else {
-    payload = buildPayload(player);
+    payload = buildPayload(player, tick);
   }
   if (!force && previous && previous.payload === payload && tick - previous.tick < SAFETY_RESEND_TICKS) return;
   player.onScreenDisplay.setTitle(payload, { fadeInDuration: 0, stayDuration: 10, fadeOutDuration: 0 });
@@ -133,6 +203,7 @@ export function initHud() {
   world.afterEvents.playerLeave.subscribe((event) => {
     lastSent.delete(event.playerId);
     pausedUntil.delete(event.playerId);
+    memory.delete(event.playerId);
   });
   world.afterEvents.playerSpawn.subscribe((event) => {
     if (event.player) system.runTimeout(() => refreshHud(event.player), 20);

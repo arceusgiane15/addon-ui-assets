@@ -56,6 +56,34 @@ await import("./main.js");
   ok("payload no armor: " + naked);
 }
 
+// ---------------------------------------------------------------- HUD change flashes and status effects
+{
+  const { buildPayload } = await import("./succubi/hud.js");
+  const p = makePlayer({ id: "-150", hp: 100 });
+  buildPayload(p, 1000);
+  p.hp = 70;
+  const hit = buildPayload(p, 1005);
+  assert.ok(hit.includes("-h") && hit.includes("G20"), hit);
+  ok("hit: red flash + damage trail from the old ring: " + hit);
+  p.hp = 60;
+  const hit2 = buildPayload(p, 1010);
+  assert.ok(hit2.includes("G20"), "trail keeps the level before the first hit: " + hit2);
+  ok("combo hits keep one trail");
+  const later = buildPayload(p, 1100);
+  assert.ok(!later.includes("-h") && !later.includes("G"), later);
+  ok("flash and trail clear after 1.5 s");
+  p.hp = 75;
+  assert.ok(buildPayload(p, 1105).includes("+h"));
+  ok("healing pops the heart");
+  p.hp = 76;
+  assert.ok(!buildPayload(p, 1200).includes("+h"));
+  ok("slow natural regen does not flash");
+  p.effects = ["regeneration", "absorption", "hunger"];
+  const fx = buildPayload(p, 1300);
+  assert.ok(fx.includes("Er") && fx.includes("Ea") && fx.includes("Qh"), fx);
+  ok("status effects: " + fx);
+}
+
 // ---------------------------------------------------------------- height rules
 {
   const { openHeightForm } = await import("./height/ui.js");
