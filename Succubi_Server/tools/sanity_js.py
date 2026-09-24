@@ -1,6 +1,7 @@
 SANITY_JS = r'''import { world, system } from "@minecraft/server";
 import { runAs } from "./cmd.js";
 import { SANITY_BY_ID, TEDDY_ID } from "./sanity_values.js";
+import { enabled } from "./settings_store.js";
 
 // Sanity (สติ) 0-100.
 //  up:   tasty food / drinks / some medicine, sleeping (and waking up rested), friends nearby, the tea kiosk's music, hugging a teddy
@@ -147,6 +148,13 @@ const EVENTS = [
   { id: "zombie", loss: 5, run: (p) => sound(p, "mob.zombie.say", ahead(p, -2), 1, 0.7) }
 ];
 const SHARED = ["thunder", "red_fog", "bells"];
+export const EVENT_NAMES = {
+  thunder: "ฟ้าผ่าข้างหู", footsteps: "เสียงฝีเท้าตามหลัง", knock: "เสียงเคาะ 3 ที", cave: "เสียงถ้ำ", creeper: "ครีปเปอร์ปลอม",
+  stare: "เสียงเอนเดอร์แมนจ้อง", heartbeat: "หัวใจเต้นแรง", bells: "ระฆังดังไกลๆ", moan: "เสียงครวญคราง", shadow: "เงาดำยืนมอง",
+  red_fog: "หมอกแดง 1 นาที", whisper: "ข้อความกระซิบ ???", tea_voice: "เสียงประกาศร้านชาผี", animals: "สัตว์แตกตื่น",
+  glass: "กระจกแตกข้างหลัง", growl: "เสียงคำราม + จอสั่น", text: "ข้อความปริศนา", zombie: "เสียงซอมบี้ข้างหลัง"
+};
+export const EVENT_IDS = EVENTS.map((e) => e.id);
 
 function shadowFigure(player) {
   const at = ahead(player, rand(16, 22));
@@ -182,7 +190,7 @@ function shadowFigure(player) {
   }, 5);
 }
 
-function runEvent(player, id) {
+export function runEvent(player, id) {
   const ev = id ? EVENTS.find((e) => e.id === id) : pick(EVENTS.filter((e) => e.id !== lastEvent.get(player.id)));
   if (!ev) return;
   lastEvent.set(player.id, ev.id);
@@ -197,6 +205,10 @@ const worldDelay = () => Math.floor(rand(150, 240) * 60); // 2.5-4 hours
 
 // ---------------------------------------------------------------- per second
 function tick(player) {
+  if (!enabled("sanity")) {
+    if ((fogLevel.get(player.id) ?? -1) >= 0) updateFog(player, SANITY_MAX, true);
+    return;
+  }
   if (exempt(player)) return;
   const loc = player.location;
   const dim = player.dimension;
@@ -236,6 +248,7 @@ function tick(player) {
 
   if (delta !== 0) addSanity(player, delta);
 
+  if (!enabled("events")) return;
   const next = player.getDynamicProperty(NEXT);
   const left = typeof next === "number" ? next - 1 : nextDelay();
   if (left <= 0) {
@@ -247,7 +260,7 @@ function tick(player) {
 }
 
 function worldTick(players) {
-  if (players.length === 0) return;
+  if (players.length === 0 || !enabled("sanity") || !enabled("events")) return;
   const next = world.getDynamicProperty(WORLD_NEXT);
   const left = typeof next === "number" ? next - 1 : worldDelay();
   if (left > 0) return world.setDynamicProperty(WORLD_NEXT, left);
@@ -258,12 +271,13 @@ function worldTick(players) {
 
 export function initSanity() {
   world.afterEvents.itemCompleteUse.subscribe((event) => {
+    if (!enabled("sanity")) return;
     const gain = SANITY_BY_ID[event.itemStack?.typeId];
     if (event.source?.typeId === "minecraft:player" && gain) addSanity(event.source, gain);
   });
 
   world.afterEvents.itemUse.subscribe((event) => {
-    if (event.itemStack?.typeId !== TEDDY_ID) return;
+    if (event.itemStack?.typeId !== TEDDY_ID || !enabled("sanity")) return;
     const p = event.source;
     const lastHug = Number(p.getDynamicProperty("succubi:teddy_hug")) || 0;
     if (Date.now() - lastHug < 90000) {
@@ -279,7 +293,7 @@ export function initSanity() {
   world.afterEvents.entityHurt.subscribe(
     (event) => {
       const p = event.hurtEntity;
-      if (exempt(p)) return;
+      if (exempt(p) || !enabled("sanity")) return;
       const fromMonster = event.damageSource?.damagingEntity?.matches?.({ families: ["monster"] }) ?? false;
       addSanity(p, -Math.min(8, event.damage * 0.6 + (fromMonster ? 1 : 0)));
     },

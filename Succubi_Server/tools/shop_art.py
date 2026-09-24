@@ -123,58 +123,68 @@ def leaf(d, cx, cy, a, b, ang, fill):
     d.polygon(pts, fill=fill)
 
 
-def background(key, th, kiosk_icon, rows=5):
-    W, H = 560, 360 + 60 * (rows - 5)
+def background(key, th, kiosk_icon, rows=5, W=560):
+    H = 360 + 60 * (rows - 5)
     ex = H - 360
+    dx = W - 560
     img = Image.new('RGBA', (W * SS, H * SS), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     base, dark, acc, glass = th['base'], th['dark'], th['accent'], th['glass']
     # drop shadow + body
-    rrect(d, (6, 8, 556, H - 2), 22, (0, 0, 0, 90))
-    rrect(d, (4, 4, 552, H - 8), 22, base + (255,), outline=darken(base, 0.45) + (255,), width=2)
-    rrect(d, (8, 8, 548, H - 12), 19, None, outline=lighten(base, 0.25) + (255,), width=1)
-    # header bar
-    rrect(d, (14, 10, 424, 38), 8, dark + (255,))
-    deco_header(key, d, th, W)
-    deco_extra(key, d, th)
-    # menu board (behind the product grid: grid at 18,42, 100x60 per card)
-    rrect(d, (14, 40, 422, H - 14), 10, darken(dark, 0.25) + (255,), outline=lighten(dark, 0.2) + (255,), width=2)
+    rrect(d, (6, 8, W - 4, H - 2), 22, (0, 0, 0, 90))
+    rrect(d, (4, 4, W - 8, H - 8), 22, base + (255,), outline=darken(base, 0.45) + (255,), width=2)
+    rrect(d, (8, 8, W - 12, H - 12), 19, None, outline=lighten(base, 0.25) + (255,), width=1)
+    # header bar (decorations drawn for 560 wide, moved right with the header end)
+    rrect(d, (14, 10, 424 + dx, 38), 8, dark + (255,))
+    deco = Image.new('RGBA', (560 * SS, H * SS), (0, 0, 0, 0)); dd = ImageDraw.Draw(deco)
+    deco_header(key, dd, th, 560)
+    deco_extra(key, dd, th)
+    img.alpha_composite(deco, (dx * SS, 0))
+    # menu board (behind the product grid: grid at 18,42)
+    rrect(d, (14, 40, 422 + dx, H - 14), 10, darken(dark, 0.25) + (255,), outline=lighten(dark, 0.2) + (255,), width=2)
     for r in range(rows):   # shelves between card rows
         y = 42 + 60 * (r + 1) - 3
         if y < H - 16:
-            d.rectangle([18 * SS, y * SS, 418 * SS, (y + 2) * SS], fill=lighten(dark, 0.12) + (255,))
+            d.rectangle([18 * SS, y * SS, (418 + dx) * SS, (y + 2) * SS], fill=lighten(dark, 0.12) + (255,))
     # right column: register
-    rrect(d, (430, 40, 546, H - 14), 10, darken(base, 0.18) + (255,), outline=darken(base, 0.45) + (255,), width=2)
-    # LCD (text label drawn by the UI at 442,52 width 94)
-    rrect(d, (438, 48, 540, 176), 7, glass + (255,), outline=lighten(glass, 0.3) + (255,), width=2)
-    rrect(d, (442, 52, 536, 172), 5, darken(glass, 0.2) + (255,))
-    # card reader / coin slot
-    rrect(d, (452, 188, 526, 204), 4, (30, 30, 34, 255))
-    d.rectangle([468 * SS, 194 * SS, 510 * SS, 197 * SS], fill=(0, 0, 0, 255))
-    rrect(d, (446, 210, 532, 226), 4, (30, 30, 34, 255))
-    d.rectangle([452 * SS, 216 * SS, 526 * SS, 219 * SS], fill=(0, 0, 0, 255))
-    # shop badge (the kiosk itself) in the tray
-    rrect(d, (442, 238 + ex, 534, 338 + ex), 8, lighten(base, 0.12) + (255,), outline=darken(base, 0.4) + (255,), width=2)
+    rrect(d, (430 + dx, 40, 546 + dx, H - 14), 10, darken(base, 0.18) + (255,), outline=darken(base, 0.45) + (255,), width=2)
+    rrect(d, (438 + dx, 48, 540 + dx, 176), 7, glass + (255,), outline=lighten(glass, 0.3) + (255,), width=2)
+    rrect(d, (442 + dx, 52, 536 + dx, 172), 5, darken(glass, 0.2) + (255,))
+    rrect(d, (452 + dx, 188, 526 + dx, 204), 4, (30, 30, 34, 255))
+    d.rectangle([(468 + dx) * SS, 194 * SS, (510 + dx) * SS, 197 * SS], fill=(0, 0, 0, 255))
+    rrect(d, (446 + dx, 210, 532 + dx, 226), 4, (30, 30, 34, 255))
+    d.rectangle([(452 + dx) * SS, 216 * SS, (526 + dx) * SS, 219 * SS], fill=(0, 0, 0, 255))
+    rrect(d, (442 + dx, 238 + ex, 534 + dx, 338 + ex), 8, lighten(base, 0.12) + (255,), outline=darken(base, 0.4) + (255,), width=2)
     icon = kiosk_icon.convert('RGBA').resize((84 * SS, 84 * SS), Image.LANCZOS)
-    img.alpha_composite(icon, (446 * SS, (246 + ex) * SS))
+    img.alpha_composite(icon, ((446 + dx) * SS, (246 + ex) * SS))
     return img.resize((W, H), Image.LANCZOS)
 
 
-def card(th, icon, off=False):
-    W, H = 92, 56
+def widen(img, W):
+    """3-slice stretch of a 92x56 button (keeps the icon box on the left and the right edge)"""
+    img = img.convert('RGBA'); w, h = img.size
+    left, right = img.crop((0, 0, 44, h)), img.crop((w - 12, 0, w, h))
+    mid = img.crop((44, 0, w - 12, h)).resize((W - 56, h), Image.LANCZOS)
+    out = Image.new('RGBA', (W, h), (0, 0, 0, 0))
+    out.paste(left, (0, 0)); out.paste(mid, (44, 0)); out.paste(right, (W - 12, 0))
+    return out
+
+
+def card(th, icon, off=False, W=92):
+    H = 56
     img = Image.new('RGBA', (W * SS, H * SS), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     c = th['cell']
     if off:
         c = (96, 96, 100)
-    rrect(d, (1, 3, 91, 55), 8, darken(c, 0.45) + (255,))            # bottom shadow
+    rrect(d, (1, 3, W - 1, 55), 8, darken(c, 0.45) + (255,))            # bottom shadow
     body = vgrad(((W - 4) * SS, (H - 8) * SS), lighten(c, 0.12), darken(c, 0.12))
     mask = Image.new('L', img.size, 0)
-    ImageDraw.Draw(mask).rounded_rectangle([2 * SS, 1 * SS, 90 * SS, 51 * SS], radius=8 * SS, fill=255)
+    ImageDraw.Draw(mask).rounded_rectangle([2 * SS, 1 * SS, (W - 2) * SS, 51 * SS], radius=8 * SS, fill=255)
     layer = Image.new('RGBA', img.size, (0, 0, 0, 0)); layer.paste(body, (2 * SS, 1 * SS))
     img.paste(layer, (0, 0), mask)
     acc = th['accent'] if not off else (150, 150, 150)
-    d.rounded_rectangle([7 * SS, 4 * SS, 85 * SS, 6 * SS], radius=SS, fill=acc + (170,))  # top accent line
+    d.rounded_rectangle([7 * SS, 4 * SS, (W - 7) * SS, 6 * SS], radius=SS, fill=acc + (170,))  # top accent line
     # icon box
     rrect(d, (6, 11, 38, 45), 6, lighten(c, 0.28) + (255,), outline=darken(c, 0.3) + (255,), width=1)
     icon = icon.convert('RGBA')
