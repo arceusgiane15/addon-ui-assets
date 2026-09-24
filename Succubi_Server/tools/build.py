@@ -6,7 +6,7 @@ import build_food, build_shop, build_scripts, build_extra, build_sanity, build_v
 from build_food import wjson
 from data import FOODS, SHOPS
 
-VERSION = [1, 0, 18]
+VERSION = [1, 0, 19]
 
 
 def log(msg):

@@ -18,6 +18,12 @@ def catalog(bp):
         for g in c['groups']:
             g['items'] = [i for i in g['items'] if _name(i) not in TOOLS]
         c['groups'] = [g for g in c['groups'] if g['items'] or g['group_identifier']['name'] == GROUP]
+    # every group icon must be an item of that group (the horror kit used the rule wand, which moved here)
+    for c in cats:
+        for g in c['groups']:
+            names = [_name(i) for i in g['items']]
+            if g['items'] and g['group_identifier'].get('icon') not in names:
+                g['group_identifier']['icon'] = names[0]
     eq = next(c for c in cats if c['category_name'] == 'equipment')
     grp = {"group_identifier": {"icon": "succubi:server_settings", "name": GROUP}, "items": list(TOOLS)}
     at = next((n for n, g in enumerate(eq['groups']) if g['group_identifier']['name'] == 'itemGroup.name.succubi:money'), len(eq['groups']))
