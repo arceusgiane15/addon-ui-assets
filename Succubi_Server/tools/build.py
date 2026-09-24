@@ -2,11 +2,11 @@
 usage: python3 tools/build.py <extracted v1.0.10 dir> <out dir>"""
 import json, os, shutil, sys, zipfile
 sys.path.insert(0, os.path.dirname(__file__))
-import build_food, build_shop, build_scripts, build_extra, build_sanity, build_v14, build_v15, build_v16, build_v17, icons, optimize
+import build_food, build_shop, build_scripts, build_extra, build_sanity, build_v14, build_v15, build_v16, build_v17, build_v18, icons, optimize
 from build_food import wjson
 from data import FOODS, SHOPS
 
-VERSION = [1, 0, 17]
+VERSION = [1, 0, 18]
 
 
 def log(msg):
@@ -96,6 +96,7 @@ def main(src, out):
     build_v14.build(bp, rp, item_tex, log)
     build_v15.build(bp, rp, log)
     build_v16.build(bp, rp, item_tex, log)
+    build_v18.build(bp, rp, log)
 
     it_path = f'{rp}/textures/item_texture.json'
     it = json.load(open(it_path)); it['texture_data'].update(item_tex); wjson(it_path, it)
