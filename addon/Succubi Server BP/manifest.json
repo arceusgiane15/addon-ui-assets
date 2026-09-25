@@ -2,12 +2,12 @@
   "format_version": 2,
   "header": {
     "name": "Succubi Server BP",
-    "description": "Succubi Server v1.1.9 · กระเป๋าเงิน ร้านค้า ส่วนสูง การแพทย์ หิวน้ำ ค่าสติ เรื่องสยอง (ปืนอยู่ในแพ็ค Succubi Guns)",
+    "description": "Succubi Server v1.1.10 · กระเป๋าเงิน ร้านค้า ส่วนสูง การแพทย์ หิวน้ำ ค่าสติ เรื่องสยอง (ปืนอยู่ในแพ็ค Succubi Guns)",
     "uuid": "344a2ed9-b5c1-4651-af5b-b888f88e66f0",
     "version": [
       1,
       1,
-      9
+      10
     ],
     "min_engine_version": [
       1,
@@ -23,7 +23,7 @@
       "version": [
         1,
         1,
-        9
+        10
       ]
     },
     {
@@ -35,7 +35,7 @@
       "version": [
         1,
         1,
-        9
+        10
       ]
     }
   ],
@@ -45,7 +45,7 @@
       "version": [
         1,
         1,
-        9
+        10
       ]
     },
     {

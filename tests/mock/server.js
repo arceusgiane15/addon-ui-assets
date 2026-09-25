@@ -53,6 +53,14 @@ export function advance(ticks) {
 
 // ---------------------------------------------------------------- blocks
 export const BlockTypes = { get: (id) => (String(id).startsWith("minecraft:") ? { id } : undefined), getAll: () => [] };
+export class MolangVariableMap {
+  constructor() {
+    this.values = {};
+  }
+  setFloat(k, v) {
+    this.values[k] = v;
+  }
+}
 export class BlockVolume {
   constructor(from, to) {
     this.from = from;
@@ -216,7 +224,8 @@ export class Entity {
   teleport(at) {
     this.location = { ...at };
   }
-  getComponent() {
+  getComponent(id) {
+    if (id === "minecraft:health") return (this.health ??= new Health(1000, 1000));
     return undefined;
   }
   getViewDirection() {
@@ -225,7 +234,9 @@ export class Entity {
   matches() {
     return false;
   }
-  addEffect() {}
+  addEffect(id) {
+    this.effects = [...(this.effects ?? []), id];
+  }
   getEffect() {
     return undefined;
   }
@@ -259,6 +270,8 @@ export class Player extends Entity {
     this.mainhand = undefined;
     this.music = [];
     this.sounds = [];
+    this.particles = [];
+    this.items = [];
     this.title = "";
     this.actionbar = "";
     this.onScreenDisplay = {
@@ -277,6 +290,8 @@ export class Player extends Entity {
   }
   getComponent(id) {
     if (id === "minecraft:health") return this.health;
+    if (id === "minecraft:inventory")
+      return { container: { addItem: (stack) => void this.items.push(stack), size: 36, getItem: () => undefined } };
     if (id === "minecraft:equippable")
       return { getEquipment: (slot) => (slot === "Mainhand" && this.mainhand ? { typeId: this.mainhand } : undefined) };
     return undefined;
@@ -290,6 +305,9 @@ export class Player extends Entity {
   sendMessage() {}
   playSound(id) {
     this.sounds.push(id);
+  }
+  spawnParticle(id, at, vars) {
+    this.particles.push([id, at, vars]);
   }
   playMusic(id, options) {
     this.music.push([id, options]);

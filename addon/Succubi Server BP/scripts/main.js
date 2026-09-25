@@ -20,7 +20,7 @@ import { initShadows } from "./succubi/shadows.js";
 import { initMusic } from "./succubi/music.js";
 
 /**
- * Succubi Server v1.1.9 - core systems.
+ * Succubi Server v1.1.10 - core systems.
  * Guns live in the separate "Succubi Guns" packs; this pack works with or without them.
  * Menus: the wallet (always in the last hotbar slot) for players, the settings item for admins.
  */
@@ -45,4 +45,4 @@ initDaytime();
 initShadows();
 initMusic();
 
-console.warn("[Succubi Server] v1.1.9 loaded: wallet, shops, HUD + day clock, height, medical, thirst, sanity + shadows, regen, pressure sounds, tension music, Rule of Horror");
+console.warn("[Succubi Server] v1.1.10 loaded: wallet, shops, HUD + day clock, height, medical, thirst, sanity + shadows, regen, pressure sounds, tension music, Rule of Horror");

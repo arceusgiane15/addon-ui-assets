@@ -10,9 +10,13 @@ import { isAdmin } from "./settings_store.js";
 // Right-click a machine -> machine screen. Money goes in as cash items (not from the wallet balance);
 // the credit sits in the machine until spent, and whatever is left is paid back as change on close.
 // Invisible colour codes in the title pick the skin RP ui/server_form.json draws.
+// Since v1.1.9 the machines use the shop screen too (product names, "ใส่เงินหมด" takes every note at once):
+// the store's product buttons (same products), the vending skins bg_vend_drink / bg_vend_snack.
+const SHOP_TEX = "textures/ui/succubi_shops/";
+const ALL_CASH = [1, 5, 10, 20, 50, 100, 500, 1000];
 export const MACHINES = {
-  "succubi:drink_vending_machine": { flag: "§0§9§8§4", title: "ตู้กดน้ำ", products: DRINKS, prefix: "drink" },
-  "succubi:snack_vending_machine": { flag: "§0§9§8§3", title: "ตู้ขนม", products: SNACKS, prefix: "snack" }
+  "succubi:drink_vending_machine": { flag: "§0§9§8§4", title: "ตู้กดน้ำ", products: DRINKS, prefix: "seven_drink", tex: SHOP_TEX, btnTex: SHOP_TEX, names: true, who: "ตู้กดน้ำ", slots: ALL_CASH },
+  "succubi:snack_vending_machine": { flag: "§0§9§8§3", title: "ตู้ขนม", products: SNACKS, prefix: "seven_snack", tex: SHOP_TEX, btnTex: SHOP_TEX, names: true, who: "ตู้ขนม", slots: ALL_CASH }
 };
 export const COIN_SLOTS = [1, 5, 10, 20, 50, 100]; // what the machine accepts, like a real one
 const CASH_ID = { 1: "succubi:coin_1", 5: "succubi:coin_5", 10: "succubi:coin_10", 20: "succubi:banknote_20", 50: "succubi:banknote_50", 100: "succubi:banknote_100", 500: "succubi:banknote_500", 1000: "succubi:banknote_1000" };

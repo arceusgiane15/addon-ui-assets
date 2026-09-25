@@ -246,19 +246,42 @@ test("Don't Starve sanity: night, darkness, campfire, flowers", () => {
   assert.equal(total, 20, "capped at 20 per 5 minutes");
 });
 
-test("shadows come below 15 % and melt away above 20 %", async () => {
+test("shadows: one per player, only the mad see them, hits counted, melt away above 20 %", async () => {
+  const shadowsMod = await import(BP + "succubi/shadows.js");
   store.setEnabled("shadows_real", true);
+  const friend = new mc.Player("Sane friend");
+  friend.location = { x: 3.5, y: 70, z: 0.5 };
+  mc.world.players.push(friend);
+  sanity.setSanity(friend, 100);
   player.gameMode = "survival";
   sanity.setSanity(player, 5);
-  await settle(20 * 25);
+  await settle(20 * 40);
   assert.ok(player.hasTag("succubi_insane"));
+  assert.ok(!friend.hasTag("succubi_insane"));
   const dim = player.dimension;
   const shadows = () => dim.spawned.filter((e) => e.alive && e.typeId === "succubi:shadow_creature");
-  assert.ok(shadows().length >= 1, "a shadow came");
+  assert.equal(shadows().length, 1, "exactly one shadow");
+  assert.ok(shadows()[0].effects.includes("invisibility"), "its body is invisible");
+  const drawn = new Set(player.particles.map(([id]) => id));
+  for (const id of ["succubi:shadow_body", "succubi:shadow_eye", "succubi:shadow_wisp", "succubi:shadow_gather"]) assert.ok(drawn.has(id), id);
+  assert.equal(friend.particles.length, 0, "the sane friend sees nothing");
+  // hits: 29 damage is not enough, the 30th point destroys it
+  const s = shadows()[0];
+  const fuelBefore = player.items.length;
+  const sanityBefore = sanity.getSanity(player);
+  shadowsMod.hitShadow({ hurtEntity: s, damage: 29, damageSource: { damagingEntity: player } });
+  assert.ok(s.alive);
+  assert.equal(s.getComponent("minecraft:health").currentValue, 1000, "real health kept full");
+  shadowsMod.hitShadow({ hurtEntity: s, damage: 5, damageSource: { damagingEntity: player } });
+  assert.ok(!s.alive, "destroyed");
+  assert.equal(player.items.length, fuelBefore + 1, "nightmare fuel in hand");
+  assert.ok(sanity.getSanity(player) >= sanityBefore + 14.9);
+  assert.equal(friend.particles.length, 0, "the burst was not shown to the sane friend either");
   sanity.setSanity(player, 25);
   await settle(40);
   assert.ok(!player.hasTag("succubi_insane"));
   assert.equal(shadows().length, 0);
+  mc.world.players.pop();
 });
 
 test("admin settings: height page, rules, preset, time speed", async () => {
@@ -288,4 +311,24 @@ test("admin settings: height page, rules, preset, time speed", async () => {
   assert.ok(Math.abs(daytime.timeRate() - 1 / 12) < 1e-9);
   store.resetNums(Object.keys(store.NUMS), store.HEIGHT_SWITCHES);
   player.gameMode = "survival";
+});
+
+test("vending machine: shop screen with product names, pays from credit", async () => {
+  const vending = await import(BP + "succubi/vending.js");
+  const machine = vending.MACHINES["succubi:drink_vending_machine"];
+  player.setDynamicProperty("succubi:vend_credit", 100);
+  player.items.length = 0;
+  ui.shown.length = 0;
+  ui.answers.push({ canceled: false, selection: 4 }, { canceled: true, cancelationReason: "UserClosed" }); // 2nd product
+  await vending.openMachine(player, machine);
+  const form = ui.shown[0];
+  const buttons = form.parts.filter((p) => p[0] === "button");
+  assert.match(form.parts[0][1], /ตู้กดน้ำ§0§9§8§4/);
+  assert.deepEqual(buttons.slice(0, 3).map((b) => b[2].split("/").pop()), ["btn_change", "btn_insert_all_off", "amt_close"]);
+  assert.match(buttons[3][1], /น้ำดื่ม/); // names, not just prices
+  assert.match(buttons[4][1], /เป๊ปซี่/);
+  assert.equal(buttons[4][2], "textures/ui/succubi_shops/p_seven_drink_pepsi");
+  assert.equal(player.items.at(0)?.typeId, "succubi:drink_pepsi", "bought");
+  // closing pays the change back
+  assert.equal(player.getDynamicProperty("succubi:vend_credit"), 0);
 });

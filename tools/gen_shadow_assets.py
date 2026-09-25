@@ -1,11 +1,11 @@
 """Shadow creature (below 15 % sanity) and nightmare fuel. Safe to run again.
 
-BP  entities/succubi_shadow_creature.json            hunts only players tagged succubi_insane (scripts/succubi/shadows.js)
-BP  loot_tables/entities/succubi_shadow_creature.json  1-2 nightmare fuel
-BP  items/extra/nightmare_fuel.json                    burns in a furnace like a small coal
-RP  entity/succubi_shadow_creature.entity.json          the shadow figure's model and texture, floating and swaying
-RP  animations/succubi_shadow_creature.animation.json
+BP  entities/succubi_shadow_creature.json    the invisible body: hunts only players tagged succubi_insane
+                                             (scripts/succubi/shadows.js draws it with particles for them only)
+BP  items/extra/nightmare_fuel.json          burns in a furnace like a small coal (the killer gets it in hand)
+RP  entity/succubi_shadow_creature.entity.json  renders nothing (controller.render.succubi_hidden)
 RP  textures/items/extra/nightmare_fuel.png + item_texture.json entry + th_TH / en_US names
+Particles and the hidden render controller: tools/gen_shadow_particles.py
 """
 import json
 import os
@@ -34,9 +34,11 @@ ENTITY = {
             "is_experimental": False,
         },
         "components": {
-            "minecraft:type_family": {"family": ["succubi_shadow", "monster", "mob"]},
+            # not "monster": sane players nearby must not lose sanity to it, golems must not fight thin air
+            "minecraft:type_family": {"family": ["succubi_shadow", "mob"]},
             "minecraft:collision_box": {"width": 0.6, "height": 1.9},
-            "minecraft:health": {"value": 30, "max": 30},
+            # lots of real health: the script counts the hits, so the game's death smoke never shows
+            "minecraft:health": {"value": 1000, "max": 1000},
             "minecraft:attack": {"damage": 5},
             "minecraft:movement": {"value": 0.27},
             "minecraft:movement.basic": {},
@@ -45,7 +47,7 @@ ENTITY = {
             "minecraft:jump.static": {},
             "minecraft:can_climb": {},
             "minecraft:physics": {},
-            "minecraft:pushable": {"is_pushable": True, "is_pushable_by_piston": True},
+            "minecraft:pushable": {"is_pushable": False, "is_pushable_by_piston": False},
             "minecraft:follow_range": {"value": 40, "max": 40},
             "minecraft:fire_immune": True,
             "minecraft:breathable": {"total_supply": 15, "suffocate_time": 0, "breathes_water": True},
@@ -54,8 +56,6 @@ ENTITY = {
                 {"cause": "suffocation", "deals_damage": False},
                 {"cause": "drowning", "deals_damage": False},
             ]},
-            "minecraft:loot": {"table": "loot_tables/entities/succubi_shadow_creature.json"},
-            "minecraft:experience_reward": {"on_death": "3"},
             "minecraft:nameable": {},
             "minecraft:conditional_bandwidth_optimization": {},
             # only players who lost their mind are prey; hits from anyone else are ignored (no hurt_by_target)
@@ -79,11 +79,6 @@ ENTITY = {
     },
 }
 
-LOOT = {"pools": [{"rolls": 1, "entries": [{
-    "type": "item", "name": "succubi:nightmare_fuel", "weight": 1,
-    "functions": [{"function": "set_count", "count": {"min": 1, "max": 2}}],
-}]}]}
-
 ITEM = {
     "format_version": "1.21.0",
     "minecraft:item": {
@@ -105,24 +100,7 @@ CLIENT = {
             "materials": {"default": "entity_alphatest"},
             "textures": {"default": "textures/entity/succubi_shops/shadow_figure"},
             "geometry": {"default": "geometry.succubi_shadow_figure"},
-            "animations": {"float": "animation.succubi.shadow_creature.float"},
-            "scripts": {"animate": ["float"]},
-            "render_controllers": ["controller.render.succubi_money"],
-        }
-    },
-}
-
-ANIMATION = {
-    "format_version": "1.8.0",
-    "animations": {
-        "animation.succubi.shadow_creature.float": {
-            "loop": True,
-            "bones": {
-                "root": {
-                    "position": [0, "1.2 + math.sin(query.life_time * 150) * 1.2", 0],
-                    "rotation": ["math.sin(query.life_time * 70) * 5", 0, "math.sin(query.life_time * 45) * 4"],
-                }
-            },
+            "render_controllers": ["controller.render.succubi_hidden"],
         }
     },
 }
@@ -176,10 +154,8 @@ def patch_lang(path, entries):
 
 def main():
     write_json(os.path.join(BP, "entities", "succubi_shadow_creature.json"), ENTITY)
-    write_json(os.path.join(BP, "loot_tables", "entities", "succubi_shadow_creature.json"), LOOT)
     write_json(os.path.join(BP, "items", "extra", "nightmare_fuel.json"), ITEM)
     write_json(os.path.join(RP, "entity", "succubi_shadow_creature.entity.json"), CLIENT)
-    write_json(os.path.join(RP, "animations", "succubi_shadow_creature.animation.json"), ANIMATION)
     fuel_texture().save(os.path.join(RP, "textures", "items", "extra", "nightmare_fuel.png"))
 
     tex_path = os.path.join(RP, "textures", "item_texture.json")

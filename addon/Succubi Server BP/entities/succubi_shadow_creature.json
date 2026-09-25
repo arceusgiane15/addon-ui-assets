@@ -11,7 +11,6 @@
       "minecraft:type_family": {
         "family": [
           "succubi_shadow",
-          "monster",
           "mob"
         ]
       },
@@ -20,8 +19,8 @@
         "height": 1.9
       },
       "minecraft:health": {
-        "value": 30,
-        "max": 30
+        "value": 1000,
+        "max": 1000
       },
       "minecraft:attack": {
         "damage": 5
@@ -39,8 +38,8 @@
       "minecraft:can_climb": {},
       "minecraft:physics": {},
       "minecraft:pushable": {
-        "is_pushable": true,
-        "is_pushable_by_piston": true
+        "is_pushable": false,
+        "is_pushable_by_piston": false
       },
       "minecraft:follow_range": {
         "value": 40,
@@ -67,12 +66,6 @@
             "deals_damage": false
           }
         ]
-      },
-      "minecraft:loot": {
-        "table": "loot_tables/entities/succubi_shadow_creature.json"
-      },
-      "minecraft:experience_reward": {
-        "on_death": "3"
       },
       "minecraft:nameable": {},
       "minecraft:conditional_bandwidth_optimization": {},

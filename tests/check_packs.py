@@ -62,7 +62,7 @@ for key in ("succubi.music.danger", "succubi.music.madness", "succubi.music.sile
         if not os.path.exists(os.path.join(RP, s["name"] + ".ogg")):
             problems.append(f"sound_definitions: {key} -> {s['name']}.ogg missing")
 
-# 6. shadow creature: client entity, geometry, animation, render controller, loot, item, names
+# 6. shadow creature: an invisible body (hidden render controller), drawn with particles for the mad only
 client = load(os.path.join(RP, "entity", "succubi_shadow_creature.entity.json"))["minecraft:client_entity"]["description"]
 geos = set()
 for path in glob.glob(os.path.join(RP, "models", "**", "*.json"), recursive=True):
@@ -70,36 +70,54 @@ for path in glob.glob(os.path.join(RP, "models", "**", "*.json"), recursive=True
         geos.add(g["description"]["identifier"])
 if client["geometry"]["default"] not in geos:
     problems.append("shadow creature: geometry missing")
-anims = {}
-for path in glob.glob(os.path.join(RP, "animations", "**", "*.json"), recursive=True):
-    anims.update(load(path).get("animations", {}))
-for a in client["animations"].values():
-    if a not in anims:
-        problems.append(f"shadow creature: animation {a} missing")
 rcs = {}
 for path in glob.glob(os.path.join(RP, "render_controllers", "**", "*.json"), recursive=True):
     rcs.update(load(path).get("render_controllers", {}))
 for rc in client["render_controllers"]:
     if rc not in rcs:
         problems.append(f"shadow creature: render controller {rc} missing")
-if not texture_exists(client["textures"]["default"]):
-    problems.append("shadow creature: texture missing")
-entity = load(os.path.join(BP, "entities", "succubi_shadow_creature.json"))
-loot = entity["minecraft:entity"]["components"]["minecraft:loot"]["table"]
-if not os.path.exists(os.path.join(BP, loot)):
-    problems.append(f"shadow creature: loot table {loot} missing")
+    elif rcs[rc].get("part_visibility") != [{"*": False}]:
+        problems.append(f"shadow creature: {rc} does not hide the model")
+particles = {}
+for path in glob.glob(os.path.join(RP, "particles", "**", "*.json"), recursive=True):
+    pe = load(path)["particle_effect"]
+    particles[pe["description"]["identifier"]] = pe
+shadow_js = open(os.path.join(BP, "scripts", "succubi", "shadows.js"), encoding="utf-8").read()
+for pid in sorted(set(re.findall(r'"(succubi:shadow_[a-z]+)"', shadow_js)) - {"succubi:shadow_owner", "succubi:shadow_hp",
+                                                                           "succubi:shadow_creature"}):
+    if pid not in particles:
+        problems.append(f"shadows.js: particle {pid} missing")
+    elif not texture_exists(particles[pid]["description"]["basic_render_parameters"]["texture"]):
+        problems.append(f"particle {pid}: texture missing")
+entity = load(os.path.join(BP, "entities", "succubi_shadow_creature.json"))["minecraft:entity"]["components"]
+if "monster" in entity["minecraft:type_family"]["family"] or "minecraft:loot" in entity:
+    problems.append("shadow creature: must not be a monster or drop loot (the sane would notice)")
 items = {load(p)["minecraft:item"]["description"]["identifier"]
          for p in glob.glob(os.path.join(BP, "items", "**", "*.json"), recursive=True)
          if "minecraft:item" in load(p)}
-for pool in load(os.path.join(BP, loot))["pools"]:
-    for entry in pool["entries"]:
-        if entry["name"] not in items:
-            problems.append(f"loot: {entry['name']} is not an item of this pack")
+if "succubi:nightmare_fuel" not in items:
+    problems.append("nightmare fuel item missing")
 for lang in ("th_TH.lang", "en_US.lang"):
     text = open(os.path.join(RP, "texts", lang), encoding="utf-8").read()
     for key in ("item.succubi:nightmare_fuel.name", "entity.succubi:shadow_creature.name"):
         if key + "=" not in text:
             problems.append(f"{lang}: {key} missing")
+
+# 6b. vending machines use the shop screen: panels, skins and product buttons exist
+shops_ui = load(os.path.join(RP, "ui", "succubi_shops.json"))
+for kind in ("drink", "snack"):
+    if f"vend_{kind}_panel" not in shops_ui:
+        problems.append(f"succubi_shops.json: vend_{kind}_panel missing")
+    if not texture_exists(f"textures/ui/succubi_shops/bg_vend_{kind}"):
+        problems.append(f"bg_vend_{kind} missing")
+form = open(os.path.join(RP, "ui", "server_form.json"), encoding="utf-8").read()
+if "succubi_shops.vend_drink_panel" not in form or "succubi_shops.vend_snack_panel" not in form:
+    problems.append("server_form.json does not open the vending panels")
+for path in glob.glob(os.path.join(BP, "entities", "kiosk", "*.json")) + [
+        os.path.join(BP, "entities", "succubi_shops", n + ".json") for n in
+        ("amulet_stall", "book_stall", "pharmacy_stall", "store_drink_fridge", "store_hot_counter", "store_snack_shelf")]:
+    if "minecraft:is_collidable" not in load(path)["minecraft:entity"]["components"]:
+        problems.append(f"{os.path.basename(path)}: not solid (is_collidable)")
 
 # 7. manifests agree on versions of the packs they depend on
 manifests = {}

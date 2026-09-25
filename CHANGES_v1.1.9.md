@@ -1,6 +1,6 @@
 # Succubi Server v1.1.9
 
-ไฟล์ติดตั้ง: `dist/Succubi_Server_v1.1.9.mcaddon` (ซอร์สอยู่ใน `addon/`)
+ไฟล์ติดตั้งล่าสุด: ดู `CHANGES_v1.1.10.md` (ซอร์สอยู่ใน `addon/`)
 
 ## สิ่งที่เปลี่ยน
 

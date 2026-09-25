@@ -2760,5 +2760,285 @@
         }
       }
     ]
+  },
+  "vend_drink_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_vend_drink",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lตู้กดน้ำ",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.6,
+            1,
+            0.65
+          ],
+          "localize": false,
+          "shadow": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.seven_drink_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "vend_snack_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_vend_snack",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lตู้ขนม",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.6,
+            1,
+            0.65
+          ],
+          "localize": false,
+          "shadow": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.seven_drink_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
 }

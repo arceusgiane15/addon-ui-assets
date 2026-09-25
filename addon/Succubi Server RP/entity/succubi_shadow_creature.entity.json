@@ -12,16 +12,8 @@
       "geometry": {
         "default": "geometry.succubi_shadow_figure"
       },
-      "animations": {
-        "float": "animation.succubi.shadow_creature.float"
-      },
-      "scripts": {
-        "animate": [
-          "float"
-        ]
-      },
       "render_controllers": [
-        "controller.render.succubi_money"
+        "controller.render.succubi_hidden"
       ]
     }
   }

@@ -64,7 +64,7 @@
         }
       },
       {
-        "succubi_drink@succubi_vending.drink_panel": {
+        "succubi_drink@succubi_shops.vend_drink_panel": {
           "bindings": [
             {
               "binding_name": "#title_text"
@@ -78,7 +78,7 @@
         }
       },
       {
-        "succubi_snack@succubi_vending.snack_panel": {
+        "succubi_snack@succubi_shops.vend_snack_panel": {
           "bindings": [
             {
               "binding_name": "#title_text"
