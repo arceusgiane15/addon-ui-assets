@@ -379,6 +379,9 @@
     },
     "succubi_book_custom": {
       "textures": "textures/items/extra/book_custom"
+    },
+    "succubi_nightmare_fuel": {
+      "textures": "textures/items/extra/nightmare_fuel"
     }
   }
 }

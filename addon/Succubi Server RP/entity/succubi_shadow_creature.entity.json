@@ -1,0 +1,28 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "succubi:shadow_creature",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/succubi_shops/shadow_figure"
+      },
+      "geometry": {
+        "default": "geometry.succubi_shadow_figure"
+      },
+      "animations": {
+        "float": "animation.succubi.shadow_creature.float"
+      },
+      "scripts": {
+        "animate": [
+          "float"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ]
+    }
+  }
+}

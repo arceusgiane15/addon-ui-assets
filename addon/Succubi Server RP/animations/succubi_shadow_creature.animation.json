@@ -1,0 +1,22 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.succubi.shadow_creature.float": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "position": [
+            0,
+            "1.2 + math.sin(query.life_time * 150) * 1.2",
+            0
+          ],
+          "rotation": [
+            "math.sin(query.life_time * 70) * 5",
+            0,
+            "math.sin(query.life_time * 45) * 4"
+          ]
+        }
+      }
+    }
+  }
+}

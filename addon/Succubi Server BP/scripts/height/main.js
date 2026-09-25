@@ -1,10 +1,12 @@
 import { world, system, EquipmentSlot } from "@minecraft/server";
 import { CONFIG } from "./config.js";
 import { applyHeight, getHeightCm, forget, markFight, enforceLimits, bodyStats } from "./height.js";
-import { onSettingChange } from "../succubi/settings_store.js";
-import { openHeightForm } from "./ui.js";
+import { heightPoints } from "./body.js";
+import { onSettingChange, isHeightSetting, num } from "../succubi/settings_store.js";
+import { onAdjusterUse, initTiltMode } from "./ui.js";
 
 const GUN_NAMESPACES = ["trenbankai:", "c7afd424"];
+const HIT_CAUSES = ["entityAttack", "projectile"];
 
 function holdsGun(player) {
   try {
@@ -15,15 +17,31 @@ function holdsGun(player) {
   }
 }
 
-// Melee hits follow the hitter's height: short players hit lighter, tall players harder (no potion effects).
-// The game has already applied the normal damage; the difference is taken from / given back to the victim.
-// Guns and arrows keep their own damage.
-export function scaleHit(event) {
+// How much of this hit the height rules change (1 = as the game dealt it):
+//  - the hitter's melee strength (short players hit lighter, tall players harder; guns and arrows keep theirs)
+//  - the victim's damage taken from hits, and fall damage
+export function hitFactor(event) {
   const src = event.damageSource;
+  const cause = src?.cause;
+  let factor = 1;
   const hitter = src?.damagingEntity;
-  if (!hitter || hitter.typeId !== "minecraft:player" || src.cause !== "entityAttack" || src.damagingProjectile) return;
-  if (!(event.damage > 0) || holdsGun(hitter)) return;
-  const factor = bodyStats(getHeightCm(hitter)).damage;
+  if (hitter?.typeId === "minecraft:player" && cause === "entityAttack" && !src.damagingProjectile && !holdsGun(hitter)) {
+    factor *= bodyStats(getHeightCm(hitter)).damage;
+  }
+  const victim = event.hurtEntity;
+  if (victim?.typeId === "minecraft:player") {
+    const st = bodyStats(getHeightCm(victim));
+    if (cause === "fall") factor *= st.fall;
+    else if (HIT_CAUSES.includes(cause)) factor *= st.hurt;
+  }
+  return factor;
+}
+
+// The game has already applied the normal damage; the difference is taken from / given back to the victim
+// (no potion effects). A hit the game already made lethal cannot be undone.
+export function scaleHit(event) {
+  if (!(event.damage > 0)) return;
+  const factor = hitFactor(event);
   if (Math.abs(factor - 1) < 0.005) return;
   const victim = event.hurtEntity;
   try {
@@ -48,9 +66,7 @@ export function initHeightSystem() {
     const player = event.source;
     const item = event.itemStack;
     if (!player || !item || item.typeId !== CONFIG.itemId) return;
-    system.run(() => {
-      openHeightForm(player).catch(() => {});
-    });
+    system.run(() => onAdjusterUse(player));
   });
 
   world.afterEvents.playerSpawn.subscribe((event) => {
@@ -60,7 +76,7 @@ export function initHeightSystem() {
     system.runTimeout(() => {
       try {
         enforceLimits(player);
-        applyHeight(player, true);
+        applyHeight(player, true, false, true);
       } catch (e) {}
     }, 10);
   });
@@ -80,7 +96,7 @@ export function initHeightSystem() {
     world.afterEvents.playerDimensionChange.subscribe((event) => {
       const player = event.player;
       if (!player) return;
-      forget(player.id, true);
+      forget(player.id, true, true);
       system.runTimeout(() => {
         try {
           applyHeight(player, true);
@@ -97,18 +113,22 @@ export function initHeightSystem() {
     }
   }, CONFIG.reapplyIntervalTicks);
 
-  // base HP or the height switches changed in the settings: everyone's HP and speed follow at once
+  // height settings changed: everyone's HP, speed and hunger follow at once, heights outside a new range are pulled in
   onSettingChange((name) => {
-    if (!["hp_base", "height_hp", "height_speed", "height_damage", "*"].includes(name)) return;
+    if (!isHeightSetting(name)) return;
     for (const player of world.getAllPlayers()) {
       try {
+        enforceLimits(player);
         applyHeight(player, true);
       } catch (e) {}
     }
   });
 
+  initTiltMode();
+
+  const { lo, std, hi } = heightPoints();
   console.warn(
-    `[Kotarus Height + HP System] players ${CONFIG.playerMinCm}-${CONFIG.playerMaxCm} cm (admins ${CONFIG.minCm}-${CONFIG.maxCm}), ` +
-      `change every ${CONFIG.cooldownSeconds}s, height sets HP (half to double the base), speed and melee strength`
+    `[Kotarus Height + HP System] players ${lo}-${hi} cm (standard ${std}, admins ${CONFIG.minCm}-${CONFIG.maxCm}), ` +
+      `change every ${num("h_cooldown")} min; height sets HP, speed, strength, fall damage, hunger and damage taken`
   );
 }

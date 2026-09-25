@@ -199,3 +199,5 @@ action.interact.succubi_use=ใช้
 action.interact.succubi_pickup=เก็บ (แอดมิน)
 itemGroup.name.succubi:tools=เครื่องมือ
 item.succubi:book_custom.name=สมุดเขียนเอง
+item.succubi:nightmare_fuel.name=เชื้อเพลิงฝันร้าย
+entity.succubi:shadow_creature.name=เงาจากความคลั่ง

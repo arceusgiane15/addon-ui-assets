@@ -199,3 +199,5 @@ action.interact.succubi_use=Use
 action.interact.succubi_pickup=Pick up (admin)
 itemGroup.name.succubi:tools=Tools
 item.succubi:book_custom.name=Writable Book
+item.succubi:nightmare_fuel.name=Nightmare Fuel
+entity.succubi:shadow_creature.name=Shadow of Madness

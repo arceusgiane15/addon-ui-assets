@@ -1,6 +1,8 @@
 import { world, system } from "@minecraft/server";
 import { PRODUCT_BY_ID } from "./products.js";
 import { enabled, num } from "./settings_store.js";
+import { getHeightCm } from "../height/height.js";
+import { hungerPercent } from "../height/body.js";
 
 // Max water and how fast it drains are base stats (settings item -> สเตตัสพื้นฐาน -> น้ำ)
 export const THIRST_MAX = 20; // the default max
@@ -66,6 +68,7 @@ export function tickThirst(player, second) {
   const before = getThirst(player);
   const max = thirstMax();
   let drain = 1 / num("thirst_seconds");
+  drain *= hungerPercent(getHeightCm(player)) / 100; // tall bodies dry out faster (settings: ส่วนสูง -> หิวและน้ำ)
   if (player.isSprinting) drain *= SPRINT_MULTIPLIER;
   if (player.dimension.id === "minecraft:nether") drain *= NETHER_MULTIPLIER;
   const now = setThirst(player, before - drain);

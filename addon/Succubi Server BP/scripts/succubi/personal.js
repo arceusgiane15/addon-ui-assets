@@ -30,6 +30,8 @@ export async function openPersonal(player, note = "") {
   form.button(`§lเอฟเฟกต์จอ: ${noFx ? "§cปิด" : "§aเปิด"}\n§7ขอบจอแดงตอนเลือดน้อย · จอเทาตอนสติต่ำ`, `${UI}screen_fx`);
   const noSfx = player.hasTag("no_pressure_sfx");
   form.button(`§lเสียงกดดัน: ${noSfx ? "§cปิด" : "§aเปิด"}\n§7หัวใจเต้น ท้องร้อง หอบ กระซิบ`, `${UI}sound`);
+  const noMusic = player.hasTag("no_tension_music");
+  form.button(`§lเพลงตึงเครียด: ${noMusic ? "§cปิด" : "§aเปิด"}\n§7เลือดต่ำ/สติต่ำ ใช้เพลงแพ็คแทนเพลงเกม`, `${UI}sound`);
   form.button(
     `§lปรับส่วนสูง · ${getHeightCm(player)} ซม.\n§7${lock.seconds ? `เปลี่ยนได้อีกใน ${Math.ceil(lock.seconds / 60)} นาที` : "ส่วนสูงมีผลกับเลือด ความเร็ว แรงตี"}`,
     `${UI}height`
@@ -57,8 +59,13 @@ export async function openPersonal(player, note = "") {
     else player.addTag("no_pressure_sfx");
     return openPersonal(player, noSfx ? "§aเปิดเสียงกดดันแล้ว" : "§eปิดเสียงกดดันแล้ว");
   }
-  if (sel === 3) return openHeightForm(player);
-  if (guns && sel === 4) return openGunGuide(player);
+  if (sel === 3) {
+    if (noMusic) player.removeTag("no_tension_music");
+    else player.addTag("no_tension_music");
+    return openPersonal(player, noMusic ? "§aเปิดเพลงตึงเครียดแล้ว" : "§eปิดเพลงตึงเครียดแล้ว (เพลงเกมเล่นตามปกติ)");
+  }
+  if (sel === 4) return openHeightForm(player);
+  if (guns && sel === 5) return openGunGuide(player);
   return openWallet(player);
 }
 

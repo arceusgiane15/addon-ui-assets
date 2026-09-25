@@ -2,17 +2,14 @@
 export const CONFIG = {
   itemId: "kotarus:height_adjuster",
 
-  // Steve is 1.8 blocks tall = 180 cm (Scale 1.0)
+  // Steve is 1.8 blocks tall = 180 cm (Scale 1.0). Body size always follows cm / 180; the standard height for
+  // stats (normal HP / speed / strength) is a setting (h_std) and can differ.
   baseCm: 180,
   // Full range: admins, or everyone when the admin switch "ส่วนสูงอิสระ" is on
   minCm: 1,
   maxCm: 500,
-  // Normal players: a believable range, so nobody hides in a 10 cm hitbox or tanks with 200 HP
-  playerMinCm: 140,
-  playerMaxCm: 220,
-  // Normal players: one change every 5 minutes, and never within 15 s of a fight
-  cooldownSeconds: 300,
-  combatLockSeconds: 15,
+  // Normal players: the range (h_min - h_max), the minutes between changes (h_cooldown) and the lock after a
+  // fight (h_fight_lock) are settings (settings item -> สเตตัสพื้นฐาน -> ส่วนสูง)
 
   // Collision box stepping
   hitboxStepCm: 10,
@@ -23,10 +20,7 @@ export const CONFIG = {
   propNextChange: "kotarus:height_next", // Date.now() ms when the next change is allowed
 
   reapplyIntervalTicks: 40,
-  heightTagPrefix: "kotarus:height_",
+  heightTagPrefix: "kotarus:height_"
 
-  // HP, speed and hit strength come from body.js (generated from tools/v20/common.py BODY) and the settings item
-  // (base HP, and switches for each effect):
-  // 140 cm = 50 HP, runs 15 % faster, hits 23 % lighter / 180 cm = 100 HP / 220 cm = 200 HP, 13 % slower, hits 30 % harder
-  baseHp: 100
+  // HP, speed, strength, fall damage, hunger and damage taken come from body.js (three points set in the settings)
 };

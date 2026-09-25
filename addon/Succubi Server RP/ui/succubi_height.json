@@ -2229,10 +2229,10 @@
             48
           ],
           "grid_dimensions": [
-            4,
+            2,
             2
           ],
-          "grid_item_template": "succubi_height.cell",
+          "grid_item_template": "succubi_height.wcell",
           "collection_name": "form_buttons",
           "layer": 5
         }
@@ -2454,8 +2454,7 @@
             -6,
             3
           ],
-          "layer": 8,
-          "$pressed_button_name": "button.submit_custom_form"
+          "layer": 8
         }
       },
       {
@@ -4602,7 +4601,7 @@
           ],
           "size": [
             140,
-            136
+            112
           ],
           "layer": 5,
           "controls": [
@@ -4610,6 +4609,512 @@
               "generated@server_form.generated_contents": {}
             }
           ]
+        }
+      },
+      {
+        "confirm@common.button": {
+          "size": [
+            70,
+            21
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            128,
+            150
+          ],
+          "layer": 8,
+          "$pressed_button_name": "button.submit_custom_form",
+          "controls": [
+            {
+              "default": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "controls": [
+                  {
+                    "art": {
+                      "type": "image",
+                      "texture": "textures/ui/succubi_height/wbtn_confirm",
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "label": {
+                      "type": "label",
+                      "text": "ยืนยัน",
+                      "color": [
+                        1,
+                        1,
+                        1
+                      ],
+                      "shadow": true,
+                      "localize": false,
+                      "layer": 3,
+                      "anchor_from": "center",
+                      "anchor_to": "center",
+                      "offset": [
+                        7,
+                        -1
+                      ],
+                      "font_type": "smooth"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "hover": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "controls": [
+                  {
+                    "art": {
+                      "type": "image",
+                      "texture": "textures/ui/succubi_height/wbtn_confirm",
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "label": {
+                      "type": "label",
+                      "text": "ยืนยัน",
+                      "color": [
+                        1,
+                        1,
+                        1
+                      ],
+                      "shadow": true,
+                      "localize": false,
+                      "layer": 3,
+                      "anchor_from": "center",
+                      "anchor_to": "center",
+                      "offset": [
+                        7,
+                        -1
+                      ],
+                      "font_type": "smooth"
+                    }
+                  },
+                  {
+                    "overlay": {
+                      "type": "image",
+                      "texture": "textures/ui/succubi_height/wbtn_hover",
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
+                      "layer": 2
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "pressed": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "offset": [
+                  0,
+                  1
+                ],
+                "controls": [
+                  {
+                    "art": {
+                      "type": "image",
+                      "texture": "textures/ui/succubi_height/wbtn_confirm",
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "label": {
+                      "type": "label",
+                      "text": "ยืนยัน",
+                      "color": [
+                        1,
+                        1,
+                        1
+                      ],
+                      "shadow": true,
+                      "localize": false,
+                      "layer": 3,
+                      "anchor_from": "center",
+                      "anchor_to": "center",
+                      "offset": [
+                        7,
+                        -1
+                      ],
+                      "font_type": "smooth"
+                    }
+                  },
+                  {
+                    "overlay": {
+                      "type": "image",
+                      "texture": "textures/ui/succubi_height/wbtn_pressed",
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
+                      "layer": 2
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "cancel@common.button": {
+          "size": [
+            70,
+            21
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            202,
+            150
+          ],
+          "layer": 8,
+          "$pressed_button_name": "button.menu_exit",
+          "controls": [
+            {
+              "default": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "controls": [
+                  {
+                    "art": {
+                      "type": "image",
+                      "texture": "textures/ui/succubi_height/wbtn_cancel",
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "label": {
+                      "type": "label",
+                      "text": "ยกเลิก",
+                      "color": [
+                        1,
+                        1,
+                        1
+                      ],
+                      "shadow": true,
+                      "localize": false,
+                      "layer": 3,
+                      "anchor_from": "center",
+                      "anchor_to": "center",
+                      "offset": [
+                        7,
+                        -1
+                      ],
+                      "font_type": "smooth"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "hover": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "controls": [
+                  {
+                    "art": {
+                      "type": "image",
+                      "texture": "textures/ui/succubi_height/wbtn_cancel",
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "label": {
+                      "type": "label",
+                      "text": "ยกเลิก",
+                      "color": [
+                        1,
+                        1,
+                        1
+                      ],
+                      "shadow": true,
+                      "localize": false,
+                      "layer": 3,
+                      "anchor_from": "center",
+                      "anchor_to": "center",
+                      "offset": [
+                        7,
+                        -1
+                      ],
+                      "font_type": "smooth"
+                    }
+                  },
+                  {
+                    "overlay": {
+                      "type": "image",
+                      "texture": "textures/ui/succubi_height/wbtn_hover",
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
+                      "layer": 2
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "pressed": {
+                "type": "panel",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "offset": [
+                  0,
+                  1
+                ],
+                "controls": [
+                  {
+                    "art": {
+                      "type": "image",
+                      "texture": "textures/ui/succubi_height/wbtn_cancel",
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "label": {
+                      "type": "label",
+                      "text": "ยกเลิก",
+                      "color": [
+                        1,
+                        1,
+                        1
+                      ],
+                      "shadow": true,
+                      "localize": false,
+                      "layer": 3,
+                      "anchor_from": "center",
+                      "anchor_to": "center",
+                      "offset": [
+                        7,
+                        -1
+                      ],
+                      "font_type": "smooth"
+                    }
+                  },
+                  {
+                    "overlay": {
+                      "type": "image",
+                      "texture": "textures/ui/succubi_height/wbtn_pressed",
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
+                      "layer": 2
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "wcell": {
+    "type": "panel",
+    "size": [
+      76,
+      24
+    ],
+    "controls": [
+      {
+        "button@common.button": {
+          "size": [
+            74,
+            22
+          ],
+          "$pressed_button_name": "button.form_button_click",
+          "bindings": [
+            {
+              "binding_type": "collection_details",
+              "binding_collection_name": "form_buttons"
+            }
+          ],
+          "controls": [
+            {
+              "default@succubi_height.wb_default": {}
+            },
+            {
+              "hover@succubi_height.wb_hover": {}
+            },
+            {
+              "pressed@succubi_height.wb_pressed": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "wb_label": {
+    "type": "label",
+    "text": "#form_button_text",
+    "color": [
+      1,
+      1,
+      1
+    ],
+    "shadow": true,
+    "localize": false,
+    "layer": 3,
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "offset": [
+      8,
+      -1
+    ],
+    "size": [
+      "default",
+      10
+    ],
+    "bindings": [
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "font_type": "smooth"
+  },
+  "wb_default": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_height.hb_art": {}
+      },
+      {
+        "label@succubi_height.wb_label": {}
+      }
+    ]
+  },
+  "wb_hover": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_height.hb_art": {}
+      },
+      {
+        "label@succubi_height.wb_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/wbtn_hover",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "wb_pressed": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      1
+    ],
+    "controls": [
+      {
+        "art@succubi_height.hb_art": {}
+      },
+      {
+        "label@succubi_height.wb_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/wbtn_pressed",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
         }
       }
     ]

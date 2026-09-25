@@ -1,0 +1,120 @@
+{
+  "format_version": "1.20.50",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "succubi:shadow_creature",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "succubi_shadow",
+          "monster",
+          "mob"
+        ]
+      },
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.9
+      },
+      "minecraft:health": {
+        "value": 30,
+        "max": 30
+      },
+      "minecraft:attack": {
+        "damage": 5
+      },
+      "minecraft:movement": {
+        "value": 0.27
+      },
+      "minecraft:movement.basic": {},
+      "minecraft:navigation.walk": {
+        "can_path_over_water": true,
+        "avoid_damage_blocks": true,
+        "can_open_doors": false
+      },
+      "minecraft:jump.static": {},
+      "minecraft:can_climb": {},
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:follow_range": {
+        "value": 40,
+        "max": 40
+      },
+      "minecraft:fire_immune": true,
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": 0,
+        "breathes_water": true
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "fall",
+            "deals_damage": false
+          },
+          {
+            "cause": "suffocation",
+            "deals_damage": false
+          },
+          {
+            "cause": "drowning",
+            "deals_damage": false
+          }
+        ]
+      },
+      "minecraft:loot": {
+        "table": "loot_tables/entities/succubi_shadow_creature.json"
+      },
+      "minecraft:experience_reward": {
+        "on_death": "3"
+      },
+      "minecraft:nameable": {},
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:behavior.nearest_attackable_target": {
+        "priority": 1,
+        "must_see": false,
+        "reselect_targets": true,
+        "within_radius": 40,
+        "entity_types": [
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "is_family",
+                  "subject": "other",
+                  "value": "player"
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "other",
+                  "value": "succubi_insane"
+                }
+              ]
+            },
+            "max_dist": 40
+          }
+        ]
+      },
+      "minecraft:behavior.melee_attack": {
+        "priority": 2,
+        "speed_multiplier": 1.15,
+        "track_target": true
+      },
+      "minecraft:behavior.random_stroll": {
+        "priority": 6,
+        "speed_multiplier": 0.7
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 7,
+        "look_distance": 12,
+        "probability": 0.05
+      }
+    }
+  }
+}

@@ -3,6 +3,8 @@ import { getThirst, thirstMax } from "./thirst.js";
 import { getSanity, SANITY_MAX } from "./sanity.js";
 import { enabled } from "./settings_store.js";
 import { ARMOR_POINTS } from "./armor_values.js";
+import { shownHp } from "../height/height.js";
+import { clockTokens } from "./daytime.js";
 
 // The HUD is drawn by RP ui/succubi_hud.json (four round gauges). Its data travels in the title, which the RP
 // never displays and keeps (preserves) after the title fades, so a value is only sent when it changes:
@@ -19,8 +21,11 @@ import { ARMOR_POINTS } from "./armor_values.js";
 //   Vxn = icon stage n (4 full .. 0 almost gone): cracked heart, eaten drumstick, drying drop, warping brain
 //   Er regeneration sparkles, Ea absorption halo, Ef burning, Qh hunger effect
 //   Wn = the admins turned the gauge numbers off (settings item -> สถานะและ HUD)
-//   whole screen (RP): sanity below 70 % lays a grey filter over the screen step by step; health at 75 % and
+//   whole screen (RP): sanity below 65 % lays a grey filter over the screen step by step; health at 75 % and
 //   below keeps the edges red, deeper at every step (from H); Nx = this player turned the screen effects off
+//   Rg1..Rg4 = TV static tier from sanity (below 70 / 50 / 30 / 15 %)
+//   Jxn = Don't Starve arrows over gauge x: n 1-3 = rising (that many arrows), 4-6 = falling (n - 3 arrows)
+//   Rk.. Rn.. R5..R8.. = the day clock and the day number (see daytime.js)
 //   "shud:off" hides the HUD (tag hide_hud, creative, spectator)
 // Map makers who show their own /title can pause the HUD: /scriptevent succubi:hud_pause 10
 const MARKER = "shud:";
@@ -31,6 +36,7 @@ const SAFETY_RESEND_TICKS = 1200; // once a minute, in case the client rebuilt i
 const pad2 = (n) => String(n).padStart(2, "0");
 
 const lastSent = new Map(); // player id -> { payload, tick }
+const rateMemory = new Map(); // player id -> { last: {h, f, t, s}, samples: {h: [[tick, change]...], ...} }
 const pausedUntil = new Map(); // player id (or "*") -> tick
 
 export function toSteps(value, max) {
@@ -139,6 +145,65 @@ function flashes(player, values, hpStep, tick) {
   return s;
 }
 
+// ---------------------------------------------------------------- Don't Starve rate arrows
+// Changes are measured as a share of the gauge's max. A single step bigger than "jump" is a meal, a drink or a
+// hit (the flashes above show those), not a rate. The rest is summed over "window" seconds and turned into
+// % of max per minute; steps = how fast for 1 / 2 / 3 arrows. Thirst always drains a little (7.5 %/min by
+// default), so its first arrow starts above that.
+export const RATE = {
+  h: { window: 4, jump: 0.025, steps: [3, 12, 40] },
+  f: { window: 60, jump: 0.11, steps: [6, 20, 50] },
+  t: { window: 6, jump: 0.04, steps: [12, 25, 50] },
+  s: { window: 5, jump: 0.02, steps: [1.5, 10, 30] }
+};
+
+// samples: [[tick, change]] -> 0 (steady), 1-3 rising, 4-6 falling
+export function rateCode(samples, now, cfg) {
+  let sum = 0;
+  for (const [t, d] of samples) if (now - t <= cfg.window * 20) sum += d;
+  const perMinute = (sum * 100 * 60) / cfg.window;
+  const size = Math.abs(perMinute);
+  const level = size >= cfg.steps[2] ? 3 : size >= cfg.steps[1] ? 2 : size >= cfg.steps[0] ? 1 : 0;
+  if (!level) return 0;
+  return perMinute > 0 ? level : level + 3;
+}
+
+function rateTokens(player, shares, tick) {
+  let m = rateMemory.get(player.id);
+  if (!m) {
+    m = { last: { ...shares }, samples: { h: [], f: [], t: [], s: [] } };
+    rateMemory.set(player.id, m);
+  }
+  let out = "";
+  for (const k of Object.keys(RATE)) {
+    const now = shares[k];
+    const list = m.samples[k];
+    if (typeof now !== "number" || !isFinite(now)) {
+      list.length = 0;
+      continue;
+    }
+    const before = m.last[k];
+    m.last[k] = now;
+    if (typeof before === "number" && isFinite(before)) {
+      const d = now - before;
+      if (d !== 0 && Math.abs(d) < RATE[k].jump) list.push([tick, d]);
+    }
+    while (list.length && tick - list[0][0] > RATE[k].window * 20) list.shift();
+    const code = rateCode(list, tick, RATE[k]);
+    if (code) out += `J${k}${code}`;
+  }
+  return out;
+}
+
+// TV static tier from sanity in % (0 = clean screen)
+export function staticTier(sanityPercent) {
+  if (sanityPercent < 15) return 4;
+  if (sanityPercent < 30) return 3;
+  if (sanityPercent < 50) return 2;
+  if (sanityPercent < 70) return 1;
+  return 0;
+}
+
 // the faint number under a gauge: O M K = hundreds, tens, ones of the value in %
 export function percentDigits(letter, value, max) {
   const p = max > 0 && value > 0 ? Math.max(0, Math.min(100, Math.round((value / max) * 100))) : 0;
@@ -153,7 +218,7 @@ export function stage(ratio) {
 
 export function buildPayload(player, tick = system.currentTick) {
   const maxHp = getMaxHp(player);
-  const hp = capHealth(player, maxHp);
+  const hp = shownHp(player, capHealth(player, maxHp));
   const hpNum = Math.max(0, Math.min(999, Math.ceil(hp)));
   const food = readFood(player);
   const thirstOn = enabled("thirst");
@@ -185,6 +250,19 @@ export function buildPayload(player, tick = system.currentTick) {
   s += flashes(player, { h: hp, hmax: maxHp, f: food, t: thirstRaw, s: sanityRaw }, hpStep, tick);
   if (player.hasTag("no_screen_fx")) s += "Nx";
   if (!enabled("hud_numbers")) s += "Wn"; // player turned the red aura / grey screen off
+  if (sanityOn) {
+    const tier = staticTier((sanityRaw / SANITY_MAX) * 100);
+    if (tier) s += `Rg${tier}`;
+  }
+  if (enabled("hud_arrows")) {
+    s += rateTokens(player, {
+      h: maxHp > 0 ? hp / maxHp : undefined,
+      f: food / 20,
+      t: thirstOn ? thirstRaw / thirstMax() : undefined,
+      s: sanityOn ? sanityRaw / SANITY_MAX : undefined
+    }, tick);
+  }
+  s += clockTokens();
   s += effectTokens(player);
   return s;
 }
@@ -232,8 +310,10 @@ export function initHud() {
     lastSent.delete(event.playerId);
     pausedUntil.delete(event.playerId);
     memory.delete(event.playerId);
+    rateMemory.delete(event.playerId);
   });
   world.afterEvents.playerSpawn.subscribe((event) => {
+    if (event.player) rateMemory.delete(event.player.id); // a respawn is not a rate
     if (event.player) system.runTimeout(() => refreshHud(event.player), 20);
   });
   try {

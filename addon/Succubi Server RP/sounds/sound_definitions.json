@@ -119,6 +119,36 @@
           "volume": 1.0
         }
       ]
+    },
+    "succubi.music.danger": {
+      "category": "music",
+      "sounds": [
+        {
+          "name": "sounds/music/succubi_danger",
+          "stream": true,
+          "volume": 0.8
+        }
+      ]
+    },
+    "succubi.music.madness": {
+      "category": "music",
+      "sounds": [
+        {
+          "name": "sounds/music/succubi_madness",
+          "stream": true,
+          "volume": 0.75
+        }
+      ]
+    },
+    "succubi.music.silence": {
+      "category": "music",
+      "sounds": [
+        {
+          "name": "sounds/music/succubi_silence",
+          "stream": true,
+          "volume": 1.0
+        }
+      ]
     }
   }
 }

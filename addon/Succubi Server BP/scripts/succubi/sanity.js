@@ -3,12 +3,15 @@ import { runAs } from "./cmd.js";
 import { SANITY_BY_ID, TEDDY_ID } from "./sanity_values.js";
 import { enabled, num } from "./settings_store.js";
 import { HOOKS, product, anyTrue } from "./hooks.js";
+import { worldSanity, flowerSanity, forgetFlowers, DS_FOOD } from "./ds_sanity.js";
 
 // Sanity (สติ) 0-100.
 //  Strange events show no narration: players only see / hear / feel them (voices in chat stay, they ARE the event).
 //  up:   tasty food / drinks / some medicine, sleeping (and waking up rested), friends nearby, the tea kiosk's music, hugging a teddy
 //  down: getting hit, monsters nearby (bosses a lot), the Nether / End, strange events (~1 per real hour per player,
 //        plus a rare one that hits everyone online at once)
+//  Don't Starve switch (sanity_world, ds_sanity.js): night and darkness drain, campfires and flowers help,
+//        raw meat hurts, cooked food helps. Below 15 % shadow creatures come (shadows.js).
 //  low sanity only darkens the fog for that player (no blindness).
 export const SANITY_MAX = 100;
 const PROP = "succubi:sanity";
@@ -496,6 +499,7 @@ function tick(player) {
     if (dim.getEntities({ type: TEA_KIOSK, location: loc, maxDistance: 12 }).length > 0) delta += 0.1;
   } catch (e) {}
   if (!threat && dim.id === "minecraft:overworld") delta += 0.01;
+  if (enabled("sanity_world")) delta += worldSanity(player, dim, loc);
 
   if (delta !== 0) addSanity(player, delta);
 
@@ -523,8 +527,19 @@ function worldTick(players) {
 export function initSanity() {
   world.afterEvents.itemCompleteUse.subscribe((event) => {
     if (!enabled("sanity")) return;
-    const gain = SANITY_BY_ID[event.itemStack?.typeId];
+    const id = event.itemStack?.typeId;
+    const gain = (SANITY_BY_ID[id] ?? 0) + (enabled("sanity_world") ? DS_FOOD[id] ?? 0 : 0);
     if (event.source?.typeId === "minecraft:player" && gain) addSanity(event.source, gain);
+  });
+
+  // Don't Starve: picking flowers calms the mind (a wither rose does the opposite)
+  world.afterEvents.playerBreakBlock.subscribe((event) => {
+    const p = event.player;
+    if (!enabled("sanity") || !enabled("sanity_world") || exempt(p)) return;
+    const gain = flowerSanity(p, event.brokenBlockPermutation?.type?.id);
+    if (!gain) return;
+    addSanity(p, gain);
+    p.onScreenDisplay.setActionBar(gain > 0 ? "§dกลิ่นดอกไม้ทำให้ใจสงบลง" : "§5ดอกไม้นี้... ไม่ใช่ดอกไม้ธรรมดา");
   });
 
   world.afterEvents.itemUse.subscribe((event) => {
@@ -564,6 +579,7 @@ export function initSanity() {
   world.afterEvents.playerLeave.subscribe((event) => {
     fogLevel.delete(event.playerId);
     sleeping.delete(event.playerId);
+    forgetFlowers(event.playerId);
   });
 
   system.runInterval(() => {

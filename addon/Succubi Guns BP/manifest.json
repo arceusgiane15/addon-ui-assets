@@ -2,12 +2,12 @@
   "format_version": 2,
   "header": {
     "name": "Succubi Guns BP",
-    "description": "ปืน เกราะ ระเบิด ของตกแต่งทหาร (Aplok Guns) สำหรับ Succubi Server v1.1.8 · วางไว้เหนือ Succubi Server BP · ถอดออกได้ทุกเมื่อ",
+    "description": "ปืน เกราะ ระเบิด ของตกแต่งทหาร (Aplok Guns) สำหรับ Succubi Server v1.1.9 · วางไว้เหนือ Succubi Server BP · ถอดออกได้ทุกเมื่อ",
     "uuid": "7c3f5a1e-2d4b-4e8a-9b61-3f0c2a9d5e17",
     "version": [
       1,
       1,
-      8
+      9
     ],
     "min_engine_version": [
       1,
@@ -23,7 +23,7 @@
       "version": [
         1,
         1,
-        8
+        9
       ]
     },
     {
@@ -35,7 +35,7 @@
       "version": [
         1,
         1,
-        8
+        9
       ]
     }
   ],
@@ -45,7 +45,7 @@
       "version": [
         1,
         1,
-        8
+        9
       ]
     },
     {
@@ -53,7 +53,7 @@
       "version": [
         1,
         1,
-        8
+        9
       ]
     },
     {
