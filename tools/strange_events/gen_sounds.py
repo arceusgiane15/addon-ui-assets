@@ -131,13 +131,65 @@ def fade(x, fi=0.005, fo=0.05):
     return x
 
 
+def master(x, target=0.22, max_gain=7.0):
+    """louder: lift quiet sounds toward a loudness target, then a soft limiter keeps the peaks under 1"""
+    x = norm(np.asarray(x, float), 1.0)
+    rms = math.sqrt(float((x ** 2).mean())) + 1e-9
+    g = min(max_gain, max(1.0, target / rms))
+    y = np.tanh(x * g) / math.tanh(g)
+    return norm(y, 0.97)
+
+
 def write(name, x, peak=0.9):
-    x = fade(norm(np.asarray(x, float), peak))
+    x = fade(master(x))
     sf.write(os.path.join(OUT, name + ".ogg"), x.astype(np.float32), SR, format="OGG", subtype="VORBIS")
+
+
+def event_music():
+    """a 64 s creepy loop for while a strange event is happening (replaces the game's music)"""
+    n = 64.0
+    tt = t(n)
+    N = len(tt)
+    x = np.zeros(N)
+    # drone: D and a sour A, beating slowly
+    for f, g in ((73.4, 1.0), (73.9, 0.7), (110.0, 0.35), (103.8, 0.25), (36.7, 0.8)):
+        x += g * np.sin(2 * np.pi * f * tt + rng.uniform(0, 6)) * (0.75 + 0.25 * np.sin(2 * np.pi * tt / rng.uniform(9, 17)))
+    x = lp(x, 900) * 0.45
+    # wind
+    x += bp(white(n), 250, 1400) * (0.2 + 0.18 * np.sin(2 * np.pi * tt / 11) ** 2) * 0.5
+    # a warped music box: sparse notes from D minor, each with an echo
+    scale = [293.7, 349.2, 392.0, 440.0, 466.2, 587.3, 698.5]
+    at = 2.0
+    while at < n - 4:
+        f = scale[int(rng.integers(0, len(scale)))] * rng.choice([1, 1, 0.5])
+        ln = int(2.5 * SR)
+        k = np.arange(ln) / SR
+        note = (np.sin(2 * np.pi * f * k) + 0.3 * np.sin(2 * np.pi * f * 2.76 * k)) * np.exp(-k * 2.2)
+        note *= 1 + 0.004 * np.sin(2 * np.pi * 5 * k)
+        for d, g in ((0, 0.5), (0.45, 0.22), (0.9, 0.1)):
+            x = place(x, note * g, at + d)
+        at += rng.uniform(1.6, 4.5)
+    # a slow far-away heartbeat in the middle part
+    for bt in np.arange(20, 44, 1.15):
+        f = np.linspace(60, 34, int(0.2 * SR))
+        x = place(x, np.sin(2 * np.pi * np.cumsum(f) / SR) * env(len(f), 0.004, 0.09) * 0.5, bt)
+        x = place(x, np.sin(2 * np.pi * np.cumsum(f) / SR) * env(len(f), 0.004, 0.09) * 0.35, bt + 0.26)
+    x = reverb(x, 2.5, 0.35, 2500)[:N]
+    # seamless loop: cross-fade the tail into the head
+    fade_n = int(3 * SR)
+    ramp = np.linspace(0, 1, fade_n)
+    x[:fade_n] = x[:fade_n] * ramp + x[-fade_n:] * (1 - ramp)
+    x = x[: N - fade_n]
+    x = norm(x, 0.85)
+    out = os.path.join(RP, "sounds/music")
+    os.makedirs(out, exist_ok=True)
+    sf.write(os.path.join(out, "succubi_strange.ogg"), x.astype(np.float32), SR, format="OGG", subtype="VORBIS")
+    DEFS["succubi.music.strange"] = {"category": "music", "sounds": [{"name": "sounds/music/succubi_strange", "stream": True, "volume": 0.9}]}
 
 
 def define(event, files, volume=1.0, category="hostile", max_distance=None, pitch=None, stream=False):
     sounds = []
+    volume = 1.0  # v1.1.15b: everything at full volume (the files are mastered louder too)
     for f in files:
         s = {"name": f"sounds/succubi/ev/{f}", "volume": volume}
         if pitch:
@@ -148,7 +200,8 @@ def define(event, files, volume=1.0, category="hostile", max_distance=None, pitc
     d = {"category": category, "sounds": sounds}
     if max_distance:
         d["max_distance"] = max_distance
-        d["min_distance"] = 1.0
+        d["max_distance"] = max(max_distance, 16) * 1.5
+        d["min_distance"] = 4.0
     DEFS[event] = d
 
 
@@ -711,6 +764,7 @@ def build():
     for name, vol in (("stinger", 1.0), ("stinger_soft", 0.8), ("vhs", 0.7), ("clock_chime", 0.9),
                       ("power_down", 1.0), ("power_up", 0.9), ("count_tick", 0.8)):
         define(f"succubi.ev.{name}", [name], vol, category="player")
+    event_music()
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "sounds.json"), "w") as f:
         json.dump(DEFS, f, indent=2)
     print("events:", len(DEFS), "files:", len(os.listdir(OUT)))

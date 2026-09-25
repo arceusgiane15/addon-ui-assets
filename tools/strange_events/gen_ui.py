@@ -92,6 +92,25 @@ def hud():
         {"ev_dark": full_image("dark_vignette", 30, "Yqd", 1.0)},
         {"ev_black": full_image("black", 31, "Yqk", 0.965)},
     ]
+    # 24 h digital clock under the clock face: R1 R2 = hour digits, R3 R4 = minute digits (daytime.js)
+    shown = find(layer, "succubi_hud_shown")
+    shown["controls"] = strip(shown["controls"], "succubi_clock_time")
+    digits = []
+    for slot, (token, x) in enumerate((("R1", -9.2), ("R2", -4.4), ("R3", 4.4), ("R4", 9.2))):
+        for n in range(10):
+            digits.append({f"t{slot}{n}": {
+                "type": "image", "texture": f"textures/ui/succubi_hud/num_{n}", "size": [4.4, 5.6], "offset": [x, 0],
+                "layer": 3, "anchor_from": "center", "anchor_to": "center", "bindings": hud_vis(f"{token}{n}")}})
+    at = next(i for i, c in enumerate(shown["controls"]) if "succubi_clock" in c) + 1
+    shown["controls"].insert(at, {"succubi_clock_time": {
+        "type": "panel", "size": [30, 9], "anchor_from": "top_right", "anchor_to": "top_right", "offset": [-7, 41], "layer": 30,
+        "controls": [
+            {"bg": {"type": "image", "texture": TEX + "black", "size": ["100%", "100%"], "layer": 1, "alpha": 0.45}},
+            {"colon": {"type": "label", "text": ":", "color": [1, 0.93, 0.8], "shadow": True, "localize": False,
+                       "font_type": "smooth", "font_scale_factor": 0.7, "layer": 4, "anchor_from": "center",
+                       "anchor_to": "center", "offset": [0, -0.6]}},
+        ] + digits,
+        "bindings": hud_vis("Rk")}})
     dump("succubi_hud.json", d)
 
 
