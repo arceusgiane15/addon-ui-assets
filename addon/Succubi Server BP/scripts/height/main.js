@@ -3,7 +3,7 @@ import { CONFIG } from "./config.js";
 import { applyHeight, getHeightCm, forget, markFight, enforceLimits, bodyStats } from "./height.js";
 import { heightPoints } from "./body.js";
 import { onSettingChange, isHeightSetting, num } from "../succubi/settings_store.js";
-import { onAdjusterUse, initTiltMode } from "./ui.js";
+import { onAdjusterUse } from "./ui.js";
 
 const GUN_NAMESPACES = ["trenbankai:", "c7afd424"];
 const HIT_CAUSES = ["entityAttack", "projectile"];
@@ -123,8 +123,6 @@ export function initHeightSystem() {
       } catch (e) {}
     }
   });
-
-  initTiltMode();
 
   const { lo, std, hi } = heightPoints();
   console.warn(

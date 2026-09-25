@@ -1,6 +1,6 @@
 """Height window (RP ui/succubi_height.json) for the v1.1.9 flow. Safe to run again.
 
- - Menu (ActionForm, height_panel): 2 x 2 wide buttons - ปรับส่วนสูง / เงย-ก้มปรับ / รีเซ็ต / ยกเลิก.
+ - Menu (ActionForm, height_panel): wide buttons in a 2 x 2 grid - ปรับส่วนสูง / รีเซ็ต / ยกเลิก.
    The reset question uses the same window with two buttons (ยืนยัน / ยกเลิก).
  - Slider (ModalForm, height_modal): the X now cancels (it used to save), and two buttons under the slider:
    ยืนยัน = submit the form, ยกเลิก = close without changing anything.

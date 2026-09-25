@@ -91,14 +91,14 @@ test("player.json carries every group the script can ask for", async () => {
   }
 });
 
-test("height menu: 4 buttons, slider has confirm, cancel changes nothing", async () => {
+test("height menu: 3 buttons, slider has confirm, cancel changes nothing", async () => {
   height.setHeightCm(player, 180);
   player.setDynamicProperty("kotarus:height_next", 0);
   ui.shown.length = 0;
   ui.answers.push({ canceled: false, selection: 0 }, { canceled: true, cancelationReason: "UserClosed" });
   await heightUi.openHeightForm(player);
   const [menu, slider] = ui.shown;
-  assert.deepEqual(menu.parts.filter((p) => p[0] === "button").map((p) => p[1]), ["ปรับส่วนสูง", "เงย-ก้มปรับ", "รีเซ็ต", "ยกเลิก"]);
+  assert.deepEqual(menu.parts.filter((p) => p[0] === "button").map((p) => p[1]), ["ปรับส่วนสูง", "รีเซ็ต", "ยกเลิก"]);
   assert.ok(slider.parts.some((p) => p[0] === "submit" && p[1] === "ยืนยัน"));
   assert.equal(height.getHeightCm(player), 180, "cancel keeps the height");
   // confirm 200
@@ -106,32 +106,28 @@ test("height menu: 4 buttons, slider has confirm, cancel changes nothing", async
   await heightUi.openHeightForm(player);
   assert.equal(height.getHeightCm(player), 200);
   // now on cooldown: reset refused
-  ui.answers.push({ canceled: false, selection: 2 });
+  ui.answers.push({ canceled: false, selection: 1 });
   await heightUi.openHeightForm(player);
   assert.equal(height.getHeightCm(player), 200);
   assert.match(player.actionbar, /เปลี่ยนได้อีกครั้ง/);
   // cooldown over: reset asks, then goes back to the standard height
   player.setDynamicProperty("kotarus:height_next", 0);
-  ui.answers.push({ canceled: false, selection: 2 }, { canceled: false, selection: 0 });
+  ui.answers.push({ canceled: false, selection: 1 }, { canceled: false, selection: 0 });
   await heightUi.openHeightForm(player);
   assert.equal(height.getHeightCm(player), 180);
 });
 
-test("tilt mode: look up = taller, sneak confirms", async () => {
-  assert.equal(heightUi.heightFromPitch(-50, 140, 220), 220);
-  assert.equal(heightUi.heightFromPitch(50, 140, 220), 140);
-  assert.equal(heightUi.heightFromPitch(0, 140, 220), 180);
-  player.setDynamicProperty("kotarus:height_next", 0);
-  player.mainhand = "kotarus:height_adjuster";
-  ui.answers.push({ canceled: false, selection: 1 });
-  await heightUi.openHeightForm(player);
-  player.rotation = { x: -25, y: 0 };
-  await settle(4);
-  player.isSneaking = true;
-  await settle(4);
-  assert.equal(height.getHeightCm(player), 200);
-  player.isSneaking = false;
-  player.mainhand = undefined;
+test("wallet settings: only the height, old personal switches cleared on join", async () => {
+  const personal = await import(BP + "succubi/personal.js");
+  ui.shown.length = 0;
+  await personal.openPersonal(player);
+  const buttons = ui.shown[0].parts.filter((p) => p[0] === "button").map((p) => p[1]);
+  assert.equal(buttons.length, 2);
+  assert.match(buttons[0], /ปรับส่วนสูง/);
+  player.addTag("hide_hud");
+  player.addTag("no_tension_music");
+  mc.fire("world.after.playerSpawn", { player, initialSpawn: true });
+  assert.ok(!player.hasTag("hide_hud") && !player.hasTag("no_tension_music"));
 });
 
 test("fall damage and hits follow the victim's height", async () => {

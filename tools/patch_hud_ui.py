@@ -96,6 +96,13 @@ TIERS = {
 }
 
 
+STRENGTH = 0.7  # v1.1.11: 30 % thinner (at 0 sanity the screen was unreadable)
+
+
+def weaker(pattern):
+    return [(wait, round(peak * STRENGTH, 3), hold) for wait, peak, hold in pattern]
+
+
 def glitch_tier(ui, n, cfg):
     fb_static = flipbook(ui, "fb_tv_static", 4, 192, 12)
     fb_bands = flipbook(ui, "fb_tv_bands", 6, 256, 9)
@@ -104,22 +111,23 @@ def glitch_tier(ui, n, cfg):
     if "static" in cfg:
         low, high, sec = cfg["static"]
         controls.append({"static": full("fx_static", 5, uv_size=[192, 108], uv=fb_static,
-                                        alpha=breathe(ui, f"tv{n}_static", low, high, sec))})
+                                        alpha=breathe(ui, f"tv{n}_static", round(low * STRENGTH, 3),
+                                                      round(high * STRENGTH, 3), sec))})
     if "veil" in cfg:
         controls.append({"veil": full("fx_static", 5, uv_size=[192, 108], uv=fb_static,
-                                      alpha=blips(ui, f"tv{n}_veil", cfg["veil"]))})
+                                      alpha=blips(ui, f"tv{n}_veil", weaker(cfg["veil"])))})
     if "scan" in cfg:
-        controls.append({"scan": full("fx_scanlines", 6, alpha=cfg["scan"])})
+        controls.append({"scan": full("fx_scanlines", 6, alpha=round(cfg["scan"] * STRENGTH, 3))})
     if "roll" in cfg:
-        roll = full("fx_roll", 6, alpha=0.8)
+        roll = full("fx_roll", 6, alpha=round(0.8 * STRENGTH, 3))
         roll["size"] = ["100%", "28%"]
         roll["anims"] = [loop_offset(ui, f"tv{n}_roll", [0, 260], [0, -260], cfg["roll"])]
         controls.append({"roll": roll})
     controls.append({"bands": full("fx_static_bands", 7, uv_size=[256, 144], uv=fb_bands,
-                                   alpha=blips(ui, f"tv{n}_bands", cfg["bands"]))})
+                                   alpha=blips(ui, f"tv{n}_bands", weaker(cfg["bands"])))})
     if "tear" in cfg:
         controls.append({"tear": full("fx_tear", 8, uv_size=[256, 144], uv=fb_tear,
-                                      alpha=blips(ui, f"tv{n}_tear", cfg["tear"]))})
+                                      alpha=blips(ui, f"tv{n}_tear", weaker(cfg["tear"])))})
     return {f"tv_{n}": {"type": "panel", "size": ["100%", "100%"], "layer": 5, "controls": controls,
                         "bindings": [has(f"Rg{n}")]}}
 

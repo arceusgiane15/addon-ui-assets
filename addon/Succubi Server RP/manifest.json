@@ -2,12 +2,12 @@
   "format_version": 2,
   "header": {
     "name": "Succubi Server RP",
-    "description": "Succubi Server v1.1.10 · โมเดล เท็กซ์เจอร์ เสียง HUD และหน้าจอ",
+    "description": "Succubi Server v1.1.11 · โมเดล เท็กซ์เจอร์ เสียง HUD และหน้าจอ",
     "uuid": "5485ae30-e95c-4ba6-8cf9-c50b4fb71226",
     "version": [
       1,
       1,
-      10
+      11
     ],
     "min_engine_version": [
       1,
@@ -23,7 +23,7 @@
       "version": [
         1,
         1,
-        10
+        11
       ]
     }
   ],
@@ -33,7 +33,7 @@
       "version": [
         1,
         1,
-        10
+        11
       ]
     }
   ],

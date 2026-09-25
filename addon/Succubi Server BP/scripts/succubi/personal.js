@@ -1,13 +1,15 @@
-import { system } from "@minecraft/server";
+import { world, system } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { openWallet } from "./money.js";
 import { openHeightForm } from "../height/ui.js";
 import { getHeightCm, lockFor } from "../height/height.js";
-import { gunsInstalled } from "./packs.js";
-import { refreshHud } from "./hud.js";
 
-// Player's own settings, opened from the wallet (replaces the old compass menu - no free items here)
+// Player's own settings, opened from the wallet (replaces the old compass menu - no free items here).
+// Since v1.1.11 only the height lives here: the HUD, screen effects, pressure sounds and tension music are
+// switched for everyone by admins only (settings item -> สถานะและ HUD).
 const UI = "textures/ui/succubi_ui/icons/";
+// what players could switch off for themselves before v1.1.11 - cleared on join so nobody stays stuck
+const OLD_PERSONAL_TAGS = ["hide_hud", "no_screen_fx", "no_pressure_sfx", "no_tension_music"];
 
 async function show(form, player) {
   for (let i = 0; i < 5; i++) {
@@ -19,73 +21,28 @@ async function show(form, player) {
 }
 
 export async function openPersonal(player, note = "") {
-  const hidden = player.hasTag("hide_hud");
   const lock = lockFor(player);
-  const guns = gunsInstalled();
   const form = new ActionFormData()
     .title("§lตั้งค่าของฉัน")
     .body(note || "§7ตั้งค่าเฉพาะตัวคุณ ไม่มีผลกับคนอื่น");
-  form.button(`§lแถบสถานะ (HUD): ${hidden ? "§cซ่อน" : "§aแสดง"}\n§7เลือด อาหาร น้ำ สติ เหนือช่องของ`, `${UI}hud`);
-  const noFx = player.hasTag("no_screen_fx");
-  form.button(`§lเอฟเฟกต์จอ: ${noFx ? "§cปิด" : "§aเปิด"}\n§7ขอบจอแดงตอนเลือดน้อย · จอเทาตอนสติต่ำ`, `${UI}screen_fx`);
-  const noSfx = player.hasTag("no_pressure_sfx");
-  form.button(`§lเสียงกดดัน: ${noSfx ? "§cปิด" : "§aเปิด"}\n§7หัวใจเต้น ท้องร้อง หอบ กระซิบ`, `${UI}sound`);
-  const noMusic = player.hasTag("no_tension_music");
-  form.button(`§lเพลงตึงเครียด: ${noMusic ? "§cปิด" : "§aเปิด"}\n§7เลือดต่ำ/สติต่ำ ใช้เพลงแพ็คแทนเพลงเกม`, `${UI}sound`);
   form.button(
     `§lปรับส่วนสูง · ${getHeightCm(player)} ซม.\n§7${lock.seconds ? `เปลี่ยนได้อีกใน ${Math.ceil(lock.seconds / 60)} นาที` : "ส่วนสูงมีผลกับเลือด ความเร็ว แรงตี"}`,
     `${UI}height`
   );
-  if (guns) form.button("§lวิธีใช้ปืน\n§7ยิง เล็ง รีโหลด", `${UI}gun`);
   form.button("§lกลับไปกระเป๋าตังค์", `${UI}back`);
-
   const r = await show(form, player);
   if (!r || r.canceled) return;
-  const sel = r.selection;
-  if (sel === 0) {
-    if (hidden) player.removeTag("hide_hud");
-    else player.addTag("hide_hud");
-    refreshHud(player);
-    return openPersonal(player, hidden ? "§aแสดงแถบสถานะแล้ว" : "§eซ่อนแถบสถานะแล้ว (กดอีกครั้งเพื่อแสดง)");
-  }
-  if (sel === 1) {
-    if (noFx) player.removeTag("no_screen_fx");
-    else player.addTag("no_screen_fx");
-    refreshHud(player);
-    return openPersonal(player, noFx ? "§aเปิดเอฟเฟกต์จอแล้ว" : "§eปิดเอฟเฟกต์จอแล้ว (แถบสถานะยังอยู่)");
-  }
-  if (sel === 2) {
-    if (noSfx) player.removeTag("no_pressure_sfx");
-    else player.addTag("no_pressure_sfx");
-    return openPersonal(player, noSfx ? "§aเปิดเสียงกดดันแล้ว" : "§eปิดเสียงกดดันแล้ว");
-  }
-  if (sel === 3) {
-    if (noMusic) player.removeTag("no_tension_music");
-    else player.addTag("no_tension_music");
-    return openPersonal(player, noMusic ? "§aเปิดเพลงตึงเครียดแล้ว" : "§eปิดเพลงตึงเครียดแล้ว (เพลงเกมเล่นตามปกติ)");
-  }
-  if (sel === 4) return openHeightForm(player);
-  if (guns && sel === 5) return openGunGuide(player);
+  if (r.selection === 0) return openHeightForm(player);
   return openWallet(player);
 }
 
-async function openGunGuide(player) {
-  const form = new ActionFormData()
-    .title("§lวิธีใช้ปืน")
-    .body(
-      "§f§lเริ่มต้น§r\n" +
-        "§7ปืนที่เพิ่งได้มายังไม่มีกระสุน ต้องรีโหลดก่อน\n\n" +
-        "§f§lรีโหลด§r\n" +
-        "§7• ถือปืนไว้ในมือหลัก\n" +
-        "§7• พกแม็กกาซีนรุ่นเดียวกับปืนไว้ในช่องเก็บของ\n" +
-        "§7• คลิกขวาค้าง หรือย่อแล้วคลิกซ้าย\n" +
-        "§7• เล่นท่ารีโหลดจบ กระสุนเต็มทันที\n\n" +
-        "§f§lยิงและเล็ง§r\n" +
-        "§7• มีกระสุนแล้วคลิกขวาเพื่อยิง\n" +
-        "§7• ย่อตัวเพื่อเล็งศูนย์\n\n" +
-        "§7ไม่ต้องถือแม็กไว้มือซ้าย ระบบดึงจากช่องเก็บของให้เอง"
-    )
-    .button("§lเข้าใจแล้ว", `${UI}back`);
-  await show(form, player);
-  return openPersonal(player);
+export function initPersonal() {
+  world.afterEvents.playerSpawn.subscribe((event) => {
+    if (!event.initialSpawn || !event.player) return;
+    for (const tag of OLD_PERSONAL_TAGS) {
+      try {
+        if (event.player.hasTag(tag)) event.player.removeTag(tag);
+      } catch (e) {}
+    }
+  });
 }

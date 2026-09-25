@@ -9,7 +9,7 @@ import { getSanity, SANITY_MAX } from "./sanity.js";
 //           ends when health is back to 90 %, or above 50 % with nothing hitting for 30 s
 //   madness (RP succubi.music.madness) sanity <= 50 % (the fog and whispers start there); ends at 60 %
 //   danger wins when both apply. Back to calm = a short silent track fades ours out; the game's music returns
-//   on its own afterwards. Off for everyone: settings -> สถานะและ HUD; for one player: wallet -> ตั้งค่า (tag no_tension_music)
+//   on its own afterwards. Off for everyone: settings -> สถานะและ HUD (an admin can still /tag a player no_tension_music)
 const TRACK = { danger: "succubi.music.danger", madness: "succubi.music.madness" };
 const SILENCE = "succubi.music.silence";
 const TICKS = 10;

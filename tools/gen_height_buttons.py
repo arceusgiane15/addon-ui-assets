@@ -60,14 +60,6 @@ def check(d):
     d.line((14, 24, 22, 15), fill=WHITE, width=3)
 
 
-def tilt(d):
-    # up arrow (white) and down arrow (red) side by side
-    d.polygon([(11, 18), (14, 14), (17, 18)], fill=WHITE)
-    d.rectangle((13, 18, 15, 25), fill=WHITE)
-    d.polygon([(17, 21), (20, 25), (23, 21)], fill=RED)
-    d.rectangle((19, 14, 21, 21), fill=RED)
-
-
 def reset(d):
     d.arc((10, 14, 22, 26), start=40, end=330, fill=WHITE, width=2)
     d.polygon([(19, 12), (24, 16), (18, 18)], fill=WHITE)
@@ -76,7 +68,6 @@ def reset(d):
 BUTTONS = {
     # name: (plate, icon image or None)
     "wbtn_adjust": ("btn_confirm", lambda: icon("pixel_art_native")),
-    "wbtn_tilt": ("btn_reset", lambda: face("black_red_minus_button_bat_128x128", tilt)),
     "wbtn_reset": ("btn_type", lambda: face("black_red_minus_button_bat_128x128", reset)),
     "wbtn_cancel": ("btn_close", lambda: icon("red_back_button_white_arrow")),
     "wbtn_confirm": ("btn_plus", lambda: face("green_plus_button_white_plus", check)),

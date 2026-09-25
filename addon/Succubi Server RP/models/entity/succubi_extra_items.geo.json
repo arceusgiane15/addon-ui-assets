@@ -2253,7 +2253,8 @@
             0.0,
             22.5,
             -0.5
-          ]
+          ],
+          "binding": "q.item_slot_to_bone_name(c.item_slot)"
         },
         {
           "name": "succubi_food_model",
@@ -6005,7 +6006,8 @@
             0.0,
             22.5,
             -0.5
-          ]
+          ],
+          "binding": "q.item_slot_to_bone_name(c.item_slot)"
         },
         {
           "name": "succubi_food_model",
@@ -9757,7 +9759,8 @@
             0.0,
             22.5,
             -0.5
-          ]
+          ],
+          "binding": "q.item_slot_to_bone_name(c.item_slot)"
         },
         {
           "name": "succubi_food_model",
@@ -11148,7 +11151,8 @@
             0.0,
             22.5,
             -0.5
-          ]
+          ],
+          "binding": "q.item_slot_to_bone_name(c.item_slot)"
         },
         {
           "name": "succubi_food_model",
@@ -30352,7 +30356,8 @@
             0.0,
             22.5,
             -0.5
-          ]
+          ],
+          "binding": "q.item_slot_to_bone_name(c.item_slot)"
         },
         {
           "name": "succubi_food_model",
@@ -43404,7 +43409,8 @@
             0.0,
             22.5,
             -0.5
-          ]
+          ],
+          "binding": "q.item_slot_to_bone_name(c.item_slot)"
         },
         {
           "name": "succubi_food_model",
