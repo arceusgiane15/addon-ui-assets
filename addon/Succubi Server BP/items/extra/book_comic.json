@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "succubi:book_comic",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.succubi:book_comic.name"
+      },
+      "minecraft:icon": "succubi_book_comic",
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

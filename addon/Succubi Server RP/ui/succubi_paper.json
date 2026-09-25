@@ -1,0 +1,246 @@
+{
+  "namespace": "succubi_paper",
+  "pp_label": {
+    "type": "label",
+    "text": "#form_button_text",
+    "color": [
+      0.22,
+      0.13,
+      0.06
+    ],
+    "shadow": false,
+    "localize": false,
+    "layer": 3,
+    "anchor_from": "left_middle",
+    "anchor_to": "left_middle",
+    "offset": [
+      22,
+      0
+    ],
+    "size": [
+      "100% - 24px",
+      "default"
+    ],
+    "bindings": [
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "font_type": "smooth"
+  },
+  "pp_default": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_paper.pp_label": {}
+      }
+    ]
+  },
+  "pp_hover": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_paper.pp_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/amt_hover",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "pp_pressed": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      1
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_paper.pp_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/amt_pressed",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "cell": {
+    "type": "panel",
+    "size": [
+      71,
+      30
+    ],
+    "controls": [
+      {
+        "button@common.button": {
+          "size": [
+            67,
+            28
+          ],
+          "$pressed_button_name": "button.form_button_click",
+          "bindings": [
+            {
+              "binding_type": "collection_details",
+              "binding_collection_name": "form_buttons"
+            }
+          ],
+          "controls": [
+            {
+              "default@succubi_paper.pp_default": {}
+            },
+            {
+              "hover@succubi_paper.pp_hover": {}
+            },
+            {
+              "pressed@succubi_paper.pp_pressed": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "paper_panel": {
+    "type": "panel",
+    "size": [
+      300,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_paper/paper",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "#title_text",
+          "color": [
+            0.5,
+            0.08,
+            0.06
+          ],
+          "localize": false,
+          "shadow": false,
+          "anchor_from": "top_middle",
+          "anchor_to": "top_middle",
+          "offset": [
+            0,
+            12
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "body": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.2,
+            0.12,
+            0.06
+          ],
+          "localize": false,
+          "shadow": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            20,
+            30
+          ],
+          "size": [
+            260,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "slots": {
+          "type": "grid",
+          "anchor_from": "bottom_right",
+          "anchor_to": "bottom_right",
+          "offset": [
+            -14,
+            -12
+          ],
+          "size": [
+            142,
+            30
+          ],
+          "grid_dimensions": [
+            2,
+            1
+          ],
+          "grid_item_template": "succubi_paper.cell",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      }
+    ]
+  }
+}

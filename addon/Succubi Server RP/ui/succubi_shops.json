@@ -1,0 +1,2764 @@
+{
+  "namespace": "succubi_shops",
+  "somtum_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_somtum",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lร้านส้มตำครกทอง",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.953,
+            0.835,
+            0.514
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.somtum_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "chicken_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_chicken",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lร้านไก่ทอดสูตรยายน้อย",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.988,
+            0.973,
+            0.941
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.chicken_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "ramen_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_ramen",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lร้านบะหมี่สูตรท่านฮารุโตะ",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.875,
+            0.451,
+            0.463
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.ramen_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "omelette_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_omelette",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lร้านข้าวไข่เจียว สูตรผู้บัญชาการ",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.973,
+            0.851,
+            0.471
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.omelette_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "fried_insects_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_fried_insects",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lร้านแมลงทอดสูตรท่านฮารุโตะ",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.961,
+            0.733,
+            0.451
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.fried_insects_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "haruto_tea_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_haruto_tea",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lร้านน้ำชาฮารุโตะ",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.6,
+            0.757,
+            0.545
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.haruto_tea_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "pharmacy_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_pharmacy",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lแผงขายยา",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.349,
+            0.835,
+            0.631
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.pharmacy_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "seven_snack_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_seven_snack",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lร้านสะดวกซื้อ · ชั้นขนม",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.965,
+            0.624,
+            0.435
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.seven_snack_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "seven_drink_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_seven_drink",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lร้านสะดวกซื้อ · ตู้แช่เครื่องดื่ม",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.553,
+            0.784,
+            0.937
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.seven_drink_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "seven_hot_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_seven_hot",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lร้านสะดวกซื้อ · อาหารพร้อมทาน",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.929,
+            0.427,
+            0.459
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.seven_hot_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "books_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_books",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lแผงหนังสือ",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.961,
+            0.859,
+            0.58
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.books_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "amulets_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_amulets",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lแผงพระเครื่อง",
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.941,
+            0.824,
+            0.502
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            293,
+            31
+          ],
+          "size": [
+            56,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "actions": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            26
+          ],
+          "size": [
+            264,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_shops.cell3a",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            61
+          ],
+          "size": [
+            276,
+            132
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.amulets_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "amuletui_panel": {
+    "type": "panel",
+    "size": [
+      320,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_amuletui",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lเครื่องราง",
+          "color": [
+            1,
+            0.93,
+            0.75
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            1,
+            0.9,
+            0.6
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            245,
+            33
+          ],
+          "size": [
+            66,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "slots": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            27
+          ],
+          "size": [
+            224,
+            144
+          ],
+          "grid_dimensions": [
+            2,
+            3
+          ],
+          "grid_item_template": "succubi_shops.am_cell",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      }
+    ]
+  },
+  "s3_label": {
+    "type": "label",
+    "text": "#form_button_text",
+    "color": [
+      1,
+      1,
+      1
+    ],
+    "shadow": true,
+    "localize": false,
+    "layer": 4,
+    "anchor_from": "left_middle",
+    "anchor_to": "left_middle",
+    "offset": [
+      27,
+      0
+    ],
+    "size": [
+      "100% - 29px",
+      "default"
+    ],
+    "bindings": [
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "font_type": "smooth"
+  },
+  "s3a_label": {
+    "type": "label",
+    "text": "#form_button_text",
+    "color": [
+      1,
+      1,
+      1
+    ],
+    "shadow": true,
+    "localize": false,
+    "layer": 4,
+    "anchor_from": "left_middle",
+    "anchor_to": "left_middle",
+    "offset": [
+      25,
+      0
+    ],
+    "size": [
+      "100% - 27px",
+      "default"
+    ],
+    "bindings": [
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "font_type": "smooth"
+  },
+  "s3_default": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_shops.s3_label": {}
+      }
+    ]
+  },
+  "s3_hover": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_shops.s3_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/amt_hover",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "s3_pressed": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      1
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_shops.s3_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/amt_pressed",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "s3a_default": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_shops.s3a_label": {}
+      }
+    ]
+  },
+  "s3a_hover": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_shops.s3a_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/amt_hover",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "s3a_pressed": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      1
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_shops.s3a_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/amt_pressed",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "cell3": {
+    "type": "panel",
+    "size": [
+      88,
+      34
+    ],
+    "bindings": [
+      {
+        "binding_name": "#form_button_texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#form_button_texture - '/p_') = #form_button_texture))",
+        "target_property_name": "#visible"
+      }
+    ],
+    "controls": [
+      {
+        "button@common.button": {
+          "size": [
+            86,
+            32
+          ],
+          "$pressed_button_name": "button.form_button_click",
+          "bindings": [
+            {
+              "binding_type": "collection_details",
+              "binding_collection_name": "form_buttons"
+            }
+          ],
+          "controls": [
+            {
+              "default@succubi_shops.s3_default": {}
+            },
+            {
+              "hover@succubi_shops.s3_hover": {}
+            },
+            {
+              "pressed@succubi_shops.s3_pressed": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "cell3a": {
+    "type": "panel",
+    "size": [
+      88,
+      30
+    ],
+    "bindings": [],
+    "controls": [
+      {
+        "button@common.button": {
+          "size": [
+            86,
+            28
+          ],
+          "$pressed_button_name": "button.form_button_click",
+          "bindings": [
+            {
+              "binding_type": "collection_details",
+              "binding_collection_name": "form_buttons"
+            }
+          ],
+          "controls": [
+            {
+              "default@succubi_shops.s3a_default": {}
+            },
+            {
+              "hover@succubi_shops.s3a_hover": {}
+            },
+            {
+              "pressed@succubi_shops.s3a_pressed": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "somtum_content": {
+    "type": "panel",
+    "size": [
+      264,
+      68
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            102
+          ],
+          "grid_dimensions": [
+            3,
+            3
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "chicken_content": {
+    "type": "panel",
+    "size": [
+      264,
+      68
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            102
+          ],
+          "grid_dimensions": [
+            3,
+            3
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "ramen_content": {
+    "type": "panel",
+    "size": [
+      264,
+      68
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            102
+          ],
+          "grid_dimensions": [
+            3,
+            3
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "omelette_content": {
+    "type": "panel",
+    "size": [
+      264,
+      68
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            102
+          ],
+          "grid_dimensions": [
+            3,
+            3
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "fried_insects_content": {
+    "type": "panel",
+    "size": [
+      264,
+      68
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            102
+          ],
+          "grid_dimensions": [
+            3,
+            3
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "haruto_tea_content": {
+    "type": "panel",
+    "size": [
+      264,
+      68
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            102
+          ],
+          "grid_dimensions": [
+            3,
+            3
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "pharmacy_content": {
+    "type": "panel",
+    "size": [
+      264,
+      136
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            170
+          ],
+          "grid_dimensions": [
+            3,
+            5
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "seven_snack_content": {
+    "type": "panel",
+    "size": [
+      264,
+      170
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            204
+          ],
+          "grid_dimensions": [
+            3,
+            6
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "seven_drink_content": {
+    "type": "panel",
+    "size": [
+      264,
+      170
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            204
+          ],
+          "grid_dimensions": [
+            3,
+            6
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "seven_hot_content": {
+    "type": "panel",
+    "size": [
+      264,
+      136
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            170
+          ],
+          "grid_dimensions": [
+            3,
+            5
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "books_content": {
+    "type": "panel",
+    "size": [
+      264,
+      136
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            170
+          ],
+          "grid_dimensions": [
+            3,
+            5
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "amulets_content": {
+    "type": "panel",
+    "size": [
+      264,
+      170
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "clips_children": true,
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            -34
+          ],
+          "size": [
+            264,
+            204
+          ],
+          "grid_dimensions": [
+            3,
+            6
+          ],
+          "grid_item_template": "succubi_shops.cell3",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "am_label": {
+    "type": "label",
+    "text": "#form_button_text",
+    "color": [
+      1,
+      1,
+      1
+    ],
+    "shadow": true,
+    "localize": false,
+    "layer": 4,
+    "anchor_from": "left_middle",
+    "anchor_to": "left_middle",
+    "offset": [
+      37,
+      0
+    ],
+    "size": [
+      "100% - 39px",
+      "default"
+    ],
+    "bindings": [
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "font_type": "smooth"
+  },
+  "am_default": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_shops.am_label": {}
+      }
+    ]
+  },
+  "am_hover": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_shops.am_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/amt_hover",
+          "size": [
+            "100%",
+            "100% - 2px"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "am_pressed": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      1
+    ],
+    "controls": [
+      {
+        "art@succubi_vending.vs_art": {}
+      },
+      {
+        "label@succubi_shops.am_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/amt_pressed",
+          "size": [
+            "100%",
+            "100% - 2px"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "am_cell": {
+    "type": "panel",
+    "size": [
+      112,
+      48
+    ],
+    "controls": [
+      {
+        "button@common.button": {
+          "size": [
+            108,
+            44
+          ],
+          "$pressed_button_name": "button.form_button_click",
+          "bindings": [
+            {
+              "binding_type": "collection_details",
+              "binding_collection_name": "form_buttons"
+            }
+          ],
+          "controls": [
+            {
+              "default@succubi_shops.am_default": {}
+            },
+            {
+              "hover@succubi_shops.am_hover": {}
+            },
+            {
+              "pressed@succubi_shops.am_pressed": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "am_pick_content": {
+    "type": "panel",
+    "size": [
+      224,
+      384
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "controls": [
+      {
+        "grid": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "size": [
+            224,
+            384
+          ],
+          "grid_dimensions": [
+            2,
+            8
+          ],
+          "grid_item_template": "succubi_shops.am_cell",
+          "collection_name": "form_buttons"
+        }
+      }
+    ]
+  },
+  "amulet_picker_panel": {
+    "type": "panel",
+    "size": [
+      320,
+      200
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_shops/bg_amuletui",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lเลือกเครื่องราง",
+          "color": [
+            1,
+            0.93,
+            0.75
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            12,
+            9
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "lcd": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            1,
+            0.9,
+            0.6
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            245,
+            33
+          ],
+          "size": [
+            66,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "list": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            8,
+            27
+          ],
+          "size": [
+            228,
+            166
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "scroll@common.scrolling_panel": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "$show_background": false,
+                "$scrolling_content": "succubi_shops.am_pick_content",
+                "$scroll_size": [
+                  5,
+                  "100% - 4px"
+                ],
+                "$scrolling_pane_size": [
+                  "100%",
+                  "100%"
+                ],
+                "$scrolling_pane_offset": [
+                  0,
+                  0
+                ],
+                "$scroll_bar_right_padding_size": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

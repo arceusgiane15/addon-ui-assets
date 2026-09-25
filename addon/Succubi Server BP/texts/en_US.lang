@@ -1,0 +1,11 @@
+item.kotarus:height_adjuster=Height Adjuster (cm)
+item.kotarus:height_adjuster.name=Height Adjuster (cm)
+item.kotarus:bandage_blackpowder=Standard Bandage
+item.kotarus:bandage_blackpowder.name=Standard Bandage
+item.kotarus:bandage_blackpowder_use_skill1.name=Standard Bandage (In Use)
+item.kotarus:medkit_blackpowder=Revival Device
+item.kotarus:medkit_blackpowder.name=Revival Device
+item.kotarus:medkit_blackpowder_use_skill1.name=Revival Device (In Use)
+item.kotarus:syringe_blackpowder=Antipyretic Syringe
+item.kotarus:syringe_blackpowder.name=Antipyretic Syringe
+item.kotarus:syringe_blackpowder_use_skill1.name=Antipyretic Syringe (In Use)

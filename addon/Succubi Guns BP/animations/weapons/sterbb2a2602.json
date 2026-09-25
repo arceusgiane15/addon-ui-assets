@@ -1,0 +1,36 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.player.deagle_reload": {
+      "animation_length": 1.9583,
+      "loop": false,
+      "timeline": {
+        "0.0417": [
+          "/playsound weapon.ak12.arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "0.375": [
+          "/playsound weapon.deagle.mag_out @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.08 0.2 rotational"
+        ],
+        "0.75": [
+          "/playsound weapon.m249.mag_out_arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "1.0625": [
+          "/playsound weapon.deagle.mag_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.06 0.2 rotational"
+        ],
+        "1.5625": [
+          "/playsound weapon.deagle.slide_back @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "1.6875": [
+          "/playsound weapon.deagle.slide_release @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "1.8625": [
+          "/playsound weapon.ak12.hand_grab @a[r=20] ^^^1.5 1 1 0.01"
+        ]
+      }
+    }
+  }
+}

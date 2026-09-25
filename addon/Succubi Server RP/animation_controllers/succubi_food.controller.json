@@ -1,0 +1,153 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.succubi_food.plate": {
+      "initial_state": "hold",
+      "states": {
+        "hold": {
+          "animations": [
+            {
+              "hold_fp": "c.is_first_person"
+            },
+            {
+              "hold_tp": "!c.is_first_person"
+            }
+          ],
+          "transitions": [
+            {
+              "eat": "c.item_slot == 'main_hand' && q.main_hand_item_use_duration > 0"
+            }
+          ],
+          "blend_transition": 0.12
+        },
+        "eat": {
+          "animations": [
+            {
+              "eat_fp": "c.is_first_person"
+            },
+            {
+              "eat_tp": "!c.is_first_person"
+            }
+          ],
+          "transitions": [
+            {
+              "hold": "!(c.item_slot == 'main_hand' && q.main_hand_item_use_duration > 0)"
+            }
+          ],
+          "blend_transition": 0.12
+        }
+      }
+    },
+    "controller.animation.succubi_food.hand": {
+      "initial_state": "hold",
+      "states": {
+        "hold": {
+          "animations": [
+            {
+              "hold_fp": "c.is_first_person"
+            },
+            {
+              "hold_tp": "!c.is_first_person"
+            }
+          ],
+          "transitions": [
+            {
+              "eat": "c.item_slot == 'main_hand' && q.main_hand_item_use_duration > 0"
+            }
+          ],
+          "blend_transition": 0.12
+        },
+        "eat": {
+          "animations": [
+            {
+              "eat_fp": "c.is_first_person"
+            },
+            {
+              "eat_tp": "!c.is_first_person"
+            }
+          ],
+          "transitions": [
+            {
+              "hold": "!(c.item_slot == 'main_hand' && q.main_hand_item_use_duration > 0)"
+            }
+          ],
+          "blend_transition": 0.12
+        }
+      }
+    },
+    "controller.animation.succubi_food.vending_drink": {
+      "initial_state": "hold",
+      "states": {
+        "hold": {
+          "animations": [
+            {
+              "hold_fp": "c.is_first_person"
+            },
+            {
+              "hold_tp": "!c.is_first_person"
+            }
+          ],
+          "transitions": [
+            {
+              "eat": "c.item_slot == 'main_hand' && q.main_hand_item_use_duration > 0"
+            }
+          ],
+          "blend_transition": 0.12
+        },
+        "eat": {
+          "animations": [
+            {
+              "eat_fp": "c.is_first_person"
+            },
+            {
+              "eat_tp": "!c.is_first_person"
+            }
+          ],
+          "transitions": [
+            {
+              "hold": "!(c.item_slot == 'main_hand' && q.main_hand_item_use_duration > 0)"
+            }
+          ],
+          "blend_transition": 0.12
+        }
+      }
+    },
+    "controller.animation.succubi_food.vending_snack": {
+      "initial_state": "hold",
+      "states": {
+        "hold": {
+          "animations": [
+            {
+              "hold_fp": "c.is_first_person"
+            },
+            {
+              "hold_tp": "!c.is_first_person"
+            }
+          ],
+          "transitions": [
+            {
+              "eat": "c.item_slot == 'main_hand' && q.main_hand_item_use_duration > 0"
+            }
+          ],
+          "blend_transition": 0.12
+        },
+        "eat": {
+          "animations": [
+            {
+              "eat_fp": "c.is_first_person"
+            },
+            {
+              "eat_tp": "!c.is_first_person"
+            }
+          ],
+          "transitions": [
+            {
+              "hold": "!(c.item_slot == 'main_hand' && q.main_hand_item_use_duration > 0)"
+            }
+          ],
+          "blend_transition": 0.12
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "succubi:store_hot_counter",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/succubi_shops/store_hot_counter"
+      },
+      "geometry": {
+        "default": "geometry.store_hot_counter"
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ],
+      "enable_attachables": false
+    }
+  }
+}

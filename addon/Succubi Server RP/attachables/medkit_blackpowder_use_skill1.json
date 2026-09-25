@@ -1,0 +1,29 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "kotarus:medkit_blackpowder_use_skill1",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/models/medkit_blackpowder"
+      },
+      "geometry": {
+        "default": "geometry.combat_medkit"
+      },
+      "render_controllers": [
+        "controller.render.kotarus_item"
+      ],
+      "animations": {
+        "use_skill1_weapon": "animation.medkit_blackpowder.revive_weapon",
+        "use_skill1_body": "animation.medkit_blackpowder.revive_body"
+      },
+      "scripts": {
+        "animate": [
+          "use_skill1_weapon"
+        ]
+      }
+    }
+  }
+}

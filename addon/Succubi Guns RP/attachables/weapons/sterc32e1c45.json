@@ -1,0 +1,55 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "trenbankai:awp",
+      "materials": {
+        "default": "entity_alphatest",
+        "transparent": "entity_alphablend",
+        "transparent_additive": "entity_beam_additive",
+        "charged": "charged_creeper",
+        "glow": "spider"
+      },
+      "textures": {
+        "default": "textures/models/weapons/awp",
+        "scope_hp": "textures/models/attachment/scope_hp",
+        "scope_lp": "textures/models/attachment/scope_lp"
+      },
+      "geometry": {
+        "default": "geometry.awp",
+        "scope_hp": "geometry.scope_hp",
+        "scope_lp": "geometry.scope_lp"
+      },
+      "animations": {
+        "setup_controller": "controller.animation.weapon.setup",
+        "attachments": "animation.awp.attachments",
+        "wield_controller": "controller.animation.weapon.wield",
+        "wield_fpp": "animation.weapons.wield_fpp",
+        "wield_tpp": "animation.weapons.wield_tpp",
+        "reload_controller": "controller.animation.weapon.reload",
+        "reload_empty_fpp": "animation.awp.fpp_reload",
+        "reload_fpp": "animation.awp.fpp_reload",
+        "fire_controller": "controller.animation.weapon.fire",
+        "fire": "animation.awp.fire.item"
+      },
+      "scripts": {
+        "pre_animation": [
+          "v.is_first_person = c.is_first_person;",
+          "v.bipod_phisycs = (v.is_first_person || q.property('trenbankai:reload') || q.property('trenbankai:standby') || q.is_sprinting) ? 0 : math.clamp(-q.target_x_rotation, -50, 50);"
+        ],
+        "animate": [
+          "setup_controller"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.weapon",
+        {
+          "controller.render.scope_hp": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 4"
+        },
+        {
+          "controller.render.scope_lp": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 5"
+        }
+      ]
+    }
+  }
+}

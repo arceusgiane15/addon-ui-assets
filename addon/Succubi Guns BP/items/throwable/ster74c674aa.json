@@ -1,0 +1,41 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "trenbankai:m84_grenade",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:cooldown": {
+        "category": "m84_grenade",
+        "duration": 0.65
+      },
+      "minecraft:display_name": {
+        "value": "item.m84_grenade.name"
+      },
+      "minecraft:icon": "m84_grenade",
+      "minecraft:projectile": {
+        "projectile_entity": "trenbankai:m84_grenade_entity",
+        "minimum_critical_power": 1
+      },
+      "minecraft:throwable": {
+        "do_swing_animation": true,
+        "min_draw_duration": 0.01,
+        "max_draw_duration": 1.0,
+        "launch_power_scale": 2
+      },
+      "minecraft:use_modifiers": {
+        "use_duration": 3600
+      },
+      "minecraft:tags": {
+        "tags": [
+          "is_threeditem",
+          "is_grenade",
+          "is_throwable"
+        ]
+      }
+    }
+  }
+}

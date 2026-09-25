@@ -1,0 +1,39 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "trenbankai:mossberg",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/models/weapons/mossberg"
+      },
+      "geometry": {
+        "default": "geometry.mossberg"
+      },
+      "animations": {
+        "setup_controller": "controller.animation.weapon.setup_wo_attachments",
+        "wield_controller": "controller.animation.weapon.wield",
+        "wield_fpp": "animation.weapons.wield_fpp",
+        "wield_tpp": "animation.weapons.wield_tpp",
+        "reload_controller": "controller.animation.weapon.reload",
+        "reload_empty_fpp": "animation.mossberg.fpp_reload",
+        "reload_fpp": "animation.mossberg.fpp_reload",
+        "fire_controller": "controller.animation.weapon.fire",
+        "fire": "animation.mossberg.fire.item"
+      },
+      "scripts": {
+        "pre_animation": [
+          "v.is_first_person = c.is_first_person;"
+        ],
+        "animate": [
+          "setup_controller"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.weapon"
+      ]
+    }
+  }
+}

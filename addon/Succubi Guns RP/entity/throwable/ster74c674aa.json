@@ -1,0 +1,28 @@
+{
+  "format_version": "1.18.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "trenbankai:m84_grenade_entity",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/models/throwable/m84_grenade"
+      },
+      "geometry": {
+        "default": "geometry.grenade"
+      },
+      "scripts": {
+        "animate": [
+          "spin"
+        ]
+      },
+      "animations": {
+        "spin": "animation.grenade.spin"
+      },
+      "render_controllers": [
+        "controller.render.grenade.entity"
+      ]
+    }
+  }
+}

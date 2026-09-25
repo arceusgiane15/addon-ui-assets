@@ -1,0 +1,41 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "trenbankai:flare",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:cooldown": {
+        "category": "flare",
+        "duration": 1
+      },
+      "minecraft:display_name": {
+        "value": "item.flare.name"
+      },
+      "minecraft:icon": "flare",
+      "minecraft:projectile": {
+        "projectile_entity": "trenbankai:flare_entity",
+        "minimum_critical_power": 1
+      },
+      "minecraft:throwable": {
+        "do_swing_animation": true,
+        "min_draw_duration": 0.1,
+        "max_draw_duration": 1.0,
+        "launch_power_scale": 2
+      },
+      "minecraft:use_modifiers": {
+        "use_duration": 3600
+      },
+      "minecraft:tags": {
+        "tags": [
+          "is_threeditem",
+          "is_grenade",
+          "is_throwable"
+        ]
+      }
+    }
+  }
+}

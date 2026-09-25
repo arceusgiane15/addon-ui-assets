@@ -1,0 +1,210 @@
+{
+  "resource_pack_name": "succubi_server",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "acog_sight": {
+      "textures": "textures/items/attachment/acog_sight"
+    },
+    "eotech_sight": {
+      "textures": "textures/items/attachment/eotech_sight"
+    },
+    "foregrip": {
+      "textures": "textures/items/attachment/foregrip"
+    },
+    "laser_green": {
+      "textures": "textures/items/attachment/laser_green"
+    },
+    "laser_red": {
+      "textures": "textures/items/attachment/laser_red"
+    },
+    "okp7_reflex_sight": {
+      "textures": "textures/items/attachment/okp7_reflex_sight"
+    },
+    "predator_v4_sight": {
+      "textures": "textures/items/attachment/predator_v4_sight"
+    },
+    "scope_hp": {
+      "textures": "textures/items/attachment/scope_hp"
+    },
+    "scope_lp": {
+      "textures": "textures/items/attachment/scope_lp"
+    },
+    "silencer": {
+      "textures": "textures/items/attachment/silencer"
+    },
+    "bullet_9x19pr": {
+      "textures": "textures/items/bullet/bullet_9x19pr"
+    },
+    "bullet_12gauge": {
+      "textures": "textures/items/bullet/bullet_12gauge"
+    },
+    "bullet_50ae": {
+      "textures": "textures/items/bullet/bullet_50ae"
+    },
+    "bullet_545x39": {
+      "textures": "textures/items/bullet/bullet_545x39"
+    },
+    "bullet_556x45": {
+      "textures": "textures/items/bullet/bullet_556x45"
+    },
+    "bullet_762x39": {
+      "textures": "textures/items/bullet/bullet_762x39"
+    },
+    "bullet_762x51": {
+      "textures": "textures/items/bullet/bullet_762x51"
+    },
+    "cooked_flesh": {
+      "textures": "textures/items/food/cooked_flesh"
+    },
+    "ak12": {
+      "textures": "textures/items/weapons/ak12"
+    },
+    "ak47": {
+      "textures": "textures/items/weapons/ak47"
+    },
+    "ak74": {
+      "textures": "textures/items/weapons/ak74"
+    },
+    "akm": {
+      "textures": "textures/items/weapons/akm"
+    },
+    "aks74u": {
+      "textures": "textures/items/weapons/aks74u"
+    },
+    "awp": {
+      "textures": "textures/items/weapons/awp"
+    },
+    "deagle": {
+      "textures": "textures/items/weapons/deagle"
+    },
+    "fnfal": {
+      "textures": "textures/items/weapons/fnfal"
+    },
+    "parafal": {
+      "textures": "textures/items/weapons/parafal"
+    },
+    "glock17": {
+      "textures": "textures/items/weapons/glock17"
+    },
+    "glock18": {
+      "textures": "textures/items/weapons/glock18"
+    },
+    "m4a1": {
+      "textures": "textures/items/weapons/m4a1"
+    },
+    "m249": {
+      "textures": "textures/items/weapons/m249"
+    },
+    "mossberg": {
+      "textures": "textures/items/weapons/mossberg"
+    },
+    "m1014": {
+      "textures": "textures/items/weapons/m1014"
+    },
+    "mp5a5": {
+      "textures": "textures/items/weapons/mp5a5"
+    },
+    "rpg7": {
+      "textures": "textures/items/weapons/rpg7"
+    },
+    "sks": {
+      "textures": "textures/items/weapons/sks"
+    },
+    "ak12_mag": {
+      "textures": "textures/items/mag/ak12_mag"
+    },
+    "ak47_mag": {
+      "textures": "textures/items/mag/ak47_mag"
+    },
+    "ak74_mag": {
+      "textures": "textures/items/mag/ak74_mag"
+    },
+    "akm_mag": {
+      "textures": "textures/items/mag/akm_mag"
+    },
+    "awp_mag": {
+      "textures": "textures/items/mag/awp_mag"
+    },
+    "deagle_mag": {
+      "textures": "textures/items/mag/deagle_mag"
+    },
+    "fnfal_mag": {
+      "textures": "textures/items/mag/fnfal_mag"
+    },
+    "glock_mag": {
+      "textures": "textures/items/mag/glock_mag"
+    },
+    "m4a1_mag": {
+      "textures": "textures/items/mag/m4a1_mag"
+    },
+    "m249_mag": {
+      "textures": "textures/items/mag/m249_mag"
+    },
+    "mp5a5_mag": {
+      "textures": "textures/items/mag/mp5a5_mag"
+    },
+    "rpg7_rocket": {
+      "textures": "textures/items/mag/rpg7_rocket"
+    },
+    "config": {
+      "textures": "textures/items/other/config"
+    },
+    "lock": {
+      "textures": "textures/items/other/lock"
+    },
+    "landmine": {
+      "textures": "textures/items/props/landmine"
+    },
+    "c4_explosive": {
+      "textures": "textures/items/throwable/c4_explosive"
+    },
+    "flare": {
+      "textures": "textures/items/throwable/flare"
+    },
+    "l83a1_grenade": {
+      "textures": "textures/items/throwable/l83a1_grenade"
+    },
+    "m84_grenade": {
+      "textures": "textures/items/throwable/m84_grenade"
+    },
+    "mk2_grenade": {
+      "textures": "textures/items/throwable/mk2_grenade"
+    },
+    "helmet_6b47": {
+      "textures": "textures/items/wearable/helmet_6b47"
+    },
+    "helmet_6b47_nvg": {
+      "textures": "textures/items/wearable/helmet_6b47_nvg"
+    },
+    "juggernaut_boots": {
+      "textures": "textures/items/wearable/juggernaut_boots"
+    },
+    "juggernaut_chestplate": {
+      "textures": "textures/items/wearable/juggernaut_chestplate"
+    },
+    "juggernaut_helmet": {
+      "textures": "textures/items/wearable/juggernaut_helmet"
+    },
+    "juggernaut_leggings": {
+      "textures": "textures/items/wearable/juggernaut_leggings"
+    },
+    "nvg": {
+      "textures": "textures/items/wearable/nvg"
+    },
+    "vest_6b3": {
+      "textures": "textures/items/wearable/vest_6b3"
+    },
+    "vest_6b13": {
+      "textures": "textures/items/wearable/vest_6b13"
+    },
+    "vest_bnti_gzhelk": {
+      "textures": "textures/items/wearable/vest_bnti_gzhelk"
+    },
+    "syringe": {
+      "textures": "textures/items/syringe"
+    },
+    "kotarus:syringe": {
+      "textures": "textures/items/syringe"
+    }
+  }
+}

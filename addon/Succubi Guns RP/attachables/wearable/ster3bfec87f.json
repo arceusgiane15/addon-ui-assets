@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "trenbankai:vest_bnti_gzhelk",
+      "materials": {
+        "default": "armor",
+        "enchanted": "armor_enchanted"
+      },
+      "textures": {
+        "default": "textures/models/wearable/vest_bnti_gzhelk",
+        "enchanted": "textures/misc/enchanted_actor_glint"
+      },
+      "geometry": {
+        "default": "geometry.vest_bnti_gzhelk"
+      },
+      "scripts": {
+        "parent_setup": "v.chest_layer_visible = 0;"
+      },
+      "render_controllers": [
+        "controller.render.armor"
+      ]
+    }
+  }
+}

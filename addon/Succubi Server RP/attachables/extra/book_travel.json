@@ -1,0 +1,32 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "succubi:book_travel",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/extra/book_travel"
+      },
+      "geometry": {
+        "default": "geometry.succubi_extra_book_travel"
+      },
+      "animations": {
+        "hold_fp": "animation.succubi_food.hand.hold_fp",
+        "hold_tp": "animation.succubi_food.hand.hold_tp",
+        "eat_fp": "animation.succubi_food.hand.eat_fp",
+        "eat_tp": "animation.succubi_food.hand.eat_tp",
+        "wield": "controller.animation.succubi_food.hand"
+      },
+      "scripts": {
+        "animate": [
+          "wield"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ]
+    }
+  }
+}

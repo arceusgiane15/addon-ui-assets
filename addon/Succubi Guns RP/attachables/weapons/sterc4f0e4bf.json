@@ -1,0 +1,63 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "trenbankai:m1014",
+      "materials": {
+        "default": "entity_alphatest",
+        "transparent": "entity_alphablend",
+        "transparent_additive": "entity_beam_additive",
+        "charged": "charged_creeper",
+        "glow": "spider"
+      },
+      "textures": {
+        "default": "textures/models/weapons/m1014",
+        "acog_sight": "textures/models/attachment/acog_sight",
+        "eotech_sight": "textures/models/attachment/eotech_sight",
+        "foregrip": "textures/models/attachment/foregrip"
+      },
+      "geometry": {
+        "default": "geometry.m1014",
+        "acog_sight": "geometry.acog_sight",
+        "eotech_sight": "geometry.eotech_sight",
+        "eotech_sight_reticle": "geometry.eotech_sight.reticle",
+        "foregrip": "geometry.foregrip"
+      },
+      "animations": {
+        "setup_controller": "controller.animation.weapon.setup",
+        "attachments": "animation.m1014.attachments",
+        "wield_controller": "controller.animation.weapon.wield",
+        "wield_fpp": "animation.weapons.wield_fpp",
+        "wield_tpp": "animation.weapons.wield_tpp",
+        "reload_controller": "controller.animation.weapon.reload",
+        "reload_empty_fpp": "animation.m1014.fpp_reload",
+        "reload_fpp": "animation.m1014.fpp_reload",
+        "fire_controller": "controller.animation.weapon.fire",
+        "fire": "animation.m1014.fire.item"
+      },
+      "scripts": {
+        "pre_animation": [
+          "v.is_first_person = c.is_first_person;"
+        ],
+        "animate": [
+          "setup_controller"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.weapon",
+        {
+          "controller.render.acog_sight": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 1"
+        },
+        {
+          "controller.render.eotech_sight": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 2"
+        },
+        {
+          "controller.render.eotech_sight.reticle": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 2"
+        },
+        {
+          "controller.render.foregrip": "q.has_property('trenbankai:grip') && q.property('trenbankai:grip') == 1"
+        }
+      ]
+    }
+  }
+}

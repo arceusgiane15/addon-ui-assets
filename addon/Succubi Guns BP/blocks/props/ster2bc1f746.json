@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "trenbankai:military_wall",
+      "menu_category": {
+        "category": "none",
+        "group": "itemGroup.name.misc",
+        "is_hidden_in_commands": true
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_explosion": false,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 16
+      },
+      "minecraft:display_name": "tile.military_wall.name",
+      "tag:metal": {}
+    }
+  }
+}

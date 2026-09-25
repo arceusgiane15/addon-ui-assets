@@ -1,0 +1,1354 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "ambient.loop.electric_pole": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/ambient/loop/electric_pole"
+      ]
+    },
+    "ambient.loop.lamp_celling": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/ambient/loop/lamp_celling"
+      ]
+    },
+    "block.light.blink": {
+      "category": "block",
+      "sounds": [
+        "sounds/block/light/blink"
+      ]
+    },
+    "bullet.distant": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/distant/distant_0",
+        "sounds/bullet/distant/distant_1",
+        "sounds/bullet/distant/distant_2",
+        "sounds/bullet/distant/distant_3"
+      ]
+    },
+    "bullet.eject.bounce_9mm": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/bullet/eject/bounce_9mm",
+          "volume": 0.06
+        }
+      ]
+    },
+    "bullet.eject.bounce_308mm": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/bullet/eject/bounce_308mm",
+          "volume": 0.06
+        }
+      ]
+    },
+    "bullet.eject.bounce_338mm": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/bullet/eject/bounce_338mm",
+          "volume": 0.06
+        }
+      ]
+    },
+    "bullet.eject.bounce_556mm": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/bullet/eject/bounce_556mm",
+          "volume": 0.06
+        }
+      ]
+    },
+    "bullet.eject.bounce_shotgun": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/bullet/eject/bounce_shotgun",
+          "volume": 0.6
+        }
+      ]
+    },
+    "bullet.eject.eject_50bmg": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/bullet/eject/eject_50bmg",
+          "volume": 0.06
+        }
+      ]
+    },
+    "bullet.eject.eject_9mm": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/bullet/eject/eject_9mm",
+          "volume": 0.06
+        }
+      ]
+    },
+    "bullet.eject.eject_45acp": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/bullet/eject/eject_45acp",
+          "volume": 0.06
+        }
+      ]
+    },
+    "bullet.eject.eject_556mm": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/bullet/eject/eject_556mm",
+          "volume": 0.06
+        }
+      ]
+    },
+    "bullet.eject.eject_762mm": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/bullet/eject/eject_762mm",
+          "volume": 0.06
+        }
+      ]
+    },
+    "bullet.impact.cardboard": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/cardboard_0",
+        "sounds/bullet/impact/cardboard_1",
+        "sounds/bullet/impact/cardboard_2",
+        "sounds/bullet/impact/cardboard_3",
+        "sounds/bullet/impact/cardboard_4"
+      ]
+    },
+    "bullet.impact.carpet": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/carpet_0",
+        "sounds/bullet/impact/carpet_1",
+        "sounds/bullet/impact/carpet_2",
+        "sounds/bullet/impact/carpet_3",
+        "sounds/bullet/impact/carpet_4"
+      ]
+    },
+    "bullet.impact.chainlink": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/chainlink_0",
+        "sounds/bullet/impact/chainlink_1",
+        "sounds/bullet/impact/chainlink_2",
+        "sounds/bullet/impact/chainlink_3",
+        "sounds/bullet/impact/chainlink_4"
+      ]
+    },
+    "bullet.impact.computer": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/computer_0",
+        "sounds/bullet/impact/computer_1",
+        "sounds/bullet/impact/computer_2",
+        "sounds/bullet/impact/computer_3",
+        "sounds/bullet/impact/computer_4"
+      ]
+    },
+    "bullet.impact.concrete": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/concrete_0",
+        "sounds/bullet/impact/concrete_1",
+        "sounds/bullet/impact/concrete_2",
+        "sounds/bullet/impact/concrete_3",
+        "sounds/bullet/impact/concrete_4"
+      ]
+    },
+    "bullet.impact.dirt": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/dirt_0",
+        "sounds/bullet/impact/dirt_1",
+        "sounds/bullet/impact/dirt_2",
+        "sounds/bullet/impact/dirt_3",
+        "sounds/bullet/impact/dirt_4"
+      ]
+    },
+    "bullet.impact.flesh": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/flesh_0",
+        "sounds/bullet/impact/flesh_1",
+        "sounds/bullet/impact/flesh_2",
+        "sounds/bullet/impact/flesh_3",
+        "sounds/bullet/impact/flesh_4"
+      ]
+    },
+    "bullet.impact.foliage": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/foliage_0",
+        "sounds/bullet/impact/foliage_1",
+        "sounds/bullet/impact/foliage_2",
+        "sounds/bullet/impact/foliage_3",
+        "sounds/bullet/impact/foliage_4"
+      ]
+    },
+    "bullet.impact.fruit": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/fruit_0",
+        "sounds/bullet/impact/fruit_1",
+        "sounds/bullet/impact/fruit_2",
+        "sounds/bullet/impact/fruit_3",
+        "sounds/bullet/impact/fruit_4"
+      ]
+    },
+    "bullet.impact.glass": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/glass_0",
+        "sounds/bullet/impact/glass_1",
+        "sounds/bullet/impact/glass_2",
+        "sounds/bullet/impact/glass_3"
+      ]
+    },
+    "bullet.impact.grass": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/grass_0",
+        "sounds/bullet/impact/grass_1",
+        "sounds/bullet/impact/grass_2",
+        "sounds/bullet/impact/grass_3",
+        "sounds/bullet/impact/grass_4"
+      ]
+    },
+    "bullet.impact.gravel": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/gravel_0",
+        "sounds/bullet/impact/gravel_1",
+        "sounds/bullet/impact/gravel_2",
+        "sounds/bullet/impact/gravel_3",
+        "sounds/bullet/impact/gravel_4"
+      ]
+    },
+    "bullet.impact.kevlar": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/kevlar_0",
+        "sounds/bullet/impact/kevlar_1",
+        "sounds/bullet/impact/kevlar_2",
+        "sounds/bullet/impact/kevlar_3",
+        "sounds/bullet/impact/kevlar_4"
+      ]
+    },
+    "bullet.impact.melon": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/melon_0",
+        "sounds/bullet/impact/melon_1",
+        "sounds/bullet/impact/melon_2",
+        "sounds/bullet/impact/melon_3",
+        "sounds/bullet/impact/melon_4"
+      ]
+    },
+    "bullet.impact.metal": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/metal_0",
+        "sounds/bullet/impact/metal_1",
+        "sounds/bullet/impact/metal_2",
+        "sounds/bullet/impact/metal_3",
+        "sounds/bullet/impact/metal_4"
+      ]
+    },
+    "bullet.impact.metal_barrel": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/metal_barrel_0",
+        "sounds/bullet/impact/metal_barrel_1",
+        "sounds/bullet/impact/metal_barrel_2",
+        "sounds/bullet/impact/metal_barrel_3",
+        "sounds/bullet/impact/metal_barrel_4"
+      ]
+    },
+    "bullet.impact.metal_panel": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/metal_panel_0",
+        "sounds/bullet/impact/metal_panel_1",
+        "sounds/bullet/impact/metal_panel_2",
+        "sounds/bullet/impact/metal_panel_3",
+        "sounds/bullet/impact/metal_panel_4"
+      ]
+    },
+    "bullet.impact.metal_solid": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/metal_solid_0",
+        "sounds/bullet/impact/metal_solid_1",
+        "sounds/bullet/impact/metal_solid_2",
+        "sounds/bullet/impact/metal_solid_3",
+        "sounds/bullet/impact/metal_solid_4"
+      ]
+    },
+    "bullet.impact.mud": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/mud_0",
+        "sounds/bullet/impact/mud_1",
+        "sounds/bullet/impact/mud_2",
+        "sounds/bullet/impact/mud_3",
+        "sounds/bullet/impact/mud_4"
+      ]
+    },
+    "bullet.impact.plastic": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/plastic_0",
+        "sounds/bullet/impact/plastic_1",
+        "sounds/bullet/impact/plastic_2",
+        "sounds/bullet/impact/plastic_3",
+        "sounds/bullet/impact/plastic_4"
+      ]
+    },
+    "bullet.impact.player": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/player_0",
+        "sounds/bullet/impact/player_1",
+        "sounds/bullet/impact/player_2",
+        "sounds/bullet/impact/player_3",
+        "sounds/bullet/impact/player_4"
+      ]
+    },
+    "bullet.impact.pottery": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/pottery_0",
+        "sounds/bullet/impact/pottery_1",
+        "sounds/bullet/impact/pottery_2",
+        "sounds/bullet/impact/pottery_3",
+        "sounds/bullet/impact/pottery_4"
+      ]
+    },
+    "bullet.impact.sand": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/sand_0",
+        "sounds/bullet/impact/sand_1",
+        "sounds/bullet/impact/sand_2",
+        "sounds/bullet/impact/sand_3",
+        "sounds/bullet/impact/sand_4"
+      ]
+    },
+    "bullet.impact.tile": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/tile_0",
+        "sounds/bullet/impact/tile_1",
+        "sounds/bullet/impact/tile_2",
+        "sounds/bullet/impact/tile_3",
+        "sounds/bullet/impact/tile_4"
+      ]
+    },
+    "bullet.impact.vehicle": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/vehicle_0",
+        "sounds/bullet/impact/vehicle_1",
+        "sounds/bullet/impact/vehicle_2",
+        "sounds/bullet/impact/vehicle_3",
+        "sounds/bullet/impact/vehicle_4"
+      ]
+    },
+    "bullet.impact.water": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/water_0",
+        "sounds/bullet/impact/water_1",
+        "sounds/bullet/impact/water_2",
+        "sounds/bullet/impact/water_3",
+        "sounds/bullet/impact/water_4"
+      ]
+    },
+    "bullet.impact.wood": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/wood_0",
+        "sounds/bullet/impact/wood_1",
+        "sounds/bullet/impact/wood_2",
+        "sounds/bullet/impact/wood_3",
+        "sounds/bullet/impact/wood_4"
+      ]
+    },
+    "bullet.impact.wood_planks": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/impact/wood_planks_0",
+        "sounds/bullet/impact/wood_planks_1",
+        "sounds/bullet/impact/wood_planks_2",
+        "sounds/bullet/impact/wood_planks_3",
+        "sounds/bullet/impact/wood_planks_4"
+      ]
+    },
+    "bullet.reload.in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/reload/bullet_in_0",
+        "sounds/bullet/reload/bullet_in_1",
+        "sounds/bullet/reload/bullet_in_2",
+        "sounds/bullet/reload/bullet_in_3"
+      ]
+    },
+    "bullet.ricochet": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/ricochet/ricochet_0",
+        "sounds/bullet/ricochet/ricochet_1",
+        "sounds/bullet/ricochet/ricochet_2",
+        "sounds/bullet/ricochet/ricochet_3",
+        "sounds/bullet/ricochet/ricochet_4",
+        "sounds/bullet/ricochet/ricochet_5",
+        "sounds/bullet/ricochet/ricochet_6",
+        "sounds/bullet/ricochet/ricochet_7",
+        "sounds/bullet/ricochet/ricochet_8",
+        "sounds/bullet/ricochet/ricochet_9",
+        "sounds/bullet/ricochet/ricochet_10",
+        "sounds/bullet/ricochet/ricochet_11",
+        "sounds/bullet/ricochet/ricochet_12",
+        "sounds/bullet/ricochet/ricochet_13",
+        "sounds/bullet/ricochet/ricochet_14",
+        "sounds/bullet/ricochet/ricochet_15",
+        "sounds/bullet/ricochet/ricochet_16"
+      ]
+    },
+    "bullet.subsonic.light": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/subsonic/light_0",
+        "sounds/bullet/subsonic/light_1",
+        "sounds/bullet/subsonic/light_2",
+        "sounds/bullet/subsonic/light_3",
+        "sounds/bullet/subsonic/light_4",
+        "sounds/bullet/subsonic/light_5",
+        "sounds/bullet/subsonic/light_6"
+      ]
+    },
+    "bullet.supersonic.outdoor.bulletby": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/supersonic/outdoor/bulletby_0",
+        "sounds/bullet/supersonic/outdoor/bulletby_1",
+        "sounds/bullet/supersonic/outdoor/bulletby_2",
+        "sounds/bullet/supersonic/outdoor/bulletby_3",
+        "sounds/bullet/supersonic/outdoor/bulletby_4",
+        "sounds/bullet/supersonic/outdoor/bulletby_5",
+        "sounds/bullet/supersonic/outdoor/bulletby_6",
+        "sounds/bullet/supersonic/outdoor/bulletby_7",
+        "sounds/bullet/supersonic/outdoor/bulletby_8"
+      ]
+    },
+    "bullet.supersonic.outdoor.bulletby.alt": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/bullet/supersonic/outdoor/bulletby_alt_0",
+        "sounds/bullet/supersonic/outdoor/bulletby_alt_1",
+        "sounds/bullet/supersonic/outdoor/bulletby_alt_2",
+        "sounds/bullet/supersonic/outdoor/bulletby_alt_3",
+        "sounds/bullet/supersonic/outdoor/bulletby_alt_4",
+        "sounds/bullet/supersonic/outdoor/bulletby_alt_5",
+        "sounds/bullet/supersonic/outdoor/bulletby_alt_6",
+        "sounds/bullet/supersonic/outdoor/bulletby_alt_7",
+        "sounds/bullet/supersonic/outdoor/bulletby_alt_8"
+      ]
+    },
+    "effect.explosion.debris": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/explosion/debris_0",
+        "sounds/effect/explosion/debris_1",
+        "sounds/effect/explosion/debris_2",
+        "sounds/effect/explosion/debris_3"
+      ]
+    },
+    "effect.explosion.distant": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/explosion/distant_0",
+        "sounds/effect/explosion/distant_1",
+        "sounds/effect/explosion/distant_2",
+        "sounds/effect/explosion/distant_3"
+      ]
+    },
+    "effect.explosion.explode": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/explosion/explode_0",
+        "sounds/effect/explosion/explode_1",
+        "sounds/effect/explosion/explode_2",
+        "sounds/effect/explosion/explode_3"
+      ]
+    },
+    "effect.explosion.indoors": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/explosion/indoors_0",
+        "sounds/effect/explosion/indoors_1",
+        "sounds/effect/explosion/indoors_2",
+        "sounds/effect/explosion/indoors_3"
+      ]
+    },
+    "effect.weapon.ads_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/weapon/ads_in"
+      ]
+    },
+    "effect.weapon.ads_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/weapon/ads_out"
+      ]
+    },
+    "effect.weapon.attach": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/weapon/attach"
+      ]
+    },
+    "effect.weapon.dist.large_extra": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/effect/weapon/dist_large_extra",
+          "volume": 0.5
+        }
+      ]
+    },
+    "effect.weapon.dist.large": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/effect/weapon/dist_large",
+          "volume": 0.5
+        }
+      ]
+    },
+    "effect.weapon.dist.low": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/effect/weapon/dist_low",
+          "volume": 0.5
+        }
+      ]
+    },
+    "effect.weapon.dist.medium": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/effect/weapon/dist_medium",
+          "volume": 0.5
+        }
+      ]
+    },
+    "effect.weapon.dist.short": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/effect/weapon/dist_short",
+          "volume": 0.5
+        }
+      ]
+    },
+    "effect.weapon.draw": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/weapon/draw_0",
+        "sounds/effect/weapon/draw_1",
+        "sounds/effect/weapon/draw_2",
+        "sounds/effect/weapon/draw_3",
+        "sounds/effect/weapon/draw_4",
+        "sounds/effect/weapon/draw_5",
+        "sounds/effect/weapon/draw_6"
+      ]
+    },
+    "effect.weapon.dryfire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/weapon/dryfire"
+      ]
+    },
+    "effect.weapon.holster": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/weapon/holster"
+      ]
+    },
+    "effect.weapon.iron_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/weapon/iron_in"
+      ]
+    },
+    "effect.weapon.iron_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/weapon/iron_out"
+      ]
+    },
+    "effect.weapon.lean_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/weapon/lean_in"
+      ]
+    },
+    "effect.weapon.lean_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/weapon/lean_out"
+      ]
+    },
+    "effect.gunshot": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/gunshot/gunshot_0",
+        "sounds/effect/gunshot/gunshot_1",
+        "sounds/effect/gunshot/gunshot_2",
+        "sounds/effect/gunshot/gunshot_3"
+      ]
+    },
+    "effect.player.voice.no_ammo": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/player/voice/no_ammo_0",
+        "sounds/effect/player/voice/no_ammo_1"
+      ]
+    },
+    "effect.player.voice.reload": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/player/voice/reload_0",
+        "sounds/effect/player/voice/reload_1",
+        "sounds/effect/player/voice/reload_2",
+        "sounds/effect/player/voice/reload_3",
+        "sounds/effect/player/voice/reload_4"
+      ]
+    },
+    "effect.player.blind": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/player/blind"
+      ]
+    },
+    "effect.player.hitmarker": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/player/hitmarker"
+      ]
+    },
+    "effect.player.splat": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/effect/player/splat"
+      ]
+    },
+    "effect.landmine": {
+      "category": "block",
+      "sounds": [
+        "sounds/effect/landmine"
+      ]
+    },
+    "weapon.ak12.arm_movement": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/arm_movement"
+      ]
+    },
+    "weapon.ak12.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/fire"
+      ]
+    },
+    "weapon.ak12.fire.dist": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/weapons/ak12/fire",
+          "volume": 0.8,
+          "pitch": 0.5
+        }
+      ]
+    },
+    "weapon.ak12.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/fire_indoor"
+      ]
+    },
+    "weapon.ak12.fire_silenced": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/fire_silenced"
+      ]
+    },
+    "weapon.ak12.fire_silenced.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/fire_silenced_indoor"
+      ]
+    },
+    "weapon.ak12.hand_grab": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/hand_grab"
+      ]
+    },
+    "weapon.ak12.mag_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/mag_in"
+      ]
+    },
+    "weapon.ak12.mag_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/mag_out"
+      ]
+    },
+    "weapon.ak12.mag_out_arm_movement": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/mag_out_arm_movement"
+      ]
+    },
+    "weapon.ak12.mag_out_arm_movement_speed": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/mag_out_arm_movement_speed"
+      ]
+    },
+    "weapon.ak12.pull_back": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/pull_back"
+      ]
+    },
+    "weapon.ak12.pull_forward": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/pull_forward"
+      ]
+    },
+    "weapon.ak47.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak47/fire"
+      ]
+    },
+    "weapon.ak47.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak47/fire_indoor"
+      ]
+    },
+    "weapon.ak47.mag_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak47/mag_in"
+      ]
+    },
+    "weapon.ak47.mag_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak47/mag_out"
+      ]
+    },
+    "weapon.ak47.pull_back": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak47/pull_back"
+      ]
+    },
+    "weapon.ak47.pull_forward": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak47/pull_forward"
+      ]
+    },
+    "weapon.awp.arm_movement": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/awp/arm_movement"
+      ]
+    },
+    "weapon.awp.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/awp/fire"
+      ]
+    },
+    "weapon.awp.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/awp/fire_indoor"
+      ]
+    },
+    "weapon.awp.mag_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/awp/mag_in"
+      ]
+    },
+    "weapon.awp.mag_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/awp/mag_out"
+      ]
+    },
+    "weapon.awp.pull_back": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/awp/pull_back"
+      ]
+    },
+    "weapon.awp.pull_forward": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/awp/pull_forward"
+      ]
+    },
+    "weapon.deagle.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/fire"
+      ]
+    },
+    "weapon.deagle.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/fire_indoor"
+      ]
+    },
+    "weapon.deagle.fire_silenced": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/fire_silenced"
+      ]
+    },
+    "weapon.deagle.fire_silenced.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/fire_silenced_indoor"
+      ]
+    },
+    "weapon.deagle.mag_hit": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/mag_hit"
+      ]
+    },
+    "weapon.deagle.mag_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/mag_in"
+      ]
+    },
+    "weapon.deagle.mag_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/mag_out"
+      ]
+    },
+    "weapon.deagle.mag_release": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/mag_release"
+      ]
+    },
+    "weapon.deagle.safety": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/safety"
+      ]
+    },
+    "weapon.deagle.slide_back": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/slide_back"
+      ]
+    },
+    "weapon.deagle.slide_release": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/deagle/slide_release"
+      ]
+    },
+    "weapon.fnfal.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/fnfal/fire"
+      ]
+    },
+    "weapon.fnfal.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/fnfal/fire_indoor"
+      ]
+    },
+    "weapon.fnfal.fire_silenced": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/fire_silenced"
+      ]
+    },
+    "weapon.fnfal.fire_silenced.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/ak12/fire_silenced_indoor"
+      ]
+    },
+    "weapon.fnfal.mag_hit": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/fnfal/mag_hit"
+      ]
+    },
+    "weapon.fnfal.mag_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/fnfal/mag_in"
+      ]
+    },
+    "weapon.fnfal.mag_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/fnfal/mag_out"
+      ]
+    },
+    "weapon.fnfal.pull_back": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/fnfal/pull_back"
+      ]
+    },
+    "weapon.fnfal.pull_forward": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/fnfal/pull_forward"
+      ]
+    },
+    "weapon.glock.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/glock/fire"
+      ]
+    },
+    "weapon.glock.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/glock/fire_indoor"
+      ]
+    },
+    "weapon.glock.fire_silenced": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/glock/fire_silenced"
+      ]
+    },
+    "weapon.glock.fire_silenced.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/glock/fire_silenced_indoor"
+      ]
+    },
+    "weapon.glock.mag_hit": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/glock/mag_hit"
+      ]
+    },
+    "weapon.glock.mag_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/glock/mag_in"
+      ]
+    },
+    "weapon.glock.mag_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/glock/mag_out"
+      ]
+    },
+    "weapon.glock.slide_back": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/glock/slide_back"
+      ]
+    },
+    "weapon.glock.slide_release": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/glock/slide_release"
+      ]
+    },
+    "weapon.m249.belt_align": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/belt_align"
+      ]
+    },
+    "weapon.m249.belt_pull_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/belt_pull_out"
+      ]
+    },
+    "weapon.m249.belt_remove": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/belt_remove"
+      ]
+    },
+    "weapon.m249.bullet_jingle": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/bullet_jingle"
+      ]
+    },
+    "weapon.m249.cover_down": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/cover_down"
+      ]
+    },
+    "weapon.m249.cover_up": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/cover_up"
+      ]
+    },
+    "weapon.m249.fetch_mag": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/fetch_mag"
+      ]
+    },
+    "weapon.m249.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/fire"
+      ]
+    },
+    "weapon.m249.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/fire_indoor"
+      ]
+    },
+    "weapon.m249.fire.belt": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/fire_belt"
+      ]
+    },
+    "weapon.m249.fire.belt.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/fire_belt_indoor"
+      ]
+    },
+    "weapon.m249.mag_hit": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/mag_hit"
+      ]
+    },
+    "weapon.m249.mag_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/mag_in"
+      ]
+    },
+    "weapon.m249.mag_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/mag_out"
+      ]
+    },
+    "weapon.m249.mag_out_full": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/mag_out_full"
+      ]
+    },
+    "weapon.m249.pull_back": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/pull_back"
+      ]
+    },
+    "weapon.m249.pull_forward": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/pull_forward"
+      ]
+    },
+    "weapon.m249.shoulder": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/shoulder"
+      ]
+    },
+    "weapon.m249.throw_away_remaining": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m249/throw_away_remaining"
+      ]
+    },
+    "weapon.m4a1.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m4a1/fire"
+      ]
+    },
+    "weapon.m4a1.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m4a1/fire_indoor"
+      ]
+    },
+    "weapon.m4a1.fire_silenced": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m4a1/fire_silenced"
+      ]
+    },
+    "weapon.m4a1.fire_silenced.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m4a1/fire_silenced_indoor"
+      ]
+    },
+    "weapon.m4a1.mag_hit": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m4a1/mag_hit"
+      ]
+    },
+    "weapon.m4a1.mag_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m4a1/mag_in"
+      ]
+    },
+    "weapon.m4a1.mag_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m4a1/mag_out"
+      ]
+    },
+    "weapon.m4a1.pull_back": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m4a1/pull_back"
+      ]
+    },
+    "weapon.m4a1.pull_forward": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/m4a1/pull_forward"
+      ]
+    },
+    "weapon.mossberg.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mossberg/fire"
+      ]
+    },
+    "weapon.mossberg.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mossberg/fire_indoor"
+      ]
+    },
+    "weapon.mossberg.pump_back": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mossberg/pump_back"
+      ]
+    },
+    "weapon.mossberg.pump_forward": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mossberg/pump_forward"
+      ]
+    },
+    "weapon.mossberg.shell_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mossberg/shell_in"
+      ]
+    },
+    "weapon.mp5a5.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mp5a5/fire"
+      ]
+    },
+    "weapon.mp5a5.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mp5a5/fire_indoor"
+      ]
+    },
+    "weapon.mp5a5.fire_silenced": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mp5a5/fire_silenced"
+      ]
+    },
+    "weapon.mp5a5.fire_silenced.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mp5a5/fire_silenced_indoor"
+      ]
+    },
+    "weapon.mp5a5.mag_in": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mp5a5/mag_in"
+      ]
+    },
+    "weapon.mp5a5.mag_out": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mp5a5/mag_out"
+      ]
+    },
+    "weapon.mp5a5.pull_back": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mp5a5/pull_back"
+      ]
+    },
+    "weapon.mp5a5.pull_forward": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/mp5a5/pull_forward"
+      ]
+    },
+    "weapon.rpg7.begin_reload": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/rpg7/begin_reload"
+      ]
+    },
+    "weapon.rpg7.fire": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/rpg7/fire"
+      ]
+    },
+    "weapon.rpg7.fire.indoor": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/rpg7/fire_indoor"
+      ]
+    },
+    "weapon.rpg7.insert_round_1": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/rpg7/insert_round_1"
+      ]
+    },
+    "weapon.rpg7.insert_round_2": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/rpg7/insert_round_2"
+      ]
+    },
+    "weapon.rpg7.lock_round": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/rpg7/lock_round"
+      ]
+    },
+    "weapon.rpg7.rocket_ignition": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/rpg7/rocket_ignition"
+      ]
+    },
+    "weapon.rpg7.safety_shoulder": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/weapons/rpg7/safety_shoulder"
+      ]
+    },
+    "throwable.flash_grenade.explode": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/throwable/flash_grenade/explode"
+      ]
+    },
+    "throwable.grenade.drop": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/throwable/grenade/drop"
+      ]
+    },
+    "throwable.grenade.throw": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/throwable/grenade/throw"
+      ]
+    },
+    "throwable.smoke_grenade.burn_loop_end": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/throwable/smoke_grenade/burn_loop_end"
+      ]
+    },
+    "throwable.smoke_grenade.detonate": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/throwable/smoke_grenade/detonate"
+      ]
+    },
+    "wearable.nvg.toggle": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/wearable/nvg/toggle"
+      ]
+    },
+    "wearable.nvg.toggleoff": {
+      "category": "neutral",
+      "sounds": [
+        "sounds/wearable/nvg/toggleoff"
+      ]
+    },
+    "medic.potion_shatter": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/glass1",
+          "pitch": 1.0,
+          "volume": 1.0
+        },
+        {
+          "name": "sounds/random/glass2",
+          "pitch": 1.1,
+          "volume": 1.0
+        }
+      ]
+    }
+  }
+}

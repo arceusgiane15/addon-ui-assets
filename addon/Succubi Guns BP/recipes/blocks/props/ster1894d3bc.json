@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "trenbankai:sandbag"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BCB",
+      "AAA",
+      "BCB"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:sand"
+      },
+      "B": {
+        "item": "minecraft:string"
+      },
+      "C": {
+        "item": "minecraft:leather"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:sand"
+      }
+    ],
+    "result": {
+      "item": "trenbankai:sandbag",
+      "count": 2
+    }
+  }
+}

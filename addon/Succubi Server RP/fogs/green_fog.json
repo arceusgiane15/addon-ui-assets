@@ -1,0 +1,16 @@
+{
+  "format_version": "1.16.100",
+  "minecraft:fog_settings": {
+    "description": {
+      "identifier": "succubi:green_fog"
+    },
+    "distance": {
+      "air": {
+        "fog_start": 3,
+        "fog_end": 38,
+        "fog_color": "#1E4A1A",
+        "render_distance_type": "fixed"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "succubi:book_stall",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/succubi_shops/book_stall"
+      },
+      "geometry": {
+        "default": "geometry.book_stall"
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ],
+      "enable_attachables": false
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.silencer",
+        "texture_width": 32,
+        "texture_height": 32,
+        "visible_bounds_width": 7,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "binding": "q.item_slot_to_bone_name((c.item_slot == 'off_hand') ? 'body' : 'main_hand')"
+        },
+        {
+          "name": "attachment",
+          "parent": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "silencer",
+          "parent": "attachment",
+          "pivot": [
+            0,
+            0.05,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.25,
+                -1.2,
+                -5
+              ],
+              "size": [
+                2.5,
+                2.5,
+                10
+              ],
+              "pivot": [
+                0,
+                0.05,
+                0
+              ],
+              "rotation": [
+                0,
+                0,
+                45
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

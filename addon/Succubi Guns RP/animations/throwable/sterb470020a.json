@@ -1,0 +1,301 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.throwable.throw_fpp": {
+      "animation_length": 0.4167,
+      "bones": {
+        "rightItem": {
+          "rotation": {
+            "0.2917": [
+              0,
+              0,
+              0
+            ],
+            "0.375": [
+              42.5,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.2917": [
+              0,
+              0,
+              0
+            ],
+            "0.375": [
+              0,
+              -1,
+              0
+            ]
+          },
+          "scale": {
+            "0.2917": [
+              1,
+              1,
+              1
+            ],
+            "0.4167": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          }
+        },
+        "body": {
+          "rotation": {
+            "0.0": {
+              "post": [
+                0,
+                0,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.125": {
+              "post": [
+                0,
+                30,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.2083": {
+              "post": [
+                0,
+                30,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.2917": {
+              "post": [
+                4,
+                0,
+                4
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.4167": [
+              0,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.0": {
+              "post": [
+                0,
+                0,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.125": {
+              "post": [
+                -1,
+                0,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.2917": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "leftArm": {
+          "rotation": {
+            "0.0": {
+              "post": [
+                0,
+                0,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.125": {
+              "post": [
+                5,
+                0,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.2083": {
+              "post": [
+                10,
+                -10,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.375": [
+              0,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.0": {
+              "post": [
+                0,
+                0,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.125": {
+              "post": [
+                -4,
+                0,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.2083": {
+              "post": [
+                1,
+                -1,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.375": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightArm": {
+          "rotation": {
+            "0.2083": {
+              "pre": [
+                0,
+                0,
+                0
+              ],
+              "post": [
+                0,
+                0,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.2917": {
+              "post": [
+                15,
+                0,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.375": [
+              0,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.2083": {
+              "pre": [
+                0,
+                0,
+                0
+              ],
+              "post": [
+                0,
+                0,
+                0
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.2917": {
+              "post": [
+                0,
+                1,
+                -2
+              ],
+              "lerp_mode": "catmullrom"
+            },
+            "0.4167": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.throwable.aim_fpp": {
+      "loop": true,
+      "bones": {
+        "body": {
+          "position": [
+            "q.main_hand_item_use_duration ? 1 : -0",
+            0,
+            0
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            "-40 - math.sin(q.life_time * 110)",
+            "-math.cos(q.life_time * 100)",
+            "120 + math.cos(q.life_time * 140)"
+          ],
+          "position": [
+            7,
+            1,
+            0
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            "10 - math.sin(q.life_time * 110)",
+            0,
+            10
+          ],
+          "position": [
+            0,
+            2,
+            2
+          ]
+        }
+      }
+    },
+    "animation.throwable.hold_fpp": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "rotation": [
+            0,
+            180,
+            0
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -100,
+            -4,
+            5
+          ],
+          "position": [
+            1.5,
+            -1,
+            0
+          ]
+        },
+        "body": {
+          "rotation": [
+            "q.is_sneaking ? 0 : math.sin(q.life_time * 103) * 0.2",
+            "q.is_sneaking ? 0 : math.cos(q.life_time * 113) * 0.4",
+            "q.is_sneaking ? 0 : math.cos(q.life_time * 93) * 0.4"
+          ]
+        }
+      }
+    }
+  }
+}

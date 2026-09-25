@@ -1,0 +1,448 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.weapons_vars": {
+      "initial_state": "set",
+      "states": {
+        "set": {
+          "on_entry": [
+            "v.draw = !q.is_sleeping && !q.is_emoting && !q.is_swimming && !q.is_crawling && q.is_alive;",
+            "v.fire = q.main_hand_item_use_duration && !q.property('trenbankai:reload') && !q.property('trenbankai:standby') && q.is_alive;",
+            "v.cycle = q.property('trenbankai:cycle') && q.is_alive;",
+            "v.reload = !q.property('trenbankai:reload') && q.is_alive;",
+            "v.reloading = q.property('trenbankai:reload') && q.is_alive;"
+          ],
+          "transitions": [
+            {
+              "loop": "1"
+            }
+          ]
+        },
+        "loop": {
+          "transitions": [
+            {
+              "set": "1"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.weapons_setup": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "on_entry": [
+            "v.draw = !q.is_sleeping && !q.is_emoting && !q.is_swimming && !q.is_crawling && q.is_alive;",
+            "v.fire = q.main_hand_item_use_duration && !q.property('trenbankai:reload') && !q.property('trenbankai:standby') && q.is_alive;",
+            "v.cycle = q.property('trenbankai:cycle') && q.is_alive;",
+            "v.reload = !q.property('trenbankai:reload') && q.is_alive;",
+            "v.reloading = q.property('trenbankai:reload') && q.is_alive;"
+          ],
+          "animations": [
+            {
+              "weapons_vars_controller": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon')"
+            },
+            {
+              "ak12_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12')"
+            },
+            {
+              "ak47_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak47')"
+            },
+            {
+              "ak74_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak74')"
+            },
+            {
+              "akm_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:akm')"
+            },
+            {
+              "aks74u_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:aks74u')"
+            },
+            {
+              "awp_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp')"
+            },
+            {
+              "deagle_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:deagle')"
+            },
+            {
+              "fnfal_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:fnfal')"
+            },
+            {
+              "parafal_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:parafal')"
+            },
+            {
+              "glock17_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:glock17')"
+            },
+            {
+              "glock18_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:glock18')"
+            },
+            {
+              "m249_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m249')"
+            },
+            {
+              "m4a1_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m4a1')"
+            },
+            {
+              "mossberg_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg')"
+            },
+            {
+              "mp5a5_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mp5a5')"
+            },
+            {
+              "rpg7_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:rpg7')"
+            },
+            {
+              "m1014_controller": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014')"
+            },
+            {
+              "weapons_bullet_counter_controller": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon')"
+            },
+            {
+              "weapons_sight_controller": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon')"
+            },
+            {
+              "weapons_ads_controller": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon')"
+            },
+            {
+              "weapons_standby_controller": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon')"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.weapons_bullet_counter": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "transitions": [
+            {
+              "display": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon') && !q.property('trenbankai:reload')"
+            },
+            {
+              "reloading": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon') && q.property('trenbankai:reload')"
+            }
+          ]
+        },
+        "display": {
+          "on_entry": [
+            "/function weapons/bullet_counter/display"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.property('trenbankai:reload')"
+            },
+            {
+              "reloading": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon') && q.property('trenbankai:reload')"
+            }
+          ]
+        },
+        "reloading": {
+          "on_entry": [
+            "/titleraw @s actionbar {\"rawtext\":[{\"translate\":\"game.tip.reloading\"}]}"
+          ],
+          "transitions": [
+            {
+              "inactive": "q.property('trenbankai:reload')"
+            },
+            {
+              "display": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon') && !q.property('trenbankai:reload')"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.weapons_sight": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "transitions": [
+            {
+              "acog": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 1 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            },
+            {
+              "eotech": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 2 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            },
+            {
+              "okp7": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 3 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            },
+            {
+              "scope_hp": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 4 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            },
+            {
+              "scope_lp": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 5 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            },
+            {
+              "default": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 0 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/effect @s slowness 0 0"
+          ]
+        },
+        "acog": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 1 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/effect @s slowness 999999999 4 true"
+          ],
+          "on_exit": [
+            "/effect @s slowness 0 0"
+          ]
+        },
+        "eotech": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 2 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/effect @s slowness 999999999 3 true"
+          ],
+          "on_exit": [
+            "/effect @s slowness 0 0"
+          ]
+        },
+        "okp7": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 3 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/effect @s slowness 999999999 2 true"
+          ],
+          "on_exit": [
+            "/effect @s slowness 0 0"
+          ]
+        },
+        "scope_hp": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 4 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/effect @s slowness 999999999 8 true"
+          ],
+          "on_exit": [
+            "/effect @s slowness 0 0"
+          ]
+        },
+        "scope_lp": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 5 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/effect @s slowness 999999999 6 true"
+          ],
+          "on_exit": [
+            "/effect @s slowness 0 0"
+          ]
+        },
+        "default": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 0 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/effect @s slowness 999999999 1 true"
+          ],
+          "on_exit": [
+            "/effect @s slowness 0 0"
+          ]
+        }
+      }
+    },
+    "controller.animation.player.weapons_sight_fov": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "transitions": [
+            {
+              "acog": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 1 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            },
+            {
+              "eotech": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 2 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            },
+            {
+              "okp7": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 3 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            },
+            {
+              "scope_hp": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 4 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            },
+            {
+              "scope_lp": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 5 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            },
+            {
+              "default": "q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') && q.property('trenbankai:sight') == 0 && !q.property('trenbankai:reload') && !q.property('trenbankai:wall_detect') && q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/camera @s fov_clear 0.4 linear"
+          ]
+        },
+        "acog": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 1 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/camera @s fov_set 40 0.4 linear"
+          ],
+          "on_exit": [
+            "/camera @s fov_clear 0.4 linear"
+          ]
+        },
+        "eotech": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 2 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/camera @s fov_set 45 0.4 linear"
+          ],
+          "on_exit": [
+            "/camera @s fov_clear 0.4 linear"
+          ]
+        },
+        "okp7": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 3 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/camera @s fov_set 45 0.4 linear"
+          ],
+          "on_exit": [
+            "/camera @s fov_clear 0.4 linear"
+          ]
+        },
+        "scope_hp": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 4 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/camera @s fov_set 30 0.4 linear"
+          ],
+          "on_exit": [
+            "/camera @s fov_clear 0.4 linear"
+          ]
+        },
+        "scope_lp": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 5 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/camera @s fov_set 30 0.4 linear"
+          ],
+          "on_exit": [
+            "/camera @s fov_clear 0.4 linear"
+          ]
+        },
+        "default": {
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand','is_weapon') || q.property('trenbankai:sight') != 0 ||q.property('trenbankai:reload') || q.property('trenbankai:wall_detect') || !q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/camera @s fov_set 60 0.4 linear"
+          ],
+          "on_exit": [
+            "/camera @s fov_clear 0.4 linear"
+          ]
+        }
+      }
+    },
+    "controller.animation.player.weapons_ads": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "transitions": [
+            {
+              "ads": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon') && q.is_sneaking"
+            }
+          ],
+          "on_entry": [
+            "/hud @s reset crosshair"
+          ],
+          "on_exit": [
+            "/hud @s hide crosshair"
+          ]
+        },
+        "ads": {
+          "on_entry": [
+            "/camerashake add @s 0.04 0.2 rotational",
+            "/playsound effect.weapon.ads_out @a[r=20] ^^^1.5 1 1 0.01"
+          ],
+          "on_exit": [
+            "/camerashake add @s 0.04 0.2 rotational",
+            "/playsound effect.weapon.ads_in @a[r=20] ^^^1.5 1 1 0.01"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_weapon') || !q.is_sneaking"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.weapons_standby": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "on_entry": [
+            "@s trenbankai:remove_standby"
+          ],
+          "on_exit": [
+            "@s trenbankai:add_standby",
+            "v.weapon_standby = q.life_time;"
+          ],
+          "animations": [
+            "weapons_standby"
+          ],
+          "transitions": [
+            {
+              "pre_standby": "q.all_animations_finished && !q.main_hand_item_use_duration && !q.is_sneaking && !q.is_sprinting && !q.property('trenbankai:reload') && !q.property('trenbankai:cycle') && !q.property('trenbankai:wall_detect') && q.is_alive"
+            }
+          ]
+        },
+        "pre_standby": {
+          "transitions": [
+            {
+              "standby": "q.all_animations_finished && !q.main_hand_item_use_duration && !q.is_sneaking && !q.is_sprinting && !q.property('trenbankai:reload') && !q.property('trenbankai:cycle') && !q.property('trenbankai:wall_detect') && q.is_alive"
+            },
+            {
+              "inactive": "!q.property('trenbankai:standby') || q.main_hand_item_use_duration || q.is_sneaking || q.is_sprinting || q.property('trenbankai:reload') || q.property('trenbankai:cycle') || q.property('trenbankai:wall_detect') || !q.is_alive"
+            }
+          ]
+        },
+        "standby": {
+          "on_entry": [
+            "@s trenbankai:add_standby"
+          ],
+          "on_exit": [
+            "@s trenbankai:remove_standby"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.property('trenbankai:standby') || q.main_hand_item_use_duration || q.is_sneaking || q.is_sprinting || q.property('trenbankai:reload') || q.property('trenbankai:cycle') || q.property('trenbankai:wall_detect') || !q.is_alive"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

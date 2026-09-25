@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "succubi:book_prayer",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.succubi:book_prayer.name"
+      },
+      "minecraft:icon": "succubi_book_prayer",
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

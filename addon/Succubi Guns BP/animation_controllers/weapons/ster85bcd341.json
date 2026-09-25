@@ -1,0 +1,118 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.ak12": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "on_entry": [
+            "@s trenbankai:remove_reload"
+          ],
+          "transitions": [
+            {
+              "fire": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') && q.scoreboard('ak12') >= 1 && v.fire && v.draw"
+            },
+            {
+              "pre_reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') && q.scoreboard('ak12') <= 0 && v.reload"
+            },
+            {
+              "pre_reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') && q.scoreboard('ak12') <= 29 && v.reload && q.is_sneaking && v.attack_time"
+            }
+          ]
+        },
+        "fire": {
+          "on_entry": [
+            "/function weapons/fire/ak12"
+          ],
+          "on_exit": [
+            "v.weapon_fire = q.life_time;"
+          ],
+          "transitions": [
+            {
+              "firing": "(1.0)"
+            }
+          ]
+        },
+        "firing": {
+          "on_entry": [
+            "v.weapon_fire = q.life_time;"
+          ],
+          "transitions": [
+            {
+              "post_fire": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') || q.scoreboard('ak12') <= 0 || !v.fire || !v.draw"
+            },
+            {
+              "fire": "(q.life_time - v.weapon_fire) >= 0.022"
+            }
+          ]
+        },
+        "post_fire": {
+          "on_entry": [
+            "/execute as @s[tag=!underground, tag=!silencer] run playsound effect.weapon.dist.medium @a[rm=0.1, r=200] ^^^1.5 100 1 0.01"
+          ],
+          "transitions": [
+            {
+              "inactive": "(1.0)"
+            }
+          ]
+        },
+        "pre_reload": {
+          "on_entry": [
+            "/execute as @s[hasitem={item=trenbankai:ak12_mag, quantity=1..}, scores={ak12=..0}] run event entity @s trenbankai:add_reload_empty",
+            "/execute as @s[hasitem={item=trenbankai:ak12_mag, quantity=1..}, scores={ak12=1..}] run event entity @s trenbankai:add_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') || !q.property('trenbankai:reload') || !q.is_alive"
+            },
+            {
+              "reload_empty": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') && q.property('trenbankai:reload') == 1 && v.reloading"
+            },
+            {
+              "reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') && q.property('trenbankai:reload') == 2 && v.reloading"
+            }
+          ]
+        },
+        "reload_empty": {
+          "animations": [
+            "ak12_reload_empty"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') || !v.reloading"
+            },
+            {
+              "reloaded": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') && q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "reload": {
+          "animations": [
+            "ak12_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') || !v.reloading"
+            },
+            {
+              "reloaded": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') && q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "reloaded": {
+          "on_entry": [
+            "/execute as @s[hasitem={item=trenbankai:ak12, location=slot.weapon.mainhand}] run function weapons/reload/ak12"
+          ],
+          "transitions": [
+            {
+              "inactive": "1"
+            },
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:ak12') || !v.draw"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

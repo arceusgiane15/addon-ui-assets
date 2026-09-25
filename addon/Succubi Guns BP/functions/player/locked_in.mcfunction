@@ -1,0 +1,29 @@
+replaceitem entity @a slot.inventory 0 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 1 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 2 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 3 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 4 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 5 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 6 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 7 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 8 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 9 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 10 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 11 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 12 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 13 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 14 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 15 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 16 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 17 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 18 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 19 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 20 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 21 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 22 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 23 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 24 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 25 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+replaceitem entity @a slot.inventory 26 c7afd424:b1fb687a 1 0 {"item_lock":{"mode":"lock_in_slot"}}
+
+kill @e[type=item, name="Lock Invntory Slot"]

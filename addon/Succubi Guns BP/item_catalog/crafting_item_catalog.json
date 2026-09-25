@@ -1,0 +1,174 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:crafting_items_catalog": {
+    "categories": [
+      {
+        "category_name": "construction",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "trenbankai:container_blue",
+              "name": "itemGroup.name.trenbankai:containers"
+            },
+            "items": [
+              "trenbankai:container_blue",
+              "trenbankai:container_brown",
+              "trenbankai:container_green",
+              "trenbankai:container_red"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "construction",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "trenbankai:hesco_olive",
+              "name": "itemGroup.name.trenbankai:hesco"
+            },
+            "items": [
+              "trenbankai:hesco_olive",
+              "trenbankai:hesco_snow",
+              "trenbankai:hesco_tan"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "construction",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "trenbankai:spotlight",
+              "name": "itemGroup.name.trenbankai:props"
+            },
+            "items": [
+              "trenbankai:barbed_wire",
+              "trenbankai:ceiling_light",
+              "trenbankai:hedgehog",
+              "trenbankai:sandbag",
+              "trenbankai:spotlight",
+              "trenbankai:corrugated_metal",
+              "trenbankai:corrugated_metal_rusty",
+              "trenbankai:hazard_block",
+              "trenbankai:tread_plate"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "trenbankai:ak12",
+              "name": "itemGroup.name.trenbankai:weapons"
+            },
+            "items": [
+              "trenbankai:ak12",
+              "trenbankai:ak47",
+              "trenbankai:ak74",
+              "trenbankai:akm",
+              "trenbankai:aks74u",
+              "trenbankai:awp",
+              "trenbankai:deagle",
+              "trenbankai:fnfal",
+              "trenbankai:parafal",
+              "trenbankai:glock17",
+              "trenbankai:glock18",
+              "trenbankai:m4a1",
+              "trenbankai:m249",
+              "trenbankai:mossberg",
+              "trenbankai:m1014",
+              "trenbankai:mp5a5",
+              "trenbankai:rpg7"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "trenbankai:ak12_mag",
+              "name": "itemGroup.name.trenbankai:ammo"
+            },
+            "items": [
+              "trenbankai:ak12_mag",
+              "trenbankai:ak47_mag",
+              "trenbankai:ak74_mag",
+              "trenbankai:akm_mag",
+              "trenbankai:awp_mag",
+              "trenbankai:deagle_mag",
+              "trenbankai:fnfal_mag",
+              "trenbankai:glock_mag",
+              "trenbankai:m4a1_mag",
+              "trenbankai:m249_mag",
+              "trenbankai:mp5a5_mag",
+              "trenbankai:rpg7_rocket",
+              "trenbankai:bullet_12gauge"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "trenbankai:eotech_sight",
+              "name": "itemGroup.name.trenbankai:attachments"
+            },
+            "items": [
+              "trenbankai:acog_sight",
+              "trenbankai:eotech_sight",
+              "trenbankai:foregrip",
+              "trenbankai:laser_green",
+              "trenbankai:laser_red",
+              "trenbankai:okp7_reflex_sight",
+              "trenbankai:predator_v4_sight",
+              "trenbankai:scope_hp",
+              "trenbankai:scope_lp",
+              "trenbankai:silencer"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "trenbankai:l83a1_grenade",
+              "name": "itemGroup.name.trenbankai:throwables"
+            },
+            "items": [
+              "trenbankai:l83a1_grenade",
+              "trenbankai:m84_grenade",
+              "trenbankai:mk2_grenade",
+              "trenbankai:flare",
+              "trenbankai:landmine_item"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "trenbankai:ammo_workbench",
+              "name": "itemGroup.name.trenbankai:workbench"
+            },
+            "items": [
+              "trenbankai:ammo_workbench",
+              "trenbankai:attachment_workbench"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

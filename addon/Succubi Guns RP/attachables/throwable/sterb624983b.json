@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "trenbankai:mk2_grenade",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/models/throwable/mk2_grenade"
+      },
+      "geometry": {
+        "default": "geometry.grenade"
+      },
+      "animations": {
+        "wield": "animation.grenade.wield"
+      },
+      "scripts": {
+        "animate": [
+          "wield"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.grenade.item"
+      ]
+    }
+  }
+}

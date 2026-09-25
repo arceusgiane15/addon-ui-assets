@@ -1,0 +1,46 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Succubi Guns RP",
+    "description": "โมเดล เสียง และเอฟเฟกต์ของปืน (Aplok Guns) สำหรับ Succubi Server v1.1.8",
+    "uuid": "a2b3c4d5-e6f7-4819-8a2b-3c4d5e6f7081",
+    "version": [
+      1,
+      1,
+      8
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      90
+    ]
+  },
+  "modules": [
+    {
+      "description": "Aplok Guns resources",
+      "type": "resources",
+      "uuid": "b3c4d5e6-f708-4192-9a3b-4c5d6e7f8092",
+      "version": [
+        1,
+        1,
+        8
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "7c3f5a1e-2d4b-4e8a-9b61-3f0c2a9d5e17",
+      "version": [
+        1,
+        1,
+        8
+      ]
+    }
+  ],
+  "metadata": {
+    "authors": [
+      "Gabriel Aplok (Aplok Guns)",
+      "Succubi Server"
+    ]
+  }
+}

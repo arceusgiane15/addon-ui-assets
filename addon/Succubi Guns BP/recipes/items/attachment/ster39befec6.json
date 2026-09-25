@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "trenbankai:laser_red"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BBB",
+      "DAC"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:glass"
+      },
+      "B": {
+        "item": "minecraft:leather"
+      },
+      "C": {
+        "item": "minecraft:redstone"
+      },
+      "D": {
+        "item": "minecraft:green_dye"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:leather"
+      }
+    ],
+    "result": {
+      "item": "trenbankai:laser_red"
+    }
+  }
+}

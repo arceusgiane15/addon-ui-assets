@@ -1,0 +1,122 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.weapon.setup": {
+      "initial_state": "setup",
+      "states": {
+        "setup": {
+          "animations": [
+            "wield_controller",
+            "attachments"
+          ]
+        }
+      }
+    },
+    "controller.animation.weapon.setup_wo_attachments": {
+      "initial_state": "setup",
+      "states": {
+        "setup": {
+          "animations": [
+            "wield_controller"
+          ]
+        }
+      }
+    },
+    "controller.animation.weapon.wield": {
+      "initial_state": "first_person",
+      "states": {
+        "first_person": {
+          "animations": [
+            "wield_fpp",
+            {
+              "reload_controller": "q.has_property('trenbankai:reload')"
+            },
+            {
+              "fire_controller": "q.has_property('trenbankai:weapon_fire')"
+            }
+          ],
+          "transitions": [
+            {
+              "third_person": "!c.is_first_person"
+            }
+          ]
+        },
+        "third_person": {
+          "animations": [
+            "wield_tpp",
+            {
+              "fire_controller": "q.has_property('trenbankai:weapon_fire')"
+            }
+          ],
+          "transitions": [
+            {
+              "first_person": "c.is_first_person"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.weapon.reload": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "transitions": [
+            {
+              "reload_empty": "q.property('trenbankai:reload') == 1 && !q.is_sleeping && !q.is_emoting && !q.is_swimming && !q.is_crawling && q.is_alive"
+            },
+            {
+              "reload": "q.property('trenbankai:reload') == 2 && !q.is_sleeping && !q.is_emoting && !q.is_swimming && !q.is_crawling && q.is_alive"
+            }
+          ],
+          "blend_transition": 0.2
+        },
+        "reload_empty": {
+          "animations": [
+            "reload_empty_fpp"
+          ],
+          "transitions": [
+            {
+              "inactive": "q.property('trenbankai:reload') != 1 || q.is_sleeping || q.is_emoting || q.is_swimming || q.is_crawling || !q.is_alive"
+            }
+          ],
+          "blend_transition": 0.2
+        },
+        "reload": {
+          "animations": [
+            "reload_fpp"
+          ],
+          "transitions": [
+            {
+              "inactive": "q.property('trenbankai:reload') != 2 || q.is_sleeping || q.is_emoting || q.is_swimming || q.is_crawling || !q.is_alive"
+            }
+          ],
+          "blend_transition": 0.2
+        }
+      }
+    },
+    "controller.animation.weapon.fire": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "transitions": [
+            {
+              "fire": "q.property('trenbankai:weapon_fire') && q.is_alive"
+            }
+          ],
+          "blend_transition": 0.1
+        },
+        "fire": {
+          "animations": [
+            "fire"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.property('trenbankai:weapon_fire') || !q.is_alive"
+            }
+          ],
+          "blend_transition": 0.1
+        }
+      }
+    }
+  }
+}

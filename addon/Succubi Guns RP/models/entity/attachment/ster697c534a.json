@@ -1,0 +1,385 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.eotech_sight",
+        "texture_width": 32,
+        "texture_height": 32,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 3.5,
+        "visible_bounds_offset": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "binding": "q.item_slot_to_bone_name((c.item_slot == 'off_hand') ? 'body' : 'main_hand')"
+        },
+        {
+          "name": "attachment",
+          "parent": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "eotech",
+          "parent": "attachment",
+          "pivot": [
+            0,
+            0,
+            0.375
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.5,
+                0,
+                -1
+              ],
+              "size": [
+                3,
+                2,
+                3.5
+              ],
+              "inflate": 0.01,
+              "uv": [
+                0,
+                10
+              ]
+            },
+            {
+              "origin": [
+                0.7,
+                1.8,
+                -0.2
+              ],
+              "size": [
+                1,
+                2.9,
+                2.4
+              ],
+              "inflate": -0.2,
+              "uv": [
+                19,
+                4
+              ]
+            },
+            {
+              "origin": [
+                0.7,
+                1.8,
+                -1.2
+              ],
+              "size": [
+                1,
+                2.55,
+                1.4
+              ],
+              "inflate": -0.21,
+              "pivot": [
+                1.2,
+                2,
+                -1
+              ],
+              "rotation": [
+                -28,
+                0,
+                0
+              ],
+              "uv": [
+                0,
+                21
+              ]
+            },
+            {
+              "origin": [
+                -1.7,
+                1.8,
+                -1.2
+              ],
+              "size": [
+                1,
+                2.55,
+                1.4
+              ],
+              "inflate": -0.21,
+              "pivot": [
+                -1.2,
+                2,
+                -1
+              ],
+              "rotation": [
+                -28,
+                0,
+                0
+              ],
+              "uv": [
+                6,
+                20
+              ]
+            },
+            {
+              "origin": [
+                0.7,
+                1.8,
+                1.3
+              ],
+              "size": [
+                1,
+                2.95,
+                1.4
+              ],
+              "inflate": -0.21,
+              "pivot": [
+                1.2,
+                2,
+                2.5
+              ],
+              "rotation": [
+                11,
+                0,
+                0
+              ],
+              "uv": [
+                11,
+                20
+              ]
+            },
+            {
+              "origin": [
+                -1.7,
+                1.8,
+                1.3
+              ],
+              "size": [
+                1,
+                2.95,
+                1.4
+              ],
+              "inflate": -0.21,
+              "pivot": [
+                -1.2,
+                2,
+                2.5
+              ],
+              "rotation": [
+                11,
+                0,
+                0
+              ],
+              "uv": [
+                16,
+                20
+              ]
+            },
+            {
+              "origin": [
+                -1.1,
+                1.8,
+                1.3
+              ],
+              "size": [
+                2.2,
+                1.1,
+                1.4
+              ],
+              "inflate": -0.21,
+              "pivot": [
+                -0.6,
+                2,
+                2.5
+              ],
+              "rotation": [
+                11,
+                0,
+                0
+              ],
+              "uv": [
+                18,
+                15
+              ]
+            },
+            {
+              "origin": [
+                -1.7,
+                1.8,
+                -0.2
+              ],
+              "size": [
+                1,
+                2.9,
+                2.4
+              ],
+              "inflate": -0.2,
+              "uv": [
+                0,
+                16
+              ]
+            },
+            {
+              "origin": [
+                -1.1,
+                3.7,
+                -0.2
+              ],
+              "size": [
+                2.2,
+                1,
+                2.4
+              ],
+              "inflate": -0.2,
+              "uv": [
+                15,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -1.1,
+                1.8,
+                -0.9
+              ],
+              "size": [
+                2.2,
+                1,
+                3.1
+              ],
+              "inflate": -0.2,
+              "uv": [
+                10,
+                15
+              ]
+            },
+            {
+              "origin": [
+                -1.6,
+                0.3,
+                -3.1
+              ],
+              "size": [
+                3.2,
+                2.5,
+                2.6
+              ],
+              "inflate": -0.2,
+              "uv": [
+                13,
+                10
+              ]
+            }
+          ]
+        },
+        {
+          "name": "glass",
+          "parent": "eotech",
+          "pivot": [
+            0,
+            0.8,
+            -0.8
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.25,
+                2.3,
+                0.2
+              ],
+              "size": [
+                2.5,
+                2,
+                0
+              ],
+              "uv": [
+                21,
+                18
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": {
+        "identifier": "geometry.eotech_sight.reticle",
+        "texture_width": 32,
+        "texture_height": 32,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 3.5,
+        "visible_bounds_offset": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "binding": "q.item_slot_to_bone_name((c.item_slot == 'off_hand') ? 'body' : 'main_hand')"
+        },
+        {
+          "name": "attachment",
+          "parent": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "eotech",
+          "parent": "attachment",
+          "pivot": [
+            0,
+            0,
+            0.375
+          ]
+        },
+        {
+          "name": "reticle",
+          "parent": "eotech",
+          "pivot": [
+            -0.5,
+            1.8,
+            0.3
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.5,
+                0.8,
+                -0.7
+              ],
+              "size": [
+                5,
+                5,
+                4
+              ],
+              "inflate": -2.2,
+              "uv": [
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

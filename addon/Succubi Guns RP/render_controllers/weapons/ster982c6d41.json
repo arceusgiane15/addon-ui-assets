@@ -1,0 +1,43 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.weapon": {
+      "geometry": "geometry.default",
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "textures": [
+        "texture.default"
+      ],
+      "part_visibility": [
+        {
+          "ironSight": "q.has_property('trenbankai:sight') ? !q.property('trenbankai:sight') : (1.0)"
+        },
+        {
+          "frontSight": "(q.has_property('trenbankai:sight') && q.is_sneaking && v.is_first_person) ? !q.property('trenbankai:sight') : (1.0)"
+        },
+        {
+          "sideMount": "q.has_property('trenbankai:sight') ? q.property('trenbankai:sight') : (0.0)"
+        }
+      ]
+    },
+    "controller.render.player.weapon_position": {
+      "geometry": "Geometry.weapon_position",
+      "textures": [
+        "Texture.weapon_position"
+      ],
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "part_visibility": [
+        {
+          "*": false
+        }
+      ]
+    }
+  }
+}

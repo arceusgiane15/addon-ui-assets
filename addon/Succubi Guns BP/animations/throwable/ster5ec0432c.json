@@ -1,0 +1,14 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.thrown_l83a1_grenade.sfx": {
+      "loop": true,
+      "animation_length": 0.6,
+      "timeline": {
+        "0": [
+          "/playsound throwable.smoke_grenade.burn_loop_end @a[r=20] ~~~ 100 1 0.01"
+        ]
+      }
+    }
+  }
+}

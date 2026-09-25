@@ -1,0 +1,21 @@
+{
+  "namespace": "hud",
+  "cooldown_renderer": {
+    "ignored": false
+  },
+  "succubi_guns_extra": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "controls": [
+      {
+        "hud_elements@hud_elements.hud_elements": {}
+      }
+    ]
+  },
+  "hud_screen@common.base_screen": {
+    "$additional_screen_content": "hud.succubi_guns_extra"
+  }
+}

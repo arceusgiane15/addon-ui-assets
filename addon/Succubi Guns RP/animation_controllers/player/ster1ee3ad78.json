@@ -1,0 +1,673 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.core": {
+      "initial_state": "root",
+      "states": {
+        "root": {
+          "blend_transition": 0.18,
+          "animations": [
+            "root"
+          ],
+          "transitions": [
+            {
+              "root_weapons": "v.weapons"
+            },
+            {
+              "root_throwable": "v.throwable"
+            }
+          ]
+        },
+        "root_weapons": {
+          "blend_transition": 0.18,
+          "animations": [
+            "root_weapons"
+          ],
+          "transitions": [
+            {
+              "root": "!v.weapons"
+            },
+            {
+              "root_throwable": "v.throwable"
+            }
+          ]
+        },
+        "root_throwable": {
+          "blend_transition": 0.18,
+          "animations": [
+            "root_throwable"
+          ],
+          "transitions": [
+            {
+              "root": "!v.throwable"
+            },
+            {
+              "root_weapons": "v.weapons"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.move": {
+      "initial_state": "move",
+      "states": {
+        "move": {
+          "blend_transition": 0.25,
+          "animations": [
+            {
+              "move_arms": "v.weapons ? false : q.modified_move_speed"
+            },
+            {
+              "move_legs": "q.modified_move_speed"
+            }
+          ],
+          "transitions": [
+            {
+              "run": "q.is_sprinting"
+            }
+          ]
+        },
+        "run": {
+          "blend_transition": 0.25,
+          "animations": [
+            {
+              "move_arms": "v.weapons ? false : q.modified_move_speed"
+            },
+            {
+              "move_legs": "q.modified_move_speed"
+            }
+          ],
+          "transitions": [
+            {
+              "move": "!q.is_sprinting"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.sneaking": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "blend_transition": 0.25,
+          "transitions": [
+            {
+              "sneak": "q.is_sneaking && !q.is_sleeping"
+            }
+          ]
+        },
+        "sneak": {
+          "blend_transition": 0.3,
+          "animations": [
+            "sneaking"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_sneaking || q.is_sleeping"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.swimming": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "blend_transition": 0.25,
+          "transitions": [
+            {
+              "swim": "v.swim_amount > 0 && !v.crawling"
+            }
+          ]
+        },
+        "swim": {
+          "blend_transition": 0.25,
+          "animations": [
+            "swimming",
+            "swimming.legs"
+          ],
+          "transitions": [
+            {
+              "inactive": "v.swim_amount <= 0 || v.crawling"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.riding": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "blend_transition": 0.22,
+          "transitions": [
+            {
+              "ride": "q.is_riding"
+            }
+          ]
+        },
+        "ride": {
+          "blend_transition": 0.22,
+          "animations": [
+            {
+              "riding.arms": "!v.weapons"
+            },
+            "riding.legs"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_riding"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.crawling": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "blend_transition": 0.5,
+          "transitions": [
+            {
+              "crawl": "v.crawling && !q.is_moving"
+            },
+            {
+              "walk": "v.crawling && q.is_moving"
+            }
+          ]
+        },
+        "crawl": {
+          "blend_transition": 0.5,
+          "transitions": [
+            {
+              "inactive": "!v.crawling"
+            },
+            {
+              "walk": "v.crawling && q.is_moving"
+            }
+          ],
+          "animations": [
+            {
+              "crawling": "!v.is_first_person"
+            }
+          ]
+        },
+        "walk": {
+          "blend_transition": 0.5,
+          "transitions": [
+            {
+              "crawl": "!v.crawling || !q.is_moving"
+            }
+          ],
+          "animations": [
+            {
+              "crawling_walk": "!v.is_first_person"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.holding": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "blend_transition": 0.16,
+          "transitions": [
+            {
+              "brush": "v.is_using_brush"
+            },
+            {
+              "charge": "q.is_charging"
+            },
+            {
+              "bow": "q.get_equipped_item_name == 'bow' && (v.item_use_normalized > 0 && v.item_use_normalized < 1)"
+            },
+            {
+              "crossbow": "q.get_equipped_item_name == 'crossbow'"
+            },
+            {
+              "shield_block_main_hand": "q.blocking && q.get_equipped_item_name('off_hand') != 'shield' && q.get_equipped_item_name == 'shield'"
+            },
+            {
+              "shield_block_off_hand": "q.blocking && q.get_equipped_item_name('off_hand') == 'shield'"
+            },
+            {
+              "brandish_spear": "v.is_brandishing_spear"
+            },
+            {
+              "holding_spyglass": "v.is_holding_spyglass"
+            }
+          ]
+        },
+        "brush": {
+          "blend_transition": 0.16,
+          "animations": [
+            "brushing"
+          ],
+          "transitions": [
+            {
+              "inactive": "!v.is_using_brush"
+            }
+          ]
+        },
+        "charge": {
+          "blend_transition": 0.16,
+          "animations": [
+            "charging"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_charging"
+            }
+          ]
+        },
+        "bow": {
+          "blend_transition": 0.16,
+          "animations": [
+            "third_person_bow_equipped"
+          ],
+          "transitions": [
+            {
+              "inactive": "q.get_equipped_item_name != 'bow' || v.item_use_normalized <= 0 || v.item_use_normalized > 1"
+            }
+          ]
+        },
+        "crossbow": {
+          "blend_transition": 0.16,
+          "animations": [
+            "crossbow_controller"
+          ],
+          "transitions": [
+            {
+              "inactive": "q.get_equipped_item_name != 'crossbow'"
+            }
+          ]
+        },
+        "shield_block_main_hand": {
+          "blend_transition": 0.16,
+          "animations": [
+            "shield_block_main_hand"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.blocking || q.get_equipped_item_name('off_hand') == 'shield' || q.get_equipped_item_name != 'shield'"
+            }
+          ]
+        },
+        "shield_block_off_hand": {
+          "blend_transition": 0.16,
+          "animations": [
+            "shield_block_off_hand"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.blocking || q.get_equipped_item_name('off_hand') != 'shield'"
+            }
+          ]
+        },
+        "brandish_spear": {
+          "blend_transition": 0.16,
+          "animations": [
+            "brandish_spear"
+          ],
+          "transitions": [
+            {
+              "inactive": "!v.is_brandishing_spear"
+            }
+          ]
+        },
+        "holding_spyglass": {
+          "blend_transition": 0.16,
+          "animations": [
+            "holding_spyglass"
+          ],
+          "transitions": [
+            {
+              "inactive": "!v.is_holding_spyglass"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.damage": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "damage": "v.damage_nearby_mobs"
+            }
+          ],
+          "blend_transition": 0.2,
+          "blend_via_shortest_path": true
+        },
+        "damage": {
+          "animations": [
+            "damage"
+          ],
+          "transitions": [
+            {
+              "default": "!v.damage_nearby_mobs"
+            }
+          ],
+          "blend_transition": 0.2,
+          "blend_via_shortest_path": true
+        }
+      }
+    },
+    "controller.animation.player.look_at_target": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "animations": [
+            "look_at_target_default"
+          ],
+          "transitions": [
+            {
+              "gliding": "q.is_gliding"
+            },
+            {
+              "swimming": "q.is_swimming || q.is_crawling"
+            },
+            {
+              "weapons": "v.look_at_target"
+            }
+          ]
+        },
+        "gliding": {
+          "animations": [
+            "look_at_target_gliding"
+          ],
+          "transitions": [
+            {
+              "default": "!q.is_gliding"
+            },
+            {
+              "swimming": "q.is_swimming || q.is_crawling"
+            },
+            {
+              "weapons": "v.look_at_target"
+            }
+          ]
+        },
+        "swimming": {
+          "animations": [
+            "look_at_target_swimming"
+          ],
+          "transitions": [
+            {
+              "default": "!q.is_swimming && !q.is_crawling"
+            },
+            {
+              "gliding": "q.is_gliding"
+            },
+            {
+              "weapons": "v.look_at_target"
+            }
+          ]
+        },
+        "weapons": {
+          "animations": [
+            "look_at_target_weapons"
+          ],
+          "transitions": [
+            {
+              "default": "!v.look_at_target"
+            },
+            {
+              "gliding": "q.is_gliding"
+            },
+            {
+              "swimming": "q.is_swimming || q.is_crawling"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.crossbow": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "blend_transition": 0.18,
+          "transitions": [
+            {
+              "hold": "q.item_is_charged"
+            },
+            {
+              "charge": "q.item_remaining_use_duration > 0"
+            }
+          ]
+        },
+        "charge": {
+          "blend_transition": 0.18,
+          "animations": [
+            "third_person_crossbow_equipped"
+          ],
+          "transitions": [
+            {
+              "default": "q.get_equipped_item_name != 'crossbow' || (q.item_remaining_use_duration <= 0 && !q.item_is_charged)"
+            },
+            {
+              "hold": "q.item_is_charged"
+            }
+          ]
+        },
+        "hold": {
+          "blend_transition": 0.18,
+          "animations": [
+            "crossbow_hold"
+          ],
+          "transitions": [
+            {
+              "default": "q.get_equipped_item_name != 'crossbow' || (q.item_remaining_use_duration <= 0 && !q.item_is_charged)"
+            },
+            {
+              "charge": "q.item_remaining_use_duration > 0"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.first_person_attack": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "blend_transition": 0.18,
+          "animations": [
+            "first_person_attack_rotation"
+          ],
+          "transitions": [
+            {
+              "vr_attack": "v.is_using_vr"
+            }
+          ]
+        },
+        "vr_attack": {
+          "blend_transition": 0.18,
+          "animations": [
+            "first_person_vr_attack_rotation"
+          ],
+          "transitions": [
+            {
+              "default": "!v.is_using_vr"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.first_person_map": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "blend_transition": 0.18,
+          "transitions": [
+            {
+              "one_hand": "q.get_equipped_item_name('off_hand') == 'filled_map' || q.get_equipped_item_name('off_hand') == 'shield'"
+            },
+            {
+              "two_hand": "q.get_equipped_item_name('off_hand') != 'filled_map' && q.get_equipped_item_name('off_hand') != 'shield'"
+            }
+          ]
+        },
+        "one_hand": {
+          "blend_transition": 0.18,
+          "animations": [
+            {
+              "first_person_map_hold_main_hand": "q.get_equipped_item_name(0, 1) == 'filled_map'"
+            },
+            {
+              "first_person_map_hold_off_hand": "q.get_equipped_item_name('off_hand') == 'filled_map' && (q.get_equipped_item_name == 'bow' ? !(v.item_use_normalized > 0 && v.item_use_normalized < 1) : 1)"
+            }
+          ],
+          "transitions": [
+            {
+              "default": "q.get_equipped_item_name(0, 1) != 'filled_map' && q.get_equipped_item_name('off_hand') != 'filled_map'"
+            },
+            {
+              "two_hand": "q.get_equipped_item_name('off_hand') != 'filled_map' && q.get_equipped_item_name('off_hand') != 'shield'"
+            }
+          ]
+        },
+        "two_hand": {
+          "blend_transition": 0.18,
+          "animations": [
+            "first_person_map_hold",
+            "first_person_map_hold_attack"
+          ],
+          "transitions": [
+            {
+              "default": "q.get_equipped_item_name(0, 1) != 'filled_map' && q.get_equipped_item_name('off_hand') != 'filled_map'"
+            },
+            {
+              "one_hand": "q.get_equipped_item_name('off_hand') == 'filled_map' || q.get_equipped_item_name('off_hand') == 'shield'"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.root": {
+      "initial_state": "first_person",
+      "states": {
+        "first_person": {
+          "animations": [
+            {
+              "first_person_swap_item": "!q.blocking"
+            },
+            {
+              "first_person_shield_block": "q.blocking"
+            },
+            {
+              "first_person_attack_controller": "v.attack_time > 0 && q.get_equipped_item_name != 'filled_map'"
+            },
+            "first_person_base_pose",
+            {
+              "first_person_empty_hand": "q.get_equipped_item_name(0, 1) != 'filled_map'"
+            },
+            {
+              "first_person_walk": "v.bob_animation"
+            },
+            {
+              "first_person_map_controller": "(q.get_equipped_item_name(0, 1) == 'filled_map' || q.get_equipped_item_name('off_hand') == 'filled_map')"
+            },
+            {
+              "first_person_crossbow_equipped": "q.get_equipped_item_name == 'crossbow' && (v.item_use_normalized > 0 && v.item_use_normalized < 1)"
+            },
+            {
+              "first_person_breathing_bob": "v.attack_time <= 0"
+            }
+          ],
+          "transitions": [
+            {
+              "paperdoll": "v.is_paperdoll"
+            },
+            {
+              "map_player": "v.map_face_icon"
+            },
+            {
+              "third_person": "!v.is_first_person"
+            }
+          ]
+        },
+        "map_player": {
+          "transitions": [
+            {
+              "paperdoll": "v.is_paperdoll"
+            },
+            {
+              "first_person": "v.is_first_person"
+            },
+            {
+              "third_person": "!v.map_face_icon && !v.is_first_person"
+            }
+          ]
+        },
+        "paperdoll": {
+          "animations": [
+            "humanoid_base_pose",
+            "move_controller",
+            "look_at_target_ui",
+            "cape"
+          ],
+          "transitions": [
+            {
+              "first_person": "!v.is_paperdoll && v.is_first_person"
+            },
+            {
+              "map_player": "v.map_face_icon"
+            },
+            {
+              "third_person": "!v.is_paperdoll && !v.is_first_person"
+            }
+          ]
+        },
+        "third_person": {
+          "animations": [
+            "humanoid_base_pose",
+            {
+              "look_at_target": "!q.is_sleeping && !q.is_emoting && !v.crawling"
+            },
+            "cape",
+            {
+              "holding": "!v.weapons"
+            },
+            {
+              "bob": "!v.is_holding_spyglass && !v.is_tooting_goat_horn && !v.is_using_brush"
+            },
+            {
+              "use_item_progress": "(v.use_item_interval_progress > 0.0) || (v.use_item_startup_progress > 0.0) && !v.is_brandishing_spear && !v.is_holding_spyglass && !v.is_tooting_goat_horn && !v.is_using_brush && !q.is_item_name_any('slot.weapon.mainhand', 'minecraft:bow')"
+            },
+            {
+              "sleeping": "q.is_sleeping && q.is_alive"
+            },
+            {
+              "attack.positions": "v.attack_time >= 0"
+            },
+            {
+              "attack.rotations": "v.attack_time >= 0"
+            },
+            {
+              "holding_brush": "q.get_equipped_item_name == 'brush'"
+            },
+            "move_controller",
+            "sneaking_controller",
+            "swimming_controller",
+            "riding_controller",
+            "crawling_controller",
+            "holding_controller",
+            "damage_controller"
+          ],
+          "transitions": [
+            {
+              "paperdoll": "v.is_paperdoll"
+            },
+            {
+              "first_person": "v.is_first_person"
+            },
+            {
+              "map_player": "v.map_face_icon"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

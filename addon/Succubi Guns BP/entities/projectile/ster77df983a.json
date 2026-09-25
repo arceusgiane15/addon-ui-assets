@@ -1,0 +1,159 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "trenbankai:rocket",
+      "runtime_identifier": "minecraft:snowball",
+      "spawn_category": "creature",
+      "is_spawnable": false,
+      "is_summonable": false
+    },
+    "component_groups": {
+      "despawn": {
+        "minecraft:instant_despawn": {}
+      },
+      "explode_rocket_rpg7": {
+        "minecraft:explode": {
+          "fuse_length": 0,
+          "fuse_lit": true,
+          "power": 2,
+          "causes_fire": false,
+          "destroy_affected_by_griefing": true
+        }
+      },
+      "rocket_rpg7": {
+        "minecraft:variant": {
+          "value": 1
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "impact_damage": {
+              "damage": 200,
+              "knockback": true
+            },
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 7.0,
+          "gravity": 0.025,
+          "anchor": 2,
+          "should_bounce": true
+        }
+      }
+    },
+    "components": {
+      "minecraft:tick_world": {
+        "distance_to_players": 384,
+        "never_despawn": false,
+        "radius": 6
+      },
+      "minecraft:type_family": {
+        "family": [
+          "projectile",
+          "rocket"
+        ]
+      },
+      "minecraft:physics": {}
+    },
+    "events": {
+      "trenbankai:despawn": {
+        "add": {
+          "component_groups": [
+            "despawn"
+          ]
+        }
+      },
+      "trenbankai:impact": {
+        "sequence": [
+          {
+            "trigger": "trenbankai:explode"
+          },
+          {
+            "trigger": "trenbankai:despawn"
+          }
+        ]
+      },
+      "trenbankai:explode": {
+        "sequence": [
+          {
+            "filters": {
+              "test": "is_variant",
+              "value": 1
+            },
+            "add": {
+              "component_groups": [
+                "explode_rocket_rpg7"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "is_underground",
+                  "value": true
+                },
+                {
+                  "test": "is_underwater",
+                  "value": false
+                }
+              ]
+            },
+            "queue_command": {
+              "command": [
+                "tag @s add underground"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "is_underground",
+                  "value": false
+                }
+              ]
+            },
+            "queue_command": {
+              "command": [
+                "tag @s remove underground"
+              ]
+            }
+          },
+          {
+            "queue_command": {
+              "command": [
+                "function effect/explosion"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:rocket_rpg7": {
+        "sequence": [
+          {
+            "add": {
+              "component_groups": [
+                "rocket_rpg7"
+              ]
+            }
+          },
+          {
+            "queue_command": {
+              "command": [
+                "playsound weapon.rpg7.rocket_ignition @a[r=120] ~~~ 0.4 1 0.01"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

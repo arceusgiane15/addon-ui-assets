@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "succubi:amulet_moon",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.succubi:amulet_moon.name"
+      },
+      "minecraft:icon": "succubi_amulet_moon",
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

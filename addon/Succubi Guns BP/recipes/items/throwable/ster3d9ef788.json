@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "trenbankai:flare"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BAB",
+      "ACA",
+      "CAC"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:red_dye"
+      },
+      "B": {
+        "item": "minecraft:leather"
+      },
+      "C": {
+        "item": "minecraft:gunpowder"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:gunpowder"
+      }
+    ],
+    "result": {
+      "item": "trenbankai:flare"
+    }
+  }
+}

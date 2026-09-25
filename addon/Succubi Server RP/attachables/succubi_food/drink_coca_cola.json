@@ -1,0 +1,32 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "succubi:drink_coca_cola",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/models/succubi_food/drink_coca_cola"
+      },
+      "geometry": {
+        "default": "geometry.succubi_drink_coca_cola"
+      },
+      "animations": {
+        "hold_fp": "animation.succubi_food.vending_drink.hold_fp",
+        "hold_tp": "animation.succubi_food.vending_drink.hold_tp",
+        "eat_fp": "animation.succubi_food.vending_drink.eat_fp",
+        "eat_tp": "animation.succubi_food.vending_drink.eat_tp",
+        "wield": "controller.animation.succubi_food.vending_drink"
+      },
+      "scripts": {
+        "animate": [
+          "wield"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ]
+    }
+  }
+}

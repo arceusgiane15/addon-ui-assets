@@ -1,0 +1,18 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.juggernaut.move": {
+      "loop": true,
+      "anim_time_update": "q.modified_move_speed",
+      "bones": {
+        "antenna": {
+          "rotation": [
+            "math.cos(q.anim_time * 1000)",
+            0,
+            "math.sin(q.anim_time * 1000)"
+          ]
+        }
+      }
+    }
+  }
+}

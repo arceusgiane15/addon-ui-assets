@@ -1,0 +1,27 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "succubi:drink_vending_machine",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/succubi/drink_vending_machine"
+      },
+      "geometry": {
+        "default": "geometry.succubi_drink_vending_machine"
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ],
+      "spawn_egg": {
+        "base_color": "#d01c24",
+        "overlay_color": "#f4f4f4"
+      },
+      "scripts": {
+        "scale": "0.35"
+      }
+    }
+  }
+}

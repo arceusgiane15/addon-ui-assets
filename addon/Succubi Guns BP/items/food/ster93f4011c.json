@@ -1,0 +1,26 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "trenbankai:cooked_flesh",
+      "menu_category": {
+        "category": "items",
+        "group": "itemGroup.name.food"
+      }
+    },
+    "components": {
+      "minecraft:food": {
+        "nutrition": 8
+      },
+      "minecraft:display_name": {
+        "value": "item.cooked_flesh.name"
+      },
+      "minecraft:use_modifiers": {
+        "movement_modifier": 0.25,
+        "use_duration": 1.6
+      },
+      "minecraft:icon": "cooked_flesh",
+      "minecraft:use_animation": "eat"
+    }
+  }
+}

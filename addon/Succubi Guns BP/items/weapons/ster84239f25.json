@@ -1,0 +1,38 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "trenbankai:fnfal",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.fnfal.name"
+      },
+      "minecraft:food": {
+        "can_always_eat": true
+      },
+      "minecraft:tags": {
+        "tags": [
+          "is_weapon",
+          "is_fnfal",
+          "is_ar",
+          "is_heavy",
+          "allow_attachment"
+        ]
+      },
+      "minecraft:use_modifiers": {
+        "use_duration": 3600
+      },
+      "minecraft:icon": "fnfal",
+      "minecraft:max_stack_size": 1,
+      "minecraft:can_destroy_in_creative": false,
+      "minecraft:hand_equipped": true,
+      "minecraft:should_despawn": false,
+      "minecraft:stacked_by_data": true,
+      "minecraft:allow_off_hand": true
+    }
+  }
+}

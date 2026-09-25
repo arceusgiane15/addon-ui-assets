@@ -1,0 +1,11 @@
+{
+  "ui_defs": [
+    "ui/succubi_height.json",
+    "ui/succubi_hud.json",
+    "ui/succubi_paper.json",
+    "ui/succubi_shops.json",
+    "ui/succubi_ui.json",
+    "ui/succubi_vending.json",
+    "ui/succubi_wallet.json"
+  ]
+}

@@ -1,0 +1,4617 @@
+{
+  "namespace": "succubi_height",
+  "height_panel": {
+    "type": "panel",
+    "size": [
+      284,
+      184
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/height_bg",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lปรับส่วนสูง",
+          "color": [
+            1,
+            0.94,
+            0.97
+          ],
+          "shadow": true,
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            38,
+            7
+          ],
+          "layer": 5,
+          "font_scale_factor": 1.1,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "close@succubi_ui.close_button": {
+          "anchor_from": "top_right",
+          "anchor_to": "top_right",
+          "offset": [
+            -6,
+            3
+          ],
+          "layer": 8
+        }
+      },
+      {
+        "ruler_P": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/ruler_P",
+          "size": [
+            104,
+            146
+          ],
+          "offset": [
+            12,
+            32
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 2,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "(not ((#title_text - 'rP') = #title_text))"
+            }
+          ]
+        }
+      },
+      {
+        "ref_P": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person_ref",
+          "size": [
+            47.52,
+            95.04
+          ],
+          "offset": [
+            70,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "(not ((#title_text - 'rP') = #title_text))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_001": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            2.64,
+            5.28
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h001') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_002": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            5.28,
+            10.56
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h002') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_003": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            7.92,
+            15.84
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h003') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_004": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            10.56,
+            21.12
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h004') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_005": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            13.200000000000001,
+            26.400000000000002
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h005') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_006": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            15.84,
+            31.68
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h006') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_007": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            18.48,
+            36.96
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h007') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_008": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            21.12,
+            42.24
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h008') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_009": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            23.76,
+            47.52
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h009') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_010": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            26.400000000000002,
+            52.800000000000004
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h010') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_011": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            29.040000000000003,
+            58.080000000000005
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h011') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_012": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            31.68,
+            63.36
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h012') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_013": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            34.32,
+            68.64
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h013') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_014": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            36.96,
+            73.92
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h014') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_015": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            39.6,
+            79.2
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h015') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_016": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            42.24,
+            84.48
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h016') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_017": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            44.88,
+            89.76
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h017') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_018": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            47.52,
+            95.04
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h018') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_019": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            50.160000000000004,
+            100.32000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h019') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_020": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            52.800000000000004,
+            105.60000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h020') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_021": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            55.440000000000005,
+            110.88000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h021') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_022": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            58.080000000000005,
+            116.16000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h022') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_023": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            60.720000000000006,
+            121.44000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h023') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_024": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            63.36,
+            126.72
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h024') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_025": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            66.0,
+            132.0
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h025') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "ruler_A": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/ruler_A",
+          "size": [
+            104,
+            146
+          ],
+          "offset": [
+            12,
+            32
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 2,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "(not ((#title_text - 'rA') = #title_text))"
+            }
+          ]
+        }
+      },
+      {
+        "ref_A": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person_ref",
+          "size": [
+            23.76,
+            47.52
+          ],
+          "offset": [
+            70,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "(not ((#title_text - 'rA') = #title_text))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_001": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            1.32,
+            2.64
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h001') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_002": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            2.64,
+            5.28
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h002') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_003": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            3.96,
+            7.92
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h003') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_004": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            5.28,
+            10.56
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h004') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_005": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            6.6000000000000005,
+            13.200000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h005') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_006": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            7.92,
+            15.84
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h006') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_007": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            9.24,
+            18.48
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h007') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_008": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            10.56,
+            21.12
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h008') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_009": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            11.88,
+            23.76
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h009') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_010": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            13.200000000000001,
+            26.400000000000002
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h010') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_011": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            14.520000000000001,
+            29.040000000000003
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h011') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_012": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            15.84,
+            31.68
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h012') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_013": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            17.16,
+            34.32
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h013') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_014": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            18.48,
+            36.96
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h014') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_015": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            19.8,
+            39.6
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h015') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_016": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            21.12,
+            42.24
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h016') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_017": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            22.44,
+            44.88
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h017') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_018": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            23.76,
+            47.52
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h018') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_019": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            25.080000000000002,
+            50.160000000000004
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h019') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_020": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            26.400000000000002,
+            52.800000000000004
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h020') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_021": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            27.720000000000002,
+            55.440000000000005
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h021') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_022": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            29.040000000000003,
+            58.080000000000005
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h022') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_023": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            30.360000000000003,
+            60.720000000000006
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h023') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_024": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            31.68,
+            63.36
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h024') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_025": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            33.0,
+            66.0
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h025') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_026": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            34.32,
+            68.64
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h026') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_027": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            35.64,
+            71.28
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h027') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_028": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            36.96,
+            73.92
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h028') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_029": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            38.28,
+            76.56
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h029') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_030": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            39.6,
+            79.2
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h030') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_031": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            40.92,
+            81.84
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h031') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_032": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            42.24,
+            84.48
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h032') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_033": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            43.56,
+            87.12
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h033') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_034": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            44.88,
+            89.76
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h034') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_035": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            46.2,
+            92.4
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h035') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_036": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            47.52,
+            95.04
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h036') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_037": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            48.84,
+            97.68
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h037') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_038": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            50.160000000000004,
+            100.32000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h038') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_039": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            51.480000000000004,
+            102.96000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h039') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_040": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            52.800000000000004,
+            105.60000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h040') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_041": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            54.120000000000005,
+            108.24000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h041') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_042": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            55.440000000000005,
+            110.88000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h042') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_043": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            56.760000000000005,
+            113.52000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h043') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_044": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            58.080000000000005,
+            116.16000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h044') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_045": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            59.400000000000006,
+            118.80000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h045') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_046": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            60.720000000000006,
+            121.44000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h046') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_047": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            62.040000000000006,
+            124.08000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h047') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_048": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            63.36,
+            126.72
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h048') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_049": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            64.68,
+            129.36
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h049') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_050": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            66.0,
+            132.0
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h050') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "info": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            1,
+            0.93,
+            0.97
+          ],
+          "localize": false,
+          "shadow": true,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            132,
+            36
+          ],
+          "size": [
+            140,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "buttons": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            126,
+            104
+          ],
+          "size": [
+            152,
+            48
+          ],
+          "grid_dimensions": [
+            4,
+            2
+          ],
+          "grid_item_template": "succubi_height.cell",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      }
+    ]
+  },
+  "cell": {
+    "type": "panel",
+    "size": [
+      38,
+      24
+    ],
+    "controls": [
+      {
+        "button@common.button": {
+          "size": [
+            36,
+            22
+          ],
+          "$pressed_button_name": "button.form_button_click",
+          "bindings": [
+            {
+              "binding_type": "collection_details",
+              "binding_collection_name": "form_buttons"
+            }
+          ],
+          "controls": [
+            {
+              "default@succubi_height.hb_default": {}
+            },
+            {
+              "hover@succubi_height.hb_hover": {}
+            },
+            {
+              "pressed@succubi_height.hb_pressed": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "hb_art": {
+    "type": "image",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "layer": 1,
+    "bindings": [
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "hb_label": {
+    "type": "label",
+    "text": "#form_button_text",
+    "color": [
+      1,
+      1,
+      1
+    ],
+    "shadow": true,
+    "localize": false,
+    "layer": 3,
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "offset": [
+      5,
+      -1
+    ],
+    "size": [
+      "default",
+      10
+    ],
+    "bindings": [
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "font_type": "smooth"
+  },
+  "hb_default": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_height.hb_art": {}
+      },
+      {
+        "label@succubi_height.hb_label": {}
+      }
+    ]
+  },
+  "hb_hover": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_height.hb_art": {}
+      },
+      {
+        "label@succubi_height.hb_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/btn_hover",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "hb_pressed": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      1
+    ],
+    "controls": [
+      {
+        "art@succubi_height.hb_art": {}
+      },
+      {
+        "label@succubi_height.hb_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/btn_pressed",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "height_modal": {
+    "type": "panel",
+    "size": [
+      284,
+      184
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/height_modal_bg",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lปรับส่วนสูง",
+          "color": [
+            1,
+            0.94,
+            0.97
+          ],
+          "shadow": true,
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            38,
+            7
+          ],
+          "layer": 5,
+          "font_scale_factor": 1.1,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "close@succubi_ui.close_button": {
+          "anchor_from": "top_right",
+          "anchor_to": "top_right",
+          "offset": [
+            -6,
+            3
+          ],
+          "layer": 8,
+          "$pressed_button_name": "button.submit_custom_form"
+        }
+      },
+      {
+        "ruler_P": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/ruler_P",
+          "size": [
+            104,
+            146
+          ],
+          "offset": [
+            12,
+            32
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 2,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "(not ((#title_text - 'rP') = #title_text))"
+            }
+          ]
+        }
+      },
+      {
+        "ref_P": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person_ref",
+          "size": [
+            47.52,
+            95.04
+          ],
+          "offset": [
+            70,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "(not ((#title_text - 'rP') = #title_text))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_001": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            2.64,
+            5.28
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h001') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_002": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            5.28,
+            10.56
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h002') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_003": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            7.92,
+            15.84
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h003') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_004": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            10.56,
+            21.12
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h004') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_005": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            13.200000000000001,
+            26.400000000000002
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h005') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_006": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            15.84,
+            31.68
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h006') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_007": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            18.48,
+            36.96
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h007') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_008": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            21.12,
+            42.24
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h008') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_009": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            23.76,
+            47.52
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h009') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_010": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            26.400000000000002,
+            52.800000000000004
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h010') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_011": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            29.040000000000003,
+            58.080000000000005
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h011') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_012": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            31.68,
+            63.36
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h012') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_013": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            34.32,
+            68.64
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h013') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_014": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            36.96,
+            73.92
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h014') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_015": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            39.6,
+            79.2
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h015') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_016": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            42.24,
+            84.48
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h016') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_017": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            44.88,
+            89.76
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h017') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_018": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            47.52,
+            95.04
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h018') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_019": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            50.160000000000004,
+            100.32000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h019') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_020": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            52.800000000000004,
+            105.60000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h020') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_021": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            55.440000000000005,
+            110.88000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h021') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_022": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            58.080000000000005,
+            116.16000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h022') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_023": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            60.720000000000006,
+            121.44000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h023') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_024": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            63.36,
+            126.72
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h024') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_P_025": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            66.0,
+            132.0
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rP') = #title_text)) and (not ((#title_text - 'h025') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "ruler_A": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/ruler_A",
+          "size": [
+            104,
+            146
+          ],
+          "offset": [
+            12,
+            32
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 2,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "(not ((#title_text - 'rA') = #title_text))"
+            }
+          ]
+        }
+      },
+      {
+        "ref_A": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person_ref",
+          "size": [
+            23.76,
+            47.52
+          ],
+          "offset": [
+            70,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "(not ((#title_text - 'rA') = #title_text))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_001": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            1.32,
+            2.64
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h001') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_002": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            2.64,
+            5.28
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h002') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_003": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            3.96,
+            7.92
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h003') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_004": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            5.28,
+            10.56
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h004') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_005": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            6.6000000000000005,
+            13.200000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h005') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_006": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            7.92,
+            15.84
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h006') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_007": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            9.24,
+            18.48
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h007') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_008": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            10.56,
+            21.12
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h008') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_009": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            11.88,
+            23.76
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h009') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_010": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            13.200000000000001,
+            26.400000000000002
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h010') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_011": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            14.520000000000001,
+            29.040000000000003
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h011') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_012": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            15.84,
+            31.68
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h012') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_013": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            17.16,
+            34.32
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h013') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_014": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            18.48,
+            36.96
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h014') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_015": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            19.8,
+            39.6
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h015') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_016": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            21.12,
+            42.24
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h016') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_017": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            22.44,
+            44.88
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h017') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_018": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            23.76,
+            47.52
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h018') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_019": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            25.080000000000002,
+            50.160000000000004
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h019') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_020": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            26.400000000000002,
+            52.800000000000004
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h020') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_021": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            27.720000000000002,
+            55.440000000000005
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h021') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_022": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            29.040000000000003,
+            58.080000000000005
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h022') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_023": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            30.360000000000003,
+            60.720000000000006
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h023') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_024": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            31.68,
+            63.36
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h024') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_025": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            33.0,
+            66.0
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h025') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_026": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            34.32,
+            68.64
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h026') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_027": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            35.64,
+            71.28
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h027') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_028": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            36.96,
+            73.92
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h028') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_029": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            38.28,
+            76.56
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h029') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_030": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            39.6,
+            79.2
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h030') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_031": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            40.92,
+            81.84
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h031') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_032": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            42.24,
+            84.48
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h032') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_033": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            43.56,
+            87.12
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h033') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_034": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            44.88,
+            89.76
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h034') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_035": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            46.2,
+            92.4
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h035') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_036": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            47.52,
+            95.04
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h036') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_037": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            48.84,
+            97.68
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h037') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_038": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            50.160000000000004,
+            100.32000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h038') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_039": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            51.480000000000004,
+            102.96000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h039') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_040": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            52.800000000000004,
+            105.60000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h040') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_041": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            54.120000000000005,
+            108.24000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h041') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_042": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            55.440000000000005,
+            110.88000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h042') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_043": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            56.760000000000005,
+            113.52000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h043') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_044": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            58.080000000000005,
+            116.16000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h044') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_045": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            59.400000000000006,
+            118.80000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h045') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_046": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            60.720000000000006,
+            121.44000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h046') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_047": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            62.040000000000006,
+            124.08000000000001
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h047') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_048": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            63.36,
+            126.72
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h048') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_049": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            64.68,
+            129.36
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h049') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "you_A_050": {
+          "type": "image",
+          "texture": "textures/ui/succubi_height/person",
+          "size": [
+            66.0,
+            132.0
+          ],
+          "offset": [
+            98,
+            172
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "bottom_middle",
+          "layer": 3,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "target_property_name": "#visible",
+              "source_property_name": "((not ((#title_text - 'rA') = #title_text)) and (not ((#title_text - 'h050') = #title_text)))"
+            }
+          ]
+        }
+      },
+      {
+        "form": {
+          "type": "panel",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            130,
+            34
+          ],
+          "size": [
+            140,
+            136
+          ],
+          "layer": 5,
+          "controls": [
+            {
+              "generated@server_form.generated_contents": {}
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

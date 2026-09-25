@@ -1,0 +1,92 @@
+{
+  "resource_pack_name": "Aplok Guns",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "container_blue_side": {
+      "textures": "textures/blocks/container/container_blue_side"
+    },
+    "container_blue_top": {
+      "textures": "textures/blocks/container/container_blue_top"
+    },
+    "container_brown_side": {
+      "textures": "textures/blocks/container/container_brown_side"
+    },
+    "container_brown_top": {
+      "textures": "textures/blocks/container/container_brown_top"
+    },
+    "container_green_side": {
+      "textures": "textures/blocks/container/container_green_side"
+    },
+    "container_green_top": {
+      "textures": "textures/blocks/container/container_green_top"
+    },
+    "container_red_side": {
+      "textures": "textures/blocks/container/container_red_side"
+    },
+    "container_red_top": {
+      "textures": "textures/blocks/container/container_red_top"
+    },
+    "barbed_wire": {
+      "textures": "textures/blocks/props/barbed_wire"
+    },
+    "ceiling_light_broken": {
+      "textures": "textures/blocks/props/ceiling_light_broken"
+    },
+    "ceiling_light_off": {
+      "textures": "textures/blocks/props/ceiling_light_off"
+    },
+    "ceiling_light_on": {
+      "textures": "textures/blocks/props/ceiling_light_on"
+    },
+    "hedgehog": {
+      "textures": "textures/blocks/props/hedgehog"
+    },
+    "hesco_olive": {
+      "textures": "textures/blocks/props/hesco_olive"
+    },
+    "hesco_snow": {
+      "textures": "textures/blocks/props/hesco_snow"
+    },
+    "hesco_tan": {
+      "textures": "textures/blocks/props/hesco_tan"
+    },
+    "landmine": {
+      "textures": "textures/blocks/props/landmine"
+    },
+    "sandbag": {
+      "textures": "textures/blocks/props/sandbag"
+    },
+    "spotlight_broken": {
+      "textures": "textures/blocks/props/spotlight_broken"
+    },
+    "spotlight_off": {
+      "textures": "textures/blocks/props/spotlight_off"
+    },
+    "spotlight_on": {
+      "textures": "textures/blocks/props/spotlight_on"
+    },
+    "ammo_workbench": {
+      "textures": "textures/blocks/workbench/ammo_workbench"
+    },
+    "attachment_workbench": {
+      "textures": "textures/blocks/workbench/attachment_workbench"
+    },
+    "corrugated_metal": {
+      "textures": "textures/blocks/corrugated_metal"
+    },
+    "corrugated_metal_rusty": {
+      "textures": "textures/blocks/corrugated_metal_rusty"
+    },
+    "hazard_block": {
+      "textures": "textures/blocks/hazard_block"
+    },
+    "tread_plate": {
+      "textures": "textures/blocks/tread_plate"
+    },
+    "none": {
+      "textures": "textures/misc/none"
+    }
+  }
+}

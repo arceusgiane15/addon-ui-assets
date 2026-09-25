@@ -1,0 +1,59 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.player.ak47_reload_empty": {
+      "animation_length": 2.5833,
+      "loop": false,
+      "timeline": {
+        "0.0417": [
+          "/playsound weapon.ak12.arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "0.5833": [
+          "/playsound weapon.ak47.mag_out @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.08 0.2 rotational"
+        ],
+        "1.0417": [
+          "/playsound weapon.m249.mag_out_arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "1.5": [
+          "/playsound weapon.ak47.mag_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.06 0.2 rotational"
+        ],
+        "2": [
+          "/playsound weapon.ak47.pull_back @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "2.1667": [
+          "/playsound weapon.ak47.pull_forward @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "2.5": [
+          "/playsound weapon.ak12.hand_grab @a[r=20] ^^^1.5 1 1 0.01"
+        ]
+      }
+    },
+    "animation.player.ak47_reload": {
+      "animation_length": 2.0833,
+      "loop": false,
+      "timeline": {
+        "0.0417": [
+          "/playsound weapon.ak12.arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "0.5833": [
+          "/playsound weapon.ak47.mag_out @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.08 0.2 rotational"
+        ],
+        "1.0417": [
+          "/playsound weapon.m249.mag_out_arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "1.5": [
+          "/playsound weapon.ak47.mag_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.06 0.2 rotational"
+        ],
+        "2.0417": [
+          "/playsound weapon.ak12.hand_grab @a[r=20] ^^^1.5 1 1 0.01"
+        ]
+      }
+    }
+  }
+}

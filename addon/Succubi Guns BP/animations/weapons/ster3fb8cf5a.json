@@ -1,0 +1,49 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.player.m249_reload": {
+      "animation_length": 5.2917,
+      "loop": false,
+      "timeline": {
+        "0.25": [
+          "/playsound weapon.m249.cover_up @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.06 0.15 rotational"
+        ],
+        "1.25": [
+          "/execute if score @s m249 matches 5.. run playsound weapon.m249.belt_pull_out @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.02 0.2 rotational"
+        ],
+        "2.0417": [
+          "/playsound weapon.m249.mag_out @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.06 0.15 rotational"
+        ],
+        "2.375": [
+          "/playsound weapon.m249.fetch_mag @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "2.9583": [
+          "/playsound weapon.m249.mag_hit @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "3.0": [
+          "/playsound weapon.m249.mag_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "3.2917": [
+          "/playsound weapon.m249.belt_align @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.02 0.1 rotational"
+        ],
+        "3.9167": [
+          "/playsound weapon.m249.cover_down @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.06 0.15 rotational"
+        ],
+        "4.625": [
+          "/playsound weapon.m249.pull_back @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.08 0.15 rotational"
+        ],
+        "4.9583": [
+          "/playsound weapon.m249.pull_forward @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.08 0.15 rotational"
+        ]
+      }
+    }
+  }
+}

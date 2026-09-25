@@ -1,0 +1,31 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "trenbankai:rocket",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/models/weapons/rpg7"
+      },
+      "geometry": {
+        "default": "geometry.rpg7_missile"
+      },
+      "animations": {
+        "move": "animation.rocket.move"
+      },
+      "scripts": {
+        "animate": [
+          "move"
+        ]
+      },
+      "particle_effects": {
+        "rocket_trail": "trenbankai:rpg7_rocket_smoke_1"
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ]
+    }
+  }
+}

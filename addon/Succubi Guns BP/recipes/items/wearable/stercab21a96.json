@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "trenbankai:helmet_6b47_nvg"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "trenbankai:helmet_6b47"
+      },
+      {
+        "item": "trenbankai:nvg"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "trenbankai:nvg"
+      }
+    ],
+    "result": {
+      "item": "trenbankai:helmet_6b47_nvg"
+    }
+  }
+}

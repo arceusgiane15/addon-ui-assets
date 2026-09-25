@@ -1,0 +1,62 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.player.mossberg_cycle": {
+      "animation_length": 0.6,
+      "loop": false,
+      "timeline": {
+        "0.0": [
+          "/playsound weapon.mossberg.pump_back @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "0.2083": [
+          "/playsound weapon.mossberg.pump_forward @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "0.3333": [
+          "/playsound bullet.eject.bounce_shotgun @a[r=14] ~~~ 1 1 0.01"
+        ]
+      }
+    },
+    "animation.player.mossberg_reload": {
+      "animation_length": 2.7083,
+      "loop": false,
+      "timeline": {
+        "0.0417": [
+          "/playsound weapon.ak12.arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "0.4583": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "0.875": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "1.2917": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "1.7083": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "2.125": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "2.3333": [
+          "/playsound weapon.mossberg.pump_back @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.06 0.15 rotational"
+        ],
+        "2.5": [
+          "/playsound weapon.mossberg.pump_back @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.06 0.15 rotational"
+        ],
+        "2.6667": [
+          "/playsound weapon.ak12.hand_grab @a[r=20] ^^^1.5 1 1 0.01"
+        ]
+      }
+    }
+  }
+}

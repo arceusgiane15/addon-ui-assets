@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "food:thai_tea_boba",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.food:thai_tea_boba.name"
+      },
+      "minecraft:icon": "food_thai_tea_boba",
+      "minecraft:max_stack_size": 16,
+      "minecraft:food": {
+        "nutrition": 2,
+        "saturation_modifier": 0.3,
+        "can_always_eat": true
+      },
+      "minecraft:use_animation": "drink",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.4,
+        "movement_modifier": 0.35
+      },
+      "minecraft:tags": {
+        "tags": [
+          "succubi:food",
+          "succubi:kiosk_food",
+          "succubi:drink"
+        ]
+      }
+    }
+  }
+}

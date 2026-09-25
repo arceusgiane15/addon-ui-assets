@@ -1,0 +1,89 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "trenbankai:m249",
+      "materials": {
+        "default": "entity_alphatest",
+        "transparent": "entity_alphablend",
+        "transparent_additive": "entity_beam_additive",
+        "charged": "charged_creeper",
+        "glow": "spider"
+      },
+      "textures": {
+        "default": "textures/models/weapons/m249",
+        "acog_sight": "textures/models/attachment/acog_sight",
+        "eotech_sight": "textures/models/attachment/eotech_sight",
+        "okp7_reflex_sight": "textures/models/attachment/okp7_reflex_sight",
+        "scope_lp": "textures/models/attachment/scope_lp",
+        "foregrip": "textures/models/attachment/foregrip",
+        "laser_red": "textures/models/attachment/laser_red",
+        "laser_green": "textures/models/attachment/laser_green",
+        "silencer": "textures/models/attachment/silencer"
+      },
+      "geometry": {
+        "default": "geometry.m249",
+        "acog_sight": "geometry.acog_sight",
+        "eotech_sight": "geometry.eotech_sight",
+        "eotech_sight_reticle": "geometry.eotech_sight.reticle",
+        "okp7_reflex_sight": "geometry.okp7_reflex_sight",
+        "okp7_reflex_sight_reticle": "geometry.okp7_reflex_sight.reticle",
+        "scope_lp": "geometry.scope_lp",
+        "foregrip": "geometry.foregrip",
+        "laser": "geometry.laser",
+        "silencer": "geometry.silencer"
+      },
+      "animations": {
+        "setup_controller": "controller.animation.weapon.setup",
+        "attachments": "animation.m249.attachments",
+        "wield_controller": "controller.animation.weapon.wield",
+        "wield_fpp": "animation.weapons.wield_fpp",
+        "wield_tpp": "animation.weapons.wield_tpp",
+        "reload_controller": "controller.animation.weapon.reload",
+        "reload_empty_fpp": "animation.m249.fpp_reload",
+        "reload_fpp": "animation.m249.fpp_reload",
+        "fire_controller": "controller.animation.weapon.fire",
+        "fire": "animation.m249.fire.item"
+      },
+      "scripts": {
+        "pre_animation": [
+          "v.is_first_person = c.is_first_person;",
+          "v.bipod_phisycs = (v.is_first_person || q.property('trenbankai:reload') || q.property('trenbankai:standby') || q.is_sprinting) ? 0 : math.clamp(-q.target_x_rotation, -50, 50);"
+        ],
+        "animate": [
+          "setup_controller"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.weapon",
+        {
+          "controller.render.acog_sight": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 1"
+        },
+        {
+          "controller.render.eotech_sight": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 2"
+        },
+        {
+          "controller.render.eotech_sight.reticle": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 2"
+        },
+        {
+          "controller.render.okp7_reflex_sight": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 3"
+        },
+        {
+          "controller.render.okp7_reflex_sight.reticle": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 3"
+        },
+        {
+          "controller.render.scope_lp": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 5"
+        },
+        {
+          "controller.render.foregrip": "q.has_property('trenbankai:grip') && q.property('trenbankai:grip') == 1"
+        },
+        {
+          "controller.render.laser": "q.has_property('trenbankai:laser') && q.property('trenbankai:laser') >= 1"
+        },
+        {
+          "controller.render.silencer": "q.has_property('trenbankai:silencer') && q.property('trenbankai:silencer') == 1"
+        }
+      ]
+    }
+  }
+}

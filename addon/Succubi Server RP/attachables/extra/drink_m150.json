@@ -1,0 +1,32 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "succubi:drink_m150",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/extra/drink_m150"
+      },
+      "geometry": {
+        "default": "geometry.succubi_extra_drink_m150"
+      },
+      "animations": {
+        "hold_fp": "animation.succubi_food.hand.hold_fp",
+        "hold_tp": "animation.succubi_food.hand.hold_tp",
+        "eat_fp": "animation.succubi_food.hand.eat_fp",
+        "eat_tp": "animation.succubi_food.hand.eat_tp",
+        "wield": "controller.animation.succubi_food.hand"
+      },
+      "scripts": {
+        "animate": [
+          "wield"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ]
+    }
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:crafting_items_catalog": {
+    "categories": [
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "succubi:server_settings",
+              "name": "itemGroup.name.succubi:tools"
+            },
+            "items": [
+              "succubi:server_settings",
+              "succubi:wallet",
+              "succubi:rule_wand",
+              "succubi:rule_board_placer",
+              "succubi:watcher_statue_placer",
+              "kotarus:height_adjuster"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "succubi:banknote_1000",
+              "name": "itemGroup.name.succubi:money"
+            },
+            "items": [
+              "succubi:coin_1",
+              "succubi:coin_5",
+              "succubi:coin_10",
+              "succubi:banknote_20",
+              "succubi:banknote_50",
+              "succubi:banknote_100",
+              "succubi:banknote_500",
+              "succubi:banknote_1000"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "kotarus:medkit_blackpowder",
+              "name": "itemGroup.name.succubi:medical"
+            },
+            "items": [
+              "kotarus:bandage_blackpowder",
+              "kotarus:medkit_blackpowder",
+              "kotarus:syringe_blackpowder",
+              "succubi:med_paracetamol",
+              "succubi:med_cough_syrup",
+              "succubi:med_inhaler",
+              "succubi:med_balm",
+              "succubi:med_plaster",
+              "succubi:med_ors",
+              "succubi:med_vitamin_c",
+              "succubi:med_motion",
+              "succubi:med_antacid",
+              "succubi:teddy_bear"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "succubi:drink_coca_cola",
+              "name": "itemGroup.name.succubi:food"
+            },
+            "items": [
+              "succubi:drink_water_bottle",
+              "succubi:drink_pepsi",
+              "succubi:drink_fanta_orange",
+              "succubi:drink_sprite",
+              "succubi:drink_coca_cola",
+              "succubi:drink_schweppes",
+              "succubi:drink_boss_coffee",
+              "succubi:drink_pocari_sweat",
+              "succubi:drink_redbull",
+              "succubi:drink_green_tea",
+              "succubi:drink_monster_energy",
+              "succubi:snack_wafer",
+              "succubi:snack_jelly",
+              "succubi:snack_prawn_crackers",
+              "succubi:snack_cream_bun",
+              "succubi:snack_chips",
+              "succubi:snack_fish_strips",
+              "succubi:snack_cookies",
+              "succubi:snack_biscuit_sticks",
+              "succubi:snack_seaweed",
+              "succubi:snack_chocolate",
+              "succubi:snack_chips_tube",
+              "food:somtum_plate",
+              "food:somtum_pla_ra",
+              "food:larb_plate",
+              "food:kratip_rice",
+              "food:kaeng_som",
+              "food:omelette_rice",
+              "food:fried_chicken_bucket",
+              "food:spicy_chicken_bucket",
+              "food:moo_ping",
+              "food:ramen_bowl",
+              "food:tomyum_ramen",
+              "food:tonkotsu_ramen",
+              "food:fried_insects_plate",
+              "food:spicy_insects_plate",
+              "food:boba_tea",
+              "food:thai_tea_boba",
+              "food:matcha_boba",
+              "food:cocoa_boba",
+              "food:kratom_bottle",
+              "succubi:snack_peanuts",
+              "succubi:drink_milk",
+              "succubi:drink_m150",
+              "succubi:onigiri_tuna",
+              "succubi:onigiri_salmon",
+              "succubi:sandwich_ham",
+              "succubi:toastie_ham",
+              "succubi:dim_sum",
+              "succubi:bao",
+              "succubi:sausage",
+              "succubi:rice_krapow",
+              "succubi:rice_garlic_pork",
+              "succubi:boiled_eggs",
+              "succubi:snack_chips_nori",
+              "succubi:snack_chips_bbq"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "kiosk:ramen_kiosk",
+              "name": "itemGroup.name.succubi:shops"
+            },
+            "items": [
+              "kiosk:somtum_kiosk",
+              "kiosk:chicken_kiosk",
+              "kiosk:ramen_kiosk",
+              "kiosk:omelette_kiosk",
+              "kiosk:fried_insects_kiosk",
+              "kiosk:haruto_tea_kiosk",
+              "succubi:drink_vending_machine_placer",
+              "succubi:snack_vending_machine_placer",
+              "succubi:pharmacy_stall_placer",
+              "succubi:store_snack_shelf_placer",
+              "succubi:store_drink_fridge_placer",
+              "succubi:store_hot_counter_placer",
+              "succubi:book_stall_placer",
+              "succubi:amulet_stall_placer"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "succubi:book_comic",
+              "name": "itemGroup.name.succubi:books"
+            },
+            "items": [
+              "succubi:book_custom",
+              "succubi:book_newspaper",
+              "succubi:book_comic",
+              "succubi:book_travel",
+              "succubi:book_romance",
+              "succubi:book_mystery",
+              "succubi:book_dharma",
+              "succubi:book_prayer",
+              "succubi:book_coloring",
+              "succubi:book_survival",
+              "succubi:book_ghost"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "succubi:amulet_luang_por",
+              "name": "itemGroup.name.succubi:amulets"
+            },
+            "items": [
+              "succubi:amulet_luang_por",
+              "succubi:amulet_takrut",
+              "succubi:amulet_bia_kae",
+              "succubi:amulet_pha_yant",
+              "succubi:amulet_khiao_suea",
+              "succubi:amulet_nang_kwak",
+              "succubi:amulet_kuman_thong",
+              "succubi:amulet_ta_thip",
+              "succubi:amulet_cursed_doll",
+              "succubi:amulet_yant_kan_phi",
+              "succubi:amulet_lek_lai",
+              "succubi:amulet_moon",
+              "succubi:amulet_hanuman",
+              "succubi:amulet_mae_pho"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "succubi:wallet",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.succubi:wallet.name"
+      },
+      "minecraft:icon": "succubi_wallet",
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

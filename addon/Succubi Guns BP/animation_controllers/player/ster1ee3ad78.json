@@ -1,0 +1,55 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.shield_blocking": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "transitions": [
+            {
+              "block": "q.blocking"
+            }
+          ]
+        },
+        "block": {
+          "transitions": [
+            {
+              "inactive": "!q.blocking"
+            }
+          ],
+          "on_entry": [
+            "/tag @s add is_blocking"
+          ],
+          "on_exit": [
+            "/tag @s remove is_blocking"
+          ]
+        }
+      }
+    },
+    "controller.animation.player.grounded": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "transitions": [
+            {
+              "grounded": "q.is_on_ground"
+            }
+          ]
+        },
+        "grounded": {
+          "transitions": [
+            {
+              "inactive": "!q.is_on_ground"
+            }
+          ],
+          "on_entry": [
+            "/tag @s add is_grounded"
+          ],
+          "on_exit": [
+            "/tag @s remove is_grounded"
+          ]
+        }
+      }
+    }
+  }
+}

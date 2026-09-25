@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "trenbankai:juggernaut_chestplate",
+      "materials": {
+        "default": "armor",
+        "enchanted": "armor_enchanted"
+      },
+      "textures": {
+        "default": "textures/models/wearable/juggernaut",
+        "enchanted": "textures/misc/enchanted_actor_glint"
+      },
+      "geometry": {
+        "default": "geometry.juggernaut"
+      },
+      "scripts": {
+        "parent_setup": "v.chest_layer_visible = 0;"
+      },
+      "render_controllers": [
+        "controller.render.juggernaut_chestplate"
+      ]
+    }
+  }
+}

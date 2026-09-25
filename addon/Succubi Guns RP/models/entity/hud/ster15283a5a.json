@@ -1,0 +1,151 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.hud_juggernaut",
+        "texture_width": 64,
+        "texture_height": 64,
+        "visible_bounds_width": 6,
+        "visible_bounds_height": 6.5,
+        "visible_bounds_offset": [
+          0,
+          1.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "hud_juggernaut_helmet",
+          "pivot": [
+            -0.015,
+            27.54,
+            4.5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7.015,
+                20.54,
+                4.6
+              ],
+              "size": [
+                14,
+                14,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    22
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ]
+                }
+              }
+            },
+            {
+              "origin": [
+                -16.015,
+                13.54,
+                4.5
+              ],
+              "size": [
+                32,
+                10,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    32,
+                    10
+                  ]
+                }
+              }
+            },
+            {
+              "origin": [
+                -16.015,
+                31.54,
+                4.5
+              ],
+              "size": [
+                32,
+                10,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    11
+                  ],
+                  "uv_size": [
+                    32,
+                    10
+                  ]
+                }
+              }
+            },
+            {
+              "origin": [
+                5.985,
+                23.54,
+                4.5
+              ],
+              "size": [
+                10,
+                8,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    15,
+                    22
+                  ],
+                  "uv_size": [
+                    10,
+                    8
+                  ]
+                }
+              }
+            },
+            {
+              "origin": [
+                -16.015,
+                23.54,
+                4.5
+              ],
+              "size": [
+                10,
+                8,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    26,
+                    22
+                  ],
+                  "uv_size": [
+                    10,
+                    8
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

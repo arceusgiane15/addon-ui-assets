@@ -1,0 +1,40 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "trenbankai:m249",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "M249"
+      },
+      "minecraft:food": {
+        "can_always_eat": true
+      },
+      "minecraft:tags": {
+        "tags": [
+          "is_weapon",
+          "is_m249",
+          "is_lmg",
+          "is_heavy",
+          "allow_attachment",
+          "set_laser_2"
+        ]
+      },
+      "minecraft:use_modifiers": {
+        "movement_modifier": 0.25,
+        "use_duration": 3600
+      },
+      "minecraft:icon": "m249",
+      "minecraft:max_stack_size": 1,
+      "minecraft:can_destroy_in_creative": false,
+      "minecraft:hand_equipped": true,
+      "minecraft:should_despawn": false,
+      "minecraft:stacked_by_data": true,
+      "minecraft:allow_off_hand": true
+    }
+  }
+}

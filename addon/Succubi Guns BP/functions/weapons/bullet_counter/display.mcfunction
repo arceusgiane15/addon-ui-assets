@@ -1,0 +1,17 @@
+execute as @s[hasitem={item=trenbankai:ak12, location=slot.weapon.mainhand}] run function weapons/bullet_counter/ak12
+execute as @s[hasitem={item=trenbankai:ak47, location=slot.weapon.mainhand}] run function weapons/bullet_counter/ak47
+execute as @s[hasitem={item=trenbankai:ak74, location=slot.weapon.mainhand}] run function weapons/bullet_counter/ak74
+execute as @s[hasitem={item=trenbankai:akm, location=slot.weapon.mainhand}] run function weapons/bullet_counter/akm
+execute as @s[hasitem={item=trenbankai:aks74u, location=slot.weapon.mainhand}] run function weapons/bullet_counter/aks74u
+execute as @s[hasitem={item=trenbankai:awp, location=slot.weapon.mainhand}] run function weapons/bullet_counter/awp
+execute as @s[hasitem={item=trenbankai:deagle, location=slot.weapon.mainhand}] run function weapons/bullet_counter/deagle
+execute as @s[hasitem={item=trenbankai:fnfal, location=slot.weapon.mainhand}] run function weapons/bullet_counter/fnfal
+execute as @s[hasitem={item=trenbankai:parafal, location=slot.weapon.mainhand}] run function weapons/bullet_counter/parafal
+execute as @s[hasitem={item=trenbankai:glock17, location=slot.weapon.mainhand}] run function weapons/bullet_counter/glock17
+execute as @s[hasitem={item=trenbankai:glock18, location=slot.weapon.mainhand}] run function weapons/bullet_counter/glock18
+execute as @s[hasitem={item=trenbankai:m249, location=slot.weapon.mainhand}] run function weapons/bullet_counter/m249
+execute as @s[hasitem={item=trenbankai:m4a1, location=slot.weapon.mainhand}] run function weapons/bullet_counter/m4a1
+execute as @s[hasitem={item=trenbankai:mossberg, location=slot.weapon.mainhand}] run function weapons/bullet_counter/mossberg
+execute as @s[hasitem={item=trenbankai:mp5a5, location=slot.weapon.mainhand}] run function weapons/bullet_counter/mp5a5
+execute as @s[hasitem={item=trenbankai:rpg7, location=slot.weapon.mainhand}] run function weapons/bullet_counter/rpg7
+execute as @s[hasitem={item=trenbankai:m1014, location=slot.weapon.mainhand}] run function weapons/bullet_counter/m1014

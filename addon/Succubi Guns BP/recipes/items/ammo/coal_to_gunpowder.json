@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "trenbankai:coal_to_gunpowder"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:coal"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:coal"
+      }
+    ],
+    "result": [
+      {
+        "item": "minecraft:gunpowder"
+      }
+    ]
+  }
+}

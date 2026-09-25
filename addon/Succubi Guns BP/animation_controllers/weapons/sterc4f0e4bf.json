@@ -1,0 +1,118 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.m1014": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "on_entry": [
+            "@s trenbankai:remove_reload"
+          ],
+          "transitions": [
+            {
+              "fire": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') && q.scoreboard('m1014') >= 1 && v.fire && v.draw"
+            },
+            {
+              "pre_reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') && q.scoreboard('m1014') <= 0 && v.reload"
+            },
+            {
+              "pre_reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') && q.scoreboard('m1014') <= 29 && v.reload && q.is_sneaking && v.attack_time"
+            }
+          ]
+        },
+        "fire": {
+          "on_entry": [
+            "/function weapons/fire/m1014"
+          ],
+          "on_exit": [
+            "v.weapon_fire = q.life_time;"
+          ],
+          "transitions": [
+            {
+              "firing": "(1.0)"
+            }
+          ]
+        },
+        "firing": {
+          "on_entry": [
+            "v.weapon_fire = q.life_time;"
+          ],
+          "transitions": [
+            {
+              "post_fire": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') || q.scoreboard('m1014') <= 0 || !v.fire || !v.draw"
+            },
+            {
+              "fire": "(q.life_time - v.weapon_fire) >= 0.35"
+            }
+          ]
+        },
+        "post_fire": {
+          "on_entry": [
+            "/execute as @s[tag=!underground, tag=!silencer] run playsound effect.weapon.dist.medium @a[rm=0.1, r=200] ^^^1.5 100 1 0.01"
+          ],
+          "transitions": [
+            {
+              "inactive": "(1.0)"
+            }
+          ]
+        },
+        "pre_reload": {
+          "on_entry": [
+            "/execute as @s[hasitem={item=trenbankai:bullet_12gauge, quantity=1..}, scores={m1014=..0}] run event entity @s trenbankai:add_reload_empty",
+            "/execute as @s[hasitem={item=trenbankai:bullet_12gauge, quantity=1..}, scores={m1014=1..}] run event entity @s trenbankai:add_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') || !q.property('trenbankai:reload') || !q.is_alive"
+            },
+            {
+              "reload_empty": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') && q.property('trenbankai:reload') == 1 && v.reloading"
+            },
+            {
+              "reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') && q.property('trenbankai:reload') == 2 && v.reloading"
+            }
+          ]
+        },
+        "reload_empty": {
+          "animations": [
+            "m1014_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') || !v.reloading"
+            },
+            {
+              "reloaded": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') && q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "reload": {
+          "animations": [
+            "m1014_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') || !v.reloading"
+            },
+            {
+              "reloaded": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') && q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "reloaded": {
+          "on_entry": [
+            "/execute as @s[hasitem={item=trenbankai:m1014, location=slot.weapon.mainhand}] run function weapons/reload/m1014"
+          ],
+          "transitions": [
+            {
+              "inactive": "1"
+            },
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:m1014') || !v.draw"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.weapons.wield_fpp": {
+      "loop": true,
+      "bones": {
+        "weapon": {
+          "rotation": [
+            "c.item_slot == 'main_hand' ? 90 : 95",
+            "c.item_slot == 'main_hand' ? 0 : -90",
+            "c.item_slot == 'main_hand' ? 0 : -40"
+          ],
+          "position": [
+            "c.item_slot == 'main_hand' ? 0.5 : -2.5",
+            "c.item_slot == 'main_hand' ? 22.5 : 19",
+            "c.item_slot == 'main_hand' ?-2.5 : 2.5"
+          ],
+          "scale": "c.item_slot == 'main_hand' ? 0.6 : 0"
+        }
+      }
+    },
+    "animation.weapons.wield_tpp": {
+      "loop": true,
+      "bones": {
+        "weapon": {
+          "rotation": [
+            "c.item_slot == 'main_hand' ? 90 : 95",
+            "c.item_slot == 'main_hand' ? 0 : -90",
+            "c.item_slot == 'main_hand' ? 0 : -40"
+          ],
+          "position": [
+            "c.item_slot == 'main_hand' ? 0.5 : -2.5",
+            "c.item_slot == 'main_hand' ? 22.5 : 19",
+            "c.item_slot == 'main_hand' ? -2.5 : (q.equipped_item_all_tags('slot.armor.chest', 'is_vest') ? 3.5 : 2.5)"
+          ],
+          "scale": 0.6
+        }
+      }
+    },
+    "animation.weapons.wield_pistols_tpp": {
+      "loop": true,
+      "bones": {
+        "weapon": {
+          "rotation": [
+            "c.item_slot == 'main_hand' ? 90 : (80 + math.clamp(-q.target_x_rotation, -2, 2))",
+            "c.item_slot == 'main_hand' ? 0 : 15",
+            "c.item_slot == 'main_hand' ? 0 : 10"
+          ],
+          "position": [
+            "c.item_slot == 'main_hand' ? 0.5 : -5",
+            "c.item_slot == 'main_hand' ? 22.5 : 12",
+            "c.item_slot == 'main_hand' ? -2.5 : 1"
+          ],
+          "scale": 0.6
+        }
+      }
+    }
+  }
+}

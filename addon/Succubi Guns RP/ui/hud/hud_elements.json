@@ -1,0 +1,33 @@
+{
+  "namespace": "hud_elements",
+  "hud_elements@common.empty_panel": {
+    "controls": [
+      {
+        "hud_renderer@hud_elements.hud_renderer": {
+          "offset": [
+            -0.5,
+            5100
+          ],
+          "anchor_from": "center",
+          "anchor_to": "center"
+        }
+      }
+    ]
+  },
+  "hud_renderer": {
+    "type": "panel",
+    "size": [
+      63,
+      63
+    ],
+    "controls": [
+      {
+        "hud_player": {
+          "type": "custom",
+          "renderer": "live_player_renderer",
+          "layer": 1
+        }
+      }
+    ]
+  }
+}

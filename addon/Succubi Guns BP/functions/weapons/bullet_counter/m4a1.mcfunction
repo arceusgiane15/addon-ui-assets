@@ -1,0 +1,3 @@
+titleraw @s[scores={m4a1=11..}] actionbar {"rawtext":[{"text":"[ §7"},{"score":{"name":"@s","objective":"m4a1"}},{"text":"§r/30 ]"}]}
+titleraw @s[scores={m4a1=1..10}] actionbar {"rawtext":[{"text":"[ §c"},{"score":{"name":"@s","objective":"m4a1"}},{"text":"§r/30 ]"}]}
+titleraw @s[scores={m4a1=..0}] actionbar {"rawtext":[{"text":"[ §4"},{"score":{"name":"@s","objective":"m4a1"}},{"text":"§r/30 ]"}]}

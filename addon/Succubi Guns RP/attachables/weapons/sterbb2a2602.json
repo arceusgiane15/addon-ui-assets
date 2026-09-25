@@ -1,0 +1,61 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "trenbankai:deagle",
+      "materials": {
+        "default": "entity_alphatest",
+        "transparent": "entity_alphablend",
+        "transparent_additive": "entity_beam_additive",
+        "charged": "charged_creeper",
+        "glow": "spider",
+        "nvg": "hud_nvg"
+      },
+      "textures": {
+        "default": "textures/models/weapons/deagle",
+        "predator_v4": "textures/models/attachment/predator_v4",
+        "laser_red": "textures/models/attachment/laser_red",
+        "laser_green": "textures/models/attachment/laser_green",
+        "silencer": "textures/models/attachment/silencer"
+      },
+      "geometry": {
+        "default": "geometry.deagle",
+        "predator_v4": "geometry.predator_v4",
+        "laser": "geometry.laser",
+        "silencer": "geometry.silencer"
+      },
+      "animations": {
+        "setup_controller": "controller.animation.weapon.setup",
+        "attachments": "animation.deagle.attachments",
+        "wield_controller": "controller.animation.weapon.wield",
+        "wield_fpp": "animation.weapons.wield_fpp",
+        "wield_tpp": "animation.weapons.wield_pistols_tpp",
+        "reload_controller": "controller.animation.weapon.reload",
+        "reload_empty_fpp": "animation.deagle.fpp_reload",
+        "reload_fpp": "animation.deagle.fpp_reload",
+        "fire_controller": "controller.animation.weapon.fire",
+        "fire": "animation.deagle.fire.item"
+      },
+      "scripts": {
+        "pre_animation": [
+          "v.is_first_person = c.is_first_person;"
+        ],
+        "animate": [
+          "setup_controller"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.weapon",
+        {
+          "controller.render.predator_v4": "q.has_property('trenbankai:sight') && q.property('trenbankai:sight') == 6"
+        },
+        {
+          "controller.render.laser": "q.has_property('trenbankai:laser') && q.property('trenbankai:laser') >= 1"
+        },
+        {
+          "controller.render.silencer": "q.has_property('trenbankai:silencer') && q.property('trenbankai:silencer') == 1"
+        }
+      ]
+    }
+  }
+}

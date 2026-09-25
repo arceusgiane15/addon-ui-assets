@@ -1,0 +1,33 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.haruto_tea_kiosk.announcement": {
+      "loop": true,
+      "animation_length": 44.6,
+      "bones": {
+        "root": {
+          "rotation": [0, 0, 0]
+        }
+      },
+      "sound_effects": {
+        "0.0": {
+          "effect": "announcement"
+        }
+      }
+    },
+    "animation.haruto_tea_kiosk.bgm": {
+      "loop": true,
+      "animation_length": 715.1,
+      "bones": {
+        "root": {
+          "rotation": [0, 0, 0]
+        }
+      },
+      "sound_effects": {
+        "0.0": {
+          "effect": "bgm"
+        }
+      }
+    }
+  }
+}

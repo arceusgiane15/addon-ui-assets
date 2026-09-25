@@ -1,0 +1,32 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "succubi:snack_cookies",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/models/succubi_food/snack_cookies"
+      },
+      "geometry": {
+        "default": "geometry.succubi_snack_cookies"
+      },
+      "animations": {
+        "hold_fp": "animation.succubi_food.vending_snack.hold_fp",
+        "hold_tp": "animation.succubi_food.vending_snack.hold_tp",
+        "eat_fp": "animation.succubi_food.vending_snack.eat_fp",
+        "eat_tp": "animation.succubi_food.vending_snack.eat_tp",
+        "wield": "controller.animation.succubi_food.vending_snack"
+      },
+      "scripts": {
+        "animate": [
+          "wield"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ]
+    }
+  }
+}

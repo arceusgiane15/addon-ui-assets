@@ -1,0 +1,32 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "succubi:rice_garlic_pork",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/extra/rice_garlic_pork"
+      },
+      "geometry": {
+        "default": "geometry.succubi_extra_rice_garlic_pork"
+      },
+      "animations": {
+        "hold_fp": "animation.succubi_food.plate.hold_fp",
+        "hold_tp": "animation.succubi_food.plate.hold_tp",
+        "eat_fp": "animation.succubi_food.plate.eat_fp",
+        "eat_tp": "animation.succubi_food.plate.eat_tp",
+        "wield": "controller.animation.succubi_food.plate"
+      },
+      "scripts": {
+        "animate": [
+          "wield"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ]
+    }
+  }
+}

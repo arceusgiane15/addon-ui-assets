@@ -1,0 +1,45 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Succubi Server RP",
+    "description": "Succubi Server v1.1.8 · โมเดล เท็กซ์เจอร์ เสียง HUD และหน้าจอ",
+    "uuid": "5485ae30-e95c-4ba6-8cf9-c50b4fb71226",
+    "version": [
+      1,
+      1,
+      8
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      90
+    ]
+  },
+  "modules": [
+    {
+      "description": "Succubi Server resources",
+      "type": "resources",
+      "uuid": "047e96bb-f3dc-4edc-8139-0f5f1702625f",
+      "version": [
+        1,
+        1,
+        8
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "344a2ed9-b5c1-4651-af5b-b888f88e66f0",
+      "version": [
+        1,
+        1,
+        8
+      ]
+    }
+  ],
+  "metadata": {
+    "authors": [
+      "Succubi Server"
+    ]
+  }
+}

@@ -1,0 +1,1015 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.player.look_at_target.weapons": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "relative_to": {
+            "rotation": "entity"
+          },
+          "rotation": [
+            0,
+            "(math.max(-35, math.min(35, q.target_y_rotation)))",
+            0
+          ]
+        },
+        "head": {
+          "relative_to": {
+            "rotation": "entity"
+          },
+          "rotation": [
+            "(math.max(-80, math.min(80, q.target_x_rotation)))",
+            "q.target_y_rotation",
+            0
+          ]
+        },
+        "waist": {
+          "relative_to": {
+            "rotation": "entity"
+          },
+          "rotation": [
+            "(math.max(-60, math.min(80, q.target_x_rotation)))",
+            "q.target_y_rotation",
+            0
+          ]
+        }
+      }
+    },
+    "animation.weapons.dryfire": {
+      "animation_length": 0.1667,
+      "bones": {
+        "waist": {
+          "rotation": {
+            "0.0": [
+              -1,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.0": [
+              0,
+              -0.25,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "trigger": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              1
+            ],
+            "0.1667": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.weapons.standby_fpp": {
+      "loop": true,
+      "bones": {
+        "waist": {
+          "rotation": [
+            16,
+            "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_light') ? -40 : -60",
+            -6
+          ],
+          "position": [
+            "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_light') ? -6 : -8",
+            "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_light') ? 3 : (v.weapon_sight ? 0.75 : 2)",
+            "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_light') ? 4 : 2"
+          ]
+        }
+      }
+    },
+    "animation.weapons.movement_fpp": {
+      "loop": true,
+      "bones": {
+        "body": {
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "animation.weapons.wall_detect_fpp": {
+      "loop": true,
+      "bones": {
+        "body": {
+          "position": [
+            0,
+            -0.25,
+            5
+          ]
+        }
+      }
+    },
+    "animation.weapons.hide_weapon_when_scope": {
+      "loop": true,
+      "bones": {
+        "leftArm": {
+          "scale": 0
+        },
+        "rightArm": {
+          "scale": 0
+        }
+      }
+    },
+    "animation.weapons.tpp_hold_0": {
+      "loop": true,
+      "bones": {
+        "body": {
+          "rotation": [
+            0,
+            38,
+            0
+          ],
+          "position": [
+            -0.5,
+            -0.15,
+            0
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -90,
+            -38,
+            0
+          ],
+          "position": [
+            -0.75,
+            0,
+            0.75
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            -88,
+            6,
+            120
+          ],
+          "position": [
+            0.5,
+            0.32,
+            -2.5
+          ]
+        },
+        "leftLeg": {
+          "position": [
+            -0.75,
+            0,
+            -1.25
+          ]
+        },
+        "rightLeg": {
+          "rotation": [
+            0,
+            20,
+            0
+          ],
+          "position": [
+            -0.75,
+            0,
+            1.75
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_hold_1": {
+      "loop": true,
+      "bones": {
+        "body": {
+          "rotation": [
+            0,
+            20.5,
+            0
+          ],
+          "position": [
+            -0.5,
+            -0.15,
+            0
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -90,
+            -25.5,
+            0
+          ],
+          "position": [
+            -0.39979,
+            0,
+            -0.18667
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            -74,
+            50,
+            21
+          ],
+          "position": [
+            -0.83346,
+            -0.68,
+            -1.74556
+          ]
+        },
+        "leftLeg": {
+          "position": [
+            -0.75,
+            0,
+            -1.25
+          ]
+        },
+        "rightLeg": {
+          "rotation": [
+            0,
+            20,
+            0
+          ],
+          "position": [
+            -0.75,
+            0,
+            1.75
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_hold_2": {
+      "loop": true,
+      "bones": {
+        "body": {
+          "rotation": [
+            0,
+            -20.5,
+            0
+          ],
+          "position": [
+            -0.5,
+            -0.15,
+            0
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -90,
+            17,
+            0
+          ],
+          "position": [
+            0.31744,
+            0,
+            -1.40595
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            -53.13202,
+            72.82405,
+            44.23285
+          ],
+          "position": [
+            -1.84385,
+            -0.86863,
+            -1.92866
+          ]
+        },
+        "leftLeg": {
+          "rotation": [
+            9,
+            1,
+            -5
+          ],
+          "position": [
+            -0.25,
+            0,
+            0.75
+          ]
+        },
+        "rightLeg": {
+          "rotation": [
+            -17.5,
+            0,
+            0
+          ],
+          "position": [
+            -0.85,
+            -0.7,
+            -0.25
+          ]
+        },
+        "root": {
+          "position": [
+            0,
+            -0.3,
+            0
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_standby_0": {
+      "loop": true,
+      "bones": {
+        "leftArm": {
+          "rotation": [
+            -28,
+            -21,
+            8
+          ],
+          "position": [
+            0.1,
+            -2,
+            -0.9
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -27.73974,
+            -38.10376,
+            -32.12491
+          ],
+          "position": [
+            -0.6,
+            -0.8,
+            -0.1
+          ]
+        },
+        "waist": {
+          "rotation": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "leftLeg": {
+          "rotation": [
+            0.1,
+            -8,
+            -2.5
+          ]
+        },
+        "rightLeg": {
+          "rotation": [
+            -0.1,
+            8,
+            2.5
+          ]
+        },
+        "rightItem": {
+          "rotation": [
+            6.14302,
+            -0.92923,
+            -13.95297
+          ],
+          "position": [
+            -0.07142,
+            0.2896,
+            -0.0321
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_standby_3": {
+      "loop": true,
+      "bones": {
+        "leftArm": {
+          "rotation": [
+            -28,
+            -21,
+            8
+          ],
+          "position": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -24.80426,
+            -8.32864,
+            -6.0857
+          ],
+          "position": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "waist": {
+          "rotation": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "leftLeg": {
+          "rotation": [
+            0.1,
+            -8,
+            -2.5
+          ]
+        },
+        "rightLeg": {
+          "rotation": [
+            -0.1,
+            8,
+            2.5
+          ]
+        },
+        "rightItem": {
+          "rotation": [
+            -8.39944,
+            -44.83168,
+            -61.86099
+          ],
+          "position": [
+            -1.41271,
+            -2.13166,
+            -0.58444
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_standby_1": {
+      "loop": true,
+      "bones": {
+        "leftArm": {
+          "rotation": [
+            -28,
+            22,
+            40
+          ],
+          "position": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -33,
+            -25,
+            -30
+          ],
+          "position": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "waist": {
+          "rotation": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "leftLeg": {
+          "rotation": [
+            0.1,
+            -8,
+            -2.5
+          ]
+        },
+        "rightLeg": {
+          "rotation": [
+            -0.1,
+            8,
+            2.5
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_standby_2": {
+      "loop": true,
+      "bones": {
+        "leftArm": {
+          "rotation": [
+            -38,
+            54.5,
+            45
+          ],
+          "position": [
+            0,
+            -0.8,
+            -0.5
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -40.5,
+            -25,
+            -30
+          ],
+          "position": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "waist": {
+          "rotation": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "leftLeg": {
+          "rotation": [
+            0.1,
+            -8,
+            -2.5
+          ]
+        },
+        "rightLeg": {
+          "rotation": [
+            -0.1,
+            8,
+            2.5
+          ]
+        },
+        "rightItem": {
+          "rotation": [
+            0,
+            0,
+            7.5
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_run_0": {
+      "loop": true,
+      "bones": {
+        "leftArm": {
+          "rotation": [
+            "-52 - (math.sin(q.anim_time * 400) * 2)",
+            14,
+            -10
+          ],
+          "position": [
+            "math.sin(q.anim_time * 500) * 0.1",
+            "math.sin(q.anim_time * 600) * 0.2",
+            0.5
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            "-42 - (math.sin(q.anim_time * 400) * 3)",
+            -44,
+            -26
+          ],
+          "position": [
+            "math.sin(q.anim_time * 500) * 0.1",
+            "math.sin(q.anim_time * 600) * 0.2",
+            0
+          ]
+        },
+        "waist": {
+          "rotation": [
+            20,
+            "25 + math.sin(q.anim_time * 600) * 4",
+            "10 + math.sin(q.anim_time * 400) * 3"
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_run_1": {
+      "loop": true,
+      "bones": {
+        "leftArm": {
+          "rotation": [
+            "-25 + math.sin(q.anim_time * 500) * 20",
+            "0 + math.sin(q.anim_time * 300) * 3",
+            -42.5
+          ],
+          "position": [
+            0,
+            "-1 + math.cos(q.anim_time * 600) * 0.4",
+            0
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            "-125 - (math.sin(q.anim_time * 400) * 3)",
+            -4,
+            16
+          ],
+          "position": [
+            "math.sin(q.anim_time * 500) * 0.1",
+            "-1 + math.sin(q.anim_time * 600) * 0.2",
+            0
+          ]
+        },
+        "waist": {
+          "rotation": [
+            10,
+            "2.5 + math.sin(q.anim_time * 500) * 6",
+            "1 + math.sin(q.anim_time * 300) * 3"
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_run_2": {
+      "loop": true,
+      "bones": {
+        "leftArm": {
+          "rotation": [
+            "-52 - (math.sin(q.anim_time * 400) * 2)",
+            14,
+            -10
+          ],
+          "position": [
+            "math.sin(q.anim_time * 500) * 0.1",
+            "math.sin(q.anim_time * 600) * 0.2",
+            0.5
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            "-42 - (math.sin(q.anim_time * 400) * 3)",
+            -44,
+            -26
+          ],
+          "position": [
+            "math.sin(q.anim_time * 500) * 0.1",
+            "math.sin(q.anim_time * 600) * 0.2",
+            0
+          ]
+        },
+        "waist": {
+          "rotation": [
+            20,
+            "25 + math.sin(q.anim_time * 600) * 4",
+            "10 + math.sin(q.anim_time * 400) * 3"
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_ads_0": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "position": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "waist": {
+          "rotation": [
+            24,
+            0,
+            -2
+          ]
+        },
+        "head": {
+          "rotation": [
+            10,
+            -2,
+            -12
+          ]
+        },
+        "leftLeg": {
+          "rotation": [
+            -10,
+            0,
+            -5
+          ],
+          "position": [
+            0,
+            0,
+            -1
+          ]
+        },
+        "rightLeg": {
+          "rotation": [
+            12,
+            5,
+            0
+          ],
+          "position": [
+            0.2,
+            -0.06,
+            1
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            10,
+            30,
+            -22
+          ],
+          "position": [
+            0.22276,
+            -0.91299,
+            -0.3418
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -18,
+            0,
+            0
+          ],
+          "position": [
+            0.22276,
+            -0.91299,
+            -0.3418
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_ads_1": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "position": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "waist": {
+          "rotation": [
+            24,
+            0,
+            -2
+          ]
+        },
+        "head": {
+          "rotation": [
+            10,
+            -2,
+            -12
+          ]
+        },
+        "leftLeg": {
+          "rotation": [
+            -10,
+            0,
+            -5
+          ],
+          "position": [
+            0,
+            0,
+            -1
+          ]
+        },
+        "rightLeg": {
+          "rotation": [
+            12,
+            5,
+            0
+          ],
+          "position": [
+            0.2,
+            -0.06,
+            1
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            -66,
+            -15,
+            -68
+          ],
+          "position": [
+            0.10967,
+            -0.91299,
+            -0.39297
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -23.50855,
+            -0.23678,
+            2.61875
+          ],
+          "position": [
+            0.10967,
+            -0.91299,
+            -0.39297
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_ads_2": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "position": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "waist": {
+          "rotation": [
+            24,
+            0,
+            -2
+          ]
+        },
+        "head": {
+          "rotation": [
+            10,
+            -2,
+            -12
+          ]
+        },
+        "leftLeg": {
+          "rotation": [
+            -10,
+            -12.5,
+            -5
+          ],
+          "position": [
+            0,
+            0,
+            -1
+          ]
+        },
+        "rightLeg": {
+          "rotation": [
+            12,
+            17.5,
+            0
+          ],
+          "position": [
+            0.2,
+            -0.06,
+            1
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            -12.5,
+            5,
+            0
+          ],
+          "position": [
+            0.10967,
+            -0.91299,
+            -0.39297
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -23.50855,
+            -0.23678,
+            2.61875
+          ],
+          "position": [
+            0.10967,
+            -0.91299,
+            -0.39297
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_looking_at_0": {
+      "loop": true,
+      "bones": {
+        "waist": {
+          "rotation": [
+            -2.5,
+            0,
+            0
+          ]
+        },
+        "head": {
+          "rotation": [
+            2.5,
+            0,
+            0
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            -80,
+            0,
+            0
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -84,
+            0,
+            0
+          ]
+        },
+        "rightItem": {
+          "rotation": [
+            8,
+            6,
+            -90
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_looking_at_1": {
+      "loop": true,
+      "bones": {
+        "waist": {
+          "rotation": [
+            -2.5,
+            0,
+            0
+          ]
+        },
+        "head": {
+          "rotation": [
+            2.5,
+            0,
+            0
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            -85,
+            25,
+            -0.5
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -84,
+            -13,
+            -0.6
+          ]
+        },
+        "rightItem": {
+          "rotation": [
+            8,
+            6,
+            -90
+          ]
+        }
+      }
+    },
+    "animation.weapons.tpp_looking_at_2": {
+      "loop": true,
+      "bones": {
+        "waist": {
+          "rotation": [
+            -2.5,
+            0,
+            0
+          ]
+        },
+        "head": {
+          "rotation": [
+            2.5,
+            0,
+            0
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            -85,
+            -12,
+            -4
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -84,
+            14,
+            2
+          ]
+        },
+        "rightItem": {
+          "rotation": [
+            0.5,
+            -0.1,
+            -106
+          ],
+          "position": [
+            7.4,
+            -2,
+            1.2
+          ]
+        }
+      }
+    }
+  }
+}

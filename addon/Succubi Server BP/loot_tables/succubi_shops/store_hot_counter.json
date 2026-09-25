@@ -1,0 +1,14 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "succubi:store_hot_counter_placer",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

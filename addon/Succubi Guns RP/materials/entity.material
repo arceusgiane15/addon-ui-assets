@@ -1,0 +1,29 @@
+{
+  "materials": {
+    "version": "1.0.0",
+    "hud_nvg:entity_beam_additive": {
+      "blendSrc": "DestColor",
+      "blendDst": "SourceColor",
+      "+defines": [
+        "USE_EMISSIVE"
+      ],
+      "+states": [
+        "Blending",
+        "DisableCulling",
+        "DisableDepthWrite",
+        "DisableAlphaWrite"
+      ]
+    },
+    "hud_noise:entity_beam_additive": {
+      "+defines": [
+        "USE_UV_ANIM"
+      ],
+      "+samplerStates": [
+        {
+          "samplerIndex": 0,
+          "textureWrap": "Repeat"
+        }
+      ]
+    }
+  }
+}

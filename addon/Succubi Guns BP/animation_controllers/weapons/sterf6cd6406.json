@@ -1,0 +1,98 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.rpg7": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "on_entry": [
+            "@s trenbankai:remove_reload"
+          ],
+          "transitions": [
+            {
+              "fire": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:rpg7') && q.scoreboard('rpg7') >= 1 && v.fire && v.draw"
+            },
+            {
+              "pre_reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:rpg7') && q.scoreboard('rpg7') <= 0 && v.reload"
+            }
+          ]
+        },
+        "fire": {
+          "on_entry": [
+            "/function weapons/fire/rpg7"
+          ],
+          "on_exit": [
+            "v.weapon_fire = q.life_time;"
+          ],
+          "transitions": [
+            {
+              "firing": "(1.0)"
+            }
+          ]
+        },
+        "firing": {
+          "on_entry": [
+            "v.weapon_fire = q.life_time;"
+          ],
+          "transitions": [
+            {
+              "post_fire": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:rpg7') || q.scoreboard('rpg7') <= 0 || !v.fire || !v.draw"
+            },
+            {
+              "fire": "(q.life_time - v.weapon_fire) >= 0.4"
+            }
+          ]
+        },
+        "post_fire": {
+          "on_entry": [
+            "/execute as @s[tag=!underground, tag=!silencer] run playsound effect.weapon.dist.large_extra @a[rm=0.1, r=400] ^^^1.5 100 1 0.01"
+          ],
+          "transitions": [
+            {
+              "inactive": "(1.0)"
+            }
+          ]
+        },
+        "pre_reload": {
+          "on_entry": [
+            "/execute as @s[hasitem={item=trenbankai:rpg7_rocket, quantity=1..}, scores={rpg7=..0}] run event entity @s trenbankai:add_reload_empty"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:rpg7') || !q.property('trenbankai:reload') || !q.is_alive"
+            },
+            {
+              "reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:rpg7') && q.property('trenbankai:reload') && v.reloading"
+            }
+          ]
+        },
+        "reload": {
+          "animations": [
+            "rpg7_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:rpg7') || !v.reloading"
+            },
+            {
+              "reloaded": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:rpg7') && q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "reloaded": {
+          "on_entry": [
+            "/execute as @s[hasitem={item=trenbankai:rpg7, location=slot.weapon.mainhand}] run function weapons/reload/rpg7"
+          ],
+          "transitions": [
+            {
+              "inactive": "1"
+            },
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:rpg7') || !v.draw"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

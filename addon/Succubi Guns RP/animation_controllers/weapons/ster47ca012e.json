@@ -1,0 +1,222 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.weapon_position": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "transitions": [
+            {
+              "ak12": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_ak12')"
+            },
+            {
+              "ak47": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_ak47')"
+            },
+            {
+              "ak74": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_ak74')"
+            },
+            {
+              "akm": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_akm')"
+            },
+            {
+              "aks74u": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_aks74u')"
+            },
+            {
+              "awp": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_awp')"
+            },
+            {
+              "deagle": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_deagle')"
+            },
+            {
+              "fnfal": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_fnfal')"
+            },
+            {
+              "parafal": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_parafal')"
+            },
+            {
+              "glock": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_glock')"
+            },
+            {
+              "m4a1": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_m4a1')"
+            },
+            {
+              "m249": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_m249')"
+            },
+            {
+              "mossberg": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_mossberg')"
+            },
+            {
+              "mp5a5": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_mp5a5')"
+            },
+            {
+              "rpg7": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_rpg7')"
+            },
+            {
+              "m1014": "q.equipped_item_all_tags('slot.weapon.mainhand', 'is_m1014')"
+            }
+          ]
+        },
+        "ak12": {
+          "animations": [
+            "ak12_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_ak12')"
+            }
+          ]
+        },
+        "ak47": {
+          "animations": [
+            "ak47_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_ak47')"
+            }
+          ]
+        },
+        "ak74": {
+          "animations": [
+            "ak47_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_ak74')"
+            }
+          ]
+        },
+        "akm": {
+          "animations": [
+            "ak47_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_akm')"
+            }
+          ]
+        },
+        "aks74u": {
+          "animations": [
+            "aks74u_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_aks74u')"
+            }
+          ]
+        },
+        "awp": {
+          "animations": [
+            "awp_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_awp')"
+            }
+          ]
+        },
+        "deagle": {
+          "animations": [
+            "deagle_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_deagle')"
+            }
+          ]
+        },
+        "fnfal": {
+          "animations": [
+            "fnfal_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_fnfal')"
+            }
+          ]
+        },
+        "parafal": {
+          "animations": [
+            "parafal_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_parafal')"
+            }
+          ]
+        },
+        "glock": {
+          "animations": [
+            "glock_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_glock')"
+            }
+          ]
+        },
+        "m4a1": {
+          "animations": [
+            "m4a1_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_m4a1')"
+            }
+          ]
+        },
+        "m249": {
+          "animations": [
+            "m249_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_m249')"
+            }
+          ]
+        },
+        "mossberg": {
+          "animations": [
+            "mossberg_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_mossberg')"
+            }
+          ]
+        },
+        "mp5a5": {
+          "animations": [
+            "mp5a5_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_mp5a5')"
+            }
+          ]
+        },
+        "rpg7": {
+          "animations": [
+            "rpg7_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_rpg7')"
+            }
+          ]
+        },
+        "m1014": {
+          "animations": [
+            "m1014_weapon_position"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.equipped_item_all_tags('slot.weapon.mainhand', 'is_m1014')"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

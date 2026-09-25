@@ -1,0 +1,188 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.predator_v4",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 1.5,
+        "visible_bounds_offset": [
+          0,
+          0.25,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "binding": "q.item_slot_to_bone_name((c.item_slot == 'off_hand') ? 'body' : 'main_hand')"
+        },
+        {
+          "name": "attachment",
+          "parent": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "predator_v4",
+          "parent": "attachment",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                -0.5,
+                -0.75
+              ],
+              "size": [
+                2,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -1,
+                0.5,
+                -0.95
+              ],
+              "size": [
+                2,
+                1,
+                1
+              ],
+              "inflate": 0.001,
+              "uv": [
+                0,
+                4
+              ]
+            },
+            {
+              "origin": [
+                -1,
+                -0.5,
+                -0.95
+              ],
+              "size": [
+                0,
+                1,
+                1
+              ],
+              "pivot": [
+                -1,
+                0.5,
+                -0.95
+              ],
+              "rotation": [
+                22.5,
+                0,
+                0
+              ],
+              "uv": [
+                6,
+                6
+              ]
+            },
+            {
+              "origin": [
+                1,
+                -0.5,
+                -0.95
+              ],
+              "size": [
+                0,
+                1,
+                1
+              ],
+              "pivot": [
+                1,
+                0.5,
+                -0.95
+              ],
+              "rotation": [
+                22.5,
+                0,
+                0
+              ],
+              "uv": [
+                6,
+                7
+              ]
+            },
+            {
+              "origin": [
+                -1,
+                -0.5,
+                -0.95
+              ],
+              "size": [
+                2,
+                1,
+                0
+              ],
+              "pivot": [
+                1,
+                0.5,
+                -0.95
+              ],
+              "rotation": [
+                22.5,
+                0,
+                0
+              ],
+              "uv": [
+                0,
+                7
+              ]
+            }
+          ]
+        },
+        {
+          "name": "glass",
+          "parent": "predator_v4",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                0.5,
+                -0.7
+              ],
+              "size": [
+                2,
+                1,
+                0
+              ],
+              "uv": [
+                7,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

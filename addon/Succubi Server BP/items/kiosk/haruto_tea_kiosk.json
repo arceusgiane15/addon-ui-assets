@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "kiosk:haruto_tea_kiosk",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.kiosk:haruto_tea_kiosk.name"
+      },
+      "minecraft:icon": "kiosk_haruto_tea_kiosk",
+      "minecraft:max_stack_size": 1,
+      "minecraft:entity_placer": {
+        "entity": "kiosk:haruto_tea_kiosk"
+      }
+    }
+  }
+}

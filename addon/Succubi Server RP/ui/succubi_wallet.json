@@ -1,0 +1,540 @@
+{
+  "namespace": "succubi_wallet",
+  "wallet_panel": {
+    "type": "panel",
+    "size": [
+      272,
+      176
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/wallet_bg",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lกระเป๋าตังค์",
+          "color": [
+            0.97,
+            0.89,
+            0.72
+          ],
+          "shadow": true,
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            22,
+            28
+          ],
+          "layer": 5,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "info": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.25,
+            0.17,
+            0.1
+          ],
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            157,
+            37
+          ],
+          "size": [
+            90,
+            "default"
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "buttons@succubi_wallet.button_row": {
+          "layer": 5
+        }
+      },
+      {
+        "close@succubi_ui.close_button": {
+          "anchor_from": "top_right",
+          "anchor_to": "top_right",
+          "offset": [
+            -10,
+            10
+          ],
+          "layer": 8
+        }
+      }
+    ]
+  },
+  "button_row": {
+    "type": "stack_panel",
+    "orientation": "horizontal",
+    "size": [
+      "100%c",
+      30
+    ],
+    "anchor_from": "bottom_middle",
+    "anchor_to": "bottom_middle",
+    "offset": [
+      0,
+      -18
+    ],
+    "factory": {
+      "name": "buttons",
+      "control_name": "succubi_wallet.wallet_button"
+    },
+    "collection_name": "form_buttons",
+    "bindings": [
+      {
+        "binding_name": "#form_button_length",
+        "binding_name_override": "#collection_length"
+      }
+    ]
+  },
+  "wallet_button": {
+    "type": "panel",
+    "size": [
+      60,
+      30
+    ],
+    "controls": [
+      {
+        "button@common.button": {
+          "size": [
+            57,
+            26
+          ],
+          "$pressed_button_name": "button.form_button_click",
+          "bindings": [
+            {
+              "binding_type": "collection_details",
+              "binding_collection_name": "form_buttons"
+            }
+          ],
+          "controls": [
+            {
+              "default@succubi_wallet.face_default": {}
+            },
+            {
+              "hover@succubi_wallet.face_hover": {}
+            },
+            {
+              "pressed@succubi_wallet.face_pressed": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "face_art": {
+    "type": "image",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "layer": 1,
+    "bindings": [
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "face_label": {
+    "type": "label",
+    "text": "#form_button_text",
+    "color": [
+      1,
+      1,
+      1
+    ],
+    "shadow": true,
+    "localize": false,
+    "layer": 3,
+    "anchor_from": "left_middle",
+    "anchor_to": "left_middle",
+    "offset": [
+      24,
+      -1
+    ],
+    "size": [
+      "100% - 25px",
+      "default"
+    ],
+    "bindings": [
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "font_type": "smooth"
+  },
+  "face_default": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_wallet.face_art": {}
+      },
+      {
+        "label@succubi_wallet.face_label": {}
+      }
+    ]
+  },
+  "face_hover": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_wallet.face_art": {}
+      },
+      {
+        "label@succubi_wallet.face_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/btn_hover",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "face_pressed": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      1
+    ],
+    "controls": [
+      {
+        "art@succubi_wallet.face_art": {}
+      },
+      {
+        "label@succubi_wallet.face_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/btn_pressed",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "withdraw_panel": {
+    "type": "panel",
+    "size": [
+      272,
+      176
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/withdraw_bg",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "§lถอนเงิน",
+          "color": [
+            0.97,
+            0.89,
+            0.72
+          ],
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            22,
+            23
+          ],
+          "layer": 5,
+          "shadow": true,
+          "font_type": "smooth"
+        }
+      },
+      {
+        "info": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.25,
+            0.17,
+            0.1
+          ],
+          "localize": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            26,
+            47
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ],
+          "size": [
+            220,
+            "default"
+          ],
+          "font_type": "smooth"
+        }
+      },
+      {
+        "amounts": {
+          "type": "grid",
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            16,
+            94
+          ],
+          "size": [
+            240,
+            64
+          ],
+          "grid_dimensions": [
+            5,
+            2
+          ],
+          "grid_item_template": "succubi_wallet.amount_cell",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      }
+    ]
+  },
+  "amount_cell": {
+    "type": "panel",
+    "size": [
+      48,
+      32
+    ],
+    "controls": [
+      {
+        "button@common.button": {
+          "size": [
+            46,
+            28
+          ],
+          "$pressed_button_name": "button.form_button_click",
+          "bindings": [
+            {
+              "binding_type": "collection_details",
+              "binding_collection_name": "form_buttons"
+            }
+          ],
+          "controls": [
+            {
+              "default@succubi_wallet.amt_default": {}
+            },
+            {
+              "hover@succubi_wallet.amt_hover": {}
+            },
+            {
+              "pressed@succubi_wallet.amt_pressed": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "amt_art": {
+    "type": "image",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "layer": 1,
+    "bindings": [
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "amt_label": {
+    "type": "label",
+    "text": "#form_button_text",
+    "color": [
+      1,
+      1,
+      1
+    ],
+    "shadow": true,
+    "localize": false,
+    "layer": 3,
+    "anchor_from": "left_middle",
+    "anchor_to": "left_middle",
+    "offset": [
+      20,
+      -1
+    ],
+    "size": [
+      "100% - 21px",
+      "default"
+    ],
+    "bindings": [
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "font_type": "smooth"
+  },
+  "amt_default": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_wallet.amt_art": {}
+      },
+      {
+        "label@succubi_wallet.amt_label": {}
+      }
+    ]
+  },
+  "amt_hover": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "controls": [
+      {
+        "art@succubi_wallet.amt_art": {}
+      },
+      {
+        "label@succubi_wallet.amt_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/amt_hover",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  },
+  "amt_pressed": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "offset": [
+      0,
+      1
+    ],
+    "controls": [
+      {
+        "art@succubi_wallet.amt_art": {}
+      },
+      {
+        "label@succubi_wallet.amt_label": {}
+      },
+      {
+        "overlay": {
+          "type": "image",
+          "texture": "textures/ui/succubi_wallet/amt_pressed",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 2
+        }
+      }
+    ]
+  }
+}

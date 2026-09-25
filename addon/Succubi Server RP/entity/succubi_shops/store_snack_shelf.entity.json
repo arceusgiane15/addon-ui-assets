@@ -1,0 +1,21 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "succubi:store_snack_shelf",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/succubi_shops/store_snack_shelf"
+      },
+      "geometry": {
+        "default": "geometry.store_snack_shelf"
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ],
+      "enable_attachables": false
+    }
+  }
+}

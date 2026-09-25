@@ -1,0 +1,27 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "succubi:snack_vending_machine",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/succubi/snack_vending_machine"
+      },
+      "geometry": {
+        "default": "geometry.succubi_snack_vending_machine"
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ],
+      "spawn_egg": {
+        "base_color": "#2a78d0",
+        "overlay_color": "#ffb020"
+      },
+      "scripts": {
+        "scale": "0.35"
+      }
+    }
+  }
+}

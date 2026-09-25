@@ -1,0 +1,57 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.parafal.attachments": {
+      "loop": true,
+      "bones": {
+        "acog": {
+          "position": [
+            0,
+            4.1,
+            -4
+          ]
+        },
+        "eotech": {
+          "position": [
+            0,
+            4,
+            -3
+          ]
+        },
+        "scope": {
+          "position": [
+            0,
+            4,
+            -3
+          ]
+        },
+        "silencer": {
+          "position": [
+            0,
+            2.8,
+            -36.4
+          ]
+        }
+      }
+    },
+    "animation.parafal.weapon_position": {
+      "loop": true,
+      "bones": {
+        "muzzleFlash": {
+          "position": [
+            0.5,
+            -23.75,
+            -2.25
+          ]
+        },
+        "bulletEject": {
+          "position": [
+            2,
+            -5,
+            -3.5
+          ]
+        }
+      }
+    }
+  }
+}

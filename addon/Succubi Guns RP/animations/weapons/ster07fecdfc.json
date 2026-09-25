@@ -1,0 +1,250 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.aks74u.attachments": {
+      "loop": true,
+      "bones": {
+        "acog": {
+          "position": [
+            0,
+            4.9,
+            -4.5
+          ]
+        },
+        "eotech": {
+          "position": [
+            0,
+            4.9,
+            -3.2
+          ]
+        },
+        "okp7": {
+          "position": [
+            0,
+            4.9,
+            -4.5
+          ]
+        },
+        "scope": {
+          "position": [
+            0,
+            4.9,
+            -4.5
+          ]
+        },
+        "silencer": {
+          "position": [
+            0,
+            1.8,
+            -28.5
+          ]
+        }
+      }
+    },
+    "animation.aks74u.weapon_position": {
+      "loop": true,
+      "bones": {
+        "muzzleFlash": {
+          "position": [
+            0.5,
+            -15.9,
+            -2.5
+          ]
+        },
+        "bulletEject": {
+          "position": [
+            2,
+            -5,
+            -3.5
+          ]
+        }
+      }
+    },
+    "animation.aks74u.fire": {
+      "animation_length": 0.7,
+      "blend_weight": "q.is_in_ui ? 0 : 1",
+      "timeline": {
+        "0.0": [
+          "v.recoil.x = (-math.random(1, 1.5) * (q.is_sneaking ? 0.5 : 1));",
+          "v.recoil.y = (math.random(-1, 1) * (q.is_sneaking ? 0.5 : 1));"
+        ]
+      },
+      "bones": {
+        "waist": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.15": [
+              "v.recoil.x",
+              "v.recoil.y",
+              -0.25
+            ],
+            "0.7": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "leftArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.1": [
+              0,
+              0,
+              "1.5 * (q.is_sneaking ? 0.5 : 1)"
+            ],
+            "0.35": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.1": [
+              0,
+              0,
+              "1.5 * (q.is_sneaking ? 0.5 : 1)"
+            ],
+            "0.35": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "particle_effects": {
+        "0.0": [
+          {
+            "effect": "bullet_tracer",
+            "locator": "muzzle_flash"
+          },
+          {
+            "effect": "muzzle_flash",
+            "locator": "muzzle_flash"
+          },
+          {
+            "effect": "muzzle_lensflare",
+            "locator": "muzzle_flash"
+          },
+          {
+            "effect": "muzzle_smoke",
+            "locator": "muzzle_flash"
+          },
+          {
+            "effect": "casing_762x39mm",
+            "locator": "bullet_eject"
+          }
+        ],
+        "0.5": {
+          "effect": "muzzle_hot",
+          "locator": "muzzle_flash"
+        }
+      }
+    },
+    "animation.aks74u.fire.silenced": {
+      "animation_length": 0.7,
+      "blend_weight": "q.is_in_ui ? 0 : 1",
+      "timeline": {
+        "0.0": [
+          "v.recoil.x = (-math.random(1, 1.5) * (q.is_sneaking ? 0.5 : 1));",
+          "v.recoil.y = (math.random(-1, 1) * (q.is_sneaking ? 0.5 : 1));"
+        ]
+      },
+      "bones": {
+        "waist": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.15": [
+              "v.recoil.x",
+              "v.recoil.y",
+              -0.25
+            ],
+            "0.7": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "leftArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.1": [
+              0,
+              0,
+              "1.5 * (q.is_sneaking ? 0.5 : 1)"
+            ],
+            "0.35": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.1": [
+              0,
+              0,
+              "1.5 * (q.is_sneaking ? 0.5 : 1)"
+            ],
+            "0.35": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "particle_effects": {
+        "0.0": [
+          {
+            "effect": "bullet_tracer",
+            "locator": "silencer_muzzle_flash"
+          },
+          {
+            "effect": "muzzle_smoke",
+            "locator": "silencer_muzzle_flash"
+          },
+          {
+            "effect": "casing_762x39mm",
+            "locator": "bullet_eject"
+          }
+        ],
+        "0.5": {
+          "effect": "muzzle_hot",
+          "locator": "silencer_muzzle_flash"
+        }
+      }
+    }
+  }
+}

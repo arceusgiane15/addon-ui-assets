@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "trenbankai:ammo_workbench"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CAC",
+      "CBC",
+      "C C"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:gunpowder"
+      },
+      "B": {
+        "item": "minecraft:iron_ingot"
+      },
+      "C": {
+        "item": "minecraft:planks"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:planks"
+      }
+    ],
+    "result": {
+      "item": "trenbankai:ammo_workbench"
+    }
+  }
+}

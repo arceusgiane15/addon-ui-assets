@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "trenbankai:okp7_reflex_sight",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.okp7_reflex_sight.name"
+      },
+      "minecraft:tags": {
+        "tags": [
+          "is_attachment"
+        ]
+      },
+      "minecraft:icon": "okp7_reflex_sight",
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

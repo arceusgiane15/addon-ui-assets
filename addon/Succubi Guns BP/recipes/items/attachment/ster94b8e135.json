@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "trenbankai:okp7_reflex_sight"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ADC",
+      "BCB"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:glass_pane"
+      },
+      "B": {
+        "item": "minecraft:leather"
+      },
+      "C": {
+        "item": "minecraft:redstone"
+      },
+      "D": {
+        "item": "minecraft:red_dye"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:leather"
+      }
+    ],
+    "result": {
+      "item": "trenbankai:okp7_reflex_sight"
+    }
+  }
+}

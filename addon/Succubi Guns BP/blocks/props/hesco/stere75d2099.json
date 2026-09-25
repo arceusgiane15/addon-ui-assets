@@ -1,0 +1,30 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "trenbankai:hesco_olive",
+      "menu_category": {
+        "category": "construction"
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 10
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
+      },
+      "minecraft:display_name": "tile.hesco_olive.name",
+      "minecraft:geometry": "geometry.hesco",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "hesco_olive",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false
+        }
+      },
+      "minecraft:light_dampening": 0,
+      "tag:sand": {}
+    }
+  }
+}

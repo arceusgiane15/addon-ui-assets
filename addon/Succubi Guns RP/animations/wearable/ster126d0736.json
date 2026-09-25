@@ -1,0 +1,17 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.helmet_nvg.on": {
+      "loop": true,
+      "bones": {
+        "nvg": {
+          "rotation": [
+            140,
+            0,
+            0
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "food:moo_ping",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/food/moo_ping_atlas"
+      },
+      "geometry": {
+        "default": "geometry.succubi_food_moo_ping"
+      },
+      "animations": {
+        "hold_fp": "animation.succubi_food.hand.hold_fp",
+        "hold_tp": "animation.succubi_food.hand.hold_tp",
+        "eat_fp": "animation.succubi_food.hand.eat_fp",
+        "eat_tp": "animation.succubi_food.hand.eat_tp",
+        "wield": "controller.animation.succubi_food.hand"
+      },
+      "scripts": {
+        "animate": [
+          "wield"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ]
+    }
+  }
+}

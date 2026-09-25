@@ -1,0 +1,103 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.hud_sight",
+        "texture_width": 32,
+        "texture_height": 32,
+        "visible_bounds_width": 7,
+        "visible_bounds_height": 6.5,
+        "visible_bounds_offset": [
+          0,
+          1.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "hud_sight",
+          "pivot": [
+            -0.015,
+            27.54,
+            4
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -15.015,
+                12.54,
+                11
+              ],
+              "size": [
+                30,
+                30,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    32,
+                    32
+                  ]
+                }
+              }
+            },
+            {
+              "origin": [
+                14.885,
+                12.54,
+                11
+              ],
+              "size": [
+                15,
+                30,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    1,
+                    1
+                  ]
+                }
+              }
+            },
+            {
+              "origin": [
+                -29.915,
+                12.54,
+                11
+              ],
+              "size": [
+                15,
+                30,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    1,
+                    1
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

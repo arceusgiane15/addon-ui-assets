@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "trenbankai:flare",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/models/throwable/flare"
+      },
+      "geometry": {
+        "default": "geometry.flare"
+      },
+      "animations": {
+        "wield": "animation.flare.wield"
+      },
+      "scripts": {
+        "animate": [
+          "wield"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.grenade.item"
+      ]
+    }
+  }
+}

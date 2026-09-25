@@ -1,0 +1,29 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "kotarus:syringe_blackpowder",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/models/syringe_blackpowder"
+      },
+      "geometry": {
+        "default": "geometry.tactical_syringe"
+      },
+      "animations": {
+        "use_skill1_weapon": "animation.syringe_blackpowder.inject_weapon",
+        "controller": "controller.animation.kotarus.syringe_blackpowder"
+      },
+      "scripts": {
+        "animate": [
+          "controller"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.kotarus_item"
+      ]
+    }
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.root_throwable": {
+      "initial_state": "first_person",
+      "states": {
+        "first_person": {
+          "animations": [
+            {
+              "first_person_swap_item": "!q.blocking"
+            },
+            {
+              "first_person_shield_block": "q.blocking"
+            },
+            {
+              "first_person_attack_controller": "v.attack_time > 0 && q.get_equipped_item_name != 'filled_map'"
+            },
+            "first_person_base_pose",
+            {
+              "first_person_map_controller": "(q.get_equipped_item_name(0, 1) == 'filled_map' || q.get_equipped_item_name('off_hand') == 'filled_map')"
+            },
+            "throwable_controller",
+            "throwable_aim_controller"
+          ],
+          "transitions": [
+            {
+              "paperdoll": "v.is_paperdoll"
+            },
+            {
+              "third_person": "!v.is_first_person"
+            }
+          ]
+        },
+        "paperdoll": {
+          "animations": [
+            "humanoid_base_pose",
+            "move_controller",
+            "look_at_target_ui",
+            "cape"
+          ],
+          "transitions": [
+            {
+              "first_person": "!v.is_paperdoll && v.is_first_person"
+            },
+            {
+              "third_person": "!v.is_paperdoll && !v.is_first_person"
+            }
+          ]
+        },
+        "third_person": {
+          "animations": [
+            "humanoid_base_pose",
+            {
+              "look_at_target": "!q.is_sleeping && !q.is_emoting && !v.crawling"
+            },
+            "cape",
+            {
+              "holding": "!v.weapons"
+            },
+            {
+              "bob": "!v.is_holding_spyglass && !v.is_tooting_goat_horn && !v.is_using_brush"
+            },
+            {
+              "use_item_progress": "(v.use_item_interval_progress > 0.0) || (v.use_item_startup_progress > 0.0) && !v.is_brandishing_spear && !v.is_holding_spyglass && !v.is_tooting_goat_horn && !v.is_using_brush && !q.is_item_name_any('slot.weapon.mainhand', 'minecraft:bow')"
+            },
+            {
+              "sleeping": "q.is_sleeping && q.is_alive"
+            },
+            {
+              "attack.positions": "v.attack_time >= 0"
+            },
+            {
+              "attack.rotations": "v.attack_time >= 0"
+            },
+            {
+              "holding_brush": "q.get_equipped_item_name == 'brush'"
+            },
+            "move_controller",
+            "sneaking_controller",
+            "swimming_controller",
+            "riding_controller",
+            "crawling_controller",
+            "holding_controller",
+            "damage_controller"
+          ],
+          "transitions": [
+            {
+              "paperdoll": "v.is_paperdoll"
+            },
+            {
+              "first_person": "v.is_first_person"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.throwable": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "blend_transition": 0.2,
+          "transitions": [
+            {
+              "hold": "v.throwable"
+            }
+          ]
+        },
+        "hold": {
+          "blend_transition": 0.2,
+          "animations": [
+            "throwable_hold_fpp"
+          ],
+          "transitions": [
+            {
+              "inactive": "!v.throwable"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.throwable_aim": {
+      "initial_state": "hold",
+      "states": {
+        "hold": {
+          "blend_transition": 0.25,
+          "transitions": [
+            {
+              "aim": "q.is_sneaking ? true : q.main_hand_item_use_duration"
+            }
+          ]
+        },
+        "aim": {
+          "blend_transition": 0.25,
+          "animations": [
+            "throwable_aim_fpp"
+          ],
+          "transitions": [
+            {
+              "hold": "!q.is_sneaking ? !q.main_hand_item_use_duration : false"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

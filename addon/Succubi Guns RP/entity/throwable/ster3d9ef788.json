@@ -1,0 +1,39 @@
+{
+  "format_version": "1.18.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "trenbankai:flare_entity",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/models/throwable/flare"
+      },
+      "geometry": {
+        "default": "geometry.flare"
+      },
+      "scripts": {
+        "should_update_effects_offscreen": true,
+        "should_update_bones_and_effects_offscreen": true,
+        "animate": [
+          {
+            "spin": "q.variant == 0"
+          },
+          {
+            "loop": "q.variant == 1"
+          }
+        ]
+      },
+      "animations": {
+        "spin": "animation.grenade.spin",
+        "loop": "animation.flare.loop"
+      },
+      "particle_effects": {
+        "flare_smoke": "trenbankai:flare_smoke"
+      },
+      "render_controllers": [
+        "controller.render.grenade.entity"
+      ]
+    }
+  }
+}

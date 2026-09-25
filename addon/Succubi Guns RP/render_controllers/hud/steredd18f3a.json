@@ -1,0 +1,85 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.hud_juggernaut": {
+      "geometry": "geometry.hud_juggernaut",
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "textures": [
+        "Texture.hud_juggernaut"
+      ],
+      "on_fire_color": {},
+      "is_hurt_color": {},
+      "ignore_lighting": true
+    },
+    "controller.render.hud_sight": {
+      "arrays": {
+        "textures": {
+          "Array.texture": [
+            "Texture.sight_acog",
+            "Texture.sight_hp",
+            "Texture.sight_lp"
+          ]
+        }
+      },
+      "geometry": "geometry.hud_sight",
+      "materials": [
+        {
+          "*": "material.transparent"
+        }
+      ],
+      "textures": [
+        "array.texture[math.clamp(v.weapon_sight, 3, 5) - 2]"
+      ],
+      "part_visibility": [
+        {
+          "*": "v.hud_sight"
+        }
+      ],
+      "on_fire_color": {},
+      "is_hurt_color": {},
+      "ignore_lighting": true
+    },
+    "controller.render.hud_nvg": {
+      "geometry": "geometry.hud_nvg",
+      "materials": [
+        {
+          "*": "material.hud_nvg"
+        }
+      ],
+      "textures": [
+        "texture.hud_nvg"
+      ],
+      "on_fire_color": {},
+      "is_hurt_color": {},
+      "ignore_lighting": true
+    },
+    "controller.render.hud_noise": {
+      "geometry": "geometry.hud_noise",
+      "materials": [
+        {
+          "*": "material.hud_noise"
+        }
+      ],
+      "uv_anim": {
+        "offset": [
+          "math.sin(q.life_time * 256) * 0.75",
+          "math.sin(q.life_time * 256) * 0.25"
+        ],
+        "scale": [
+          3,
+          3
+        ]
+      },
+      "textures": [
+        "texture.hud_noise"
+      ],
+      "on_fire_color": {},
+      "is_hurt_color": {},
+      "ignore_lighting": true
+    }
+  }
+}

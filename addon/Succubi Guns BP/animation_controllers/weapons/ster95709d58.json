@@ -1,0 +1,139 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.mossberg": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "on_entry": [
+            "@s trenbankai:remove_reload"
+          ],
+          "transitions": [
+            {
+              "fire": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') && q.scoreboard('mossberg') >= 1 && v.fire && v.draw && !v.cycle"
+            },
+            {
+              "cycle": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') && v.cycle"
+            },
+            {
+              "pre_reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') && q.scoreboard('mossberg') <= 0 && v.reload && !v.cycle"
+            },
+            {
+              "pre_reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') && q.scoreboard('mossberg') <= 5 && v.reload && q.is_sneaking && v.attack_time && !v.cycle"
+            }
+          ]
+        },
+        "fire": {
+          "on_entry": [
+            "/function weapons/fire/mossberg",
+            "/event entity @s[scores={mossberg=1..}] trenbankai:add_cycle"
+          ],
+          "on_exit": [
+            "v.weapon_fire = q.life_time;"
+          ],
+          "transitions": [
+            {
+              "firing": "(1.0)"
+            }
+          ]
+        },
+        "firing": {
+          "on_entry": [
+            "v.weapon_fire = q.life_time;"
+          ],
+          "transitions": [
+            {
+              "post_fire": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') || q.scoreboard('mossberg') <= 0 || !v.fire || !v.draw || v.cycle"
+            },
+            {
+              "fire": "(q.life_time - v.weapon_fire) >= 0.06"
+            }
+          ]
+        },
+        "post_fire": {
+          "on_entry": [
+            "/execute as @s[tag=!underground, tag=!silencer] run playsound effect.weapon.dist.medium @a[rm=0.1, r=200] ^^^1.5 100 1 0.01"
+          ],
+          "transitions": [
+            {
+              "inactive": "(1.0)"
+            }
+          ]
+        },
+        "cycle": {
+          "animations": [
+            "mossberg_cycle"
+          ],
+          "on_entry": [
+            "/playanimation @s animation.mossberg.cycle cycle 0 \"!q.is_item_name_any('slot.weapon.mainhand', 0, 'trenbankai:mossberg')\"",
+            "@s trenbankai:remove_cycle"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') || !q.is_alive"
+            },
+            {
+              "inactive": "q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "pre_reload": {
+          "on_entry": [
+            "/execute as @s[hasitem={item=trenbankai:bullet_12gauge, quantity=1..}, scores={mossberg=..0}] run event entity @s trenbankai:add_reload_empty",
+            "/execute as @s[hasitem={item=trenbankai:bullet_12gauge, quantity=1..}, scores={mossberg=1..}] run event entity @s trenbankai:add_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') || !q.property('trenbankai:reload') || !q.is_alive || v.cycle"
+            },
+            {
+              "reload_empty": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') && q.property('trenbankai:reload') == 1 && v.reloading && !v.cycle"
+            },
+            {
+              "reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') && q.property('trenbankai:reload') == 2 && v.reloading && !v.cycle"
+            }
+          ]
+        },
+        "reload_empty": {
+          "animations": [
+            "mossberg_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') || !v.reloading"
+            },
+            {
+              "reloaded": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') && q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "reload": {
+          "animations": [
+            "mossberg_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') || !v.reloading"
+            },
+            {
+              "reloaded": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') && q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "reloaded": {
+          "on_entry": [
+            "/execute as @s[hasitem={item=trenbankai:mossberg, location=slot.weapon.mainhand}] run function weapons/reload/mossberg"
+          ],
+          "transitions": [
+            {
+              "inactive": "1"
+            },
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:mossberg') || !v.draw"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

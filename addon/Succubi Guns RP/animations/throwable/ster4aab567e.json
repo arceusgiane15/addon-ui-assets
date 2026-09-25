@@ -1,0 +1,61 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.grenade.wield": {
+      "loop": true,
+      "bones": {
+        "grenade": {
+          "rotation": [
+            80,
+            -16,
+            2
+          ],
+          "position": [
+            2,
+            20,
+            -3
+          ],
+          "scale": 0.6
+        }
+      }
+    },
+    "animation.grenade.spin": {
+      "loop": true,
+      "blend_weight": "!q.is_in_water && !q.is_on_ground",
+      "bones": {
+        "grenade": {
+          "rotation": [
+            "q.anim_time * 360",
+            "q.anim_time * 360",
+            0
+          ]
+        }
+      }
+    },
+    "animation.flare.wield": {
+      "loop": true,
+      "bones": {
+        "grenade": {
+          "rotation": [
+            80,
+            -16,
+            2
+          ],
+          "position": [
+            1.6,
+            19.3,
+            -1.5
+          ],
+          "scale": 0.4
+        },
+        "flare": {
+          "rotation": [
+            0,
+            -30,
+            0
+          ]
+        }
+      }
+    }
+  }
+}

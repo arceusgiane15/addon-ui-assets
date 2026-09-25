@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "succubi:teddy_bear",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.succubi:teddy_bear.name"
+      },
+      "minecraft:icon": "succubi_teddy_bear",
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

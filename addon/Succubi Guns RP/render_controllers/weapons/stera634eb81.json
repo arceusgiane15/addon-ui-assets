@@ -1,0 +1,208 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.acog_sight": {
+      "geometry": "geometry.acog_sight",
+      "materials": [
+        {
+          "*": "material.default"
+        },
+        {
+          "glass": "material.transparent"
+        },
+        {
+          "lens": "material.transparent"
+        },
+        {
+          "reticle": "material.glow"
+        }
+      ],
+      "textures": [
+        "texture.acog_sight"
+      ],
+      "part_visibility": [
+        {
+          "lens": "q.is_sneaking"
+        },
+        {
+          "reticle": "q.is_sneaking"
+        },
+        {
+          "colored_glass": "v.is_first_person ? !q.is_sneaking : (1.0)"
+        }
+      ]
+    },
+    "controller.render.eotech_sight": {
+      "geometry": "geometry.eotech_sight",
+      "materials": [
+        {
+          "*": "material.default"
+        },
+        {
+          "glass": "material.transparent"
+        }
+      ],
+      "textures": [
+        "texture.eotech_sight"
+      ],
+      "part_visibility": [
+        {
+          "reticle": "q.is_sneaking"
+        }
+      ]
+    },
+    "controller.render.eotech_sight.reticle": {
+      "geometry": "geometry.eotech_sight_reticle",
+      "materials": [
+        {
+          "reticle": "material.glow"
+        }
+      ],
+      "textures": [
+        "texture.eotech_sight"
+      ],
+      "part_visibility": [
+        {
+          "*": "q.is_sneaking"
+        }
+      ],
+      "ignore_lighting": true,
+      "light_color_multiplier": 3
+    },
+    "controller.render.okp7_reflex_sight": {
+      "geometry": "geometry.okp7_reflex_sight",
+      "materials": [
+        {
+          "*": "material.default"
+        },
+        {
+          "glass": "material.transparent"
+        }
+      ],
+      "textures": [
+        "texture.okp7_reflex_sight"
+      ],
+      "part_visibility": [
+        {
+          "reticle": "q.is_sneaking"
+        }
+      ]
+    },
+    "controller.render.okp7_reflex_sight.reticle": {
+      "geometry": "geometry.okp7_reflex_sight_reticle",
+      "materials": [
+        {
+          "reticle": "material.glow"
+        }
+      ],
+      "textures": [
+        "texture.okp7_reflex_sight"
+      ],
+      "part_visibility": [
+        {
+          "*": "q.is_sneaking"
+        }
+      ],
+      "ignore_lighting": true,
+      "light_color_multiplier": 3
+    },
+    "controller.render.scope_hp": {
+      "geometry": "geometry.scope_hp",
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "textures": [
+        "texture.scope_hp"
+      ]
+    },
+    "controller.render.scope_lp": {
+      "geometry": "geometry.scope_lp",
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "textures": [
+        "texture.scope_lp"
+      ]
+    },
+    "controller.render.predator_v4": {
+      "geometry": "geometry.predator_v4",
+      "materials": [
+        {
+          "*": "material.default"
+        },
+        {
+          "glass": "material.transparent"
+        }
+      ],
+      "textures": [
+        "texture.predator_v4"
+      ]
+    },
+    "controller.render.laser": {
+      "arrays": {
+        "geometries": {
+          "Array.geo": [
+            "Geometry.laser"
+          ]
+        },
+        "textures": {
+          "Array.skins": [
+            "Texture.laser_green",
+            "Texture.laser_red"
+          ]
+        }
+      },
+      "geometry": "array.geo[0]",
+      "materials": [
+        {
+          "*": "material.default"
+        },
+        {
+          "laserLine": "material.charged"
+        }
+      ],
+      "textures": [
+        "array.skins[q.property('trenbankai:laser') - 1]"
+      ],
+      "part_visibility": [
+        {
+          "laser_0": "q.equipped_item_all_tags('slot.weapon.mainhand', 'set_laser_0')"
+        },
+        {
+          "laser_1": "q.equipped_item_all_tags('slot.weapon.mainhand', 'set_laser_1')"
+        },
+        {
+          "laser_2": "q.equipped_item_all_tags('slot.weapon.mainhand', 'set_laser_2')"
+        }
+      ],
+      "is_hurt_color": {},
+      "on_fire_color": {}
+    },
+    "controller.render.foregrip": {
+      "geometry": "geometry.foregrip",
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "textures": [
+        "texture.foregrip"
+      ]
+    },
+    "controller.render.silencer": {
+      "geometry": "geometry.silencer",
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "textures": [
+        "texture.silencer"
+      ]
+    }
+  }
+}

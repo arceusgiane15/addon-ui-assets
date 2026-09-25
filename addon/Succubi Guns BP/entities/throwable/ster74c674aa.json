@@ -1,0 +1,140 @@
+{
+  "format_version": "1.17.10",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "trenbankai:m84_grenade_entity",
+      "runtime_identifier": "minecraft:snowball",
+      "is_spawnable": false,
+      "is_summonable": false
+    },
+    "component_groups": {
+      "despawn": {
+        "minecraft:instant_despawn": {}
+      },
+      "impact": {
+        "minecraft:type_family": {
+          "family": [
+            "projectile",
+            "flash",
+            "grenade",
+            "noise"
+          ]
+        },
+        "minecraft:area_attack": {
+          "cause": "entity_explosion",
+          "damage_per_tick": 2,
+          "damage_range": 2.5
+        },
+        "minecraft:timer": {
+          "looping": false,
+          "time": 0.25,
+          "time_down_event": {
+            "event": "trenbankai:explode"
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "projectile",
+          "flash",
+          "grenade"
+        ]
+      },
+      "minecraft:collision_box": {
+        "width": 0.25,
+        "height": 0.25
+      },
+      "minecraft:tick_world": {
+        "distance_to_players": 256,
+        "never_despawn": false,
+        "radius": 2
+      },
+      "minecraft:projectile": {
+        "on_hit": {
+          "definition_event": {
+            "affect_projectile": true,
+            "event_trigger": {
+              "event": "trenbankai:impact"
+            }
+          },
+          "stick_in_ground": {
+            "shake_time": 0.1
+          },
+          "impact_damage": {
+            "damage": 6,
+            "knockback": false,
+            "should_bounce": true,
+            "semi_random_diff_damage": false
+          }
+        },
+        "power": 1.075,
+        "gravity": 0.06,
+        "inertia": 1,
+        "liquid_inertia": 0.65,
+        "uncertainty_base": 0.4,
+        "anchor": 1,
+        "offset": [
+          0,
+          0.15,
+          0
+        ],
+        "stop_on_hurt": true,
+        "reflect_on_hurt": true,
+        "should_bounce": true
+      },
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:physics": {}
+    },
+    "events": {
+      "trenbankai:despawn": {
+        "add": {
+          "component_groups": [
+            "despawn"
+          ]
+        }
+      },
+      "trenbankai:impact": {
+        "add": {
+          "component_groups": [
+            "impact"
+          ]
+        }
+      },
+      "trenbankai:explode": {
+        "sequence": [
+          {
+            "queue_command": {
+              "command": [
+                "camera @a[tag=can_flash, r=6] fade time 0.1 2.5 3.5 color 255 255 255",
+                "camera @a[tag=can_flash, r=12] fade time 0.1 1.5 2 color 255 255 255",
+                "camera @a[tag=can_flash, r=16] fade time 0.1 0.5 1.4 color 255 255 255"
+              ]
+            }
+          },
+          {
+            "queue_command": {
+              "command": [
+                "fill ~~~ ~1~1~1 trenbankai:muzzle_light replace air",
+                "playsound throwable.flash_grenade.explode @a[r=50] ~~~ 100 1 0.01",
+                "execute as @a[r=20] run playsound effect.player.blind @s",
+                "particle trenbankai:light_explosion ^^^"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "despawn"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

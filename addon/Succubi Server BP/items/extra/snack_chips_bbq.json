@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "succubi:snack_chips_bbq",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.succubi:snack_chips_bbq.name"
+      },
+      "minecraft:icon": "succubi_snack_chips_bbq",
+      "minecraft:max_stack_size": 16,
+      "minecraft:food": {
+        "nutrition": 6,
+        "saturation_modifier": 0.3
+      },
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.2,
+        "movement_modifier": 0.35
+      },
+      "minecraft:tags": {
+        "tags": [
+          "succubi:snack",
+          "succubi:food"
+        ]
+      }
+    }
+  }
+}

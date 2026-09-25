@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "trenbankai:silencer",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.silencer.name"
+      },
+      "minecraft:tags": {
+        "tags": [
+          "is_attachment"
+        ]
+      },
+      "minecraft:icon": "silencer",
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

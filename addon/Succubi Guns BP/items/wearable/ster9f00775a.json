@@ -1,0 +1,42 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "trenbankai:juggernaut_boots",
+      "menu_category": {
+        "category": "equipment",
+        "group": "itemGroup.name.boots"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.juggernaut_boots.name"
+      },
+      "minecraft:durability": {
+        "max_durability": 520,
+        "damage_chance": {
+          "min": 60,
+          "max": 100
+        }
+      },
+      "minecraft:enchantable": {
+        "value": 9,
+        "slot": "armor_feet"
+      },
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor",
+          "minecraft:netherite_tier",
+          "is_boot",
+          "is_juggernaut"
+        ]
+      },
+      "minecraft:wearable": {
+        "protection": 4,
+        "slot": "slot.armor.feet"
+      },
+      "minecraft:icon": "juggernaut_boots",
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

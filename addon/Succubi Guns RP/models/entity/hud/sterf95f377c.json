@@ -1,0 +1,55 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.hud_noise",
+        "texture_width": 512,
+        "texture_height": 512,
+        "visible_bounds_width": 24,
+        "visible_bounds_height": 56.5,
+        "visible_bounds_offset": [
+          0,
+          26.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "hud_noise",
+          "pivot": [
+            -0.015,
+            24.52,
+            2
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -18.015,
+                6.52,
+                2
+              ],
+              "size": [
+                36,
+                36,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    512,
+                    512
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

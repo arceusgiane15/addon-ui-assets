@@ -1,0 +1,293 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.succubi_food.plate.hold_tp": {
+      "loop": true,
+      "bones": {
+        "succubi_food": {
+          "rotation": [
+            18.0,
+            "c.item_slot == 'off_hand' ? 0.0 : -0.0",
+            "c.item_slot == 'off_hand' ? 0.0 : -0.0"
+          ],
+          "position": [
+            "c.item_slot == 'off_hand' ? -0.3 : 0.3",
+            -0.11,
+            -2.28
+          ],
+          "scale": 1.0
+        }
+      }
+    },
+    "animation.succubi_food.plate.hold_fp": {
+      "loop": true,
+      "bones": {
+        "succubi_food": {
+          "rotation": [
+            139.0,
+            52.54,
+            41.32
+          ],
+          "position": [
+            -1.75,
+            0.11,
+            -5.11
+          ],
+          "scale": "c.item_slot == 'off_hand' ? 0 : 1.0"
+        }
+      }
+    },
+    "animation.succubi_food.plate.eat_tp": {
+      "loop": true,
+      "bones": {
+        "succubi_food": {
+          "rotation": [
+            42.21,
+            -9.33,
+            24.79
+          ],
+          "position": [
+            1.82,
+            -2.36,
+            -2.85
+          ],
+          "scale": 1.0
+        }
+      }
+    },
+    "animation.succubi_food.plate.eat_fp": {
+      "loop": true,
+      "bones": {
+        "succubi_food": {
+          "rotation": [
+            139.0,
+            -61.26,
+            128.43
+          ],
+          "position": [
+            "0.04 + math.sin(q.life_time * 1100) * 0.45 * -0.64",
+            "5.44 + math.sin(q.life_time * 1100) * 0.45 * -0.6",
+            "-9.32 + math.sin(q.life_time * 1100) * 0.45 * -0.48"
+          ],
+          "scale": 1.0
+        }
+      }
+    },
+    "animation.succubi_food.hand.hold_tp": {
+      "loop": true,
+      "bones": {
+        "succubi_food": {
+          "rotation": [
+            18.0,
+            "c.item_slot == 'off_hand' ? 0.0 : -0.0",
+            "c.item_slot == 'off_hand' ? 0.0 : -0.0"
+          ],
+          "position": [
+            "c.item_slot == 'off_hand' ? -0.3 : 0.3",
+            -0.18,
+            -1.2
+          ],
+          "scale": 1.0
+        }
+      }
+    },
+    "animation.succubi_food.hand.hold_fp": {
+      "loop": true,
+      "bones": {
+        "succubi_food": {
+          "rotation": [
+            119.36,
+            50.08,
+            13.82
+          ],
+          "position": [
+            -2.05,
+            -0.27,
+            -4.24
+          ],
+          "scale": "c.item_slot == 'off_hand' ? 0 : 1.0"
+        }
+      }
+    },
+    "animation.succubi_food.hand.eat_tp": {
+      "loop": true,
+      "bones": {
+        "succubi_food": {
+          "rotation": [
+            29.27,
+            -15.6,
+            26.08
+          ],
+          "position": [
+            2.25,
+            -1.91,
+            -3.75
+          ],
+          "scale": 1.0
+        }
+      }
+    },
+    "animation.succubi_food.hand.eat_fp": {
+      "loop": true,
+      "bones": {
+        "succubi_food": {
+          "rotation": [
+            151.2,
+            -61.5,
+            134.38
+          ],
+          "position": [
+            "-1.92 + math.sin(q.life_time * 1100) * 0.45 * -0.64",
+            "5.67 + math.sin(q.life_time * 1100) * 0.45 * -0.6",
+            "-10.12 + math.sin(q.life_time * 1100) * 0.45 * -0.48"
+          ],
+          "scale": 1.0
+        }
+      }
+    },
+    "animation.succubi_food.vending_drink.hold_tp": {
+      "loop": true,
+      "bones": {
+        "succubi_money": {
+          "rotation": [
+            -162.0,
+            "c.item_slot == 'off_hand' ? 0.0 : -0.0",
+            "c.item_slot == 'off_hand' ? 0.0 : -0.0"
+          ],
+          "position": [
+            "c.item_slot == 'off_hand' ? -0.3 : 0.3",
+            20.79,
+            -1.52
+          ],
+          "scale": 0.4
+        }
+      }
+    },
+    "animation.succubi_food.vending_drink.hold_fp": {
+      "loop": true,
+      "bones": {
+        "succubi_money": {
+          "rotation": [
+            -60.64,
+            50.08,
+            13.82
+          ],
+          "position": [
+            -2.84,
+            19.41,
+            -4.81
+          ],
+          "scale": "c.item_slot == 'off_hand' ? 0 : 0.4"
+        }
+      }
+    },
+    "animation.succubi_food.vending_drink.eat_tp": {
+      "loop": true,
+      "bones": {
+        "succubi_money": {
+          "rotation": [
+            -150.73,
+            -15.6,
+            26.08
+          ],
+          "position": [
+            2.76,
+            18.83,
+            -4.24
+          ],
+          "scale": 0.4
+        }
+      }
+    },
+    "animation.succubi_food.vending_drink.eat_fp": {
+      "loop": true,
+      "bones": {
+        "succubi_money": {
+          "rotation": [
+            -28.8,
+            -61.5,
+            134.38
+          ],
+          "position": [
+            "-2.86 + math.sin(q.life_time * 1100) * 0.45 * -0.64",
+            "25.98 + math.sin(q.life_time * 1100) * 0.45 * -0.6",
+            "-10.36 + math.sin(q.life_time * 1100) * 0.45 * -0.48"
+          ],
+          "scale": 0.4
+        }
+      }
+    },
+    "animation.succubi_food.vending_snack.hold_tp": {
+      "loop": true,
+      "bones": {
+        "succubi_money": {
+          "rotation": [
+            -162.0,
+            "c.item_slot == 'off_hand' ? 0.0 : -0.0",
+            "c.item_slot == 'off_hand' ? 0.0 : -0.0"
+          ],
+          "position": [
+            "c.item_slot == 'off_hand' ? -0.3 : 0.3",
+            21.26,
+            -1.67
+          ],
+          "scale": 0.4
+        }
+      }
+    },
+    "animation.succubi_food.vending_snack.hold_fp": {
+      "loop": true,
+      "bones": {
+        "succubi_money": {
+          "rotation": [
+            -60.64,
+            50.08,
+            13.82
+          ],
+          "position": [
+            -3.22,
+            19.25,
+            -5.09
+          ],
+          "scale": "c.item_slot == 'off_hand' ? 0 : 0.4"
+        }
+      }
+    },
+    "animation.succubi_food.vending_snack.eat_tp": {
+      "loop": true,
+      "bones": {
+        "succubi_money": {
+          "rotation": [
+            -150.73,
+            -15.6,
+            26.08
+          ],
+          "position": [
+            3.01,
+            19.2,
+            -4.47
+          ],
+          "scale": 0.4
+        }
+      }
+    },
+    "animation.succubi_food.vending_snack.eat_fp": {
+      "loop": true,
+      "bones": {
+        "succubi_money": {
+          "rotation": [
+            -28.8,
+            -61.5,
+            134.38
+          ],
+          "position": [
+            "-3.32 + math.sin(q.life_time * 1100) * 0.45 * -0.64",
+            "26.14 + math.sin(q.life_time * 1100) * 0.45 * -0.6",
+            "-10.47 + math.sin(q.life_time * 1100) * 0.45 * -0.48"
+          ],
+          "scale": 0.4
+        }
+      }
+    }
+  }
+}

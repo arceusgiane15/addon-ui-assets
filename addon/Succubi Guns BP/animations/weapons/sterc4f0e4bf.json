@@ -1,0 +1,48 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.player.m1014_reload": {
+      "animation_length": 3.6667,
+      "loop": false,
+      "timeline": {
+        "0.0417": [
+          "/playsound weapon.ak12.arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "0.5417": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "0.7917": [
+          "/playsound weapon.ak12.arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "1.25": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "1.6667": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "2.0833": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "2.5": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "2.9167": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "3.3333": [
+          "/playsound weapon.mossberg.shell_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "3.5833": [
+          "/playsound weapon.ak12.hand_grab @a[r=20] ^^^1.5 1 1 0.01"
+        ]
+      }
+    }
+  }
+}

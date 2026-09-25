@@ -1,0 +1,79 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.player.awp_cycle": {
+      "animation_length": 1.1781,
+      "loop": false,
+      "timeline": {
+        "0.31": [
+          "/playsound weapon.awp.pull_back @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "0.434": [
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "0.558": [
+          "/playsound weapon.awp.pull_forward @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "0.744": [
+          "/camerashake add @s 0.02 0.15 rotational"
+        ]
+      }
+    },
+    "animation.player.awp_reload_empty": {
+      "animation_length": 2.3333,
+      "loop": false,
+      "timeline": {
+        "0.0417": [
+          "/playsound weapon.awp.arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "0.5417": [
+          "/playsound weapon.awp.mag_out @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.08 0.2 rotational"
+        ],
+        "0.875": [
+          "/playsound weapon.ak12.mag_out_arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "1.2917": [
+          "/playsound weapon.awp.mag_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.06 0.2 rotational"
+        ],
+        "1.7917": [
+          "/playsound weapon.awp.pull_back @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "2.0833": [
+          "/playsound weapon.awp.pull_forward @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.04 0.15 rotational"
+        ],
+        "2.2917": [
+          "/playsound weapon.ak12.hand_grab @a[r=20] ^^^1.5 1 1 0.01"
+        ]
+      }
+    },
+    "animation.player.awp_reload": {
+      "animation_length": 1.7083,
+      "loop": false,
+      "timeline": {
+        "0.0417": [
+          "/playsound weapon.awp.arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "0.5417": [
+          "/playsound weapon.awp.mag_out @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.08 0.2 rotational"
+        ],
+        "0.875": [
+          "/playsound weapon.ak12.mag_out_arm_movement @a[r=20] ^^^1.5 1 1 0.01"
+        ],
+        "1.2917": [
+          "/playsound weapon.awp.mag_in @a[r=20] ^^^1.5 1 1 0.01",
+          "/camerashake add @s 0.06 0.2 rotational"
+        ],
+        "1.6667": [
+          "/playsound weapon.ak12.hand_grab @a[r=20] ^^^1.5 1 1 0.01"
+        ]
+      }
+    }
+  }
+}

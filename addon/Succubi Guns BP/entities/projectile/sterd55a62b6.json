@@ -1,0 +1,2463 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "trenbankai:bullet",
+      "runtime_identifier": "minecraft:snowball",
+      "spawn_category": "creature",
+      "is_spawnable": false,
+      "is_summonable": false,
+      "animations": {
+        "impact": "controller.animation.bullet.impact"
+      },
+      "scripts": {
+        "animate": [
+          "impact"
+        ]
+      }
+    },
+    "component_groups": {
+      "despawn": {
+        "minecraft:instant_despawn": {}
+      },
+      "impact": {
+        "minecraft:mark_variant": {
+          "value": 1
+        },
+        "minecraft:timer": {
+          "looping": true,
+          "time": 0.01,
+          "time_down_event": {
+            "event": "trenbankai:impacted"
+          }
+        }
+      },
+      "bullet_ak12": {
+        "minecraft:variant": {
+          "value": 1
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.4,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_ak12_move": {
+        "minecraft:variant": {
+          "value": 1
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_ak12_ads": {
+        "minecraft:variant": {
+          "value": 1
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 22,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.4,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_ak47": {
+        "minecraft:variant": {
+          "value": 2
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.6,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_ak47_move": {
+        "minecraft:variant": {
+          "value": 2
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 2.2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_ak47_ads": {
+        "minecraft:variant": {
+          "value": 2
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 22,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.6,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_awp": {
+        "minecraft:variant": {
+          "value": 3
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 30,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_awp_move": {
+        "minecraft:variant": {
+          "value": 3
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 30,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.6,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_awp_ads": {
+        "minecraft:variant": {
+          "value": 3
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 34,
+          "gravity": 0,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_deagle": {
+        "minecraft:variant": {
+          "value": 4
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.6,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_deagle_move": {
+        "minecraft:variant": {
+          "value": 4
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_deagle_ads": {
+        "minecraft:variant": {
+          "value": 4
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 22,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_fnfal": {
+        "minecraft:variant": {
+          "value": 5
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.4,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_fnfal_move": {
+        "minecraft:variant": {
+          "value": 5
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.8,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_fnfal_ads": {
+        "minecraft:variant": {
+          "value": 5
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 22,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.4,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_glock": {
+        "minecraft:variant": {
+          "value": 6
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.6,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_glock_move": {
+        "minecraft:variant": {
+          "value": 6
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_glock_ads": {
+        "minecraft:variant": {
+          "value": 6
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 22,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_m249": {
+        "minecraft:variant": {
+          "value": 7
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 6,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.6,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_m249_move": {
+        "minecraft:variant": {
+          "value": 7
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 6,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 2.2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_m249_ads": {
+        "minecraft:variant": {
+          "value": 7
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 14,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.25,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_m4a1": {
+        "minecraft:variant": {
+          "value": 8
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.3,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_m4a1_move": {
+        "minecraft:variant": {
+          "value": 8
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_m4a1_ads": {
+        "minecraft:variant": {
+          "value": 8
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 22,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_mossberg": {
+        "minecraft:variant": {
+          "value": 9
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 6,
+          "gravity": 0.02,
+          "inertia": 1,
+          "liquid_inertia": 1.5,
+          "uncertainty_base": 10,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_mossberg_move": {
+        "minecraft:variant": {
+          "value": 9
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 6,
+          "gravity": 0.02,
+          "inertia": 1,
+          "liquid_inertia": 1.5,
+          "uncertainty_base": 14,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_mossberg_ads": {
+        "minecraft:variant": {
+          "value": 9
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 1,
+          "liquid_inertia": 1.5,
+          "uncertainty_base": 5,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_mp5a5": {
+        "minecraft:variant": {
+          "value": 10
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_mp5a5_move": {
+        "minecraft:variant": {
+          "value": 10
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 4,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_mp5a5_ads": {
+        "minecraft:variant": {
+          "value": 10
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 10,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_ak74": {
+        "minecraft:variant": {
+          "value": 11
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.4,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_ak74_move": {
+        "minecraft:variant": {
+          "value": 11
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_ak74_ads": {
+        "minecraft:variant": {
+          "value": 11
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 22,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.4,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_akm": {
+        "minecraft:variant": {
+          "value": 12
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.6,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_akm_move": {
+        "minecraft:variant": {
+          "value": 12
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 2.2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_akm_ads": {
+        "minecraft:variant": {
+          "value": 12
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 22,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.6,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_aks74u": {
+        "minecraft:variant": {
+          "value": 13
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 1.4,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_aks74u_move": {
+        "minecraft:variant": {
+          "value": 13
+        },
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 18,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 2,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      },
+      "bullet_aks74u_ads": {
+        "minecraft:variant": {
+          "value": 13
+        },
+        "minecraft:is_saddled": {},
+        "minecraft:projectile": {
+          "on_hit": {
+            "definition_event": {
+              "affect_projectile": true,
+              "event_trigger": {
+                "event": "trenbankai:impact"
+              }
+            },
+            "stick_in_ground": {
+              "shake_time": 0.1
+            }
+          },
+          "power": 22,
+          "gravity": 0.02,
+          "inertia": 2,
+          "liquid_inertia": 2,
+          "uncertainty_base": 0.4,
+          "anchor": 1,
+          "offset": [
+            0,
+            0,
+            0.05
+          ],
+          "should_bounce": true,
+          "multiple_targets": false
+        }
+      }
+    },
+    "components": {
+      "minecraft:tick_world": {
+        "distance_to_players": 384,
+        "never_despawn": false,
+        "radius": 6
+      },
+      "minecraft:type_family": {
+        "family": [
+          "projectile",
+          "bullet"
+        ]
+      },
+      "minecraft:mark_variant": {
+        "value": 0
+      },
+      "minecraft:collision_box": {
+        "width": 0.01,
+        "height": 0.01
+      },
+      "minecraft:timer": {
+        "time": 6,
+        "looping": true,
+        "time_down_event": {
+          "event": "trenbankai:despawn"
+        }
+      },
+      "minecraft:environment_sensor": {
+        "triggers": [
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "distance_to_nearest_player",
+                  "operator": ">=",
+                  "value": 64
+                }
+              ]
+            },
+            "event": "trenbankai:distance_to_nearest_player"
+          }
+        ]
+      },
+      "minecraft:break_blocks": {
+        "breakable_blocks": [
+          "bamboo",
+          "barrel",
+          "big_dripleaf",
+          "carved_pumpkin",
+          "cave_vines",
+          "cave_vines_body_with_berries",
+          "cave_vines_head_with_berries",
+          "chain",
+          "chorus_flower",
+          "chorus_plant",
+          "cocoa",
+          "lantern",
+          "lit_pumpkin",
+          "melon_block",
+          "pumpkin",
+          "standing_sign",
+          "small_dripleaf_block",
+          "turtle_egg",
+          "vine",
+          "wall_banner",
+          "wall_sign",
+          "web",
+          "wheat",
+          "waterlily",
+          "glass",
+          "glass_pane",
+          "stained_glass",
+          "tinted_glass",
+          "black_stained_glass",
+          "black_stained_glass_pane",
+          "blue_stained_glass",
+          "blue_stained_glass_pane",
+          "brown_stained_glass",
+          "brown_stained_glass_pane",
+          "cyan_stained_glass",
+          "cyan_stained_glass_pane",
+          "gray_stained_glass",
+          "gray_stained_glass_pane",
+          "green_stained_glass",
+          "green_stained_glass_pane",
+          "light_blue_stained_glass",
+          "light_blue_stained_glass_pane",
+          "light_gray_stained_glass",
+          "light_gray_stained_glass_pane",
+          "lime_stained_glass",
+          "lime_stained_glass_pane",
+          "magenta_stained_glass",
+          "magenta_stained_glass_pane",
+          "orange_stained_glass",
+          "orange_stained_glass_pane",
+          "pink_stained_glass",
+          "pink_stained_glass_pane",
+          "purple_stained_glass",
+          "purple_stained_glass_pane",
+          "red_stained_glass",
+          "red_stained_glass_pane",
+          "white_stained_glass",
+          "white_stained_glass_pane",
+          "yellow_stained_glass",
+          "yellow_stained_glass_pane",
+          "hard_black_stained_glass",
+          "hard_black_stained_glass_pane",
+          "hard_blue_stained_glass",
+          "hard_blue_stained_glass_pane",
+          "hard_brown_stained_glass",
+          "hard_brown_stained_glass_pane",
+          "hard_cyan_stained_glass",
+          "hard_cyan_stained_glass_pane",
+          "hard_gray_stained_glass",
+          "hard_gray_stained_glass_pane",
+          "hard_green_stained_glass",
+          "hard_green_stained_glass_pane",
+          "hard_light_blue_stained_glass",
+          "hard_light_blue_stained_glass_pane",
+          "hard_light_gray_stained_glass",
+          "hard_light_gray_stained_glass_pane",
+          "hard_lime_stained_glass",
+          "hard_lime_stained_glass_pane",
+          "hard_magenta_stained_glass",
+          "hard_magenta_stained_glass_pane",
+          "hard_orange_stained_glass",
+          "hard_orange_stained_glass_pane",
+          "hard_pink_stained_glass",
+          "hard_pink_stained_glass_pane",
+          "hard_purple_stained_glass",
+          "hard_purple_stained_glass_pane",
+          "hard_red_stained_glass",
+          "hard_red_stained_glass_pane",
+          "hard_white_stained_glass",
+          "hard_white_stained_glass_pane",
+          "hard_yellow_stained_glass",
+          "hard_yellow_stained_glass_pane",
+          "acacia_door",
+          "bamboo_door",
+          "birch_door",
+          "cherry_door",
+          "crimson_door",
+          "dark_oak_door",
+          "jungle_door",
+          "mangrove_door",
+          "pale_oak_door",
+          "spruce_door",
+          "warped_door",
+          "wooden_door"
+        ]
+      },
+      "minecraft:conditional_bandwidth_optimization": {
+        "default_values": {
+          "max_optimized_distance": 80,
+          "max_dropped_ticks": 7,
+          "use_motion_prediction_hints": true
+        }
+      },
+      "minecraft:physics": {}
+    },
+    "events": {
+      "trenbankai:despawn": {
+        "add": {
+          "component_groups": [
+            "despawn"
+          ]
+        }
+      },
+      "trenbankai:impact": {
+        "add": {
+          "component_groups": [
+            "impact"
+          ]
+        }
+      },
+      "trenbankai:impacted": {
+        "sequence": [
+          {
+            "trigger": "trenbankai:hiss"
+          },
+          {
+            "trigger": "trenbankai:snap"
+          },
+          {
+            "trigger": "trenbankai:despawn"
+          }
+        ]
+      },
+      "trenbankai:hiss": {
+        "sequence": [
+          {
+            "queue_command": {
+              "command": [
+                "execute as @e[family=player, rm=1, r=5] at @s run playsound bullet.subsonic.hiss @a[r=20] ~~~ 0.75 1 0.01"
+              ]
+            }
+          },
+          {}
+        ]
+      },
+      "trenbankai:snap": {
+        "sequence": [
+          {
+            "queue_command": {
+              "command": [
+                "tag @s add snapped",
+                "execute as @e[family=bullet, tag=!snapped, rm=0.1, r=5] at @s run playsound bullet.supersonic.snap @a[r=60] ~~~ 0.75 1 0.01"
+              ]
+            }
+          },
+          {}
+        ]
+      },
+      "trenbankai:distance_to_nearest_player": {
+        "sequence": [
+          {
+            "filters": {
+              "test": "is_underground",
+              "value": false
+            },
+            "queue_command": {
+              "command": [
+                "playsound bullet.distant @a[r=100] ~~5~ 100 1 0.01"
+              ]
+            }
+          },
+          {
+            "trigger": "trenbankai:despawn"
+          }
+        ]
+      },
+      "trenbankai:bullet_ak12": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "int_property",
+                "operator": "==",
+                "subject": "other",
+                "domain": "trenbankai:grip",
+                "value": 0
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_ak12"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              },
+              {
+                "test": "int_property",
+                "operator": "==",
+                "subject": "other",
+                "domain": "trenbankai:grip",
+                "value": 0
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_ak12_move"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_ak12_ads"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "int_property",
+                "operator": ">=",
+                "subject": "other",
+                "domain": "trenbankai:grip",
+                "value": 1
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_ak12_ads"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_ak47": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_ak47"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_ak47_move"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_ak47_ads"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_awp": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_awp"
+              ]
+            },
+            "queue_command": {
+              "target": "other",
+              "command": [
+                "tag @s[tag=!recoil] add recoil",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback false",
+                "tp @s[tag=recoil, tag=is_grounded] ~~~~~-10",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback true",
+                "tag @s[tag=recoil] remove recoil"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_awp_move"
+              ]
+            },
+            "queue_command": {
+              "target": "other",
+              "command": [
+                "tag @s[tag=!recoil] add recoil",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback false",
+                "tp @s[tag=recoil, tag=is_grounded] ~~~~~-15",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback true",
+                "tag @s[tag=recoil] remove recoil"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_awp_ads"
+              ]
+            },
+            "queue_command": {
+              "target": "other",
+              "command": [
+                "tag @s[tag=!recoil] add recoil",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback false",
+                "tp @s[tag=recoil, tag=is_grounded] ~~~~~-5",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback true",
+                "tag @s[tag=recoil] remove recoil"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_deagle": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_deagle"
+              ]
+            },
+            "queue_command": {
+              "target": "other",
+              "command": [
+                "tag @s[tag=!recoil] add recoil",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback false",
+                "tp @s[tag=recoil, tag=is_grounded] ~~~~~-2",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback true",
+                "tag @s[tag=recoil] remove recoil"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_deagle_move"
+              ]
+            },
+            "queue_command": {
+              "target": "other",
+              "command": [
+                "tag @s[tag=!recoil] add recoil",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback false",
+                "tp @s[tag=recoil, tag=is_grounded] ~~~~~-2",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback true",
+                "tag @s[tag=recoil] remove recoil"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_deagle_ads"
+              ]
+            },
+            "queue_command": {
+              "target": "other",
+              "command": [
+                "tag @s[tag=!recoil] add recoil",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback false",
+                "tp @s[tag=recoil, tag=is_grounded] ~~~~~-2",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback true",
+                "tag @s[tag=recoil] remove recoil"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_fnfal": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_fnfal"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_fnfal_move"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_fnfal_ads"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_glock": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_glock"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_glock_move"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_glock_ads"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_m249": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_m249"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_m249_move"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_m249_ads"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_m4a1": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "int_property",
+                "operator": "==",
+                "subject": "other",
+                "domain": "trenbankai:grip",
+                "value": 0
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_m4a1"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              },
+              {
+                "test": "int_property",
+                "operator": "==",
+                "subject": "other",
+                "domain": "trenbankai:grip",
+                "value": 0
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_m4a1_move"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_m4a1_ads"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "int_property",
+                "operator": ">=",
+                "subject": "other",
+                "domain": "trenbankai:grip",
+                "value": 1
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_m4a1_ads"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_mossberg": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_mossberg"
+              ]
+            },
+            "queue_command": {
+              "target": "other",
+              "command": [
+                "tag @s[tag=!recoil] add recoil",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback false",
+                "tp @s[tag=recoil, tag=is_grounded] ~~~~~-1",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback true",
+                "tag @s[tag=recoil] remove recoil"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_mossberg_move"
+              ]
+            },
+            "queue_command": {
+              "target": "other",
+              "command": [
+                "tag @s[tag=!recoil] add recoil",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback false",
+                "tp @s[tag=recoil, tag=is_grounded] ~~~~~-1.5",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback true",
+                "tag @s[tag=recoil] remove recoil"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_mossberg_ads"
+              ]
+            },
+            "queue_command": {
+              "target": "other",
+              "command": [
+                "tag @s[tag=!recoil] add recoil",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback false",
+                "tp @s[tag=recoil, tag=is_grounded] ~~~~~-0.25",
+                "execute as @s[tag=recoil] run gamerule sendcommandfeedback true",
+                "tag @s[tag=recoil] remove recoil"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_mp5a5": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "int_property",
+                "operator": "==",
+                "subject": "other",
+                "domain": "trenbankai:grip",
+                "value": 0
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_mp5a5"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              },
+              {
+                "test": "int_property",
+                "operator": "==",
+                "subject": "other",
+                "domain": "trenbankai:grip",
+                "value": 0
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_mp5a5_move"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_mp5a5_ads"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "int_property",
+                "operator": ">=",
+                "subject": "other",
+                "domain": "trenbankai:grip",
+                "value": 1
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_mp5a5_ads"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_ak74": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_ak74"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_ak74_move"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_ak74_ads"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_akm": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_akm"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_akm_move"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_akm_ads"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:bullet_aks74u": {
+        "sequence": [
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_aks74u"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": false
+              },
+              {
+                "test": "is_moving",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_aks74u_move"
+              ]
+            }
+          },
+          {
+            "filters": [
+              {
+                "test": "is_sneaking",
+                "operator": "==",
+                "subject": "other",
+                "value": true
+              }
+            ],
+            "add": {
+              "component_groups": [
+                "bullet_aks74u_ads"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "format_version": "1.16.100",
+  "minecraft:fog_settings": {
+    "description": {
+      "identifier": "succubi:sanity_fog_2"
+    },
+    "distance": {
+      "air": {
+        "fog_start": 7,
+        "fog_end": 40,
+        "fog_color": "#120B1A",
+        "render_distance_type": "fixed"
+      }
+    }
+  }
+}

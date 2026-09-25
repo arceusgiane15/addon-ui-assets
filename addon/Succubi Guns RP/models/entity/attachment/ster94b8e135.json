@@ -1,0 +1,372 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.okp7_reflex_sight",
+        "texture_width": 32,
+        "texture_height": 32,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "binding": "q.item_slot_to_bone_name((c.item_slot == 'off_hand') ? 'body' : 'main_hand')"
+        },
+        {
+          "name": "attachment",
+          "parent": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "okp7",
+          "parent": "attachment",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.2,
+                0,
+                -1.5
+              ],
+              "size": [
+                2.4,
+                1,
+                5
+              ],
+              "uv": [
+                15,
+                10
+              ]
+            },
+            {
+              "origin": [
+                -1.25,
+                0.75,
+                -2
+              ],
+              "size": [
+                0,
+                2.5,
+                2
+              ],
+              "pivot": [
+                0,
+                2,
+                -1
+              ],
+              "rotation": [
+                0,
+                0,
+                45
+              ],
+              "uv": [
+                0,
+                18
+              ]
+            },
+            {
+              "origin": [
+                -1.25,
+                3.25,
+                -2
+              ],
+              "size": [
+                2.5,
+                0,
+                2
+              ],
+              "pivot": [
+                0,
+                2,
+                -1
+              ],
+              "rotation": [
+                0,
+                0,
+                45
+              ],
+              "uv": [
+                15,
+                17
+              ]
+            },
+            {
+              "origin": [
+                1.76,
+                1,
+                -2
+              ],
+              "size": [
+                0,
+                1,
+                2
+              ],
+              "uv": [
+                19,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -1.25,
+                0.75,
+                -2
+              ],
+              "size": [
+                1.2,
+                0,
+                2
+              ],
+              "pivot": [
+                0,
+                2,
+                -1
+              ],
+              "rotation": [
+                0,
+                0,
+                45
+              ],
+              "uv": [
+                5,
+                18
+              ]
+            },
+            {
+              "origin": [
+                0.75,
+                0.5,
+                -2
+              ],
+              "size": [
+                1,
+                1,
+                6
+              ],
+              "uv": [
+                0,
+                10
+              ]
+            },
+            {
+              "origin": [
+                0,
+                -0.15,
+                2
+              ],
+              "size": [
+                1.25,
+                1,
+                1
+              ],
+              "inflate": -0.3,
+              "pivot": [
+                2.45,
+                0.5,
+                0.5
+              ],
+              "rotation": [
+                0,
+                0,
+                35
+              ],
+              "uv": [
+                19,
+                7
+              ]
+            },
+            {
+              "origin": [
+                -1.6,
+                0,
+                0.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "inflate": -0.001,
+              "uv": [
+                19,
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "name": "glass",
+          "parent": "okp7",
+          "pivot": [
+            0,
+            2,
+            -0.5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.25,
+                0.75,
+                -1.45
+              ],
+              "size": [
+                2.5,
+                2.5,
+                0
+              ],
+              "inflate": -0.001,
+              "pivot": [
+                0,
+                2,
+                -1.45
+              ],
+              "rotation": [
+                0,
+                0,
+                45
+              ],
+              "uv": [
+                12,
+                20
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": {
+        "identifier": "geometry.okp7_reflex_sight.reticle",
+        "texture_width": 32,
+        "texture_height": 32,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "binding": "q.item_slot_to_bone_name((c.item_slot == 'off_hand') ? 'body' : 'main_hand')"
+        },
+        {
+          "name": "attachment",
+          "parent": "weapon",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "okp7",
+          "parent": "attachment",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "reticle",
+          "parent": "okp7",
+          "pivot": [
+            -0.5,
+            0.5,
+            -1.25
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.5,
+                1.47157,
+                -0.95
+              ],
+              "size": [
+                1,
+                1,
+                0
+              ],
+              "inflate": -0.2,
+              "pivot": [
+                0,
+                1.97157,
+                -1.45
+              ],
+              "rotation": [
+                0,
+                0,
+                45
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    13,
+                    25
+                  ],
+                  "uv_size": [
+                    7,
+                    7
+                  ]
+                }
+              }
+            },
+            {
+              "origin": [
+                -0.6,
+                1.37157,
+                -0.85
+              ],
+              "size": [
+                1.2,
+                1.2,
+                0
+              ],
+              "inflate": -0.2,
+              "uv": {
+                "north": {
+                  "uv": [
+                    22,
+                    21
+                  ],
+                  "uv_size": [
+                    9,
+                    9
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

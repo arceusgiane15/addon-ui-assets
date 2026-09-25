@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "trenbankai:scope_hp"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B B",
+      " A ",
+      "C C"
+    ],
+    "key": {
+      "A": {
+        "item": "trenbankai:scope_lp"
+      },
+      "B": {
+        "item": "minecraft:copper_ingot"
+      },
+      "C": {
+        "item": "minecraft:leather"
+      }
+    },
+    "unlock": [
+      {
+        "item": "trenbankai:scope_lp"
+      }
+    ],
+    "result": {
+      "item": "trenbankai:scope_hp"
+    }
+  }
+}

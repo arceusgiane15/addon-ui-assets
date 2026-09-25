@@ -1,0 +1,37 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "kiosk:haruto_tea_kiosk",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/kiosks/haruto_tea_kiosk_atlas"
+      },
+      "geometry": {
+        "default": "geometry.haruto_tea_kiosk"
+      },
+      "sound_effects": {
+        "announcement": "kiosk.haruto_tea.announcement",
+        "bgm": "kiosk.haruto_tea.bgm"
+      },
+      "animations": {
+        "audio_announcement": "animation.haruto_tea_kiosk.announcement",
+        "audio_bgm": "animation.haruto_tea_kiosk.bgm"
+      },
+      "scripts": {
+        "animate": [
+          "audio_announcement",
+          "audio_bgm"
+        ],
+        "should_update_bones_and_effects_offscreen": true,
+        "should_update_effects_offscreen": true
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "enable_attachables": false
+    }
+  }
+}

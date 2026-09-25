@@ -1,0 +1,384 @@
+{
+  "resource_pack_name": "succubi_server",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "height_adjuster": {
+      "textures": "textures/items/height_adjuster"
+    },
+    "kotarus:height_adjuster": {
+      "textures": "textures/items/height_adjuster"
+    },
+    "bandage_blackpowder": {
+      "textures": "textures/items/bandage_blackpowder"
+    },
+    "kotarus:bandage_blackpowder": {
+      "textures": "textures/items/bandage_blackpowder"
+    },
+    "medkit_blackpowder": {
+      "textures": "textures/items/medkit_blackpowder"
+    },
+    "kotarus:medkit_blackpowder": {
+      "textures": "textures/items/medkit_blackpowder"
+    },
+    "syringe_blackpowder": {
+      "textures": "textures/items/syringe_blackpowder"
+    },
+    "kotarus:syringe_blackpowder": {
+      "textures": "textures/items/syringe_blackpowder"
+    },
+    "succubi_banknote_20": {
+      "textures": "textures/items/money/banknote_20"
+    },
+    "succubi_banknote_50": {
+      "textures": "textures/items/money/banknote_50"
+    },
+    "succubi_banknote_100": {
+      "textures": "textures/items/money/banknote_100"
+    },
+    "succubi_banknote_500": {
+      "textures": "textures/items/money/banknote_500"
+    },
+    "succubi_banknote_1000": {
+      "textures": "textures/items/money/banknote_1000"
+    },
+    "succubi_coin_1": {
+      "textures": "textures/items/money/coin_1"
+    },
+    "succubi_coin_5": {
+      "textures": "textures/items/money/coin_5"
+    },
+    "succubi_coin_10": {
+      "textures": "textures/items/money/coin_10"
+    },
+    "succubi_wallet": {
+      "textures": "textures/items/money/wallet"
+    },
+    "succubi_drink_water_bottle": {
+      "textures": "textures/items/succubi_food/drink_water_bottle"
+    },
+    "succubi_drink_pepsi": {
+      "textures": "textures/items/succubi_food/drink_pepsi"
+    },
+    "succubi_drink_fanta_orange": {
+      "textures": "textures/items/succubi_food/drink_fanta_orange"
+    },
+    "succubi_drink_sprite": {
+      "textures": "textures/items/succubi_food/drink_sprite"
+    },
+    "succubi_drink_coca_cola": {
+      "textures": "textures/items/succubi_food/drink_coca_cola"
+    },
+    "succubi_drink_schweppes": {
+      "textures": "textures/items/succubi_food/drink_schweppes"
+    },
+    "succubi_drink_boss_coffee": {
+      "textures": "textures/items/succubi_food/drink_boss_coffee"
+    },
+    "succubi_drink_pocari_sweat": {
+      "textures": "textures/items/succubi_food/drink_pocari_sweat"
+    },
+    "succubi_drink_redbull": {
+      "textures": "textures/items/succubi_food/drink_redbull"
+    },
+    "succubi_drink_green_tea": {
+      "textures": "textures/items/succubi_food/drink_green_tea"
+    },
+    "succubi_drink_monster_energy": {
+      "textures": "textures/items/succubi_food/drink_monster_energy"
+    },
+    "succubi_snack_wafer": {
+      "textures": "textures/items/succubi_food/snack_wafer"
+    },
+    "succubi_snack_jelly": {
+      "textures": "textures/items/succubi_food/snack_jelly"
+    },
+    "succubi_snack_prawn_crackers": {
+      "textures": "textures/items/succubi_food/snack_prawn_crackers"
+    },
+    "succubi_snack_cream_bun": {
+      "textures": "textures/items/succubi_food/snack_cream_bun"
+    },
+    "succubi_snack_chips": {
+      "textures": "textures/items/succubi_food/snack_chips"
+    },
+    "succubi_snack_fish_strips": {
+      "textures": "textures/items/succubi_food/snack_fish_strips"
+    },
+    "succubi_snack_cookies": {
+      "textures": "textures/items/succubi_food/snack_cookies"
+    },
+    "succubi_snack_biscuit_sticks": {
+      "textures": "textures/items/succubi_food/snack_biscuit_sticks"
+    },
+    "succubi_snack_seaweed": {
+      "textures": "textures/items/succubi_food/snack_seaweed"
+    },
+    "succubi_snack_chocolate": {
+      "textures": "textures/items/succubi_food/snack_chocolate"
+    },
+    "succubi_snack_chips_tube": {
+      "textures": "textures/items/succubi_food/snack_chips_tube"
+    },
+    "food_somtum_plate": {
+      "textures": "textures/items/food/somtum_plate"
+    },
+    "food_somtum_pla_ra": {
+      "textures": "textures/items/food/somtum_pla_ra"
+    },
+    "food_larb_plate": {
+      "textures": "textures/items/food/larb_plate"
+    },
+    "food_kratip_rice": {
+      "textures": "textures/items/food/kratip_rice"
+    },
+    "food_kaeng_som": {
+      "textures": "textures/items/food/kaeng_som"
+    },
+    "food_omelette_rice": {
+      "textures": "textures/items/food/omelette_rice"
+    },
+    "food_fried_chicken_bucket": {
+      "textures": "textures/items/food/fried_chicken_bucket"
+    },
+    "food_spicy_chicken_bucket": {
+      "textures": "textures/items/food/spicy_chicken_bucket"
+    },
+    "food_moo_ping": {
+      "textures": "textures/items/food/moo_ping"
+    },
+    "food_ramen_bowl": {
+      "textures": "textures/items/food/ramen_bowl"
+    },
+    "food_tomyum_ramen": {
+      "textures": "textures/items/food/tomyum_ramen"
+    },
+    "food_tonkotsu_ramen": {
+      "textures": "textures/items/food/tonkotsu_ramen"
+    },
+    "food_fried_insects_plate": {
+      "textures": "textures/items/food/fried_insects_plate"
+    },
+    "food_spicy_insects_plate": {
+      "textures": "textures/items/food/spicy_insects_plate"
+    },
+    "food_boba_tea": {
+      "textures": "textures/items/food/boba_tea"
+    },
+    "food_thai_tea_boba": {
+      "textures": "textures/items/food/thai_tea_boba"
+    },
+    "food_matcha_boba": {
+      "textures": "textures/items/food/matcha_boba"
+    },
+    "food_cocoa_boba": {
+      "textures": "textures/items/food/cocoa_boba"
+    },
+    "food_kratom_bottle": {
+      "textures": "textures/items/food/kratom_bottle"
+    },
+    "kiosk_chicken_kiosk": {
+      "textures": "textures/items/kiosk/chicken_kiosk"
+    },
+    "kiosk_fried_insects_kiosk": {
+      "textures": "textures/items/kiosk/fried_insects_kiosk"
+    },
+    "kiosk_haruto_tea_kiosk": {
+      "textures": "textures/items/kiosk/haruto_tea_kiosk"
+    },
+    "kiosk_omelette_kiosk": {
+      "textures": "textures/items/kiosk/omelette_kiosk"
+    },
+    "kiosk_ramen_kiosk": {
+      "textures": "textures/items/kiosk/ramen_kiosk"
+    },
+    "kiosk_somtum_kiosk": {
+      "textures": "textures/items/kiosk/somtum_kiosk"
+    },
+    "succubi_drink_vending_machine_placer": {
+      "textures": "textures/items/succubi/drink_vending_machine_placer"
+    },
+    "succubi_snack_vending_machine_placer": {
+      "textures": "textures/items/succubi/snack_vending_machine_placer"
+    },
+    "succubi_med_paracetamol": {
+      "textures": "textures/items/extra/med_paracetamol"
+    },
+    "succubi_med_cough_syrup": {
+      "textures": "textures/items/extra/med_cough_syrup"
+    },
+    "succubi_med_inhaler": {
+      "textures": "textures/items/extra/med_inhaler"
+    },
+    "succubi_med_balm": {
+      "textures": "textures/items/extra/med_balm"
+    },
+    "succubi_med_plaster": {
+      "textures": "textures/items/extra/med_plaster"
+    },
+    "succubi_med_ors": {
+      "textures": "textures/items/extra/med_ors"
+    },
+    "succubi_med_vitamin_c": {
+      "textures": "textures/items/extra/med_vitamin_c"
+    },
+    "succubi_med_motion": {
+      "textures": "textures/items/extra/med_motion"
+    },
+    "succubi_med_antacid": {
+      "textures": "textures/items/extra/med_antacid"
+    },
+    "succubi_snack_peanuts": {
+      "textures": "textures/items/extra/snack_peanuts"
+    },
+    "succubi_drink_milk": {
+      "textures": "textures/items/extra/drink_milk"
+    },
+    "succubi_drink_m150": {
+      "textures": "textures/items/extra/drink_m150"
+    },
+    "succubi_onigiri_tuna": {
+      "textures": "textures/items/extra/onigiri_tuna"
+    },
+    "succubi_onigiri_salmon": {
+      "textures": "textures/items/extra/onigiri_salmon"
+    },
+    "succubi_sandwich_ham": {
+      "textures": "textures/items/extra/sandwich_ham"
+    },
+    "succubi_toastie_ham": {
+      "textures": "textures/items/extra/toastie_ham"
+    },
+    "succubi_dim_sum": {
+      "textures": "textures/items/extra/dim_sum"
+    },
+    "succubi_bao": {
+      "textures": "textures/items/extra/bao"
+    },
+    "succubi_sausage": {
+      "textures": "textures/items/extra/sausage"
+    },
+    "succubi_rice_krapow": {
+      "textures": "textures/items/extra/rice_krapow"
+    },
+    "succubi_rice_garlic_pork": {
+      "textures": "textures/items/extra/rice_garlic_pork"
+    },
+    "succubi_boiled_eggs": {
+      "textures": "textures/items/extra/boiled_eggs"
+    },
+    "succubi_teddy_bear": {
+      "textures": "textures/items/extra/teddy_bear"
+    },
+    "succubi_book_newspaper": {
+      "textures": "textures/items/extra/book_newspaper"
+    },
+    "succubi_book_comic": {
+      "textures": "textures/items/extra/book_comic"
+    },
+    "succubi_book_travel": {
+      "textures": "textures/items/extra/book_travel"
+    },
+    "succubi_book_romance": {
+      "textures": "textures/items/extra/book_romance"
+    },
+    "succubi_book_mystery": {
+      "textures": "textures/items/extra/book_mystery"
+    },
+    "succubi_book_dharma": {
+      "textures": "textures/items/extra/book_dharma"
+    },
+    "succubi_book_prayer": {
+      "textures": "textures/items/extra/book_prayer"
+    },
+    "succubi_book_coloring": {
+      "textures": "textures/items/extra/book_coloring"
+    },
+    "succubi_book_survival": {
+      "textures": "textures/items/extra/book_survival"
+    },
+    "succubi_book_ghost": {
+      "textures": "textures/items/extra/book_ghost"
+    },
+    "succubi_amulet_luang_por": {
+      "textures": "textures/items/extra/amulet_luang_por"
+    },
+    "succubi_amulet_takrut": {
+      "textures": "textures/items/extra/amulet_takrut"
+    },
+    "succubi_amulet_bia_kae": {
+      "textures": "textures/items/extra/amulet_bia_kae"
+    },
+    "succubi_amulet_pha_yant": {
+      "textures": "textures/items/extra/amulet_pha_yant"
+    },
+    "succubi_amulet_khiao_suea": {
+      "textures": "textures/items/extra/amulet_khiao_suea"
+    },
+    "succubi_amulet_nang_kwak": {
+      "textures": "textures/items/extra/amulet_nang_kwak"
+    },
+    "succubi_amulet_kuman_thong": {
+      "textures": "textures/items/extra/amulet_kuman_thong"
+    },
+    "succubi_amulet_ta_thip": {
+      "textures": "textures/items/extra/amulet_ta_thip"
+    },
+    "succubi_amulet_cursed_doll": {
+      "textures": "textures/items/extra/amulet_cursed_doll"
+    },
+    "succubi_amulet_yant_kan_phi": {
+      "textures": "textures/items/extra/amulet_yant_kan_phi"
+    },
+    "succubi_amulet_lek_lai": {
+      "textures": "textures/items/extra/amulet_lek_lai"
+    },
+    "succubi_amulet_moon": {
+      "textures": "textures/items/extra/amulet_moon"
+    },
+    "succubi_amulet_hanuman": {
+      "textures": "textures/items/extra/amulet_hanuman"
+    },
+    "succubi_amulet_mae_pho": {
+      "textures": "textures/items/extra/amulet_mae_pho"
+    },
+    "succubi_snack_chips_nori": {
+      "textures": "textures/items/extra/snack_chips_nori"
+    },
+    "succubi_snack_chips_bbq": {
+      "textures": "textures/items/extra/snack_chips_bbq"
+    },
+    "succubi_pharmacy_stall_placer": {
+      "textures": "textures/items/succubi/pharmacy_stall_placer"
+    },
+    "succubi_store_snack_shelf_placer": {
+      "textures": "textures/items/succubi/store_snack_shelf_placer"
+    },
+    "succubi_store_drink_fridge_placer": {
+      "textures": "textures/items/succubi/store_drink_fridge_placer"
+    },
+    "succubi_store_hot_counter_placer": {
+      "textures": "textures/items/succubi/store_hot_counter_placer"
+    },
+    "succubi_book_stall_placer": {
+      "textures": "textures/items/succubi/book_stall_placer"
+    },
+    "succubi_amulet_stall_placer": {
+      "textures": "textures/items/succubi/amulet_stall_placer"
+    },
+    "succubi_server_settings": {
+      "textures": "textures/items/extra/server_settings"
+    },
+    "succubi_rule_board_placer": {
+      "textures": "textures/items/succubi/rule_board_placer"
+    },
+    "succubi_watcher_statue_placer": {
+      "textures": "textures/items/succubi/watcher_statue_placer"
+    },
+    "succubi_rule_wand": {
+      "textures": "textures/items/extra/rule_wand"
+    },
+    "succubi_book_custom": {
+      "textures": "textures/items/extra/book_custom"
+    }
+  }
+}

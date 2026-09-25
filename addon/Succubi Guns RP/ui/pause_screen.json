@@ -1,0 +1,87 @@
+{
+  "namespace": "pause",
+  "skin_viewer_panel": {
+    "type": "input_panel",
+    "anchor_from": "bottom_middle",
+    "anchor_to": "bottom_middle",
+    "size": [
+      "100%",
+      "100px"
+    ],
+    "$skin_viewer_panel_offset|default": [
+      0,
+      16
+    ],
+    "offset": "$skin_viewer_panel_offset",
+    "gesture_tracking_button": "button.turn_doll",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.turn_doll",
+        "mapping_type": "pressed",
+        "button_up_right_of_first_refusal": true
+      }
+    ],
+    "controls": [
+      {
+        "paper_doll_panel": {
+          "type": "panel",
+          "size": [
+            "50%",
+            "50% - 10px"
+          ],
+          "$paper_doll_offset|default": [
+            0,
+            -22
+          ],
+          "offset": "$paper_doll_offset",
+          "controls": [
+            {
+              "paper_doll": {
+                "type": "custom",
+                "renderer": "live_player_renderer",
+                "layer": 2,
+                "anchor_from": "bottom_middle",
+                "anchor_to": "bottom_middle",
+                "size": [
+                  "50%",
+                  "50%"
+                ],
+                "animation_reset_name": "screen_animation_reset",
+                "anims": [
+                  "@common.screen_exit_size_animation_push",
+                  "@common.screen_exit_size_animation_pop",
+                  "@common.screen_entrance_size_animation_push",
+                  "@common.screen_entrance_size_animation_pop"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "paper_doll_name_tag": {
+          "ignored": "($pocket_edition and $pocket_screen)",
+          "type": "custom",
+          "renderer": "name_tag_renderer",
+          "layer": 2,
+          "anchor_from": "top_middle",
+          "anchor_to": "bottom_middle",
+          "size": [
+            8,
+            8
+          ],
+          "bindings": [
+            {
+              "binding_name": "#playername"
+            },
+            {
+              "binding_name": "#playername_visible",
+              "binding_name_override": "#visible"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

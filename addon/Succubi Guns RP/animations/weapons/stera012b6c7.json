@@ -1,0 +1,1378 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.glock.attachments": {
+      "loop": true,
+      "bones": {
+        "silencer": {
+          "position": [
+            0,
+            3.1,
+            -14.9
+          ]
+        },
+        "laser": {
+          "position": [
+            0,
+            -0.35,
+            -5.3
+          ]
+        },
+        "laserLine": {
+          "position": [
+            1,
+            5.4,
+            0
+          ],
+          "scale": [
+            0.5,
+            0.5,
+            1
+          ]
+        },
+        "predator_v4": {
+          "position": [
+            0,
+            3.85,
+            "0.6 + ((q.property('trenbankai:ammo') == 0 && !q.property('trenbankai:reload'))? 3 : 0)"
+          ]
+        },
+        "slide": {
+          "position": [
+            0,
+            0,
+            "(q.property('trenbankai:ammo') == 0 && !q.property('trenbankai:reload'))? 3 : 0"
+          ]
+        }
+      }
+    },
+    "animation.glock.weapon_position": {
+      "loop": true,
+      "bones": {
+        "muzzleFlash": {
+          "position": [
+            0.5,
+            -8.4,
+            -3.15
+          ]
+        },
+        "bulletEject": {
+          "position": [
+            2,
+            -3.5,
+            -3.5
+          ]
+        }
+      }
+    },
+    "animation.glock.fpp_ads": {
+      "loop": true,
+      "bones": {
+        "waist": {
+          "rotation": [
+            0.8,
+            -0.1,
+            0
+          ],
+          "position": [
+            3.26,
+            "v.weapon_sight == 6 ? 2.3 : 2.6",
+            0
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            4.42815,
+            42.12072,
+            -25.23423
+          ],
+          "position": [
+            4.5,
+            2.25,
+            -2.75
+          ]
+        },
+        "rightArmExtra": {
+          "rotation": [
+            0,
+            0,
+            -50
+          ],
+          "position": [
+            -7,
+            -3.5,
+            0
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -0.58366,
+            -39.99242,
+            0.79267
+          ],
+          "position": [
+            -4,
+            0,
+            0
+          ]
+        },
+        "rightItem": {
+          "rotation": [
+            0.44717,
+            0.41754,
+            39.99714
+          ]
+        }
+      }
+    },
+    "animation.glock.fpp_hold": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "rotation": [
+            0,
+            180,
+            0
+          ]
+        },
+        "leftArm": {
+          "rotation": [
+            -100,
+            30,
+            34
+          ],
+          "position": [
+            -5,
+            -5,
+            -2
+          ]
+        },
+        "rightArm": {
+          "rotation": [
+            -90,
+            0,
+            0
+          ],
+          "position": [
+            1.5,
+            -1,
+            -1
+          ]
+        },
+        "body": {
+          "rotation": [
+            "q.is_sneaking ? 0 : math.sin(q.life_time * 103) * 0.2",
+            "q.is_sneaking ? 0 : math.cos(q.life_time * 113) * 0.4",
+            "q.is_sneaking ? 0 : math.cos(q.life_time * 93) * 0.4"
+          ]
+        }
+      }
+    },
+    "animation.glock.fpp_reload_empty": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 1.9583,
+      "bones": {
+        "root": {
+          "rotation": [
+            0,
+            180,
+            0
+          ]
+        },
+        "leftArm": {
+          "rotation": {
+            "0.0": [
+              -100,
+              30,
+              34
+            ],
+            "1.3125": [
+              -100,
+              30,
+              34
+            ],
+            "1.4375": [
+              -100,
+              30,
+              24
+            ],
+            "1.5625": [
+              -100,
+              38,
+              24
+            ],
+            "1.6875": [
+              -100,
+              30,
+              24
+            ],
+            "1.9375": [
+              -100,
+              30,
+              34
+            ]
+          },
+          "position": {
+            "0.0": [
+              -5,
+              -5,
+              -2
+            ],
+            "0.3125": [
+              -5,
+              -16,
+              -2
+            ],
+            "0.75": [
+              -5,
+              -16,
+              -2
+            ],
+            "1.0": [
+              -5,
+              -7,
+              0
+            ],
+            "1.125": [
+              -5,
+              -4,
+              0
+            ],
+            "1.1875": [
+              -5,
+              -2.5,
+              0
+            ],
+            "1.3125": [
+              -5,
+              -3,
+              0
+            ],
+            "1.4375": [
+              -4,
+              -3.5,
+              -0.5
+            ],
+            "1.9375": [
+              -5,
+              -5,
+              -2
+            ]
+          }
+        },
+        "rightArm": {
+          "rotation": {
+            "0.0": [
+              -90,
+              0,
+              0
+            ],
+            "0.25": [
+              -98,
+              0,
+              0
+            ],
+            "0.4375": [
+              -94,
+              0,
+              0
+            ],
+            "0.5625": [
+              -98,
+              0,
+              0
+            ],
+            "1.25": [
+              -98,
+              0,
+              0
+            ],
+            "1.375": [
+              -90,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.0": [
+              1.5,
+              -1,
+              -1
+            ],
+            "0.25": [
+              1.5,
+              0,
+              -1
+            ],
+            "1.25": [
+              1.5,
+              0,
+              -1
+            ],
+            "1.375": [
+              1.5,
+              -1,
+              -1
+            ]
+          }
+        },
+        "weapon": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.25": [
+              8,
+              0,
+              0
+            ],
+            "0.4375": [
+              4,
+              0,
+              0
+            ],
+            "0.5625": [
+              8,
+              0,
+              0
+            ],
+            "0.75": [
+              8,
+              0,
+              0
+            ],
+            "0.9375": [
+              8,
+              0,
+              0
+            ],
+            "1.0625": [
+              16,
+              0,
+              0
+            ],
+            "1.1875": [
+              8,
+              0,
+              0
+            ],
+            "1.375": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "body": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.1875": [
+              0,
+              0,
+              -5
+            ],
+            "0.25": [
+              0,
+              0,
+              "math.cos(q.anim_time*400)*10-5"
+            ],
+            "1.125": [
+              3,
+              0,
+              "math.cos(q.anim_time*200)*10-5"
+            ],
+            "1.375": [
+              0,
+              0,
+              "math.cos(q.anim_time*400)*10-5"
+            ],
+            "1.625": [
+              0,
+              0,
+              "math.cos(q.anim_time*50)*5+10"
+            ],
+            "1.875": [
+              0,
+              0,
+              -4
+            ],
+            "1.9375": [
+              0,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.1875": [
+              -2,
+              0,
+              0
+            ],
+            "1.375": [
+              -2,
+              0,
+              0
+            ],
+            "1.625": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "mag": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.4375": [
+              0,
+              0,
+              0
+            ],
+            "0.6875": [
+              46.11364,
+              -15.58394,
+              -25.96295
+            ],
+            "0.75": [
+              -30,
+              0,
+              0
+            ],
+            "1.0": [
+              -30,
+              0,
+              0
+            ],
+            "1.125": [
+              0,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.4375": [
+              0,
+              0,
+              0
+            ],
+            "0.6875": [
+              0,
+              -20,
+              0
+            ],
+            "0.75": [
+              0,
+              -20,
+              -3
+            ],
+            "1.0": [
+              0,
+              -4,
+              0
+            ],
+            "1.125": [
+              0,
+              -1,
+              0
+            ],
+            "1.1875": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "slide": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              3
+            ],
+            "1.5625": [
+              0,
+              0,
+              3
+            ],
+            "1.6875": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "trigger": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              1
+            ],
+            "1.5": [
+              0,
+              0,
+              1
+            ],
+            "1.5625": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.glock.fpp_reload": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 1.375,
+      "bones": {
+        "root": {
+          "rotation": [
+            0,
+            180,
+            0
+          ]
+        },
+        "leftArm": {
+          "rotation": {
+            "0.0": [
+              -100,
+              30,
+              34
+            ],
+            "1.25": [
+              -100,
+              30,
+              34
+            ]
+          },
+          "position": {
+            "0.0": [
+              -5,
+              -5,
+              -2
+            ],
+            "0.3125": [
+              -5,
+              -16,
+              -2
+            ],
+            "0.75": [
+              -5,
+              -16,
+              -3
+            ],
+            "1.0": [
+              -5.5,
+              -7,
+              -1.2
+            ],
+            "1.125": [
+              -5,
+              -4,
+              0
+            ],
+            "1.1875": [
+              -5,
+              -3.5,
+              -2
+            ],
+            "1.3125": [
+              -5,
+              -5,
+              -2
+            ]
+          }
+        },
+        "rightArm": {
+          "rotation": {
+            "0.0": [
+              -90,
+              0,
+              0
+            ],
+            "0.25": [
+              -98,
+              0,
+              0
+            ],
+            "0.4375": [
+              -94,
+              0,
+              0
+            ],
+            "0.5625": [
+              -98,
+              0,
+              0
+            ],
+            "1.125": [
+              -98,
+              0,
+              0
+            ],
+            "1.25": [
+              -90,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.0": [
+              1.5,
+              -1,
+              -1
+            ],
+            "0.25": [
+              1.5,
+              0,
+              -1
+            ],
+            "1.125": [
+              1.5,
+              0,
+              -1
+            ],
+            "1.25": [
+              1.5,
+              -1,
+              -1
+            ]
+          }
+        },
+        "weapon": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.25": [
+              8,
+              0,
+              0
+            ],
+            "0.4375": [
+              4,
+              0,
+              0
+            ],
+            "0.5625": [
+              8,
+              0,
+              0
+            ],
+            "0.75": [
+              8,
+              0,
+              0
+            ],
+            "0.9375": [
+              8,
+              0,
+              0
+            ],
+            "1.0625": [
+              16,
+              0,
+              0
+            ],
+            "1.1875": [
+              8,
+              0,
+              0
+            ],
+            "1.25": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "body": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.1875": [
+              0,
+              0,
+              -5
+            ],
+            "0.25": [
+              0,
+              0,
+              "math.cos(q.anim_time * 200) * 10 - 5"
+            ],
+            "1.125": [
+              3,
+              0,
+              "math.cos(q.anim_time * 200) * 10 - 5"
+            ],
+            "1.25": [
+              -1,
+              0,
+              8.29
+            ],
+            "1.375": [
+              0,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.1875": [
+              -2,
+              0,
+              0
+            ],
+            "1.25": [
+              0,
+              0,
+              0
+            ],
+            "1.3125": [
+              0,
+              -0.25,
+              0
+            ],
+            "1.375": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "mag": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.4375": [
+              0,
+              0,
+              0
+            ],
+            "0.6875": [
+              46.11364,
+              -15.58394,
+              -25.96295
+            ],
+            "0.75": [
+              -30,
+              0,
+              0
+            ],
+            "1.0": [
+              -30,
+              0,
+              0
+            ],
+            "1.125": [
+              0,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.4375": [
+              0,
+              0,
+              0
+            ],
+            "0.6875": [
+              0,
+              -20,
+              0
+            ],
+            "0.75": [
+              0,
+              -20,
+              -3
+            ],
+            "1.0": [
+              0,
+              -4,
+              0
+            ],
+            "1.125": [
+              0,
+              -1,
+              0
+            ],
+            "1.1875": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.glock.fire.item": {
+      "animation_length": 0.25,
+      "blend_weight": "q.is_in_ui ? 0 : 1",
+      "bones": {
+        "trigger": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              1
+            ],
+            "0.125": [
+              0,
+              0,
+              0
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "slide": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              3
+            ],
+            "0.1667": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "predator_v4": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              3
+            ],
+            "0.1667": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.glock17.fire": {
+      "animation_length": 0.25,
+      "blend_weight": "q.is_in_ui ? 0 : 1",
+      "bones": {
+        "waist": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0417": [
+              2.5,
+              0,
+              -0.2
+            ],
+            "0.125": [
+              "v.recoil.x",
+              0,
+              -0.25
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "leftArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              "0.25 * (q.is_sneaking ? 0.25 : 1)"
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              "0.25 * (q.is_sneaking ? 0.25 : 1)"
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightItem": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              "v.recoil.x * 2.5",
+              0,
+              0
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "particle_effects": {
+        "0.0": [
+          {
+            "effect": "bullet_tracer",
+            "locator": "muzzle_flash"
+          },
+          {
+            "effect": "muzzle_flash",
+            "locator": "muzzle_flash",
+            "pre_effect_script": "v.size = math.random(0.1, 0.3);v.amount = (math.random_integer(-1, 1) != 0 ? 1 : 3);"
+          },
+          {
+            "effect": "muzzle_lensflare",
+            "locator": "muzzle_flash",
+            "pre_effect_script": "v.size = 5;"
+          },
+          {
+            "effect": "muzzle_smoke",
+            "locator": "muzzle_flash"
+          },
+          {
+            "effect": "casing_short",
+            "locator": "bullet_eject"
+          }
+        ],
+        "0.2083": {
+          "effect": "muzzle_hot",
+          "locator": "muzzle_flash"
+        }
+      },
+      "timeline": {
+        "0.0": [
+          "v.recoil.x = (-math.random(0.5, 1) * (q.is_sneaking ? 2 : 4));"
+        ]
+      }
+    },
+    "animation.glock17.fire.silenced": {
+      "animation_length": 0.25,
+      "blend_weight": "q.is_in_ui ? 0 : 1",
+      "bones": {
+        "waist": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0417": [
+              2.5,
+              0,
+              -0.2
+            ],
+            "0.125": [
+              "v.recoil.x",
+              0,
+              -0.25
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "leftArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              "0.25 * (q.is_sneaking ? 0.25 : 1)"
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              "0.25 * (q.is_sneaking ? 0.25 : 1)"
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightItem": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              "v.recoil.x * 2",
+              0,
+              0
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "particle_effects": {
+        "0.0": [
+          {
+            "effect": "bullet_tracer",
+            "locator": "silencer_muzzle_flash"
+          },
+          {
+            "effect": "muzzle_smoke",
+            "locator": "silencer_muzzle_flash"
+          },
+          {
+            "effect": "casing_short",
+            "locator": "bullet_eject"
+          }
+        ],
+        "0.25": {
+          "effect": "muzzle_hot",
+          "locator": "silencer_muzzle_flash"
+        }
+      },
+      "timeline": {
+        "0.0": [
+          "v.recoil.x = (-math.random(0.5, 1) * (q.is_sneaking ? 2 : 4));"
+        ]
+      }
+    },
+    "animation.glock18.fire": {
+      "animation_length": 0.25,
+      "blend_weight": "q.is_in_ui ? 0 : 1",
+      "bones": {
+        "waist": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0417": [
+              2.5,
+              0,
+              -0.2
+            ],
+            "0.125": [
+              "v.recoil.x",
+              0,
+              -0.25
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "leftArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              "0.25 * (q.is_sneaking ? 0.25 : 1)"
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              "0.25 * (q.is_sneaking ? 0.25 : 1)"
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightItem": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              "v.recoil.x * 2.5",
+              0,
+              0
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "particle_effects": {
+        "0.0": [
+          {
+            "effect": "bullet_tracer",
+            "locator": "muzzle_flash"
+          },
+          {
+            "effect": "muzzle_flash",
+            "locator": "muzzle_flash",
+            "pre_effect_script": "v.size = math.random(0.1, 0.3);v.amount = (math.random_integer(-1, 1) != 0 ? 1 : 3);"
+          },
+          {
+            "effect": "muzzle_lensflare",
+            "locator": "muzzle_flash",
+            "pre_effect_script": "v.size = 5;"
+          },
+          {
+            "effect": "muzzle_smoke",
+            "locator": "muzzle_flash"
+          },
+          {
+            "effect": "casing_short",
+            "locator": "bullet_eject"
+          }
+        ],
+        "0.2083": {
+          "effect": "muzzle_hot",
+          "locator": "muzzle_flash"
+        }
+      },
+      "timeline": {
+        "0.0": [
+          "v.recoil.x = (-math.random(0.5, 1) * (q.is_sneaking ? 2 : 4));"
+        ]
+      }
+    },
+    "animation.glock18.fire.silenced": {
+      "animation_length": 0.25,
+      "blend_weight": "q.is_in_ui ? 0 : 1",
+      "bones": {
+        "waist": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0417": [
+              2.5,
+              0,
+              -0.2
+            ],
+            "0.125": [
+              "v.recoil.x",
+              0,
+              -0.25
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "leftArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              "0.25 * (q.is_sneaking ? 0.25 : 1)"
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightArm": {
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              0,
+              0,
+              "0.25 * (q.is_sneaking ? 0.25 : 1)"
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "rightItem": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.0833": [
+              "v.recoil.x * 2",
+              0,
+              0
+            ],
+            "0.2083": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "particle_effects": {
+        "0.0": [
+          {
+            "effect": "bullet_tracer",
+            "locator": "silencer_muzzle_flash"
+          },
+          {
+            "effect": "muzzle_smoke",
+            "locator": "silencer_muzzle_flash"
+          },
+          {
+            "effect": "casing_short",
+            "locator": "bullet_eject"
+          }
+        ],
+        "0.25": {
+          "effect": "muzzle_hot",
+          "locator": "silencer_muzzle_flash"
+        }
+      },
+      "timeline": {
+        "0.0": [
+          "v.recoil.x = (-math.random(0.5, 1) * (q.is_sneaking ? 2 : 4));"
+        ]
+      }
+    }
+  }
+}

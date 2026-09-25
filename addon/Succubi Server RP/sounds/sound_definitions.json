@@ -1,0 +1,124 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "medic.revive": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/levelup",
+          "pitch": 1.1,
+          "volume": 1.0
+        },
+        {
+          "name": "sounds/random/orb",
+          "pitch": 1.3,
+          "volume": 0.8
+        }
+      ]
+    },
+    "medic.bandage": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/armor/equip_leather1",
+          "pitch": 0.9,
+          "volume": 0.9
+        },
+        {
+          "name": "sounds/armor/equip_leather2",
+          "pitch": 1.0,
+          "volume": 0.9
+        }
+      ]
+    },
+    "kiosk.haruto_tea.announcement": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/kiosk/tea_announcement",
+          "volume": 1.0,
+          "stream": true
+        }
+      ]
+    },
+    "kiosk.haruto_tea.bgm": {
+      "category": "neutral",
+      "sounds": [
+        {
+          "name": "sounds/kiosk/tea_bgm_01",
+          "volume": 0.7,
+          "stream": true
+        }
+      ]
+    },
+    "succubi.heartbeat": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/succubi/heartbeat_1",
+          "volume": 1.0
+        },
+        {
+          "name": "sounds/succubi/heartbeat_2",
+          "volume": 1.0
+        }
+      ]
+    },
+    "succubi.stomach": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/succubi/stomach_1",
+          "volume": 1.0
+        },
+        {
+          "name": "sounds/succubi/stomach_2",
+          "volume": 1.0
+        },
+        {
+          "name": "sounds/succubi/stomach_3",
+          "volume": 1.0
+        }
+      ]
+    },
+    "succubi.pant": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/succubi/pant_1",
+          "volume": 1.0
+        },
+        {
+          "name": "sounds/succubi/pant_2",
+          "volume": 1.0
+        }
+      ]
+    },
+    "succubi.whisper": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/succubi/whisper_1",
+          "volume": 1.0
+        },
+        {
+          "name": "sounds/succubi/whisper_2",
+          "volume": 1.0
+        },
+        {
+          "name": "sounds/succubi/whisper_3",
+          "volume": 1.0
+        }
+      ]
+    },
+    "succubi.tinnitus": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/succubi/tinnitus_1",
+          "volume": 1.0
+        }
+      ]
+    }
+  }
+}

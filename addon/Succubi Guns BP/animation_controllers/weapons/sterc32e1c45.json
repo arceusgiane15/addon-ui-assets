@@ -1,0 +1,139 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.awp": {
+      "initial_state": "inactive",
+      "states": {
+        "inactive": {
+          "on_entry": [
+            "@s trenbankai:remove_reload"
+          ],
+          "transitions": [
+            {
+              "fire": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') && q.scoreboard('awp') >= 1 && v.fire && v.draw && !v.cycle"
+            },
+            {
+              "cycle": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') && v.cycle"
+            },
+            {
+              "pre_reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') && q.scoreboard('awp') <= 0 && v.reload && !v.cycle"
+            },
+            {
+              "pre_reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') && q.scoreboard('awp') <= 29 && v.reload && q.is_sneaking && v.attack_time && !v.cycle"
+            }
+          ]
+        },
+        "fire": {
+          "on_entry": [
+            "/function weapons/fire/awp",
+            "/event entity @s[scores={awp=1..}] trenbankai:add_cycle"
+          ],
+          "on_exit": [
+            "v.weapon_fire = q.life_time;"
+          ],
+          "transitions": [
+            {
+              "firing": "(1.0)"
+            }
+          ]
+        },
+        "firing": {
+          "on_entry": [
+            "v.weapon_fire = q.life_time;"
+          ],
+          "transitions": [
+            {
+              "post_fire": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') || q.scoreboard('awp') <= 0 || !v.fire || !v.draw || v.cycle"
+            },
+            {
+              "fire": "(q.life_time - v.weapon_fire) >= 0.06"
+            }
+          ]
+        },
+        "post_fire": {
+          "on_entry": [
+            "/execute as @s[tag=!underground, tag=!silencer] run playsound effect.weapon.dist.medium @a[rm=0.1, r=200] ^^^1.5 100 1 0.01"
+          ],
+          "transitions": [
+            {
+              "inactive": "(1.0)"
+            }
+          ]
+        },
+        "cycle": {
+          "animations": [
+            "awp_cycle"
+          ],
+          "on_entry": [
+            "/playanimation @s animation.awp.cycle cycle 0 \"!q.is_item_name_any('slot.weapon.mainhand', 0, 'trenbankai:awp')\"",
+            "@s trenbankai:remove_cycle"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') || !q.is_alive"
+            },
+            {
+              "inactive": "q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "pre_reload": {
+          "on_entry": [
+            "/execute as @s[hasitem={item=trenbankai:awp_mag, quantity=1..}, scores={awp=..0}] run event entity @s trenbankai:add_reload_empty",
+            "/execute as @s[hasitem={item=trenbankai:awp_mag, quantity=1..}, scores={awp=1..}] run event entity @s trenbankai:add_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') || !q.property('trenbankai:reload') || !q.is_alive || v.cycle"
+            },
+            {
+              "reload_empty": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') && q.property('trenbankai:reload') == 1 && v.reloading && !v.cycle"
+            },
+            {
+              "reload": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') && q.property('trenbankai:reload') == 2 && v.reloading && !v.cycle"
+            }
+          ]
+        },
+        "reload_empty": {
+          "animations": [
+            "awp_reload_empty"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') || !v.reloading"
+            },
+            {
+              "reloaded": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') && q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "reload": {
+          "animations": [
+            "awp_reload"
+          ],
+          "transitions": [
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') || !v.reloading"
+            },
+            {
+              "reloaded": "q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') && q.all_animations_finished && q.is_alive"
+            }
+          ]
+        },
+        "reloaded": {
+          "on_entry": [
+            "/execute as @s[hasitem={item=trenbankai:awp, location=slot.weapon.mainhand}] run function weapons/reload/awp"
+          ],
+          "transitions": [
+            {
+              "inactive": "1"
+            },
+            {
+              "inactive": "!q.is_item_name_any('slot.weapon.mainhand', 'trenbankai:awp') || !v.draw"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

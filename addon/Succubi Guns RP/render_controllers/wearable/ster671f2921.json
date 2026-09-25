@@ -1,0 +1,106 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.juggernaut_boots": {
+      "geometry": "geometry.default",
+      "materials": [
+        {
+          "*": "v.is_enchanted ? Material.enchanted : Material.default"
+        }
+      ],
+      "textures": [
+        "Texture.default",
+        "Texture.enchanted"
+      ],
+      "part_visibility": [
+        {
+          "*": false
+        },
+        {
+          "leftFoot": true
+        },
+        {
+          "rightFoot": true
+        }
+      ]
+    },
+    "controller.render.juggernaut_chestplate": {
+      "geometry": "geometry.default",
+      "materials": [
+        {
+          "*": "v.is_enchanted ? Material.enchanted : Material.default"
+        }
+      ],
+      "textures": [
+        "Texture.default",
+        "Texture.enchanted"
+      ],
+      "part_visibility": [
+        {
+          "*": false
+        },
+        {
+          "body": true
+        },
+        {
+          "antenna": true
+        },
+        {
+          "leftArm": true
+        },
+        {
+          "leftArmEXtra": true
+        },
+        {
+          "rightArm": true
+        },
+        {
+          "rightArmExtra": true
+        }
+      ]
+    },
+    "controller.render.juggernaut_helmet": {
+      "geometry": "geometry.default",
+      "materials": [
+        {
+          "*": "v.is_enchanted ? Material.enchanted : Material.default"
+        }
+      ],
+      "textures": [
+        "Texture.default",
+        "Texture.enchanted"
+      ],
+      "part_visibility": [
+        {
+          "*": false
+        },
+        {
+          "head": true
+        }
+      ]
+    },
+    "controller.render.juggernaut_leggings": {
+      "geometry": "geometry.default",
+      "materials": [
+        {
+          "*": "v.is_enchanted ? Material.enchanted : Material.default"
+        }
+      ],
+      "textures": [
+        "Texture.default",
+        "Texture.enchanted"
+      ],
+      "part_visibility": [
+        {
+          "*": false
+        },
+        {
+          "leftLeg": true
+        },
+        {
+          "rightLeg": true
+        }
+      ]
+    }
+  }
+}

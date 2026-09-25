@@ -1,0 +1,4926 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "minecraft:player",
+      "spawn_category": "creature",
+      "is_spawnable": false,
+      "is_summonable": false,
+      "scripts": {
+        "animate": [
+          "weapons_setup_controller",
+          "shield_blocking_controller",
+          "grounded_controller",
+          "nvg_controller"
+        ]
+      },
+      "animations": {
+        "weapons_vars_controller": "controller.animation.player.weapons_vars",
+        "weapons_setup_controller": "controller.animation.player.weapons_setup",
+        "weapons_bullet_counter_controller": "controller.animation.player.weapons_bullet_counter",
+        "weapons_sight_controller": "controller.animation.player.weapons_sight",
+        "weapons_ads_controller": "controller.animation.player.weapons_ads",
+        "weapons_standby_controller": "controller.animation.player.weapons_standby",
+        "weapons_standby": "animation.weapons.standby",
+        "ak12_controller": "controller.animation.player.ak12",
+        "ak12_reload_empty": "animation.player.ak12_reload_empty",
+        "ak12_reload": "animation.player.ak12_reload",
+        "ak47_controller": "controller.animation.player.ak47",
+        "ak47_reload_empty": "animation.player.ak47_reload_empty",
+        "ak47_reload": "animation.player.ak47_reload",
+        "ak74_controller": "controller.animation.player.ak74",
+        "akm_controller": "controller.animation.player.akm",
+        "aks74u_controller": "controller.animation.player.aks74u",
+        "awp_controller": "controller.animation.player.awp",
+        "awp_cycle": "animation.player.awp_cycle",
+        "awp_reload_empty": "animation.player.awp_reload_empty",
+        "awp_reload": "animation.player.awp_reload",
+        "deagle_controller": "controller.animation.player.deagle",
+        "deagle_reload": "animation.player.deagle_reload",
+        "fnfal_controller": "controller.animation.player.fnfal",
+        "fnfal_reload_empty": "animation.player.fnfal_reload_empty",
+        "fnfal_reload": "animation.player.fnfal_reload",
+        "parafal_controller": "controller.animation.player.parafal",
+        "glock17_controller": "controller.animation.player.glock17",
+        "glock18_controller": "controller.animation.player.glock18",
+        "glock_reload_empty": "animation.player.glock_reload_empty",
+        "glock_reload": "animation.player.glock_reload",
+        "m249_controller": "controller.animation.player.m249",
+        "m249_reload": "animation.player.m249_reload",
+        "m4a1_controller": "controller.animation.player.m4a1",
+        "m4a1_reload_empty": "animation.player.m4a1_reload_empty",
+        "m4a1_reload": "animation.player.m4a1_reload",
+        "mossberg_controller": "controller.animation.player.mossberg",
+        "mossberg_cycle": "animation.player.mossberg_cycle",
+        "mossberg_reload": "animation.player.mossberg_reload",
+        "mp5a5_controller": "controller.animation.player.mp5a5",
+        "mp5a5_reload": "animation.player.mp5a5_reload",
+        "rpg7_controller": "controller.animation.player.rpg7",
+        "rpg7_reload": "animation.player.rpg7_reload",
+        "m1014_controller": "controller.animation.player.m1014",
+        "m1014_reload": "animation.player.m1014_reload",
+        "shield_blocking_controller": "controller.animation.player.shield_blocking",
+        "grounded_controller": "controller.animation.player.grounded",
+        "nvg_controller": "controller.animation.player.nvg"
+      },
+      "properties": {
+        "trenbankai:sight": {
+          "client_sync": true,
+          "type": "int",
+          "default": 0,
+          "range": [
+            0,
+            10
+          ]
+        },
+        "trenbankai:grip": {
+          "client_sync": true,
+          "type": "int",
+          "default": 0,
+          "range": [
+            0,
+            1
+          ]
+        },
+        "trenbankai:laser": {
+          "client_sync": true,
+          "type": "int",
+          "default": 0,
+          "range": [
+            0,
+            2
+          ]
+        },
+        "trenbankai:silencer": {
+          "client_sync": true,
+          "type": "int",
+          "default": 0,
+          "range": [
+            0,
+            1
+          ]
+        },
+        "trenbankai:weapon_fire": {
+          "client_sync": true,
+          "type": "int",
+          "default": 0,
+          "range": [
+            0,
+            1
+          ]
+        },
+        "trenbankai:ammo": {
+          "client_sync": true,
+          "type": "int",
+          "default": 0,
+          "range": [
+            0,
+            200
+          ]
+        },
+        "trenbankai:reload": {
+          "client_sync": true,
+          "type": "int",
+          "default": 0,
+          "range": [
+            0,
+            2
+          ]
+        },
+        "trenbankai:cycle": {
+          "client_sync": true,
+          "type": "int",
+          "default": 0,
+          "range": [
+            0,
+            1
+          ]
+        },
+        "trenbankai:standby": {
+          "client_sync": true,
+          "type": "int",
+          "default": 0,
+          "range": [
+            0,
+            1
+          ]
+        },
+        "trenbankai:wall_detect": {
+          "client_sync": true,
+          "type": "int",
+          "default": 0,
+          "range": [
+            0,
+            1
+          ]
+        }
+      }
+    },
+    "component_groups": {
+      "minecraft:add_raid_omen": {
+        "minecraft:spell_effects": {
+          "add_effects": [
+            {
+              "effect": "raid_omen",
+              "duration": 30,
+              "display_on_screen_animation": true
+            }
+          ],
+          "remove_effects": "bad_omen"
+        },
+        "minecraft:timer": {
+          "time": [
+            0,
+            0
+          ],
+          "looping": false,
+          "time_down_event": {
+            "event": "minecraft:clear_add_raid_omen",
+            "target": "self"
+          }
+        }
+      },
+      "minecraft:clear_raid_omen_spell_effect": {
+        "minecraft:spell_effects": {}
+      },
+      "minecraft:raid_trigger": {
+        "minecraft:raid_trigger": {
+          "triggered_event": {
+            "event": "minecraft:remove_raid_trigger",
+            "target": "self"
+          }
+        }
+      },
+      "ak12_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_ak12",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "ak47_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_ak47",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "ak74_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_ak74",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "akm_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_akm",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "aks74u_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_aks74u",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "awp_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_awp",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "deagle_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_deagle",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "fnfal_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_fnfal",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "glock_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_glock",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "m249_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_m249",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "m4a1_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_m4a1",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "mossberg_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_mossberg",
+              "num_to_spawn": 8
+            }
+          ]
+        }
+      },
+      "mp5a5_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:bullet",
+              "spawn_event": "trenbankai:bullet_mp5a5",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "rpg7_fire": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "min_wait_time": 0,
+              "max_wait_time": 0,
+              "single_use": true,
+              "spawn_entity": "trenbankai:rocket",
+              "spawn_event": "trenbankai:rocket_rpg7",
+              "num_to_spawn": 1
+            }
+          ]
+        }
+      },
+      "default": {
+        "minecraft:knockback_resistance": {
+          "value": 0.25
+        }
+      },
+      "juggernaut": {
+        "minecraft:knockback_resistance": {
+          "value": 100
+        }
+      },
+      "kotarus:h_010": {
+        "minecraft:collision_box": {
+          "width": 0.1,
+          "height": 0.1
+        },
+        "minecraft:scale": {
+          "value": 0.0556
+        }
+      },
+      "kotarus:h_020": {
+        "minecraft:collision_box": {
+          "width": 0.1,
+          "height": 0.2
+        },
+        "minecraft:scale": {
+          "value": 0.1111
+        }
+      },
+      "kotarus:h_030": {
+        "minecraft:collision_box": {
+          "width": 0.1,
+          "height": 0.3
+        },
+        "minecraft:scale": {
+          "value": 0.1667
+        }
+      },
+      "kotarus:h_040": {
+        "minecraft:collision_box": {
+          "width": 0.133,
+          "height": 0.4
+        },
+        "minecraft:scale": {
+          "value": 0.2222
+        }
+      },
+      "kotarus:h_050": {
+        "minecraft:collision_box": {
+          "width": 0.167,
+          "height": 0.5
+        },
+        "minecraft:scale": {
+          "value": 0.2778
+        }
+      },
+      "kotarus:h_060": {
+        "minecraft:collision_box": {
+          "width": 0.2,
+          "height": 0.6
+        },
+        "minecraft:scale": {
+          "value": 0.3333
+        }
+      },
+      "kotarus:h_070": {
+        "minecraft:collision_box": {
+          "width": 0.233,
+          "height": 0.7
+        },
+        "minecraft:scale": {
+          "value": 0.3889
+        }
+      },
+      "kotarus:h_080": {
+        "minecraft:collision_box": {
+          "width": 0.267,
+          "height": 0.8
+        },
+        "minecraft:scale": {
+          "value": 0.4444
+        }
+      },
+      "kotarus:h_090": {
+        "minecraft:collision_box": {
+          "width": 0.3,
+          "height": 0.9
+        },
+        "minecraft:scale": {
+          "value": 0.5
+        }
+      },
+      "kotarus:h_100": {
+        "minecraft:collision_box": {
+          "width": 0.333,
+          "height": 1.0
+        },
+        "minecraft:scale": {
+          "value": 0.5556
+        }
+      },
+      "kotarus:h_110": {
+        "minecraft:collision_box": {
+          "width": 0.367,
+          "height": 1.1
+        },
+        "minecraft:scale": {
+          "value": 0.6111
+        }
+      },
+      "kotarus:h_120": {
+        "minecraft:collision_box": {
+          "width": 0.4,
+          "height": 1.2
+        },
+        "minecraft:scale": {
+          "value": 0.6667
+        }
+      },
+      "kotarus:h_130": {
+        "minecraft:collision_box": {
+          "width": 0.433,
+          "height": 1.3
+        },
+        "minecraft:scale": {
+          "value": 0.7222
+        }
+      },
+      "kotarus:h_140": {
+        "minecraft:collision_box": {
+          "width": 0.467,
+          "height": 1.4
+        },
+        "minecraft:scale": {
+          "value": 0.7778
+        }
+      },
+      "kotarus:h_150": {
+        "minecraft:collision_box": {
+          "width": 0.5,
+          "height": 1.5
+        },
+        "minecraft:scale": {
+          "value": 0.8333
+        }
+      },
+      "kotarus:h_160": {
+        "minecraft:collision_box": {
+          "width": 0.533,
+          "height": 1.6
+        },
+        "minecraft:scale": {
+          "value": 0.8889
+        }
+      },
+      "kotarus:h_170": {
+        "minecraft:collision_box": {
+          "width": 0.567,
+          "height": 1.7
+        },
+        "minecraft:scale": {
+          "value": 0.9444
+        }
+      },
+      "kotarus:h_180": {
+        "minecraft:collision_box": {
+          "width": 0.6,
+          "height": 1.8
+        },
+        "minecraft:scale": {
+          "value": 1.0
+        }
+      },
+      "kotarus:h_190": {
+        "minecraft:collision_box": {
+          "width": 0.633,
+          "height": 1.9
+        },
+        "minecraft:scale": {
+          "value": 1.0556
+        }
+      },
+      "kotarus:h_200": {
+        "minecraft:collision_box": {
+          "width": 0.667,
+          "height": 2.0
+        },
+        "minecraft:scale": {
+          "value": 1.1111
+        }
+      },
+      "kotarus:h_210": {
+        "minecraft:collision_box": {
+          "width": 0.7,
+          "height": 2.1
+        },
+        "minecraft:scale": {
+          "value": 1.1667
+        }
+      },
+      "kotarus:h_220": {
+        "minecraft:collision_box": {
+          "width": 0.733,
+          "height": 2.2
+        },
+        "minecraft:scale": {
+          "value": 1.2222
+        }
+      },
+      "kotarus:h_230": {
+        "minecraft:collision_box": {
+          "width": 0.767,
+          "height": 2.3
+        },
+        "minecraft:scale": {
+          "value": 1.2778
+        }
+      },
+      "kotarus:h_240": {
+        "minecraft:collision_box": {
+          "width": 0.8,
+          "height": 2.4
+        },
+        "minecraft:scale": {
+          "value": 1.3333
+        }
+      },
+      "kotarus:h_250": {
+        "minecraft:collision_box": {
+          "width": 0.833,
+          "height": 2.5
+        },
+        "minecraft:scale": {
+          "value": 1.3889
+        }
+      },
+      "kotarus:h_260": {
+        "minecraft:collision_box": {
+          "width": 0.867,
+          "height": 2.6
+        },
+        "minecraft:scale": {
+          "value": 1.4444
+        }
+      },
+      "kotarus:h_270": {
+        "minecraft:collision_box": {
+          "width": 0.9,
+          "height": 2.7
+        },
+        "minecraft:scale": {
+          "value": 1.5
+        }
+      },
+      "kotarus:h_280": {
+        "minecraft:collision_box": {
+          "width": 0.933,
+          "height": 2.8
+        },
+        "minecraft:scale": {
+          "value": 1.5556
+        }
+      },
+      "kotarus:h_290": {
+        "minecraft:collision_box": {
+          "width": 0.967,
+          "height": 2.9
+        },
+        "minecraft:scale": {
+          "value": 1.6111
+        }
+      },
+      "kotarus:h_300": {
+        "minecraft:collision_box": {
+          "width": 1.0,
+          "height": 3.0
+        },
+        "minecraft:scale": {
+          "value": 1.6667
+        }
+      },
+      "kotarus:h_310": {
+        "minecraft:collision_box": {
+          "width": 1.033,
+          "height": 3.1
+        },
+        "minecraft:scale": {
+          "value": 1.7222
+        }
+      },
+      "kotarus:h_320": {
+        "minecraft:collision_box": {
+          "width": 1.067,
+          "height": 3.2
+        },
+        "minecraft:scale": {
+          "value": 1.7778
+        }
+      },
+      "kotarus:h_330": {
+        "minecraft:collision_box": {
+          "width": 1.1,
+          "height": 3.3
+        },
+        "minecraft:scale": {
+          "value": 1.8333
+        }
+      },
+      "kotarus:h_340": {
+        "minecraft:collision_box": {
+          "width": 1.133,
+          "height": 3.4
+        },
+        "minecraft:scale": {
+          "value": 1.8889
+        }
+      },
+      "kotarus:h_350": {
+        "minecraft:collision_box": {
+          "width": 1.167,
+          "height": 3.5
+        },
+        "minecraft:scale": {
+          "value": 1.9444
+        }
+      },
+      "kotarus:h_360": {
+        "minecraft:collision_box": {
+          "width": 1.2,
+          "height": 3.6
+        },
+        "minecraft:scale": {
+          "value": 2.0
+        }
+      },
+      "kotarus:h_370": {
+        "minecraft:collision_box": {
+          "width": 1.233,
+          "height": 3.7
+        },
+        "minecraft:scale": {
+          "value": 2.0556
+        }
+      },
+      "kotarus:h_380": {
+        "minecraft:collision_box": {
+          "width": 1.267,
+          "height": 3.8
+        },
+        "minecraft:scale": {
+          "value": 2.1111
+        }
+      },
+      "kotarus:h_390": {
+        "minecraft:collision_box": {
+          "width": 1.3,
+          "height": 3.9
+        },
+        "minecraft:scale": {
+          "value": 2.1667
+        }
+      },
+      "kotarus:h_400": {
+        "minecraft:collision_box": {
+          "width": 1.333,
+          "height": 4.0
+        },
+        "minecraft:scale": {
+          "value": 2.2222
+        }
+      },
+      "kotarus:h_410": {
+        "minecraft:collision_box": {
+          "width": 1.367,
+          "height": 4.1
+        },
+        "minecraft:scale": {
+          "value": 2.2778
+        }
+      },
+      "kotarus:h_420": {
+        "minecraft:collision_box": {
+          "width": 1.4,
+          "height": 4.2
+        },
+        "minecraft:scale": {
+          "value": 2.3333
+        }
+      },
+      "kotarus:h_430": {
+        "minecraft:collision_box": {
+          "width": 1.433,
+          "height": 4.3
+        },
+        "minecraft:scale": {
+          "value": 2.3889
+        }
+      },
+      "kotarus:h_440": {
+        "minecraft:collision_box": {
+          "width": 1.467,
+          "height": 4.4
+        },
+        "minecraft:scale": {
+          "value": 2.4444
+        }
+      },
+      "kotarus:h_450": {
+        "minecraft:collision_box": {
+          "width": 1.5,
+          "height": 4.5
+        },
+        "minecraft:scale": {
+          "value": 2.5
+        }
+      },
+      "kotarus:h_460": {
+        "minecraft:collision_box": {
+          "width": 1.533,
+          "height": 4.6
+        },
+        "minecraft:scale": {
+          "value": 2.5556
+        }
+      },
+      "kotarus:h_470": {
+        "minecraft:collision_box": {
+          "width": 1.567,
+          "height": 4.7
+        },
+        "minecraft:scale": {
+          "value": 2.6111
+        }
+      },
+      "kotarus:h_480": {
+        "minecraft:collision_box": {
+          "width": 1.6,
+          "height": 4.8
+        },
+        "minecraft:scale": {
+          "value": 2.6667
+        }
+      },
+      "kotarus:h_490": {
+        "minecraft:collision_box": {
+          "width": 1.633,
+          "height": 4.9
+        },
+        "minecraft:scale": {
+          "value": 2.7222
+        }
+      },
+      "kotarus:h_500": {
+        "minecraft:collision_box": {
+          "width": 1.667,
+          "height": 5.0
+        },
+        "minecraft:scale": {
+          "value": 2.7778
+        }
+      },
+      "succubi:nametag_near": {
+        "minecraft:nameable": {
+          "always_show": false,
+          "allow_name_tag_renaming": false
+        }
+      },
+      "succubi:spd_140": {
+        "minecraft:movement": {
+          "value": 0.115
+        }
+      },
+      "succubi:spd_150": {
+        "minecraft:movement": {
+          "value": 0.1111
+        }
+      },
+      "succubi:spd_160": {
+        "minecraft:movement": {
+          "value": 0.1072
+        }
+      },
+      "succubi:spd_170": {
+        "minecraft:movement": {
+          "value": 0.1036
+        }
+      },
+      "succubi:spd_180": {
+        "minecraft:movement": {
+          "value": 0.1
+        }
+      },
+      "succubi:spd_190": {
+        "minecraft:movement": {
+          "value": 0.0966
+        }
+      },
+      "succubi:spd_200": {
+        "minecraft:movement": {
+          "value": 0.0933
+        }
+      },
+      "succubi:spd_210": {
+        "minecraft:movement": {
+          "value": 0.0901
+        }
+      },
+      "succubi:spd_220": {
+        "minecraft:movement": {
+          "value": 0.087
+        }
+      }
+    },
+    "components": {
+      "minecraft:experience_reward": {
+        "on_death": "math.min(q.player_level * 8, 100)"
+      },
+      "minecraft:type_family": {
+        "family": [
+          "player"
+        ]
+      },
+      "minecraft:is_hidden_when_invisible": {},
+      "minecraft:loot": {
+        "table": "loot_tables/empty.json"
+      },
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.8
+      },
+      "minecraft:can_climb": {},
+      "minecraft:movement": {
+        "value": 0.1
+      },
+      "minecraft:hurt_on_condition": {
+        "damage_conditions": [
+          {
+            "filters": {
+              "test": "in_lava",
+              "value": true
+            },
+            "cause": "lava",
+            "damage_per_tick": 4
+          }
+        ]
+      },
+      "minecraft:attack": {
+        "damage": 1
+      },
+      "minecraft:exhaustion_values": {
+        "heal": 6,
+        "jump": 0.05,
+        "sprint_jump": 0.2,
+        "mine": 0.005,
+        "attack": 0.1,
+        "damage": 0.1,
+        "walk": 0.0,
+        "sprint": 0.1,
+        "swim": 0.01
+      },
+      "minecraft:player.saturation": {
+        "value": 5,
+        "max": 20
+      },
+      "minecraft:player.exhaustion": {
+        "value": 0,
+        "max": 20
+      },
+      "minecraft:player.level": {
+        "value": 0,
+        "max": 24791
+      },
+      "minecraft:player.experience": {
+        "value": 0,
+        "max": 1
+      },
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": -1,
+        "inhale_time": 3.75,
+        "generates_bubbles": false
+      },
+      "minecraft:nameable": {
+        "always_show": true,
+        "allow_name_tag_renaming": false
+      },
+      "minecraft:physics": {
+        "push_towards_closest_space": true
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:insomnia": {
+        "days_until_insomnia": 3
+      },
+      "minecraft:rideable": {
+        "seat_count": 2,
+        "family_types": [
+          "parrot_tame"
+        ],
+        "pull_in_entities": true,
+        "seats": [
+          {
+            "position": [
+              0.4,
+              -0.2,
+              -0.1
+            ],
+            "min_rider_count": 0,
+            "max_rider_count": 0,
+            "lock_rider_rotation": 0
+          },
+          {
+            "position": [
+              -0.4,
+              -0.2,
+              -0.1
+            ],
+            "min_rider_count": 1,
+            "max_rider_count": 2,
+            "lock_rider_rotation": 0
+          }
+        ]
+      },
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:block_climber": {},
+      "minecraft:environment_sensor": {
+        "triggers": [
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_mob_effect",
+                  "subject": "self",
+                  "value": "bad_omen"
+                },
+                {
+                  "test": "is_in_village",
+                  "subject": "self",
+                  "value": true
+                }
+              ]
+            },
+            "event": "minecraft:gain_raid_omen"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "is_underground",
+                  "value": true
+                },
+                {
+                  "test": "is_underwater",
+                  "value": false
+                }
+              ]
+            },
+            "event": "trenbankai:add_underground"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "is_underground",
+                  "value": false
+                }
+              ]
+            },
+            "event": "trenbankai:remove_underground"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "is_sneaking",
+                  "value": true
+                }
+              ]
+            },
+            "event": "trenbankai:add_sneaking"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "is_sneaking",
+                  "value": false
+                }
+              ]
+            },
+            "event": "trenbankai:remove_sneaking"
+          },
+          {
+            "filters": {
+              "any_of": [
+                {
+                  "test": "has_equipment",
+                  "domain": "torso",
+                  "value": "trenbankai:juggernaut_chestplate"
+                }
+              ]
+            },
+            "event": "trenbankai:add_juggernaut"
+          },
+          {
+            "filters": {
+              "none_of": [
+                {
+                  "test": "has_equipment",
+                  "domain": "torso",
+                  "value": "trenbankai:juggernaut_chestplate"
+                }
+              ]
+            },
+            "event": "trenbankai:remove_juggernaut"
+          }
+        ]
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "on_damage": {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "has_equipment",
+                    "domain": "torso",
+                    "value": "trenbankai:juggernaut_chestplate"
+                  }
+                ]
+              }
+            },
+            "cause": "block_explosion",
+            "damage_multiplier": 0.35
+          },
+          {
+            "on_damage": {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "has_equipment",
+                    "domain": "torso",
+                    "value": "trenbankai:juggernaut_chestplate"
+                  }
+                ]
+              }
+            },
+            "cause": "entity_explosion",
+            "damage_multiplier": 0.25
+          }
+        ]
+      },
+      "minecraft:on_death": {
+        "event": "trenbankai:on_death"
+      },
+      "minecraft:health": {
+        "value": 100,
+        "max": 200
+      }
+    },
+    "events": {
+      "minecraft:gain_raid_omen": {
+        "add": {
+          "component_groups": [
+            "minecraft:add_raid_omen"
+          ]
+        }
+      },
+      "minecraft:clear_add_raid_omen": {
+        "remove": {
+          "component_groups": [
+            "minecraft:add_raid_omen"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "minecraft:clear_raid_omen_spell_effect"
+          ]
+        }
+      },
+      "minecraft:trigger_raid": {
+        "add": {
+          "component_groups": [
+            "minecraft:raid_trigger"
+          ]
+        }
+      },
+      "minecraft:remove_raid_trigger": {
+        "remove": {
+          "component_groups": [
+            "minecraft:raid_trigger"
+          ]
+        }
+      },
+      "minecraft:entity_spawned": {
+        "sequence": [
+          {
+            "add": {
+              "component_groups": [
+                "default"
+              ]
+            }
+          },
+          {
+            "trigger": "trenbankai:remove_underground"
+          },
+          {
+            "trigger": "trenbankai:remove_sneaking"
+          },
+          {
+            "trigger": "trenbankai:remove_reload"
+          },
+          {
+            "trigger": "trenbankai:remove_cycle"
+          },
+          {
+            "trigger": "trenbankai:remove_standby"
+          },
+          {
+            "trigger": "trenbankai:remove_wall_detect"
+          }
+        ]
+      },
+      "trenbankai:ak12_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ak12_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:ak47_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ak47_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:ak74_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "ak74_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:akm_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "akm_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:aks74u_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "aks74u_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:awp_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "awp_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:deagle_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "deagle_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:fnfal_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "fnfal_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:glock_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "glock_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:m249_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "m249_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:m4a1_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "m4a1_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:mossberg_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mossberg_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:mp5a5_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mp5a5_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:rpg7_fire": {
+        "sequence": [
+          {
+            "set_property": {
+              "trenbankai:weapon_fire": 1
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "rpg7_fire"
+              ]
+            }
+          }
+        ]
+      },
+      "trenbankai:add_juggernaut": {
+        "remove": {
+          "component_groups": [
+            "default"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "juggernaut"
+          ]
+        }
+      },
+      "trenbankai:remove_juggernaut": {
+        "remove": {
+          "component_groups": [
+            "juggernaut"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "default"
+          ]
+        }
+      },
+      "trenbankai:on_death": {
+        "queue_command": {
+          "command": [
+            "scoreboard players add @s deaths 1"
+          ]
+        }
+      },
+      "trenbankai:add_underground": {
+        "filters": {
+          "test": "has_tag",
+          "operator": "!=",
+          "value": "underground"
+        },
+        "queue_command": {
+          "command": [
+            "tag @s add underground"
+          ]
+        }
+      },
+      "trenbankai:remove_underground": {
+        "filters": {
+          "test": "has_tag",
+          "value": "underground"
+        },
+        "queue_command": {
+          "command": [
+            "tag @s remove underground"
+          ]
+        }
+      },
+      "trenbankai:add_sneaking": {
+        "filters": {
+          "test": "has_tag",
+          "operator": "!=",
+          "value": "sneaking"
+        },
+        "queue_command": {
+          "command": [
+            "tag @s add sneaking"
+          ]
+        }
+      },
+      "trenbankai:remove_sneaking": {
+        "filters": {
+          "test": "has_tag",
+          "value": "sneaking"
+        },
+        "queue_command": {
+          "command": [
+            "tag @s remove sneaking"
+          ]
+        }
+      },
+      "trenbankai:add_reload_empty": {
+        "filters": {
+          "test": "int_property",
+          "domain": "trenbankai:reload",
+          "operator": "!=",
+          "value": 1
+        },
+        "set_property": {
+          "trenbankai:reload": 1
+        }
+      },
+      "trenbankai:add_reload": {
+        "filters": {
+          "test": "int_property",
+          "domain": "trenbankai:reload",
+          "operator": "!=",
+          "value": 2
+        },
+        "set_property": {
+          "trenbankai:reload": 2
+        }
+      },
+      "trenbankai:remove_reload": {
+        "filters": {
+          "test": "int_property",
+          "domain": "trenbankai:reload",
+          "operator": "!=",
+          "value": 0
+        },
+        "set_property": {
+          "trenbankai:reload": 0
+        }
+      },
+      "trenbankai:add_cycle": {
+        "filters": {
+          "test": "int_property",
+          "domain": "trenbankai:cycle",
+          "operator": "!=",
+          "value": 1
+        },
+        "set_property": {
+          "trenbankai:cycle": 1
+        }
+      },
+      "trenbankai:remove_cycle": {
+        "filters": {
+          "test": "int_property",
+          "domain": "trenbankai:cycle",
+          "operator": "!=",
+          "value": 0
+        },
+        "set_property": {
+          "trenbankai:cycle": 0
+        }
+      },
+      "trenbankai:add_standby": {
+        "filters": {
+          "test": "int_property",
+          "domain": "trenbankai:standby",
+          "operator": "!=",
+          "value": 1
+        },
+        "set_property": {
+          "trenbankai:standby": 1
+        }
+      },
+      "trenbankai:remove_standby": {
+        "filters": {
+          "test": "int_property",
+          "domain": "trenbankai:standby",
+          "operator": "!=",
+          "value": 0
+        },
+        "set_property": {
+          "trenbankai:standby": 0
+        }
+      },
+      "trenbankai:add_wall_detect": {
+        "filters": {
+          "test": "int_property",
+          "domain": "trenbankai:wall_detect",
+          "operator": "!=",
+          "value": 1
+        },
+        "set_property": {
+          "trenbankai:wall_detect": 1
+        }
+      },
+      "trenbankai:remove_wall_detect": {
+        "filters": {
+          "test": "int_property",
+          "domain": "trenbankai:wall_detect",
+          "operator": "!=",
+          "value": 0
+        },
+        "set_property": {
+          "trenbankai:wall_detect": 0
+        }
+      },
+      "trenbankai:set_ammo_0": {
+        "set_property": {
+          "trenbankai:ammo": 0
+        }
+      },
+      "trenbankai:set_ammo_1": {
+        "set_property": {
+          "trenbankai:ammo": 1
+        }
+      },
+      "trenbankai:set_ammo_2": {
+        "set_property": {
+          "trenbankai:ammo": 2
+        }
+      },
+      "trenbankai:set_ammo_3": {
+        "set_property": {
+          "trenbankai:ammo": 3
+        }
+      },
+      "trenbankai:set_ammo_4": {
+        "set_property": {
+          "trenbankai:ammo": 4
+        }
+      },
+      "trenbankai:set_ammo_5": {
+        "set_property": {
+          "trenbankai:ammo": 5
+        }
+      },
+      "trenbankai:set_ammo_6": {
+        "set_property": {
+          "trenbankai:ammo": 6
+        }
+      },
+      "trenbankai:set_ammo_7": {
+        "set_property": {
+          "trenbankai:ammo": 7
+        }
+      },
+      "trenbankai:set_ammo_8": {
+        "set_property": {
+          "trenbankai:ammo": 8
+        }
+      },
+      "trenbankai:set_ammo_9": {
+        "set_property": {
+          "trenbankai:ammo": 9
+        }
+      },
+      "trenbankai:set_ammo_10": {
+        "set_property": {
+          "trenbankai:ammo": 10
+        }
+      },
+      "trenbankai:add_hitmark": {
+        "queue_command": {
+          "command": [
+            "playsound effect.player.hitmarker @s ~~~ 0.65 1"
+          ]
+        }
+      },
+      "trenbankai:add_hitmark_headshot": {
+        "queue_command": {
+          "command": [
+            "playsound effect.player.hitmarker @s ~~~ 0.65 0.8"
+          ]
+        }
+      },
+      "kotarus:set_h_010": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_010"
+          ]
+        }
+      },
+      "kotarus:set_h_020": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_020"
+          ]
+        }
+      },
+      "kotarus:set_h_030": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_030"
+          ]
+        }
+      },
+      "kotarus:set_h_040": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_040"
+          ]
+        }
+      },
+      "kotarus:set_h_050": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_050"
+          ]
+        }
+      },
+      "kotarus:set_h_060": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_060"
+          ]
+        }
+      },
+      "kotarus:set_h_070": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_070"
+          ]
+        }
+      },
+      "kotarus:set_h_080": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_080"
+          ]
+        }
+      },
+      "kotarus:set_h_090": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_090"
+          ]
+        }
+      },
+      "kotarus:set_h_100": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_100"
+          ]
+        }
+      },
+      "kotarus:set_h_110": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_110"
+          ]
+        }
+      },
+      "kotarus:set_h_120": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_120"
+          ]
+        }
+      },
+      "kotarus:set_h_130": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_130"
+          ]
+        }
+      },
+      "kotarus:set_h_140": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_140"
+          ]
+        }
+      },
+      "kotarus:set_h_150": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_150"
+          ]
+        }
+      },
+      "kotarus:set_h_160": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_160"
+          ]
+        }
+      },
+      "kotarus:set_h_170": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_170"
+          ]
+        }
+      },
+      "kotarus:set_h_180": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_180"
+          ]
+        }
+      },
+      "kotarus:set_h_190": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_190"
+          ]
+        }
+      },
+      "kotarus:set_h_200": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_200"
+          ]
+        }
+      },
+      "kotarus:set_h_210": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_210"
+          ]
+        }
+      },
+      "kotarus:set_h_220": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_220"
+          ]
+        }
+      },
+      "kotarus:set_h_230": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_230"
+          ]
+        }
+      },
+      "kotarus:set_h_240": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_240"
+          ]
+        }
+      },
+      "kotarus:set_h_250": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_250"
+          ]
+        }
+      },
+      "kotarus:set_h_260": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_260"
+          ]
+        }
+      },
+      "kotarus:set_h_270": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_270"
+          ]
+        }
+      },
+      "kotarus:set_h_280": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_280"
+          ]
+        }
+      },
+      "kotarus:set_h_290": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_290"
+          ]
+        }
+      },
+      "kotarus:set_h_300": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_300"
+          ]
+        }
+      },
+      "kotarus:set_h_310": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_310"
+          ]
+        }
+      },
+      "kotarus:set_h_320": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_320"
+          ]
+        }
+      },
+      "kotarus:set_h_330": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_330"
+          ]
+        }
+      },
+      "kotarus:set_h_340": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_340"
+          ]
+        }
+      },
+      "kotarus:set_h_350": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_350"
+          ]
+        }
+      },
+      "kotarus:set_h_360": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_360"
+          ]
+        }
+      },
+      "kotarus:set_h_370": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_370"
+          ]
+        }
+      },
+      "kotarus:set_h_380": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_380"
+          ]
+        }
+      },
+      "kotarus:set_h_390": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_390"
+          ]
+        }
+      },
+      "kotarus:set_h_400": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_400"
+          ]
+        }
+      },
+      "kotarus:set_h_410": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_410"
+          ]
+        }
+      },
+      "kotarus:set_h_420": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_420"
+          ]
+        }
+      },
+      "kotarus:set_h_430": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_430"
+          ]
+        }
+      },
+      "kotarus:set_h_440": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_440"
+          ]
+        }
+      },
+      "kotarus:set_h_450": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_450"
+          ]
+        }
+      },
+      "kotarus:set_h_460": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_460"
+          ]
+        }
+      },
+      "kotarus:set_h_470": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_470"
+          ]
+        }
+      },
+      "kotarus:set_h_480": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_480"
+          ]
+        }
+      },
+      "kotarus:set_h_490": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_500"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_490"
+          ]
+        }
+      },
+      "kotarus:set_h_500": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "kotarus:h_500"
+          ]
+        }
+      },
+      "kotarus:reset_h": {
+        "remove": {
+          "component_groups": [
+            "kotarus:h_010",
+            "kotarus:h_020",
+            "kotarus:h_030",
+            "kotarus:h_040",
+            "kotarus:h_050",
+            "kotarus:h_060",
+            "kotarus:h_070",
+            "kotarus:h_080",
+            "kotarus:h_090",
+            "kotarus:h_100",
+            "kotarus:h_110",
+            "kotarus:h_120",
+            "kotarus:h_130",
+            "kotarus:h_140",
+            "kotarus:h_150",
+            "kotarus:h_160",
+            "kotarus:h_170",
+            "kotarus:h_180",
+            "kotarus:h_190",
+            "kotarus:h_200",
+            "kotarus:h_210",
+            "kotarus:h_220",
+            "kotarus:h_230",
+            "kotarus:h_240",
+            "kotarus:h_250",
+            "kotarus:h_260",
+            "kotarus:h_270",
+            "kotarus:h_280",
+            "kotarus:h_290",
+            "kotarus:h_300",
+            "kotarus:h_310",
+            "kotarus:h_320",
+            "kotarus:h_330",
+            "kotarus:h_340",
+            "kotarus:h_350",
+            "kotarus:h_360",
+            "kotarus:h_370",
+            "kotarus:h_380",
+            "kotarus:h_390",
+            "kotarus:h_400",
+            "kotarus:h_410",
+            "kotarus:h_420",
+            "kotarus:h_430",
+            "kotarus:h_440",
+            "kotarus:h_450",
+            "kotarus:h_460",
+            "kotarus:h_470",
+            "kotarus:h_480",
+            "kotarus:h_490",
+            "kotarus:h_500"
+          ]
+        }
+      },
+      "succubi:nametag_near": {
+        "add": {
+          "component_groups": [
+            "succubi:nametag_near"
+          ]
+        }
+      },
+      "succubi:nametag_always": {
+        "remove": {
+          "component_groups": [
+            "succubi:nametag_near"
+          ]
+        }
+      },
+      "succubi:set_spd_140": {
+        "remove": {
+          "component_groups": [
+            "succubi:spd_150",
+            "succubi:spd_160",
+            "succubi:spd_170",
+            "succubi:spd_180",
+            "succubi:spd_190",
+            "succubi:spd_200",
+            "succubi:spd_210",
+            "succubi:spd_220"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "succubi:spd_140"
+          ]
+        }
+      },
+      "succubi:set_spd_150": {
+        "remove": {
+          "component_groups": [
+            "succubi:spd_140",
+            "succubi:spd_160",
+            "succubi:spd_170",
+            "succubi:spd_180",
+            "succubi:spd_190",
+            "succubi:spd_200",
+            "succubi:spd_210",
+            "succubi:spd_220"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "succubi:spd_150"
+          ]
+        }
+      },
+      "succubi:set_spd_160": {
+        "remove": {
+          "component_groups": [
+            "succubi:spd_140",
+            "succubi:spd_150",
+            "succubi:spd_170",
+            "succubi:spd_180",
+            "succubi:spd_190",
+            "succubi:spd_200",
+            "succubi:spd_210",
+            "succubi:spd_220"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "succubi:spd_160"
+          ]
+        }
+      },
+      "succubi:set_spd_170": {
+        "remove": {
+          "component_groups": [
+            "succubi:spd_140",
+            "succubi:spd_150",
+            "succubi:spd_160",
+            "succubi:spd_180",
+            "succubi:spd_190",
+            "succubi:spd_200",
+            "succubi:spd_210",
+            "succubi:spd_220"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "succubi:spd_170"
+          ]
+        }
+      },
+      "succubi:set_spd_180": {
+        "remove": {
+          "component_groups": [
+            "succubi:spd_140",
+            "succubi:spd_150",
+            "succubi:spd_160",
+            "succubi:spd_170",
+            "succubi:spd_190",
+            "succubi:spd_200",
+            "succubi:spd_210",
+            "succubi:spd_220"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "succubi:spd_180"
+          ]
+        }
+      },
+      "succubi:set_spd_190": {
+        "remove": {
+          "component_groups": [
+            "succubi:spd_140",
+            "succubi:spd_150",
+            "succubi:spd_160",
+            "succubi:spd_170",
+            "succubi:spd_180",
+            "succubi:spd_200",
+            "succubi:spd_210",
+            "succubi:spd_220"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "succubi:spd_190"
+          ]
+        }
+      },
+      "succubi:set_spd_200": {
+        "remove": {
+          "component_groups": [
+            "succubi:spd_140",
+            "succubi:spd_150",
+            "succubi:spd_160",
+            "succubi:spd_170",
+            "succubi:spd_180",
+            "succubi:spd_190",
+            "succubi:spd_210",
+            "succubi:spd_220"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "succubi:spd_200"
+          ]
+        }
+      },
+      "succubi:set_spd_210": {
+        "remove": {
+          "component_groups": [
+            "succubi:spd_140",
+            "succubi:spd_150",
+            "succubi:spd_160",
+            "succubi:spd_170",
+            "succubi:spd_180",
+            "succubi:spd_190",
+            "succubi:spd_200",
+            "succubi:spd_220"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "succubi:spd_210"
+          ]
+        }
+      },
+      "succubi:set_spd_220": {
+        "remove": {
+          "component_groups": [
+            "succubi:spd_140",
+            "succubi:spd_150",
+            "succubi:spd_160",
+            "succubi:spd_170",
+            "succubi:spd_180",
+            "succubi:spd_190",
+            "succubi:spd_200",
+            "succubi:spd_210"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "succubi:spd_220"
+          ]
+        }
+      }
+    }
+  }
+}

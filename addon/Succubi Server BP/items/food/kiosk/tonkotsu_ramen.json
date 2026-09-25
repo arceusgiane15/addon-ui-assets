@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "food:tonkotsu_ramen",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.food:tonkotsu_ramen.name"
+      },
+      "minecraft:icon": "food_tonkotsu_ramen",
+      "minecraft:max_stack_size": 16,
+      "minecraft:food": {
+        "nutrition": 14,
+        "saturation_modifier": 0.9,
+        "can_always_eat": false
+      },
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      },
+      "minecraft:tags": {
+        "tags": [
+          "succubi:food",
+          "succubi:kiosk_food",
+          "succubi:meal"
+        ]
+      }
+    }
+  }
+}

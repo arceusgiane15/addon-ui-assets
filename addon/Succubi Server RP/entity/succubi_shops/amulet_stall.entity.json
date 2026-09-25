@@ -1,0 +1,21 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "succubi:amulet_stall",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/succubi_shops/amulet_stall"
+      },
+      "geometry": {
+        "default": "geometry.amulet_stall"
+      },
+      "render_controllers": [
+        "controller.render.succubi_money"
+      ],
+      "enable_attachables": false
+    }
+  }
+}

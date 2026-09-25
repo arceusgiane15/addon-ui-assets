@@ -1,0 +1,83 @@
+{
+  "format_version": [
+    1,
+    1,
+    0
+  ],
+  "trenbankai:container_blue": {
+    "sound": "metal",
+    "textures": {
+      "down": "container_blue_top",
+      "side": "container_blue_side",
+      "up": "container_blue_top"
+    }
+  },
+  "trenbankai:container_brown": {
+    "sound": "metal",
+    "textures": {
+      "down": "container_brown_top",
+      "side": "container_brown_side",
+      "up": "container_brown_top"
+    }
+  },
+  "trenbankai:container_green": {
+    "sound": "metal",
+    "textures": {
+      "down": "container_green_top",
+      "side": "container_green_side",
+      "up": "container_green_top"
+    }
+  },
+  "trenbankai:container_red": {
+    "sound": "metal",
+    "textures": {
+      "down": "container_red_top",
+      "side": "container_red_side",
+      "up": "container_red_top"
+    }
+  },
+  "trenbankai:ammo_workbench": {
+    "sound": "wood"
+  },
+  "trenbankai:attachment_workbench": {
+    "sound": "wood"
+  },
+  "trenbankai:hazard_block": {
+    "textures": "hazard_block",
+    "sound": "metal"
+  },
+  "trenbankai:hedgehog": {
+    "sound": "metal"
+  },
+  "trenbankai:landmine": {
+    "sound": "metal"
+  },
+  "trenbankai:sandbag": {
+    "sound": "sand"
+  },
+  "trenbankai:spotlight": {
+    "sound": "metal"
+  },
+  "trenbankai:corrugated_metal": {
+    "textures": "corrugated_metal",
+    "sound": "metal"
+  },
+  "trenbankai:corrugated_metal_rusty": {
+    "textures": "corrugated_metal_rusty",
+    "sound": "metal"
+  },
+  "trenbankai:military_wall": {
+    "textures": "military_wall",
+    "sound": "metal"
+  },
+  "trenbankai:tread_plate": {
+    "textures": "tread_plate",
+    "sound": "metal"
+  },
+  "trenbankai:barbed_wire": {
+    "sound": "metal"
+  },
+  "trenbankai:ceiling_light": {
+    "sound": "metal"
+  }
+}

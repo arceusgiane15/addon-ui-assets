@@ -1,0 +1,11 @@
+item.kotarus:height_adjuster=เครื่องมือปรับส่วนสูง (เซนติเมตร)
+item.kotarus:height_adjuster.name=เครื่องมือปรับส่วนสูง (เซนติเมตร)
+item.kotarus:bandage_blackpowder=ผ้าพันแผลธรรมดา
+item.kotarus:bandage_blackpowder.name=ผ้าพันแผลธรรมดา
+item.kotarus:bandage_blackpowder_use_skill1.name=ผ้าพันแผลธรรมดา (กำลังพันแผล)
+item.kotarus:medkit_blackpowder=อุปกรณ์ชุบชีวิต
+item.kotarus:medkit_blackpowder.name=อุปกรณ์ชุบชีวิต
+item.kotarus:medkit_blackpowder_use_skill1.name=อุปกรณ์ชุบชีวิต (กำลังชุบชีวิต)
+item.kotarus:syringe_blackpowder=ยาลดไข้ (เข็มฉีดฟื้นฟู)
+item.kotarus:syringe_blackpowder.name=ยาลดไข้ (เข็มฉีดฟื้นฟู)
+item.kotarus:syringe_blackpowder_use_skill1.name=ยาลดไข้ (กำลังฉีด)

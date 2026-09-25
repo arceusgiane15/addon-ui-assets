@@ -1,0 +1,106 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.root_weapons": {
+      "initial_state": "first_person",
+      "states": {
+        "first_person": {
+          "animations": [
+            {
+              "first_person_shield_block": "q.blocking"
+            },
+            {
+              "first_person_map_controller": "(q.get_equipped_item_name(0, 1) == 'filled_map' || q.get_equipped_item_name('off_hand') == 'filled_map')"
+            }
+          ],
+          "transitions": [
+            {
+              "paperdoll": "v.is_paperdoll"
+            },
+            {
+              "third_person": "!v.is_first_person"
+            }
+          ]
+        },
+        "paperdoll": {
+          "animations": [
+            "humanoid_base_pose",
+            "move_controller",
+            "cape"
+          ],
+          "transitions": [
+            {
+              "first_person": "!v.is_paperdoll && v.is_first_person"
+            },
+            {
+              "third_person": "!v.is_paperdoll && !v.is_first_person"
+            }
+          ]
+        },
+        "third_person": {
+          "animations": [
+            "humanoid_base_pose",
+            {
+              "look_at_target": "!q.is_sleeping && !q.is_emoting && !v.crawling"
+            },
+            "cape",
+            {
+              "holding": "!v.weapons"
+            },
+            {
+              "bob": "!v.is_holding_spyglass && !v.is_tooting_goat_horn && !v.is_using_brush"
+            },
+            {
+              "sleeping": "q.is_sleeping && q.is_alive"
+            },
+            "move_controller",
+            "swimming_controller",
+            "riding_controller",
+            "crawling_controller",
+            "damage_controller"
+          ],
+          "transitions": [
+            {
+              "paperdoll": "v.is_paperdoll"
+            },
+            {
+              "first_person": "v.is_first_person"
+            }
+          ]
+        }
+      }
+    },
+    "controller.animation.player.weapons": {
+      "initial_state": "first_person",
+      "states": {
+        "first_person": {
+          "animations": [
+            "weapons_general_fpp_controller",
+            "weapons_ads_fpp_controller",
+            "weapons_run_fpp_controller",
+            "weapons_standby_fpp_controller",
+            "weapons_movement_fpp_controller",
+            "weapons_wall_detect_fpp_controller",
+            "weapon_position_controller"
+          ],
+          "transitions": [
+            {
+              "third_person": "v.is_third_person"
+            }
+          ]
+        },
+        "third_person": {
+          "animations": [
+            "weapons_general_tpp_controller",
+            "weapon_position_controller"
+          ],
+          "transitions": [
+            {
+              "first_person": "v.is_first_person"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

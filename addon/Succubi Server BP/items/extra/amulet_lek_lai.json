@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "succubi:amulet_lek_lai",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.succubi:amulet_lek_lai.name"
+      },
+      "minecraft:icon": "succubi_amulet_lek_lai",
+      "minecraft:max_stack_size": 1
+    }
+  }
+}
