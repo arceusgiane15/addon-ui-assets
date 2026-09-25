@@ -9,7 +9,7 @@ import { HOOKS } from "./hooks.js";
 // scorched one for the black book, or newsprint for the newspaper (THEME), with the book's own icon (ICON).
 // Rule boards keep the plain paper window (PAPER_FLAG, used by horror.js).
 export const PAPER_FLAG = "§0§9§5§1";
-export const BOOK_FLAG = "§0§9§5§2";
+export const BOOK_FLAG = "§0§9§5§9"; // §0§9§5§2 is the amulet window
 const THEME = { cursed: "§8§8§1", news: "§8§8§2" };
 const ICON = ["book_newspaper", "book_comic", "book_travel", "book_romance", "book_mystery", "book_dharma",
   "book_prayer", "book_coloring", "book_survival", "book_ghost", "book_custom"];

@@ -7,7 +7,7 @@
  ui/succubi_paper.json  book_panel: themed page, the book's own icon, title, text, 3 buttons (« ก่อนหน้า / ถัดไป » or
                         อ่านจบ / ปิด). Invisible colour codes in the title pick them (scripts/succubi/books.js):
                         §8§8§1 cursed, §8§8§2 newspaper (else normal), §6§6§<0-a> = which book icon
- ui/server_form.json    books use their own flag §0§9§5§2 -> book_panel (rule boards keep the paper, §0§9§5§1)
+ ui/server_form.json    books use their own flag §0§9§5§9 -> book_panel (rule boards keep the paper, §0§9§5§1)
 """
 import json
 import math
@@ -226,7 +226,7 @@ def main():
     with open(path, "w", encoding="utf-8") as f:
         f.write(json.dumps(ui, indent=2, ensure_ascii=False) + "\n")
 
-    # books get their own flag (§0§9§5§2); rule boards keep the plain paper (§0§9§5§1)
+    # books get their own flag (§0§9§5§9); rule boards keep the plain paper (§0§9§5§1)
     path = os.path.join(RP, "ui", "server_form.json")
     with open(path, encoding="utf-8") as f:
         form = json.load(f)
@@ -238,7 +238,7 @@ def main():
     at = next(i for i, c in enumerate(controls) if "succubi_paper@succubi_paper.paper_panel" in c)
     controls.insert(at + 1, {"succubi_book@succubi_paper.book_panel": {"bindings": [
         {"binding_name": "#title_text"},
-        {"binding_type": "view", "source_property_name": "(not ((#title_text - '§0§9§5§2') = #title_text))",
+        {"binding_type": "view", "source_property_name": "(not ((#title_text - '§0§9§5§9') = #title_text))",
          "target_property_name": "#visible"}]}})
     with open(path, "w", encoding="utf-8") as f:
         f.write(json.dumps(form, indent=2, ensure_ascii=False) + "\n")

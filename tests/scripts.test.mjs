@@ -349,7 +349,7 @@ test("books: long pages fit the window, news has 4 pages, prev / next / finish",
   for (let i = 0; i < n; i++) ui.answers.push({ canceled: false, selection: 1 });
   await books.readBook(player, id);
   const titles = ui.shown.map((f) => f.parts[0][1]);
-  assert.ok(titles.every((t) => t.includes("§0§9§5§2") && t.includes("§6§6§3")), "book window + romance icon");
+  assert.ok(titles.every((t) => t.includes("§0§9§5§9") && t.includes("§6§6§3")), "book window + romance icon");
   const bodies = ui.shown.map((f) => f.parts[1][1]);
   assert.match(bodies[0], /หน้า 1 \//);
   assert.match(bodies[1], /หน้า 2 \//);

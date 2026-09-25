@@ -281,7 +281,7 @@
             },
             {
               "binding_type": "view",
-              "source_property_name": "(not ((#title_text - '§0§9§5§2') = #title_text))",
+              "source_property_name": "(not ((#title_text - '§0§9§5§9') = #title_text))",
               "target_property_name": "#visible"
             }
           ]

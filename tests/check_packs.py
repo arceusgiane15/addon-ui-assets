@@ -119,6 +119,25 @@ for path in glob.glob(os.path.join(BP, "entities", "kiosk", "*.json")) + [
     if "minecraft:is_collidable" not in load(path)["minecraft:entity"]["components"]:
         problems.append(f"{os.path.basename(path)}: not solid (is_collidable)")
 
+# 6c. every window flag in server_form opens exactly one window (a shared flag shows two windows at once)
+form = load(os.path.join(RP, "ui", "server_form.json"))
+flags = {}
+for c in form["long_form"]["controls"]:
+    key = next(iter(c))
+    for b in c[key].get("bindings", []):
+        m = re.fullmatch(r"\(not \(\(#title_text - '(§[^']+)'\) = #title_text\)\)", b.get("source_property_name", ""))
+        if m:
+            flags.setdefault(m.group(1), []).append(key)
+for flag, keys in flags.items():
+    if len(keys) > 1:
+        problems.append(f"server_form: flag {flag!r} opens {keys}")
+    for other in flags:
+        if other != flag and flag in other:
+            problems.append(f"server_form: flag {flag!r} is inside {other!r}")
+js_all = "".join(open(p, encoding="utf-8").read() for p in glob.glob(os.path.join(BP, "scripts", "**", "*.js"), recursive=True))
+if '"§0§9§5§9"' not in js_all or "§0§9§5§9" not in flags:
+    problems.append("book window flag missing")
+
 # 7. manifests agree on versions of the packs they depend on
 manifests = {}
 for path in glob.glob(os.path.join(ROOT, "*", "manifest.json")):
