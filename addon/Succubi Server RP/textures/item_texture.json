@@ -2,12 +2,6 @@
   "resource_pack_name": "succubi_server",
   "texture_name": "atlas.items",
   "texture_data": {
-    "height_adjuster": {
-      "textures": "textures/items/height_adjuster"
-    },
-    "kotarus:height_adjuster": {
-      "textures": "textures/items/height_adjuster"
-    },
     "bandage_blackpowder": {
       "textures": "textures/items/bandage_blackpowder"
     },

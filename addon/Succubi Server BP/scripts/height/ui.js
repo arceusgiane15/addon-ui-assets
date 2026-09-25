@@ -133,7 +133,3 @@ async function openReset(player) {
   if (!r || r.canceled || r.selection !== 0) return;
   apply(player, target, "รีเซ็ตส่วนสูงเป็น");
 }
-
-export function onAdjusterUse(player) {
-  openHeightForm(player).catch(() => {});
-}

@@ -15,8 +15,7 @@
               "succubi:wallet",
               "succubi:rule_wand",
               "succubi:rule_board_placer",
-              "succubi:watcher_statue_placer",
-              "kotarus:height_adjuster"
+              "succubi:watcher_statue_placer"
             ]
           }
         ]

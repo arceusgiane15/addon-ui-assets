@@ -1,6 +1,6 @@
 // Kotarus Height Adjuster with Dynamic HP Scaling
 export const CONFIG = {
-  itemId: "kotarus:height_adjuster",
+  // v1.1.12: the height adjuster item is gone - heights are changed from the wallet (ตั้งค่า -> ปรับส่วนสูง)
 
   // Steve is 1.8 blocks tall = 180 cm (Scale 1.0). Body size always follows cm / 180; the standard height for
   // stats (normal HP / speed / strength) is a setting (h_std) and can differ.

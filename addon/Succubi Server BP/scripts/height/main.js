@@ -3,7 +3,6 @@ import { CONFIG } from "./config.js";
 import { applyHeight, getHeightCm, forget, markFight, enforceLimits, bodyStats } from "./height.js";
 import { heightPoints } from "./body.js";
 import { onSettingChange, isHeightSetting, num } from "../succubi/settings_store.js";
-import { onAdjusterUse } from "./ui.js";
 
 const GUN_NAMESPACES = ["trenbankai:", "c7afd424"];
 const HIT_CAUSES = ["entityAttack", "projectile"];
@@ -62,13 +61,6 @@ export function scaleHit(event) {
 }
 
 export function initHeightSystem() {
-  world.afterEvents.itemUse.subscribe((event) => {
-    const player = event.source;
-    const item = event.itemStack;
-    if (!player || !item || item.typeId !== CONFIG.itemId) return;
-    system.run(() => onAdjusterUse(player));
-  });
-
   world.afterEvents.playerSpawn.subscribe((event) => {
     const player = event.player;
     if (!player) return;
