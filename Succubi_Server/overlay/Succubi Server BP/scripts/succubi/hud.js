@@ -7,22 +7,23 @@ import { isBloodMoon } from "./bloodmoon.js";
 
 // The HUD is drawn by RP ui/succubi_hud.json (four round gauges). Its data travels in the title, which the RP
 // never displays and keeps (preserves) after the title fades, so a value is only sent when it changes:
-//   shud:H13F18T09S20Pn X0Y8Z6 An !t -h G15 Er     (spaces only here for reading)
+//   shud:H13F18T09S20Pn X0Y8Z6 An Lt Dh G15 Er     (spaces only here for reading)
 //   H/F/T/S = health / food / thirst / sanity ring, 00-20 (Txx / Sxx = that system is switched off)
 //   P = health colour (n normal, p poison, w wither)   X Y Z = health number digits
 //   A = armor (n none, y shown with digits B C)
-//   !x = low (slow pulse)   -x = just lost some (red flash, icon shakes)   +x = just gained (glow, icon pops)
+//   Lx = low (slow pulse)   Dx = just lost some (red flash, icon shakes)   Ux = just gained (glow, icon pops)
+//   Tokens are letters and digits only: the game's UI expressions choke on symbols inside the quotes
 //   G = the health ring before the hit (pale damage trail)       x = h f t s
 //   Vxn = icon stage n (4 full .. 0 almost gone): cracked heart, eaten drumstick, drying drop, warping brain
 //   Er regeneration sparkles, Ea absorption halo, Ef burning, Qh hunger effect, Eb blood moon
-//   whole screen (RP): sanity below 60 % greys the world out step by step, health stage 2/1/0 = red aura
+//   whole screen (RP): sanity below 70 % greys the world out step by step, health stage 2/1/0 = red aura
 //   beating at the edges; Nx = this player turned the screen effects off
 //   "shud:off" hides the HUD (tag hide_hud, creative, spectator)
 // Map makers who show their own /title can pause the HUD: /scriptevent succubi:hud_pause 10
 const MARKER = "shud:";
 const FOOD_OBJECTIVE = "succubi_food"; // written by the "Succubi Server Link BP" pack
 const UPDATE_TICKS = 5;
-const FLASH_TICKS = 30; // how long a +/- flash stays on screen
+const FLASH_TICKS = 30; // how long a gain / loss flash stays on screen
 const SAFETY_RESEND_TICKS = 1200; // once a minute, in case the client rebuilt its HUD
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -99,7 +100,7 @@ const RULES = {
   t: { loss: 1.5, gain: 0.5 },
   s: { loss: 2.5, gain: 2.5 }
 };
-const memory = new Map(); // player id -> { last: {h, f, t, s}, until: {"+h": tick, ...}, trail, trailUntil }
+const memory = new Map(); // player id -> { last: {h, f, t, s}, until: {"Uh": tick, ...}, trail, trailUntil }
 
 function flashes(player, values, hpStep, tick) {
   let m = memory.get(player.id);
@@ -112,8 +113,8 @@ function flashes(player, values, hpStep, tick) {
     const before = m.last[k];
     if (typeof now !== "number" || typeof before !== "number") continue;
     if (before - now >= RULES[k].loss) {
-      m.until["-" + k] = tick + FLASH_TICKS;
-      delete m.until["+" + k];
+      m.until["D" + k] = tick + FLASH_TICKS;
+      delete m.until["U" + k];
       if (k === "h") {
         // the trail shows the ring as it was before this run of hits
         const beforeStep = toSteps(before, values.hmax);
@@ -121,8 +122,8 @@ function flashes(player, values, hpStep, tick) {
         m.trailUntil = tick + FLASH_TICKS;
       }
     } else if (now - before >= RULES[k].gain) {
-      m.until["+" + k] = tick + FLASH_TICKS;
-      delete m.until["-" + k];
+      m.until["U" + k] = tick + FLASH_TICKS;
+      delete m.until["D" + k];
     }
     m.last[k] = now;
   }
@@ -165,10 +166,10 @@ export function buildPayload(player, tick = system.currentTick) {
   s += `Vh${stage(hp / maxHp)}Vf${stage(food / 20)}`;
   if (thirstOn) s += `Vt${stage(thirstRaw / THIRST_MAX)}`;
   if (sanityOn) s += `Vs${stage(sanityRaw / SANITY_MAX)}`;
-  if (hp <= maxHp * 0.25) s += "!h";
-  if (food <= 6) s += "!f";
-  if (thirstOn && thirst <= 6) s += "!t";
-  if (sanityOn && sanity <= 6) s += "!s";
+  if (hp <= maxHp * 0.25) s += "Lh";
+  if (food <= 6) s += "Lf";
+  if (thirstOn && thirst <= 6) s += "Lt";
+  if (sanityOn && sanity <= 6) s += "Ls";
   s += flashes(player, { h: hp, hmax: maxHp, f: food, t: thirstRaw, s: sanityRaw }, hpStep, tick);
   if (player.hasTag("no_screen_fx")) s += "Nx"; // player turned the red aura / grey screen off
   s += effectTokens(player);

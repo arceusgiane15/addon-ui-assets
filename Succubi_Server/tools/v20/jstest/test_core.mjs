@@ -49,7 +49,7 @@ await import("./main.js");
   ok("payload normal: " + s);
   p.hp = 20; p.effects = ["poison"];
   const low = buildPayload(p);
-  assert.match(low, /H04.*Pp.*X0Y2Z0.*!h/, low);
+  assert.match(low, /H04.*Pp.*X0Y2Z0.*Lh/, low);
   ok("payload low+poison: " + low);
   const naked = buildPayload(makePlayer({ hp: 100 }));
   assert.ok(naked.includes("An") && !naked.includes("!"), naked);
@@ -63,25 +63,30 @@ await import("./main.js");
   buildPayload(p, 1000);
   p.hp = 70;
   const hit = buildPayload(p, 1005);
-  assert.ok(hit.includes("-h") && hit.includes("G20"), hit);
+  assert.ok(hit.includes("Dh") && hit.includes("G20"), hit);
   ok("hit: red flash + damage trail from the old ring: " + hit);
   p.hp = 60;
   const hit2 = buildPayload(p, 1010);
   assert.ok(hit2.includes("G20"), "trail keeps the level before the first hit: " + hit2);
   ok("combo hits keep one trail");
   const later = buildPayload(p, 1100);
-  assert.ok(!later.includes("-h") && !later.includes("G"), later);
+  assert.ok(!later.includes("Dh") && !later.includes("G"), later);
   ok("flash and trail clear after 1.5 s");
   p.hp = 75;
-  assert.ok(buildPayload(p, 1105).includes("+h"));
+  assert.ok(buildPayload(p, 1105).includes("Uh"));
   ok("healing pops the heart");
   p.hp = 76;
-  assert.ok(!buildPayload(p, 1200).includes("+h"));
+  assert.ok(!buildPayload(p, 1200).includes("Uh"));
   ok("slow natural regen does not flash");
   p.effects = ["regeneration", "absorption", "hunger"];
   const fx = buildPayload(p, 1300);
   assert.ok(fx.includes("Er") && fx.includes("Ea") && fx.includes("Qh"), fx);
   ok("status effects: " + fx);
+  // the UI only reads plain tokens: nothing but letters and digits after the marker, in every state
+  for (const payload of [hit, hit2, later, fx, buildPayload(makePlayer({ id: "-151", hp: 5 }), 1400)]) {
+    assert.match(payload, /^shud:[A-Za-z0-9]+$/, payload);
+  }
+  ok("payload tokens are letters and digits only");
 }
 
 // ---------------------------------------------------------------- icon stages (Don't Starve style)

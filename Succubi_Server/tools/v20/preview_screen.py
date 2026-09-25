@@ -88,7 +88,7 @@ def label(im, text):
 
 def pay(h, s, extra=''):
     hp = h * 5
-    return f'shud:H{h:02d}F16T15S{s:02d}PnX{hp // 100}Y{hp // 10 % 10}Z{hp % 10}An' + extra + ('!h' if h <= 5 else '') + ('!s' if s <= 6 else '')
+    return f'shud:H{h:02d}F16T15S{s:02d}PnX{hp // 100}Y{hp // 10 % 10}Z{hp % 10}An' + extra + ('Lh' if h <= 5 else '') + ('Ls' if s <= 6 else '')
 
 
 SHOTS = [
@@ -112,7 +112,7 @@ if __name__ == '__main__':
             frames.append(label(render(out, pay(18, s), i / fps, base), f'สติค่อยๆ ลด: {s * 5}%'))
         for i in range(36):
             h = max(1, 18 - i // 2)
-            frames.append(label(render(out, pay(h, 18, '-h' if i % 6 < 2 else ''), i / fps, base), f'เลือดค่อยๆ ลด: {h * 5}%'))
+            frames.append(label(render(out, pay(h, 18, 'Dh' if i % 6 < 2 else ''), i / fps, base), f'เลือดค่อยๆ ลด: {h * 5}%'))
         for i in range(24):
             frames.append(label(render(out, pay(2, 18), i / fps, base), 'ใกล้ตาย: ออร่าแดงเต้นรัว'))
         frames = [f.convert('RGB').resize((W * G // 1, H * G // 1)).quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE) for f in frames]

@@ -14,6 +14,7 @@ W, H = 240, 90    # GUI units shown
 ANCH = {'top_left': (0, 0), 'top_middle': (0.5, 0), 'top_right': (1, 0), 'left_middle': (0, 0.5), 'center': (0.5, 0.5),
         'right_middle': (1, 0.5), 'bottom_left': (0, 1), 'bottom_middle': (0.5, 1), 'bottom_right': (1, 1)}
 _cache = {}
+STRICT = os.environ.get('HUD_STRICT') == '1'
 
 
 def evaluate(expr, payload):
@@ -23,8 +24,11 @@ def evaluate(expr, payload):
 
 
 def visible(ctl, payload):
+    from validate import expression_risk
     for b in ctl.get('bindings', []):
         if b.get('target_property_name') == '#visible' and b.get('source_control_name'):
+            if STRICT and expression_risk(b['source_property_name']):
+                continue                      # like the game: a misread condition leaves the image showing
             if not evaluate(b['source_property_name'], payload):
                 return False
     return True
@@ -161,7 +165,7 @@ def paste_clip(im, tile, pos):
 
 
 BASE = 'shud:H17F18T15S16PnX0Y8Z6AnVh4Vf4Vt3Vs4'
-STAGES = [('shud:H{h:02d}F{h:02d}T{h:02d}S{h:02d}PnX{x}Y{y}Z{z}AnVh{v}Vf{v}Vt{v}Vs{v}' + ('!h!f!t!s' if v <= 1 else '')).format(
+STAGES = [('shud:H{h:02d}F{h:02d}T{h:02d}S{h:02d}PnX{x}Y{y}Z{z}AnVh{v}Vf{v}Vt{v}Vs{v}' + ('LhLfLtLs' if v <= 1 else '')).format(
     h=h, v=v, x=(h * 5) // 100, y=(h * 5) // 10 % 10, z=(h * 5) % 10) for h, v in ((20, 4), (13, 3), (8, 2), (4, 1), (2, 0))]
 STATES = [
     ('ค่าลดลงเรื่อยๆ: ไอคอนเปลี่ยนรูปตามระดับ', STAGES),
@@ -171,17 +175,17 @@ STATES = [
     ('วิกฤต: หัวใจฉีก เลือดหยด / ท้องร้อง / หยดน้ำแตก มีไอร้อน / สมองมีตา มือเงาคืบมา', STAGES[3]),
     ('ใกล้หมด: หัวใจแหลก / เหลือกระดูก แมลงวันตอม / แห้งเป็นฝุ่น / สติหลุด', STAGES[4]),
     ('ปกติ', BASE),
-    ('โดนตี: แดงกะพริบ หัวใจสั่น แถบจางๆ บอกเลือดที่เสียไป', 'shud:H11F18T15S16PnX0Y5Z4AyB0C8-hG17'),
-    ('ฟื้นเลือด (Regeneration): ประกายวิ่งรอบหัวใจ', 'shud:H14F18T15S16PnX0Y7Z0An+hEr'),
-    ('กินอาหาร: เรืองแสง ไอคอนเด้ง', 'shud:H17F20T15S16PnX0Y8Z6An+f'),
-    ('ดื่มน้ำ', 'shud:H17F18T20S16PnX0Y8Z6An+t'),
+    ('โดนตี: แดงกะพริบ หัวใจสั่น แถบจางๆ บอกเลือดที่เสียไป', 'shud:H11F18T15S16PnX0Y5Z4AyB0C8DhG17'),
+    ('ฟื้นเลือด (Regeneration): ประกายวิ่งรอบหัวใจ', 'shud:H14F18T15S16PnX0Y7Z0AnUhEr'),
+    ('กินอาหาร: เรืองแสง ไอคอนเด้ง', 'shud:H17F20T15S16PnX0Y8Z6AnUf'),
+    ('ดื่มน้ำ', 'shud:H17F18T20S16PnX0Y8Z6AnUt'),
     ('ติดพิษ: วงเขียว มีฟองลอย', 'shud:H12F18T15S16PpX0Y6Z0An'),
     ('Wither: วงดำ มีควัน', 'shud:H09F18T15S16PwX0Y4Z5An'),
-    ('ไฟไหม้ตัว', 'shud:H13F18T15S16PnX0Y6Z5AnEf-h'),
+    ('ไฟไหม้ตัว', 'shud:H13F18T15S16PnX0Y6Z5AnEfDh'),
     ('Absorption: วงทองรอบหัวใจ', 'shud:H20F18T15S16PnX1Y0Z0AnEa'),
-    ('ติดหิว (Hunger): วงอาหารเขียวคล้ำ', 'shud:H17F09T15S16PnX0Y8Z6AnQh-f'),
-    ('คืนพระจันทร์เลือด + เจอเรื่องแปลก', 'shud:H17F18T15S07PnX0Y8Z6AnEb-s'),
-    ('ใกล้ตาย / หิว / คอแห้ง / สติหลุด', 'shud:H03F04T03S02PnX0Y1Z5An!h!f!t!s'),
+    ('ติดหิว (Hunger): วงอาหารเขียวคล้ำ', 'shud:H17F09T15S16PnX0Y8Z6AnQhDf'),
+    ('คืนพระจันทร์เลือด + เจอเรื่องแปลก', 'shud:H17F18T15S07PnX0Y8Z6AnEbDs'),
+    ('ใกล้ตาย / หิว / คอแห้ง / สติหลุด', 'shud:H03F04T03S02PnX0Y1Z5AnLhLfLtLs'),
 ]
 
 

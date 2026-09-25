@@ -690,13 +690,16 @@ def fx(tex, expr, layer, fps=12, alpha=None):
 
 GAUGES = [
     # key, token letter, x (left edge in root), fill variants [(stat key, condition)], icon sets [(icon key, condition)], flag letter
-    ('health', 'H', 0, [('health', 'Pn'), ('health_poison', 'Pp'), ('health_wither', 'Pw')],
-     [('health', 'Pn'), ('health_poison', 'Pp'), ('health_wither', 'Pw')], 'h'),
-    ('food', 'F', 25, [('food', '!Qh'), ('food_sick', 'Qh')], [('food', '!Qh'), ('food_sick', 'Qh')], 'f'),
+    # the normal look is listed last so it is the one on top if the game ever ignored a condition
+    ('health', 'H', 0, [('health_poison', 'Pp'), ('health_wither', 'Pw'), ('health', 'Pn')],
+     [('health_poison', 'Pp'), ('health_wither', 'Pw'), ('health', 'Pn')], 'h'),
+    ('food', 'F', 25, [('food_sick', 'Qh'), ('food', '!Qh')], [('food_sick', 'Qh'), ('food', '!Qh')], 'f'),
     ('thirst', 'T', 69, [('thirst', None)], [('thirst', None)], 't'),
-    ('sanity', 'S', 94, [('sanity', '!Eb'), ('sanity_blood', 'Eb')], [('sanity', None)], 's'),
+    ('sanity', 'S', 94, [('sanity_blood', 'Eb'), ('sanity', '!Eb')], [('sanity', None)], 's'),
 ]
 TIERS = range(5)          # V<flag><tier>: 4 full ... 0 almost gone (sent by hud.js)
+# flags from hud.js (x = h f t s): Lx low, Dx just lost some, Ux just gained. Letters only: Bedrock's UI
+# expressions misread symbols like - + ! inside the quotes, and a misread condition shows its image for good.
 
 
 def idle_anims(key, tier):
@@ -725,22 +728,31 @@ def and_(*xs):
     return ' and '.join(xs) if xs else None
 
 
+def group(expr, controls, layer=0):
+    """a full-size panel that shows its children only while expr holds - conditions are nested this way
+    instead of chaining many 'and's in one expression"""
+    c = {"type": "panel", "size": ["100%", "100%"], "layer": layer, "controls": controls}
+    if expr:
+        c["bindings"] = vis(expr)
+    return c
+
+
 def gauge(key, letter, x, fills, icons, f):
+    lo, loss, gain = f'L{f}', f'D{f}', f'U{f}'
     ctl = [{"shadow": img('shadow', (FX, FX), (0, 0), 0)},
            {"disc": img('disc', (G, G), (0, 0), 1)},
            {"track": img('track', (G, G), (0, 0), 2)}]
     if key == 'health':
-        for n in range(1, STEPS + 1):
-            ctl.append({f"trail_{n:02d}": img(f'trail_{n:02d}', (G, G), (0, 0), 3, and_(has('-h'), has(f'G{n:02d}')),
-                                              alpha=f"@{NS}.trail_fade")})
+        ctl.append({"trail": group(has(loss), [{f"trail_{n:02d}": img(f'trail_{n:02d}', (G, G), (0, 0), 3, has(f'G{n:02d}'),
+                                                                      alpha=f"@{NS}.trail_fade")} for n in range(1, STEPS + 1)])})
     for stat, tok in fills:
-        for n in range(1, STEPS + 1):
-            ctl.append({f"ring_{stat}_{n:02d}": img(f'ring_{stat}_{n:02d}', (G, G), (0, 0), 4, and_(has(f'{letter}{n:02d}'), cond(tok)))})
-    # glows (under the disc edge -> layer 0 so they bloom around it)
-    ctl.append({"glow_low": img(f'glow_{key}', (FX, FX), (0, 0), 0, has(f'!{f}'), alpha=f"@{NS}.pulse_slow_out")})
-    ctl.append({"glow_gain": img(f'glow_{key}', (FX, FX), (0, 0), 0, and_(has(f'+{f}'), hasnt(f'-{f}')), alpha=f"@{NS}.pulse_fast_out")})
-    ctl.append({"glow_gain_white": img('glow_white', (FX, FX), (0, 0), 5, and_(has(f'+{f}'), hasnt(f'-{f}')), alpha=f"@{NS}.flash_out")})
-    ctl.append({"glow_hurt": img('glow_hurt', (FX, FX), (0, 0), 0, has(f'-{f}'), alpha=f"@{NS}.pulse_fast_out")})
+        ctl.append({f"ring_{stat}": group(cond(tok), [{f"ring_{stat}_{n:02d}": img(f'ring_{stat}_{n:02d}', (G, G), (0, 0), 4, has(f'{letter}{n:02d}'))}
+                                                     for n in range(1, STEPS + 1)])})
+    # glows (under the disc edge -> layer 0 so they bloom around it); hud.js never sends a gain and a loss together
+    ctl.append({"glow_low": img(f'glow_{key}', (FX, FX), (0, 0), 0, has(lo), alpha=f"@{NS}.pulse_slow_out")})
+    ctl.append({"glow_gain": img(f'glow_{key}', (FX, FX), (0, 0), 0, has(gain), alpha=f"@{NS}.pulse_fast_out")})
+    ctl.append({"glow_gain_white": img('glow_white', (FX, FX), (0, 0), 5, has(gain), alpha=f"@{NS}.flash_out")})
+    ctl.append({"glow_hurt": img('glow_hurt', (FX, FX), (0, 0), 0, has(loss), alpha=f"@{NS}.pulse_fast_out")})
     # status effects
     if key == 'health':
         ctl.append({"halo_absorb": img('halo_absorb', (FX, FX), (0, 0), 1, has('Ea'), alpha=f"@{NS}.pulse_slow_out")})
@@ -766,27 +778,34 @@ def gauge(key, letter, x, fills, icons, f):
         ctl.append({"swirl": img('disc_madness', (G, G), (0, 0), 3, f"{low(1)} or {low(0)}", alpha=f"@{NS}.pulse_slow_out")})
         ctl.append({"fx_tendrils": fx('fx_tendrils', f"{low(1)} or {low(0)}", 5)})
     # icon for every stage: still (its own idle motion) / shaking (lost value) / popping (gained value)
+    # nested: icon set (normal / poison / ...) -> stage -> motion
     for icon_key, tok in icons:
-        base = cond(tok)
+        tiers = []
         for t in TIERS:
             tex = f'icon_{icon_key}_{t}'
-            at = and_(base, has(f'V{f}{t}'))
-            ctl.append({f"{tex}": img(tex, (ICON, ICON), (0, 0), 6, and_(at, hasnt(f'-{f}'), hasnt(f'+{f}')),
-                                      **({"anims": idle_anims(key, t)} if idle_anims(key, t) else {}),
-                                      **({"alpha": f"@{NS}.flicker_a"} if key == 'sanity' and t == 0 else {}))})
-            ctl.append({f"{tex}_shake": img(tex, (ICON, ICON), (0, 0), 6, and_(at, has(f'-{f}')), anims=[f"@{NS}.shake_a"])})
-            ctl.append({f"{tex}_pop": img(tex, (ICON, ICON), (0, 0), 6, and_(at, has(f'+{f}'), hasnt(f'-{f}')), anims=[f"@{NS}.pop_a"])})
+            idle = img(tex, (ICON, ICON), (0, 0), 6, and_(hasnt(loss), hasnt(gain)),
+                       **({"anims": idle_anims(key, t)} if idle_anims(key, t) else {}),
+                       **({"alpha": f"@{NS}.flicker_a"} if key == 'sanity' and t == 0 else {}))
+            tiers.append({f"stage_{t}": group(has(f'V{f}{t}'), [
+                {"idle": idle},
+                {"shake": img(tex, (ICON, ICON), (0, 0), 6, has(loss), anims=[f"@{NS}.shake_a"])},
+                {"pop": img(tex, (ICON, ICON), (0, 0), 6, has(gain), anims=[f"@{NS}.pop_a"])}])})
+        ctl.append({f"icons_{icon_key}": group(cond(tok), tiers)})
     if key == 'health':
         # health number on a plate under the heart: ones / tens / hundreds, leading zeros hidden
         ctl.append({"plate": img('plate_hp', (15, 7), (0, 9.5), 9)})
         # centred on the plate: 3 digits at -3.5 / 0 / +3.5, 2 digits at -1.75 / +1.75, 1 digit at 0
-        three, two, one = hasnt('X0'), and_(has('X0'), hasnt('Y0')), and_(has('X0'), has('Y0'))
-        slots = [('Z', three, 3.5), ('Z', two, 1.75), ('Z', one, 0), ('Y', three, 0), ('Y', two, -1.75), ('X', three, -3.5)]
-        for i, (ld, count, xoff) in enumerate(slots):
-            for dgt in range(10):
-                if ld == 'X' and dgt == 0:
-                    continue
-                ctl.append({f"n{i}_{ld}{dgt}": img(f'num_{dgt}', (3.5, 4.5), (xoff, 9.5), 10, and_(has(f'{ld}{dgt}'), count))})
+        counts = {'three': (hasnt('X0'), [('X', -3.5), ('Y', 0), ('Z', 3.5)]),
+                  'two': (and_(has('X0'), hasnt('Y0')), [('Y', -1.75), ('Z', 1.75)]),
+                  'one': (and_(has('X0'), has('Y0')), [('Z', 0)])}
+        for name, (count, slots) in counts.items():
+            digits = []
+            for ld, xoff in slots:
+                for dgt in range(10):
+                    if ld == 'X' and dgt == 0:
+                        continue
+                    digits.append({f"{ld}{dgt}": img(f'num_{dgt}', (3.5, 4.5), (xoff, 9.5), 10, has(f'{ld}{dgt}'))})
+            ctl.append({f"hp_{name}": group(count, digits)})
     body = {"type": "panel", "size": [G, G], "offset": [x, 0], "anchor_from": "top_left", "anchor_to": "top_left", "controls": ctl}
     if key == 'thirst':
         body["bindings"] = vis(hasnt('Txx'))
@@ -809,7 +828,9 @@ def screen_fx():
     ctl.append({"blood_2": full('screen_blood', has('Vh2'), 4, alpha=f"@{NS}.fx_blood2_a")})
     ctl.append({"blood_1": full('screen_blood', has('Vh1'), 4, alpha=f"@{NS}.fx_blood1_a")})
     ctl.append({"blood_0": full('screen_blood', has('Vh0'), 4, alpha=f"@{NS}.fx_blood0_a")})
-    ctl.append({"hit": full('screen_blood', and_(has('-h'), hasnt('Vh1'), hasnt('Vh0')), 5, alpha=f"@{NS}.fx_hit_a")})
+    # a hit flashes the edges, unless the aura is already strong (stage 1 / 0)
+    ctl.append({"hit_gate": group(and_(hasnt('Vh1'), hasnt('Vh0')), [
+        {"hit": full('screen_blood', has('Dh'), 5, alpha=f"@{NS}.fx_hit_a")}])})
     return {"type": "panel", "size": ["100%", "100%"], "layer": 1, "controls": ctl,
             "bindings": vis(and_(hasnt('shud:off'), hasnt('Nx')))}
 

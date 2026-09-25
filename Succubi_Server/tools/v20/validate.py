@@ -61,6 +61,30 @@ class Pack:
         self.item_tex = it.get('texture_data', {}) if isinstance(it, dict) else {}
 
 
+def ui_expressions(node):
+    if isinstance(node, dict):
+        if isinstance(node.get('source_property_name'), str) and node['source_property_name'].startswith('('):
+            yield node['source_property_name']
+        for v in node.values():
+            yield from ui_expressions(v)
+    elif isinstance(node, list):
+        for v in node:
+            yield from ui_expressions(v)
+
+
+def expression_risk(e):
+    """keep view-binding expressions in the shape the game is known to read: plain quoted tokens (letters,
+    digits, section signs, path characters) and at most two terms. In-game, a four-term 'and' chain was
+    ignored (its image always showed), so deeper logic goes into nested panels instead."""
+    for lit in re.findall(r"'([^']*)'", e):
+        if not re.fullmatch(r'[A-Za-z0-9:_/.\u00a7]*', lit):
+            return f"symbol in token '{lit}'"
+    terms = len(re.findall(r'\b(?:and|or)\b', e)) + 1
+    if terms > 2:
+        return f'{terms} terms'
+    return None
+
+
 def validate(out, groups, log=print):
     """groups: {name: [pack folder names]} - the first packs of a group are checked, all packs of the group are visible"""
     problems = []
@@ -143,6 +167,10 @@ def validate(out, groups, log=print):
                     if key and key not in item_tex:
                         P(f'{where}: icon {key} not in item_texture.json')
                 if f.startswith('ui/'):
+                    for e in ui_expressions(d):
+                        why = expression_risk(e)
+                        if why:
+                            P(f'{where}: UI expression {why}: {e[:90]}')
                     for s in walk_strings(d):
                         if isinstance(s, str) and s.startswith('textures/') and '$' not in s and not s.endswith('/'):
                             if not tex_ok(s):

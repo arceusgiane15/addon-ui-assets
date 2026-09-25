@@ -6,7 +6,7 @@ PROJECT = os.path.normpath(os.path.join(HERE, '..', '..'))          # Succubi_Se
 OVERLAY = os.path.join(PROJECT, 'overlay')
 FONT_THAI = os.path.join(PROJECT, 'fonts', 'NotoSansThai.ttf')
 
-VERSION = [1, 1, 3]
+VERSION = [1, 1, 4]
 VERSION_TEXT = '.'.join(map(str, VERSION))
 MIN_ENGINE = [1, 21, 90]
 
