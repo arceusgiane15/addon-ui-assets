@@ -599,7 +599,8 @@ def vein_segments(seed=41):
     return segs
 
 
-def screen_veins(level, segs):
+def screen_veins(level, segs, swell=False):
+    """swell=True: the same veins fat and dark red - faded in on every heartbeat so the veins throb"""
     ss = 2
     w, h = SCREEN_W * ss, SCREEN_H * ss
     lim = level / VEIN_LEVELS
@@ -611,9 +612,13 @@ def screen_veins(level, segs):
             continue
         fade = min(1.0, (lim - b) / 0.08 + 0.35)                          # the newest tips are still faint
         pts = [(x0 * ss, y0 * ss), (x1 * ss, y1 * ss)]
-        dh.line(pts, fill=(110, 0, 14, int(150 * fade)), width=int(width * ss * 2.6))
-        dc.line(pts, fill=(34, 0, 6, int(235 * fade)), width=max(1, int(width * ss)))
-    halo = halo.filter(ImageFilter.GaussianBlur(3 * ss))
+        if swell:
+            dh.line(pts, fill=(170, 0, 24, int(190 * fade)), width=int(width * ss * 4.2))
+            dc.line(pts, fill=(70, 0, 12, int(240 * fade)), width=max(1, int(width * ss * 1.9)))
+        else:
+            dh.line(pts, fill=(110, 0, 14, int(150 * fade)), width=int(width * ss * 2.6))
+            dc.line(pts, fill=(34, 0, 6, int(235 * fade)), width=max(1, int(width * ss)))
+    halo = halo.filter(ImageFilter.GaussianBlur((4 if swell else 3) * ss))
     halo.alpha_composite(core.filter(ImageFilter.GaussianBlur(0.5)))
     return halo.resize((SCREEN_W, SCREEN_H), Image.LANCZOS)
 
@@ -683,6 +688,18 @@ GREY_START = 14          # sanity steps (of 20) below which the screen starts to
 GREY_MAX = 0.88          # grey layer opacity at sanity 0 (heavy: close to black and white)
 
 
+GRAIN_START = 19         # sanity steps: a faint grain from 95 %, growing to the full grain at 15 % and below
+GRAIN_FULL = 3
+
+
+def grain_alpha(step):
+    if step > GRAIN_START:
+        return 0.0
+    if step <= GRAIN_FULL:
+        return 1.0
+    return round(0.08 + 0.92 * ((GRAIN_START - step) / (GRAIN_START - GRAIN_FULL)) ** 1.35, 3)
+
+
 def grey_alpha(step):
     if step >= GREY_START:
         return 0.0
@@ -726,6 +743,7 @@ def draw_all(rp):
     segs = vein_segments()
     for lv in range(1, VEIN_LEVELS + 1):
         screen_veins(lv, segs).save(os.path.join(d, f'screen_veins_{lv}.png'))
+        screen_veins(lv, segs, swell=True).save(os.path.join(d, f'screen_veins_swell_{lv}.png'))
     screen_dark().save(os.path.join(d, 'screen_dark.png'))
     screen_grey().save(os.path.join(d, 'screen_grey.png'))
     fb_grain().save(os.path.join(d, 'fx_grain.png'))
@@ -917,12 +935,14 @@ def screen_fx():
     for n in range(0, GREY_START):
         ctl.append({f"grey_{n:02d}": full('screen_grey', has(f'S{n:02d}'), 1, alpha=grey_alpha(n))})
     ctl.append({"dark": full('screen_dark', f"{has('Vs1')} or {has('Vs0')}", 2, alpha=f"@{NS}.fx_dark_a")})
-    ctl.append({"grain": dict(full('fx_grain', has('Vs0'), 3), uv_size=[320, 180], uv=f"@{NS}.fb_grain")})
+    for n in range(0, GRAIN_START + 1):
+        ctl.append({f"grain_{n:02d}": dict(full('fx_grain', has(f'S{n:02d}'), 3, alpha=grain_alpha(n)), uv_size=[320, 180], uv=f"@{NS}.fb_grain")})
     for n in range(0, RED_START + 1):
         parts = [{"red": full('screen_red', None, 4, alpha=red_alpha(n), anims=[f"@{NS}.heart{n:02d}_a"])}]
         if max(1, n) <= DEEP_START:
             parts.append({"deep": full('screen_red_deep', None, 5, alpha=deep_alpha(n))})
-        parts.append({"veins": full(f'screen_veins_{vein_level(n)}', None, 6, alpha=vein_alpha(n))})
+        parts.append({"veins": full(f'screen_veins_{vein_level(n)}', None, 6, alpha=vein_alpha(n), anims=[f"@{NS}.vein{n:02d}_a"])})
+        parts.append({"veins_swell": full(f'screen_veins_swell_{vein_level(n)}', None, 6, alpha=0.0, anims=[f"@{NS}.swell{n:02d}_a"])})
         ctl.append({f"blood_{n:02d}": group(has(f'H{n:02d}'), parts)})
     # shown unless the HUD is off, and only for players who keep the effects on (two nested single checks)
     return {"type": "panel", "size": ["100%", "100%"], "layer": 1, "bindings": vis(hasnt('shud:off')),
@@ -1001,19 +1021,23 @@ def hud_json():
     anims["fx_dark_b"] = {"anim_type": "alpha", "easing": "in_out_sine", "duration": 2.2, "from": 0.6, "to": 0.35, "next": f"@{NS}.fx_dark_a"}
     # the red edges beat like a heart (lub-dub, then rest): never below the steady red of that health step,
     # faster the closer to death - the same tempo pressure.js plays the heartbeat sound at
-    for n in range(0, RED_START + 1):
-        base = red_alpha(n)
-        k = (RED_START - max(1, n)) / (RED_START - 1)
-        peak = min(1.0, base + 0.16 + 0.14 * k)
+    def beat(name, n, base, peak):
         mid, peak2 = base + 0.3 * (peak - base), base + 0.7 * (peak - base)
         rest = max(0.02, 60 / heart_bpm(n) - 0.43)
-        seq = [('a', 'alpha', 0.07, base, peak, 'out_quad'), ('b', 'alpha', 0.09, peak, mid, 'in_quad'),
-               ('c', 'alpha', 0.07, mid, peak2, 'out_quad'), ('d', 'alpha', 0.2, peak2, base, 'in_out_sine')]
-        for i, (c, kind, dur, fr, to, ease) in enumerate(seq):
+        seq = [('a', 0.07, base, peak, 'out_quad'), ('b', 0.09, peak, mid, 'in_quad'),
+               ('c', 0.07, mid, peak2, 'out_quad'), ('d', 0.2, peak2, base, 'in_out_sine')]
+        for i, (c, dur, fr, to, ease) in enumerate(seq):
             nxt = seq[i + 1][0] if i + 1 < len(seq) else 'e'
-            anims[f"heart{n:02d}_{c}"] = {"anim_type": kind, "easing": ease, "duration": dur, "from": round(fr, 3), "to": round(to, 3),
-                                          "next": f"@{NS}.heart{n:02d}_{nxt}"}
-        anims[f"heart{n:02d}_e"] = {"anim_type": "wait", "duration": round(rest, 3), "next": f"@{NS}.heart{n:02d}_a"}
+            anims[f"{name}{n:02d}_{c}"] = {"anim_type": "alpha", "easing": ease, "duration": dur, "from": round(fr, 3), "to": round(to, 3),
+                                           "next": f"@{NS}.{name}{n:02d}_{nxt}"}
+        anims[f"{name}{n:02d}_e"] = {"anim_type": "wait", "duration": round(rest, 3), "next": f"@{NS}.{name}{n:02d}_a"}
+
+    for n in range(0, RED_START + 1):
+        k = (RED_START - max(1, n)) / (RED_START - 1)
+        base = red_alpha(n)
+        beat('heart', n, base, min(1.0, base + 0.16 + 0.14 * k))       # red edges
+        beat('vein', n, vein_alpha(n) * 0.7, vein_alpha(n))             # veins darken on the beat
+        beat('swell', n, 0.0, 0.5 + 0.4 * k)                            # ...and swell
     anims["fb_grain"] = {"anim_type": "flip_book", "initial_uv": [0, 0], "frame_count": 6, "frame_step": 320, "fps": 16, "easing": "linear"}
     for tex, frames in FLIPBOOKS.items():
         anims[f"fb_{tex}"] = {"anim_type": "flip_book", "initial_uv": [0, 0], "frame_count": frames, "frame_step": FX * S4,

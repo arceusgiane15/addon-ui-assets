@@ -92,14 +92,14 @@ def pay(h, s, extra=''):
 
 
 SHOTS = [
-    ('ปกติ', pay(18, 18)),
-    ('สติ 60%: ฟิลเตอร์เทาเริ่มคลุมทั้งจอ', pay(18, 12)),
-    ('สติ 30%: เทาหนัก ขอบจอมืด', pay(18, 6)),
-    ('สติ 5%: เกือบขาวดำ + เม็ดซ่า', pay(18, 1)),
-    ('เลือด 70%: ขอบแดงจางๆ เต้นช้า', pay(14, 18)),
-    ('เลือด 45%: แดงขึ้น เส้นเลือดยาวขึ้น (มีเสียงหัวใจ)', pay(9, 18)),
-    ('เลือด 25%: แดงเข้ม เส้นเลือดเยอะ เต้นเร็ว', pay(5, 18)),
-    ('เลือด 5%: แดงหนา เต้นรัว เสียงหัวใจดังขึ้น', pay(1, 18)),
+    ('สติ 90%: เม็ดซ่าจางมาก', pay(18, 18), 0.07),
+    ('สติ 70%: ซ่าจางๆ + เทาเริ่มมา', pay(18, 14), 0.07),
+    ('สติ 50%: ซ่าชัดขึ้น', pay(18, 10), 0.07),
+    ('สติ 30%: ซ่าเยอะ เทาหนัก', pay(18, 6), 0.07),
+    ('สติ 15% ลงไป: ซ่าเต็มระดับที่ชอบ', pay(18, 2), 0.07),
+    ('เลือด 45%: เส้นเลือดตอนพักจังหวะ', pay(9, 18), 0.5),
+    ('เลือด 45%: เส้นเลือดตอนหัวใจเต้น (บวม)', pay(9, 18), 0.07),
+    ('เลือด 15%: เต้นรัว เส้นเลือดบวมเต็มขอบ', pay(3, 18), 0.07),
 ]
 
 if __name__ == '__main__':
@@ -107,7 +107,6 @@ if __name__ == '__main__':
     base = world()
     if len(sys.argv) > 4 and sys.argv[4] == 'gif':
         frames, fps = [], 12
-        seq = [(label, p, 0.8 if i == 0 else 1.6) for i, (label, p) in enumerate(SHOTS)]
         # a slow slide of sanity from 100 % to 0 first
         for i in range(48):
             s = max(0, 20 - i * 20 // 44)
@@ -120,11 +119,11 @@ if __name__ == '__main__':
         for i in range(24):
             h = min(20, 1 + i)
             frames.append(label(render(out, pay(h, 18), i / fps, base), f'ฟื้นเลือด: {h * 5}%'))
-        frames = [f.convert('RGB').resize((W * G // 1, H * G // 1)).quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE) for f in frames]
+        frames = [f.convert("RGB").resize((W * G * 2 // 3, H * G * 2 // 3)).quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE) for f in frames]
         frames[0].save(target, save_all=True, append_images=frames[1:], duration=int(1000 / fps), loop=0, optimize=True)
         print('saved', target, len(frames))
     else:
-        shots = [label(render(out, p, 0.07, base), l) for l, p in SHOTS]
+        shots = [label(render(out, p, t, base), l) for l, p, t in SHOTS]
         sw, sh = shots[0].size
         sheet = Image.new('RGBA', (sw * 2, sh * ((len(shots) + 1) // 2)))
         for i, s in enumerate(shots):

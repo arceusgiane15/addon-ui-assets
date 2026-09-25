@@ -5,6 +5,7 @@ import { enabled, num } from "./settings_store.js";
 import { HOOKS, product, anyTrue } from "./hooks.js";
 
 // Sanity (สติ) 0-100.
+//  Strange events show no narration: players only see / hear / feel them (voices in chat stay, they ARE the event).
 //  up:   tasty food / drinks / some medicine, sleeping (and waking up rested), friends nearby, the tea kiosk's music, hugging a teddy
 //  down: getting hit, monsters nearby (bosses a lot), the Nether / End, strange events (~1 per real hour per player,
 //        plus a rare one that hits everyone online at once)
@@ -75,12 +76,8 @@ function updateFog(player, v, force = false) {
   if (!force && now === before) return;
   fogLevel.set(player.id, now);
   runAs(player, `fog @s remove ${FOG_ID}`);
-  if (now >= 0) {
-    runAs(player, `fog @s push ${FOG_LEVELS[now].fog} ${FOG_ID}`);
-    if (before === -2 || now < before || before < 0) player.onScreenDisplay.setActionBar(FOG_LEVELS[now].text);
-  } else if (before >= 0) {
-    player.onScreenDisplay.setActionBar("§aสติกลับมาเป็นปกติ");
-  }
+  // no text: the brain gauge, the grey filter, the grain and the whispers already tell the player
+  if (now >= 0) runAs(player, `fog @s push ${FOG_LEVELS[now].fog} ${FOG_ID}`);
 }
 
 // ---------------------------------------------------------------- strange events
@@ -165,32 +162,26 @@ const EVENTS = [
   { id: "thunder", loss: 6, run: (p) => {
       sound(p, "ambient.weather.thunder", ahead(p, 18), 1, 0.9);
       runAs(p, "camerashake add @s 0.25 1.5 positional");
-      p.onScreenDisplay.setActionBar("§7ฟ้าผ่าลงมาใกล้ๆ ทั้งที่ฟ้าโปร่ง...");
     } },
   { id: "footsteps", loss: 5, run: (p) => {
       for (let i = 0; i < 6; i++) later(i * 8, () => sound(p, "step.gravel", ahead(p, -2.5 - i * 0.2), 0.9, 0.8));
-      later(50, () => p.onScreenDisplay.setActionBar("§7...มีใครเดินตามมาหรือเปล่า"));
     } },
   { id: "knock", loss: 5, run: (p) => {
       for (let i = 0; i < 3; i++) later(i * 14, () => sound(p, "dig.wood", ahead(p, -4), 1, 0.7));
-      later(44, () => p.onScreenDisplay.setActionBar("§7ก๊อก... ก๊อก... ก๊อก..."));
     } },
   { id: "cave", loss: 4, run: (p) => sound(p, "ambient.cave", ahead(p, -3), 1, 0.8) },
   { id: "creeper", loss: 8, run: (p) => sound(p, "random.fuse", ahead(p, -1.5), 1, 1) },
   { id: "stare", loss: 6, run: (p) => sound(p, "mob.endermen.stare", undefined, 0.8, 0.6) },
   { id: "heartbeat", loss: 5, run: (p) => {
       for (let i = 0; i < 6; i++) later(i * 18, () => sound(p, "mob.warden.heartbeat", undefined, 1, 1));
-      p.onScreenDisplay.setActionBar("§4หัวใจเต้นแรงผิดปกติ...");
     } },
   { id: "bells", loss: 4, run: (p) => {
       for (let i = 0; i < 3; i++) later(i * 30, () => sound(p, "block.bell.hit", ahead(p, 25), 0.8, 0.5));
-      later(20, () => p.onScreenDisplay.setActionBar("§7ระฆังดังมาจากที่ไหนสักแห่ง..."));
     } },
   { id: "moan", loss: 6, run: (p) => sound(p, "mob.ghast.moan", ahead(p, -6), 0.7, 0.5) },
   { id: "shadow", loss: 10, run: (p) => shadowFigure(p) },
   { id: "red_fog", loss: 8, run: (p) => {
       runAs(p, `fog @s push succubi:red_fog ${EVENT_FOG_ID}`);
-      p.onScreenDisplay.setActionBar("§4ท้องฟ้ากลายเป็นสีแดง...");
       later(20 * 60, () => runAs(p, `fog @s remove ${EVENT_FOG_ID}`));
     } },
   { id: "whisper", loss: 5, run: (p) => p.sendMessage(`§8§o<???> §7${p.name}... ${pick(["หันหลังมาสิ", "เราเห็นนายนะ", "อย่าไปไหนเลย", "นายลืมอะไรไว้"])}`) },
@@ -206,7 +197,6 @@ const EVENTS = [
           e.applyKnockback(dx / len, dz / len, 1.4, 0.35);
         } catch (err) {}
       }
-      p.onScreenDisplay.setActionBar("§7สัตว์รอบตัวแตกตื่นหนีไปหมด...");
     } },
   { id: "glass", loss: 5, run: (p) => sound(p, "random.glass", ahead(p, -3), 1, 0.8) },
   { id: "growl", loss: 5, run: (p) => {
@@ -217,7 +207,6 @@ const EVENTS = [
   { id: "zombie", loss: 5, run: (p) => sound(p, "mob.zombie.say", ahead(p, -2), 1, 0.7) },
   { id: "wither_spawn", loss: 8, run: (p) => {
       sound(p, "mob.wither.spawn", ahead(p, -30), 0.35, 0.6);
-      later(40, () => p.onScreenDisplay.setActionBar("§7เสียงคำรามก้องมาจากใต้ดิน..."));
     } },
   { id: "elder_curse", loss: 7, run: (p) => {
       sound(p, "mob.elderguardian.curse", undefined, 1, 0.9);
@@ -225,7 +214,6 @@ const EVENTS = [
     } },
   { id: "door_break", loss: 7, run: (p) => {
       for (let i = 0; i < 3; i++) later(i * 16, () => sound(p, "mob.zombie.woodbreak", ahead(p, -5), 0.9, 0.8));
-      later(50, () => p.onScreenDisplay.setActionBar("§7มีอะไรพยายามพังประตู..."));
     } },
   { id: "chest", loss: 4, run: (p) => {
       sound(p, "random.chestopen", ahead(p, -3), 1, 0.8);
@@ -233,24 +221,19 @@ const EVENTS = [
     } },
   { id: "doors_toggle", loss: 6, run: (p) => {
       toggleDoors(p);
-      p.onScreenDisplay.setActionBar("§7ประตูแถวนี้ขยับเอง...");
     } },
   { id: "levitate", loss: 6, run: (p) => {
       p.addEffect("levitation", 30, { amplifier: 0, showParticles: false });
-      p.onScreenDisplay.setActionBar("§7มีบางอย่างยกตัวคุณขึ้น...");
     } },
   { id: "heavy", loss: 4, run: (p) => {
       p.addEffect("slowness", 10 * 20, { amplifier: 1, showParticles: false });
-      p.onScreenDisplay.setActionBar("§7ขาหนักอึ้งเหมือนมีมือจับไว้...");
     } },
   { id: "tremble", loss: 4, run: (p) => {
       p.addEffect("mining_fatigue", 15 * 20, { amplifier: 0, showParticles: false });
       runAs(p, "camerashake add @s 0.1 3 rotational");
-      p.onScreenDisplay.setActionBar("§7มือสั่นไม่หยุด...");
     } },
   { id: "sudden_hunger", loss: 3, run: (p) => {
       p.addEffect("hunger", 8 * 20, { amplifier: 1, showParticles: false });
-      p.onScreenDisplay.setActionBar("§7ท้องร้องกะทันหัน ทั้งที่เพิ่งกิน...");
     } },
   { id: "shadow_circle", loss: 12, run: (p) => {
       for (let i = 0; i < 4; i++) {
@@ -258,7 +241,6 @@ const EVENTS = [
         shadowAt(p, { x: p.location.x + Math.cos(a) * 12, y: p.location.y, z: p.location.z + Math.sin(a) * 12 }, 100);
       }
       sound(p, "mob.endermen.stare", undefined, 0.7, 0.4);
-      p.onScreenDisplay.setActionBar("§4คุณถูกล้อมรอบ...");
     } },
   { id: "shadow_run", loss: 8, run: (p) => {
       const d = p.getViewDirection();
@@ -269,7 +251,6 @@ const EVENTS = [
       const shadow = shadowAt(p, from, 40);
       for (let i = 1; i <= 8; i++) later(i * 3, () => shadow?.teleport({ x: from.x + side.x * i * 2, y: from.y, z: from.z + side.z * i * 2 }));
       sound(p, "mob.phantom.swoop", base, 1, 0.6);
-      later(30, () => p.onScreenDisplay.setActionBar("§7อะไรวิ่งผ่านไปเมื่อกี้?"));
     } },
   { id: "footprints", loss: 6, run: (p) => {
       for (let i = 0; i < 8; i++) later(i * 6, () => {
@@ -277,7 +258,6 @@ const EVENTS = [
         particle(p, "minecraft:basic_smoke_particle", { x: at.x, y: p.location.y + 0.1, z: at.z });
         sound(p, "step.stone", at, 0.6, 0.7);
       });
-      later(50, () => p.onScreenDisplay.setActionBar("§7รอยเท้าเดินเข้ามาหาคุณ..."));
     } },
   { id: "souls", loss: 5, run: (p) => {
       for (let i = 0; i < 16; i++) {
@@ -285,43 +265,34 @@ const EVENTS = [
         particle(p, "minecraft:soul_particle", { x: p.location.x + Math.cos(a) * 3, y: p.location.y + 1, z: p.location.z + Math.sin(a) * 3 });
       }
       sound(p, "ambient.soulsand_valley.mood", undefined, 0.8, 1);
-      p.onScreenDisplay.setActionBar("§bวิญญาณล่องลอยอยู่รอบตัว...");
     } },
   { id: "green_fog", loss: 6, run: (p) => {
       runAs(p, `fog @s push succubi:green_fog ${EVENT_FOG_ID}`);
-      p.onScreenDisplay.setActionBar("§2หมอกสีเขียวคลุ้งขึ้นมา...");
       later(20 * 45, () => runAs(p, `fog @s remove ${EVENT_FOG_ID}`));
     } },
   { id: "white_fog", loss: 5, run: (p) => {
       runAs(p, `fog @s push succubi:white_fog ${EVENT_FOG_ID}`);
-      p.onScreenDisplay.setActionBar("§fหมอกขาวหนาทึบจนมองไม่เห็นทาง...");
       later(20 * 60, () => runAs(p, `fog @s remove ${EVENT_FOG_ID}`));
     } },
   { id: "midnight_bells", loss: 8, run: (p) => {
       for (let i = 0; i < 12; i++) later(i * 22, () => sound(p, "block.bell.hit", ahead(p, 30), 0.9, 0.45));
-      p.onScreenDisplay.setActionBar("§7นาฬิกาตีเที่ยงคืน... ทั้งที่ยังไม่ถึงเวลา");
     } },
   { id: "music_box", loss: 4, run: (p) => {
       [1.19, 1.06, 0.94, 0.89, 0.94, 0.79, 0.71, 0.75].forEach((pitch, i) => later(i * 7, () => sound(p, "note.harp", ahead(p, -2), 0.8, pitch)));
-      later(60, () => p.onScreenDisplay.setActionBar("§7เสียงกล่องดนตรีดังมาจากที่ไหนสักแห่ง..."));
     } },
   { id: "phantom", loss: 5, run: (p) => {
       sound(p, "mob.phantom.swoop", { x: p.location.x, y: p.location.y + 4, z: p.location.z }, 1, 0.8);
-      p.onScreenDisplay.setActionBar("§7มีอะไรบินโฉบเหนือหัว...");
     } },
   { id: "cat_hiss", loss: 4, run: (p) => sound(p, "mob.cat.hiss", ahead(p, -2), 1, 0.9) },
   { id: "giggles", loss: 5, run: (p) => {
       for (let i = 0; i < 3; i++) later(i * 12, () => sound(p, "mob.vex.ambient", ahead(p, i % 2 ? 3 : -3), 1, 1.3));
-      later(40, () => p.onScreenDisplay.setActionBar("§7เสียงหัวเราะเล็กๆ ดังรอบตัว..."));
     } },
   { id: "roar", loss: 7, run: (p) => {
       sound(p, "mob.ravager.roar", ahead(p, 24), 0.8, 0.7);
-      p.onScreenDisplay.setActionBar("§7เสียงคำรามดังมาจากป่า...");
     } },
   { id: "sniff", loss: 9, run: (p) => {
       sound(p, "mob.warden.sniff", ahead(p, -1.5), 1, 1);
       later(30, () => sound(p, "mob.warden.heartbeat", undefined, 1, 1));
-      later(40, () => p.onScreenDisplay.setActionBar("§4มีบางอย่างกำลังดมกลิ่นคุณ..."));
     } },
   { id: "scream", loss: 8, run: (p) => sound(p, "mob.ghast.scream", ahead(p, -10), 0.8, 0.8) },
   { id: "anvil", loss: 5, run: (p) => {
@@ -331,15 +302,13 @@ const EVENTS = [
   { id: "far_blast", loss: 5, run: (p) => {
       sound(p, "random.explode", ahead(p, 40), 0.6, 0.6);
       runAs(p, "camerashake add @s 0.2 1 positional");
-      p.onScreenDisplay.setActionBar("§7เสียงระเบิดดังมาจากไกลๆ...");
     } },
   { id: "hotbar_swap", loss: 4, run: (p) => {
       swapHotbar(p);
-      p.onScreenDisplay.setActionBar("§7ของในมือ... ย้ายที่เอง?");
     } },
   { id: "name_call", loss: 4, run: (p) => {
       sound(p, "mob.villager.idle", ahead(p, -6), 0.8, 0.6);
-      p.onScreenDisplay.setActionBar(`§7"${p.name}..." มีคนเรียกชื่อคุณ`);
+      later(10, () => p.onScreenDisplay.setActionBar(`§8§o"${p.name}..."`));
     } },
   { id: "ghost_player", loss: 5, run: (p) => {
       p.sendMessage("§e??? เข้าร่วมเกม");
@@ -360,25 +329,22 @@ const EVENTS = [
       sound(p, "ambient.weather.lightning.impact", ahead(p, 12), 1, 1);
     } },
   { id: "not_alone", loss: 4, run: (p) => {
-      p.onScreenDisplay.setActionBar("§4คุณไม่ได้อยู่คนเดียว");
       for (let i = 0; i < 3; i++) later(i * 18, () => sound(p, "mob.warden.heartbeat", undefined, 1, 1));
+      later(30, () => p.onScreenDisplay.setActionBar("§8§o...คุณไม่ได้อยู่คนเดียว")); // a voice, not narration
     } },
   { id: "enderman_scream", loss: 6, run: (p) => sound(p, "mob.endermen.scream", ahead(p, -4), 0.9, 0.8) },
   { id: "spider_crawl", loss: 5, run: (p) => {
       sound(p, "mob.spider.say", { x: p.location.x, y: p.location.y + 2.5, z: p.location.z }, 1, 0.8);
       for (let i = 0; i < 4; i++) later(i * 5, () => sound(p, "mob.spider.step", ahead(p, -1), 0.8, 1));
-      p.onScreenDisplay.setActionBar("§7มีอะไรไต่อยู่บนเพดาน...");
     } },
   { id: "drowned", loss: 5, run: (p) => sound(p, "mob.drowned.say", ahead(p, -3), 1, 0.7) },
   { id: "bones", loss: 4, run: (p) => sound(p, "mob.skeleton.say", ahead(p, -2), 1, 0.7) },
   { id: "sculk", loss: 5, run: (p) => {
       for (let i = 0; i < 3; i++) later(i * 10, () => sound(p, "block.sculk_sensor.clicking", ahead(p, -2), 1, 0.9));
       particle(p, "minecraft:sculk_soul_particle", ahead(p, 2));
-      p.onScreenDisplay.setActionBar("§3เสียงคลิกดังมาจากใต้พื้น...");
     } },
   { id: "dropped", loss: 3, run: (p) => {
       sound(p, "random.pop", ahead(p, -2), 1, 0.6);
-      p.onScreenDisplay.setActionBar("§7มีอะไรหล่นอยู่ข้างหลัง...");
     } },
   { id: "whine", loss: 3, run: (p) => sound(p, "mob.wolf.whine", ahead(p, 18), 0.8, 0.6) },
   { id: "bats", loss: 5, run: (p) => {
@@ -388,7 +354,6 @@ const EVENTS = [
         } catch (e) {}
       }
       sound(p, "mob.bat.takeoff", undefined, 1, 0.9);
-      p.onScreenDisplay.setActionBar("§7ค้างคาวแตกฝูงออกมาจากความมืด!");
     } }
 ];
 const SHARED = ["thunder", "red_fog", "bells", "midnight_bells", "white_fog", "shadow_circle", "wither_spawn"];

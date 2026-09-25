@@ -17,7 +17,7 @@ import { initRegen } from "./succubi/regen.js";
 import { initPressure } from "./succubi/pressure.js";
 
 /**
- * Succubi Server v1.1.6 - core systems.
+ * Succubi Server v1.1.7 - core systems.
  * Guns live in the separate "Succubi Guns" packs; this pack works with or without them.
  * Menus: the wallet (always in the last hotbar slot) for players, the settings item for admins.
  */
@@ -39,4 +39,4 @@ initPackCheck();
 initRegen();
 initPressure();
 
-console.warn("[Succubi Server] v1.1.6 loaded: wallet, shops, HUD, height, medical, thirst, sanity, regen, pressure sounds, Rule of Horror");
+console.warn("[Succubi Server] v1.1.7 loaded: wallet, shops, HUD, height, medical, thirst, sanity, regen, pressure sounds, Rule of Horror");

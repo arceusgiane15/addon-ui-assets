@@ -381,6 +381,19 @@ await import("./main.js");
   ok("an admin writes the book, the item takes its name, players read it");
 }
 
+// ---------------------------------------------------------------- strange events: no narration, players see it themselves
+{
+  const { runEvent, EVENT_IDS } = await import("./succubi/sanity.js");
+  const VOICES = ["text", "name_call", "not_alone"]; // the voice IS the event
+  const p = makePlayer({ id: "-1450" });
+  p.getViewDirection = () => ({ x: 0, y: 0, z: 1 });
+  p.getComponent = ((orig) => (c) => (c === "minecraft:inventory" ? { container: { getItem: () => undefined, setItem() {} } } : orig(c)))(p.getComponent);
+  for (const id of EVENT_IDS.filter((x) => !VOICES.includes(x))) runEvent(p, id);
+  await new Promise((r) => setTimeout(r, 20));
+  assert.deepEqual(p.bars, [], p.bars.join(" | "));
+  ok(`${EVENT_IDS.length - VOICES.length} strange events run without a single narration line`);
+}
+
 // ---------------------------------------------------------------- server settings: three categories
 {
   const { openSettings } = await import("./succubi/settings.js");

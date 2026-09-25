@@ -81,12 +81,15 @@ def draw(canvas, rp, anims, ctl, px_, py_, pw, ph, payload, t):
     w = pw if w == '100%' else w
     h = ph if h == '100%' else h
     off = list(ctl.get('offset', [0, 0]))
+    anim_alpha = None
     for ref in ctl.get('anims', []):
         a = anims[ref.split('.')[-1]]
         if a['anim_type'] == 'offset':
             off = anim_value(ref, anims, t)
         if a['anim_type'] == 'size':
             w, h = anim_value(ref, anims, t)
+        if a['anim_type'] == 'alpha':
+            anim_alpha = anim_value(ref, anims, t)
     af, at = ANCH[ctl.get('anchor_from', 'center')], ANCH[ctl.get('anchor_to', 'center')]
     x = px_ + af[0] * pw - at[0] * w + off[0]
     y = py_ + af[1] * ph - at[1] * h + off[1]
@@ -103,8 +106,8 @@ def draw(canvas, rp, anims, ctl, px_, py_, pw, ph, payload, t):
             dw, dh = im.width * k, im.height * k
             dx, dy = (w - dw) / 2, (h - dh) / 2
         im = im.resize((max(1, round(dw * G)), max(1, round(dh * G))), Image.LANCZOS)
-        if isinstance(ctl.get('alpha'), (str, int, float)):
-            a = ctl['alpha'] if not isinstance(ctl['alpha'], str) else anim_value(ctl['alpha'], anims, t)
+        if anim_alpha is not None or isinstance(ctl.get('alpha'), (str, int, float)):
+            a = anim_alpha if anim_alpha is not None else ctl['alpha'] if not isinstance(ctl['alpha'], str) else anim_value(ctl['alpha'], anims, t)
             a = max(0.0, min(1.0, a))
             im = im.copy()
             im.putalpha(im.getchannel('A').point(lambda v: int(v * a)))
