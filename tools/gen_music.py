@@ -1,12 +1,12 @@
 """Tension music (RP sounds/music/succubi_*.ogg), made from scratch so it is the pack's own.
 
- succubi_danger.ogg   72 s loop - low health: a beating low drone, a dark filtered chord that opens and closes,
+ succubi_danger.ogg   48 s loop - low health: a beating low drone, a dark filtered chord that opens and closes,
                       an endless rising Shepard tone and metal scrapes. No drums: the heartbeat sound keeps the pulse.
- succubi_madness.ogg  72 s loop - low sanity: a warbling tritone drone, an out-of-tune music box with echo,
+ succubi_madness.ogg  48 s loop - low sanity: a warbling tritone drone, an out-of-tune music box with echo,
                       reversed swells and radio static crackle (goes with the TV static on screen).
  succubi_silence.ogg  2 s of silence - played with a fade to let the tension music die away smoothly.
 
-Every part repeats exactly every 72 s (filters run over two loops and the second is kept), so the tracks loop
+Every part repeats exactly every 48 s (filters run over two loops and the second is kept), so the tracks loop
 without a click. Run: python3 tools/gen_music.py  (needs numpy, scipy, soundfile)
 """
 import os
@@ -17,7 +17,7 @@ from scipy.signal import butter, sosfilt
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "addon", "Succubi Server RP", "sounds", "music")
 SR = 44100
-LOOP = 72.0
+LOOP = 48.0
 N = int(SR * LOOP)
 rng = np.random.default_rng(119)
 t = np.arange(2 * N) / SR  # two loops: filters settle in the first, the second is kept
@@ -88,10 +88,10 @@ def master(left, right, peak=0.8):
 def danger():
     L = np.zeros_like(t)
     R = np.zeros_like(t)
-    # beating drone: A1 against Bb1, breathing every 18 s
+    # beating drone: A1 against Bb1, breathing every 16 s
     drone = np.sin(2 * np.pi * phase_of(55.0)) + 0.8 * np.sin(2 * np.pi * phase_of(58.27))
     drone += 0.35 * lowpass(saw(phase_of(55.0 * cents(-6))), 180)
-    drone *= swell(18, 0.55, 1.0)
+    drone *= swell(16, 0.55, 1.0)
     L += 0.55 * drone
     R += 0.55 * drone
     # dark diminished chord (A2 C3 Eb3), saw through a filter that opens and closes every 24 s
@@ -118,7 +118,7 @@ def danger():
     L += 0.10 * shep
     R += 0.10 * shep
     # metal scrapes: band-passed noise with a slow rise, random pitch, left or right
-    for when in sorted(rng.uniform(0, LOOP, 9)):
+    for when in sorted(rng.uniform(0, LOOP, 6)):
         lo = rng.uniform(900, 2600)
         band = bandpass(noise(), lo, lo * 1.25, order=3)
         scrape = band * env_events([when], rng.uniform(1.2, 2.6), 0.0, reverse=True)
@@ -132,11 +132,11 @@ def madness():
     L = np.zeros_like(t)
     R = np.zeros_like(t)
     # tritone drone that warbles out of tune (C2 + F#2)
-    wobble = cents(15 * np.sin(2 * np.pi * t / 7.2))
+    wobble = cents(15 * np.sin(2 * np.pi * t / 8.0))
     for hz, gain in ((65.41, 0.5), (92.5, 0.4), (130.81, 0.15)):
         tone = np.sin(2 * np.pi * phase_of(hz * wobble)) + 0.3 * lowpass(saw(phase_of(hz * wobble * cents(8))), 400)
-        L += gain * tone * swell(36, 0.6, 1.0)
-        R += gain * tone * swell(36, 0.6, 1.0, 0.5)
+        L += gain * tone * swell(48, 0.6, 1.0)
+        R += gain * tone * swell(48, 0.6, 1.0, 0.5)
     # out-of-tune music box: whole-tone notes, each bent a little, with an echo
     scale = [523.25, 587.33, 659.26, 739.99, 830.61, 932.33, 1046.5]
     box = np.zeros_like(t)
@@ -153,7 +153,7 @@ def madness():
     L += 0.16 * echo
     R += 0.16 * np.roll(echo, int(0.021 * SR))
     # reversed swells (wind sucked backwards)
-    for when in sorted(rng.uniform(0, LOOP, 7)):
+    for when in sorted(rng.uniform(0, LOOP, 5)):
         lo = rng.uniform(200, 700)
         band = bandpass(noise(), lo, lo * 1.6, order=2)
         sw = band * env_events([when], rng.uniform(2.0, 3.5), 0.0, reverse=True)
@@ -171,9 +171,11 @@ def madness():
     return master(L, R)
 
 
-def write_ogg(name, data, quality=0.35):
-    """written in blocks: libsndfile's Vorbis encoder does not like one huge write"""
-    with sf.SoundFile(os.path.join(OUT, name + ".ogg"), "w", SR, 2, format="OGG", subtype="VORBIS",
+def write_ogg(name, data, quality=0.2):
+    """written in blocks (libsndfile's Vorbis encoder does not like one huge write), mono to keep the
+    .mcaddon under 30 MB - Minecraft plays music in mono anyway when it is not positional"""
+    data = np.ascontiguousarray(data.mean(axis=1, keepdims=True), dtype=np.float32)
+    with sf.SoundFile(os.path.join(OUT, name + ".ogg"), "w", SR, 1, format="OGG", subtype="VORBIS",
                       compression_level=1 - quality) as f:
         for i in range(0, len(data), 16384):
             f.write(data[i:i + 16384])

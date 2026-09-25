@@ -97,16 +97,16 @@ TIERS = {
 
 
 def glitch_tier(ui, n, cfg):
-    fb_static = flipbook(ui, "fb_tv_static", 6, 256, 14)
+    fb_static = flipbook(ui, "fb_tv_static", 4, 192, 12)
     fb_bands = flipbook(ui, "fb_tv_bands", 6, 256, 9)
     fb_tear = flipbook(ui, "fb_tv_tear", 4, 256, 8)
     controls = []
     if "static" in cfg:
         low, high, sec = cfg["static"]
-        controls.append({"static": full("fx_static", 5, uv_size=[256, 144], uv=fb_static,
+        controls.append({"static": full("fx_static", 5, uv_size=[192, 108], uv=fb_static,
                                         alpha=breathe(ui, f"tv{n}_static", low, high, sec))})
     if "veil" in cfg:
-        controls.append({"veil": full("fx_static", 5, uv_size=[256, 144], uv=fb_static,
+        controls.append({"veil": full("fx_static", 5, uv_size=[192, 108], uv=fb_static,
                                       alpha=blips(ui, f"tv{n}_veil", cfg["veil"]))})
     if "scan" in cfg:
         controls.append({"scan": full("fx_scanlines", 6, alpha=cfg["scan"])})

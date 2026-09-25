@@ -4867,8 +4867,8 @@
                             "anchor_to": "center",
                             "layer": 5,
                             "uv_size": [
-                              256,
-                              144
+                              192,
+                              108
                             ],
                             "uv": "@succubi_hud.fb_tv_static",
                             "alpha": "@succubi_hud.tv3_veil_0"
@@ -4995,8 +4995,8 @@
                             "anchor_to": "center",
                             "layer": 5,
                             "uv_size": [
-                              256,
-                              144
+                              192,
+                              108
                             ],
                             "uv": "@succubi_hud.fb_tv_static",
                             "alpha": "@succubi_hud.tv4_static_0"
@@ -26698,9 +26698,9 @@
       0,
       0
     ],
-    "frame_count": 6,
-    "frame_step": 256,
-    "fps": 14,
+    "frame_count": 4,
+    "frame_step": 192,
+    "fps": 12,
     "easing": "linear"
   },
   "fb_tv_bands": {

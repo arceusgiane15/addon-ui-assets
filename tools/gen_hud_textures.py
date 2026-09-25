@@ -4,7 +4,7 @@
  clock_hands.png    8x6 frames of 144x144 = 48 hand positions (frame n = 6:00 + n * 30 min, clockwise from the top)
  arrow_up_X.png     24x20    rising arrow in the gauge colour (X = h f t s)
  arrow_down_X.png   24x20    falling arrow
- fx_static.png      6 frames of 256x144  full-screen TV static (grey noise)
+ fx_static.png      4 frames of 192x108  full-screen TV static (grey noise)
  fx_static_bands.png 6 frames of 256x144 static in a few horizontal bands (the "แวบ" glitch)
  fx_tear.png        4 frames of 256x144  torn lines with red / cyan fringes
  fx_scanlines.png   256x144 every other row darkened
@@ -178,7 +178,7 @@ def main():
         save(arrow(color, True), f"arrow_up_{g}")
         save(arrow(color, False), f"arrow_down_{g}")
     w, h = 256, 144
-    save(strip([noise_frame(w, h) for _ in range(6)]), "fx_static")
+    save(strip([noise_frame(192, 108) for _ in range(4)]), "fx_static")  # coarser: it is a faint veil
     save(strip([noise_frame(w, h, band_list(rnd.randint(2, 4), h)) for _ in range(6)]), "fx_static_bands")
     save(strip([tear_frame(w, h) for _ in range(4)]), "fx_tear")
     save(scanlines(w, h), "fx_scanlines")
