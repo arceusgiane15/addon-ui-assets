@@ -127,42 +127,48 @@ await import("./main.js");
   ok("personal menu turns the red aura / grey screen off (Nx)");
 }
 
-// ---------------------------------------------------------------- height rules
+// ---------------------------------------------------------------- height rules (slider window: closing applies)
 {
   const { openHeightForm } = await import("./height/ui.js");
   const { getHeightCm, lockFor, markFight } = await import("./height/height.js");
   const p = makePlayer({ id: "-200" });
-  // +10 (idx 3) -> preview only, then confirm (6), then close (7)
-  answers.push(3, 3, 6, 7);
+  globalThis.__shown = [];
+  answers.length = 0;
+  answers.push({ formValues: [200] });
   await openHeightForm(p);
+  const modal = globalThis.__shown.at(-1);
+  assert.ok(modal.fields[0][1] === 140 && modal.fields[0][2] === 220 && modal.fields[0][4] === 180, JSON.stringify(modal.fields[0].slice(1)));
   assert.equal(getHeightCm(p), 200);
   assert.ok(lockFor(p).seconds > 290, "cooldown started");
-  ok("player confirm applies 200 cm and starts 5 min cooldown");
-  // try again: +1 then confirm -> refused by cooldown
-  answers.push(2, 6, 7);
+  ok("slider 140-220 starts at the current height; closing applies 200 cm and starts the 5 min cooldown");
+  globalThis.__shown = [];
+  answers.push(0);
   await openHeightForm(p);
   assert.equal(getHeightCm(p), 200);
-  ok("second change refused during cooldown");
-  // player range capped at 220
+  assert.ok(globalThis.__shown.at(-1)._body.includes("เปลี่ยนได้อีกครั้งใน"), globalThis.__shown.at(-1)._body);
+  ok("during the cooldown the window says how long to wait instead of showing the slider");
   const q = makePlayer({ id: "-300" });
-  answers.push(3, 3, 3, 3, 3, 3, 3, 3, 6, 7);
+  answers.push({ formValues: [260] });
   await openHeightForm(q);
   assert.equal(getHeightCm(q), 220);
   ok("player capped at 220 cm");
-  // fight lock
   const f = makePlayer({ id: "-400" });
   markFight(f);
-  answers.push(0, 6, 7);
+  answers.push(0);
   await openHeightForm(f);
   assert.equal(getHeightCm(f), 180);
   ok("fight blocks the change");
-  // admin free range, no cooldown
   const a = makePlayer({ id: "-500", tags: ["succubi_admin"] });
-  answers.push(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 7);
+  answers.push({ formValues: [20] });
   await openHeightForm(a);
   assert.equal(getHeightCm(a), 20);
   assert.equal(lockFor(a).seconds, 0);
   ok("admin can go to 20 cm with no cooldown");
+  const c = makePlayer({ id: "-510" });
+  answers.push(undefined);
+  await openHeightForm(c);
+  assert.equal(getHeightCm(c), 180);
+  ok("Esc (cancel) leaves the height as it was");
 }
 
 // ---------------------------------------------------------------- shop ownership

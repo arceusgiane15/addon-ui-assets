@@ -298,6 +298,17 @@ class Renderer:
         if base_ref in ('server_form.long_form_panel',):
             self.long_form(im, x, y, w, h)
             return
+        if base_ref == 'server_form.generated_contents' and self.form.get('slider'):
+            # the game's slider: "label: value", then the bar with its knob
+            label, lo, hi, val = self.form['slider']
+            th = self.draw_text(im, (x + 2) * G, (y + 2) * G, w - 4, f'{label}: {val}', {'color': [0.95, 0.95, 0.95]}) / G
+            by = y + th + 8
+            d = ImageDraw.Draw(im)
+            d.rounded_rectangle([(x + 4) * G, by * G, (x + w - 4) * G, (by + 4) * G], radius=2 * G, fill=(60, 60, 64, 255), outline=(20, 20, 24, 255))
+            kx = x + 4 + (w - 8) * (val - lo) / max(1, hi - lo)
+            d.rounded_rectangle([(x + 4) * G, by * G, kx * G, (by + 4) * G], radius=2 * G, fill=(90, 200, 90, 255))
+            d.rectangle([(kx - 3) * G, (by - 4) * G, (kx + 3) * G, (by + 8) * G], fill=(230, 230, 230, 255), outline=(30, 30, 30, 255))
+            return
         if base_ref == 'server_form.custom_form_panel':
             self.draw_text(im, (x + 3) * G, (y + 2) * G, w, self.form['body'] or '§7(ช่องกรอกข้อมูลของเกม)', {'color': [0.9, 0.9, 0.9]})
             return

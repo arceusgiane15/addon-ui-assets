@@ -2,19 +2,16 @@ import { system } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { CONFIG } from "./config.js";
 import {
-  getHeightCm, setHeightCm, isHitboxAvailable, hitboxStepFor,
-  limitsFor, clampFor, lockFor, startCooldown, isFree, bodyStats, percentText
+  getHeightCm, setHeightCm, isHitboxAvailable, limitsFor, clampFor, lockFor, startCooldown, isFree, bodyStats, percentText
 } from "./height.js";
 
-// Invisible colour codes tell RP ui/server_form.json to draw the height board.
+// Invisible colour codes tell RP ui/server_form.json to draw the height window.
 // "hNNN" in the title = silhouette height (NNN = cm / 10), "rP" / "rA" = which ruler (players 0-250 cm, admins 0-500 cm).
+// It is a modal form with one slider: drag to the height you want and close the window - closing keeps the new
+// height (the close button submits the form). Only Esc / the phone's back key leave without changing.
 export const HEIGHT_FLAG = "§0§9§8§5";
-// Buttons, in this order (the board lays them out by index):
-// 0 -10 | 1 -1 | 2 +1 | 3 +10 | 4 type | 5 reset | 6 confirm | 7 close
-const STEPS = [-10, -1, 1, 10];
 
 const wait = (ticks) => new Promise((resolve) => system.runTimeout(resolve, ticks));
-const drafts = new Map(); // player id -> cm being tried on the board (not applied until confirmed)
 
 async function show(form, player) {
   for (let attempt = 0; attempt < 5; attempt++) {
@@ -26,17 +23,7 @@ async function show(form, player) {
 }
 
 const silhouetteToken = (cm) => "h" + String(Math.max(1, Math.min(50, Math.round(cm / 10)))).padStart(3, "0");
-const bodyScale = (cm) => hitboxStepFor(cm) / CONFIG.baseCm;
 const fmtWait = (s) => (s >= 60 ? `${Math.floor(s / 60)} นาที ${s % 60} วิ` : `${s} วิ`);
-
-function scaleWarning(player, cm) {
-  if (!isHitboxAvailable()) return "\n§cปรับขนาดตัวไม่ได้ (ไม่พบ event ใน player.json)";
-  try {
-    const actual = player.getComponent("minecraft:scale")?.value;
-    if (typeof actual === "number" && Math.abs(actual - bodyScale(cm)) > 0.02) return `\n§cตัวในเกมยังเป็น x${actual.toFixed(2)}`;
-  } catch (e) {}
-  return "";
-}
 
 function lockText(player) {
   const lock = lockFor(player);
@@ -44,74 +31,41 @@ function lockText(player) {
   return lock.reason === "fight" ? `§cเพิ่งต่อสู้ รออีก ${fmtWait(lock.seconds)}` : `§cเปลี่ยนได้อีกครั้งใน ${fmtWait(lock.seconds)}`;
 }
 
-// Height board. The +/- buttons only move a preview; "ยืนยัน" applies it.
-export async function openHeightForm(player, note = "") {
+function statsLine(cm) {
+  const st = bodyStats(cm);
+  return `§c${st.hp} HP§7 · ความเร็ว §b${percentText(st.speed)}§7 · แรงตี §6${percentText(st.damage)}`;
+}
+
+export async function openHeightForm(player) {
   const current = getHeightCm(player);
-  if (!drafts.has(player.id)) drafts.set(player.id, clampFor(player, current));
-  const draft = drafts.get(player.id);
   const [lo, hi] = limitsFor(player);
   const free = isFree(player);
   const lock = lockText(player);
-  const changed = draft !== current;
-  const stats = bodyStats(draft);
-
-  const form = new ActionFormData()
-    .title(`§lปรับส่วนสูง${HEIGHT_FLAG}${silhouetteToken(draft)}${free ? "rA" : "rP"}`)
-    .body(
-      `§7ที่เลือก §d§l${draft} ซม.§r${changed ? ` §7(ตอนนี้ ${current})` : ""}\n` +
-        `§7เลือดสูงสุด §c§l${stats.hp} HP§r\n` +
-        `§7ความเร็ว §b§l${percentText(stats.speed)}§r §7· แรงตี §6§l${percentText(stats.damage)}§r\n` +
-        `§7ปรับได้ ${lo}-${hi} ซม.${free ? "" : ` · ${CONFIG.cooldownSeconds / 60} นาที/ครั้ง`}` +
-        (lock ? `\n${lock}` : "") + scaleWarning(player, current) + (note ? `\n${note}` : "")
-    );
-  for (const step of STEPS) {
-    const blocked = (step < 0 && draft <= lo) || (step > 0 && draft >= hi);
-    form.button(`§l${step > 0 ? "+" : ""}${step}`, `textures/ui/succubi_height/btn_${step < 0 ? "minus" : "plus"}${blocked ? "_off" : ""}`);
-  }
-  form.button("§lพิมพ์", "textures/ui/succubi_height/btn_type");
-  form.button("§lรีเซ็ต", "textures/ui/succubi_height/btn_reset");
-  form.button("§lยืนยัน", `textures/ui/succubi_height/btn_confirm${changed && !lock ? "" : "_off"}`);
-  form.button("§lปิด", "textures/ui/succubi_height/btn_close");
-
-  const response = await show(form, player);
-  if (!response || response.canceled || response.selection === 7) {
-    drafts.delete(player.id);
+  if (lock) {
+    // locked: show where things stand instead of a slider that would do nothing
+    const form = new ActionFormData().title("§lปรับส่วนสูง")
+      .body(`§fตอนนี้ §d${current} ซม.§f · ${statsLine(current)}\n\n${lock}`)
+      .button("§lตกลง", "textures/ui/succubi_ui/icons/back");
+    await show(form, player);
     return;
   }
-  let message = "";
-  const sel = response.selection;
-  if (sel < STEPS.length) {
-    const next = clampFor(player, draft + STEPS[sel]);
-    if (next === draft) message = "§eสุดช่วงที่ปรับได้แล้ว";
-    drafts.set(player.id, next);
-  } else if (sel === 4) {
-    await openHeightTyped(player);
-  } else if (sel === 5) {
-    drafts.set(player.id, clampFor(player, CONFIG.baseCm));
-  } else if (sel === 6) {
-    if (!changed) {
-      message = "§7ยังไม่ได้เปลี่ยนความสูง";
-    } else if (lockText(player)) {
-      message = lockText(player);
-    } else {
-      setHeightCm(player, draft);
-      startCooldown(player);
-      player.playSound("random.levelup", { pitch: 1.6, volume: 0.6 });
-      message = `§aเปลี่ยนเป็น ${draft} ซม. แล้ว`;
-      await wait(3); // let the new body size apply before the board reads it back
-    }
-  }
-  return openHeightForm(player, message);
-}
-
-// Exact height typed as a number (still only a preview until confirmed)
-export async function openHeightTyped(player) {
-  const [lo, hi] = limitsFor(player);
+  const label =
+    `§fตอนนี้ §d${current} ซม.\n${statsLine(current)}\n` +
+    `§7ตัวเล็ก วิ่งไว ตีเบา · ตัวสูง เดินช้า ตีแรง\n` +
+    `§7${lo}-${hi} ซม.${free ? "" : ` · เปลี่ยนได้ ${CONFIG.cooldownSeconds / 60} นาทีครั้ง`}\n` +
+    `§eเลื่อนแล้วกดปิด (X) = ใช้ความสูงนี้\n§fส่วนสูง (ซม.)`;
   const form = new ModalFormData()
-    .title("พิมพ์ส่วนสูง")
-    .textField(`ส่วนสูงเป็นเซนติเมตร (${lo}-${hi})\n§7ปกติ ${CONFIG.baseCm} ซม. = ${bodyStats(CONFIG.baseCm).hp} HP · ตัวเล็กวิ่งไวแต่ตีเบา ตัวสูงเดินช้าแต่ตีแรง`, String(CONFIG.baseCm), String(drafts.get(player.id) ?? getHeightCm(player)));
+    .title(`§lปรับส่วนสูง${HEIGHT_FLAG}${silhouetteToken(current)}${free ? "rA" : "rP"}`)
+    .slider(label, lo, hi, 1, clampFor(player, current));
   const response = await show(form, player);
   if (!response || response.canceled) return;
-  const typed = String(response.formValues?.[0] ?? "").trim();
-  if (typed !== "" && isFinite(Number(typed))) drafts.set(player.id, clampFor(player, Number(typed)));
+  const next = clampFor(player, Number(response.formValues?.[0]));
+  if (!isFinite(next) || next === current) return;
+  const late = lockText(player);
+  if (late) return player.onScreenDisplay.setActionBar(late);
+  setHeightCm(player, next);
+  startCooldown(player);
+  player.playSound("random.levelup", { pitch: 1.6, volume: 0.6 });
+  player.onScreenDisplay.setActionBar(`§aส่วนสูง ${next} ซม. §7· ${statsLine(next)}`);
+  if (!isHitboxAvailable()) player.sendMessage("§c[ส่วนสูง] ปรับขนาดตัวไม่ได้ (ไม่พบ event ใน player.json)");
 }

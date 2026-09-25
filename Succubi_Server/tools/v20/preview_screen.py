@@ -92,14 +92,12 @@ def pay(h, s, extra=''):
 
 
 SHOTS = [
-    ('สติ 90%: เม็ดซ่าจางมาก', pay(18, 18), 0.07),
-    ('สติ 70%: ซ่าจางๆ + เทาเริ่มมา', pay(18, 14), 0.07),
-    ('สติ 50%: ซ่าชัดขึ้น', pay(18, 10), 0.07),
-    ('สติ 30%: ซ่าเยอะ เทาหนัก', pay(18, 6), 0.07),
-    ('สติ 15% ลงไป: ซ่าเต็มระดับที่ชอบ', pay(18, 2), 0.07),
-    ('เลือด 45%: เส้นเลือดตอนพักจังหวะ', pay(9, 18), 0.5),
-    ('เลือด 45%: เส้นเลือดตอนหัวใจเต้น (บวม)', pay(9, 18), 0.07),
-    ('เลือด 15%: เต้นรัว เส้นเลือดบวมเต็มขอบ', pay(3, 18), 0.07),
+    ('สติ 90%: สะเก็ดลอยนิดๆ', pay(18, 18), 0.4),
+    ('สติ 75%: สะเก็ดเพิ่มขึ้น', pay(18, 15), 1.2),
+    ('สติ 55%: สะเก็ดเยอะขึ้น + เทา', pay(18, 11), 2.0),
+    ('สติ 35%: สะเก็ดหนา เทาหนัก', pay(18, 7), 2.8),
+    ('สติ 20%: สะเก็ดเต็มจอ', pay(18, 4), 3.6),
+    ('สติต่ำกว่า 15%: + เม็ดซ่าทีวี (แบบที่ชอบ)', pay(18, 2), 4.4),
 ]
 
 if __name__ == '__main__':
@@ -107,18 +105,10 @@ if __name__ == '__main__':
     base = world()
     if len(sys.argv) > 4 and sys.argv[4] == 'gif':
         frames, fps = [], 12
-        # a slow slide of sanity from 100 % to 0 first
-        for i in range(48):
-            s = max(0, 20 - i * 20 // 44)
+        # sanity sliding from 100 % to 0: the flakes drift and thicken, the grey filter closes in, the TV grain at the end
+        for i in range(84):
+            s = max(0, 20 - i * 20 // 72)
             frames.append(label(render(out, pay(18, s), i / fps, base), f'สติค่อยๆ ลด: {s * 5}%'))
-        for i in range(60):
-            h = max(1, 20 - i * 19 // 52)
-            frames.append(label(render(out, pay(h, 18), i / fps, base), f'เลือดค่อยๆ ลด: {h * 5}%'))
-        for i in range(36):
-            frames.append(label(render(out, pay(2, 18), i / fps, base), 'ใกล้ตาย: ขอบแดงเต้นรัวตามหัวใจ'))
-        for i in range(24):
-            h = min(20, 1 + i)
-            frames.append(label(render(out, pay(h, 18), i / fps, base), f'ฟื้นเลือด: {h * 5}%'))
         frames = [f.convert("RGB").resize((W * G * 2 // 3, H * G * 2 // 3)).quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE) for f in frames]
         frames[0].save(target, save_all=True, append_images=frames[1:], duration=int(1000 / fps), loop=0, optimize=True)
         print('saved', target, len(frames))

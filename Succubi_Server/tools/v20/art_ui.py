@@ -222,18 +222,28 @@ def menu_icons(rp):
                         ".############."],
                        {'#': (10, 5, 9), 'r': (232, 51, 94), 'y': (240, 164, 49), 'b': (51, 181, 240), 'v': (176, 102, 240)})
     icon_tile(hud.resize((hud.width * 3, hud.height * 3), Image.NEAREST)).save(os.path.join(d, 'hud.png'))
-    ruler = px.from_rows(["...#....#.",
-                          "..###..#w#",
-                          "..###..#w#",
-                          "...#...#w#",
-                          "..###..#w#",
-                          ".#####.#w#",
-                          ".#####.#w#",
-                          "..###..#w#",
-                          "..#.#..#w#",
-                          "..#.#..###"],
-                         {'#': (255, 92, 170), 'w': (255, 240, 248)})
-    icon_tile(px.outline(ruler, INK).resize((36, 36), Image.NEAREST)).save(os.path.join(d, 'height.png'))
+    # height: a tall bat standing wrapped in its wings, with a pink up/down arrow beside it
+    bat_rows = ["#.........#..p..",
+                "##.......##.ppp.",
+                "###.....###ppppp",
+                "###########..p..",
+                "##e#####e##..p..",
+                "###########..p..",
+                ".#########...p..",
+                "..#######....p..",
+                "wwwwwwwwwww..p..",
+                "wrw#####wrw..p..",
+                "wrw#####wrw..p..",
+                "wrw#####wrw..p..",
+                "wrw#####wrw..p..",
+                ".rw#####wr...p..",
+                ".w.#####.w...p..",
+                "...##.##...ppppp",
+                "...##.##....ppp.",
+                "..###.###....p.."]
+    bat = px.from_rows(bat_rows, {'#': (84, 62, 102), 'w': (168, 124, 190), 'r': (104, 72, 124), 'e': (255, 92, 170),
+                                  'p': (255, 120, 190)})
+    icon_tile(px.outline(bat, INK).resize((36, 40), Image.NEAREST)).save(os.path.join(d, 'height.png'))
     gun = px.from_rows(["..............",
                         ".############.",
                         ".#ggggggggggg#",
@@ -373,6 +383,12 @@ def height_art(rp):
     dr.rounded_rectangle([20, 60, 2 * 118, 2 * H_H - 20], radius=10, fill=(12, 6, 11, 230))
     dr.rounded_rectangle([2 * 126, 60, 2 * H_W - 20, 2 * 96], radius=10, fill=(12, 6, 11, 230))
     bg.save(os.path.join(d, 'height_bg.png'))
+    # slider version: the same ruler well, one tall well on the right for the slider
+    mb = window('default', H_W, H_H)
+    md = ImageDraw.Draw(mb)
+    md.rounded_rectangle([20, 60, 2 * 118, 2 * H_H - 20], radius=10, fill=(12, 6, 11, 230))
+    md.rounded_rectangle([2 * 126, 60, 2 * H_W - 20, 2 * H_H - 20], radius=10, fill=(12, 6, 11, 230))
+    mb.save(os.path.join(d, 'height_modal_bg.png'))
     # ruler scales: players 0-250 cm, admins 0-500 cm (drawn into the well: 108 x 146 units at (10,30))
     for mode, top_cm, step_cm in (('P', 250, 10), ('A', 500, 20)):
         im = Image.new('RGBA', (216, 292))
@@ -489,8 +505,35 @@ def height_json():
     return ctl
 
 
+def height_modal_json():
+    """the height slider window (ModalFormData): ruler + silhouettes on the left, the game's own form controls (just the
+    slider, no submit button) on the right. The close button submits the form, so closing = keeping the new height."""
+    ctl = height_json()[:-2]                        # bg, title, close, rulers, silhouettes (no info label, no button grid)
+    ctl[0] = {"bg": {"type": "image", "texture": "textures/ui/succubi_height/height_modal_bg", "size": ["100%", "100%"], "layer": 1}}
+    ctl[2] = {"close@succubi_ui.close_button": {"anchor_from": "top_right", "anchor_to": "top_right", "offset": [-6, 3], "layer": 8,
+                                                 "$pressed_button_name": "button.submit_custom_form"}}
+    ctl.append({"form": {"type": "panel", "anchor_from": "top_left", "anchor_to": "top_left", "offset": [130, 34], "size": [140, 136],
+                         "layer": 5, "controls": [{"generated@server_form.generated_contents": {}}]}})
+    return ctl
+
+
+HEIGHT_FLAG = '§0§9§8§5'
+
+
+def modal_switch():
+    """modal forms: the height slider gets its own window, everything else the themed modal window"""
+    tt = '#title_text'
+    on = f"(not (({tt} - '{HEIGHT_FLAG}') = {tt}))"
+    off = f"(({tt} - '{HEIGHT_FLAG}') = {tt})"
+    vis = lambda e: [{"binding_name": tt}, {"binding_type": "view", "source_property_name": e, "target_property_name": "#visible"}]
+    return {"type": "panel", "size": ["100%", "100%"], "controls": [
+        {"window@succubi_ui.modal_window": {"bindings": vis(off)}},
+        {"height@succubi_height.height_modal": {"bindings": vis(on)}}]}
+
+
 def height_ui(ui):
     ui['height_panel'] = {"type": "panel", "size": [H_W, H_H], "layer": 2, "controls": height_json()}
+    ui['height_modal'] = {"type": "panel", "size": [H_W, H_H], "layer": 2, "controls": height_modal_json()}
     ui['cell'] = {"type": "panel", "size": [38, 24], "controls": [{"button@common.button": {
         "size": [36, 22], "$pressed_button_name": "button.form_button_click",
         "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}],
@@ -519,6 +562,9 @@ def build_ui(out, ctx, log):
     wjson(os.path.join(uid, 'succubi_ui.json'), ui)
     wjson(os.path.join(uid, 'succubi_wallet.json'), wallet_ui(rjson(os.path.join(uid, 'succubi_wallet.json'))))
     wjson(os.path.join(uid, 'succubi_height.json'), height_ui(rjson(os.path.join(uid, 'succubi_height.json'))))
+    sf = rjson(os.path.join(uid, 'server_form.json'))
+    sf['custom_form'] = modal_switch()
+    wjson(os.path.join(uid, 'server_form.json'), sf)
     n = 0
     for f in sorted(os.listdir(uid)):
         if f.endswith('.json') and (f.startswith('succubi_') or f == 'server_form.json'):

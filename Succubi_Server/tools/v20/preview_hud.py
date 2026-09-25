@@ -78,8 +78,8 @@ def draw(canvas, rp, anims, ctl, px_, py_, pw, ph, payload, t):
     if not visible(ctl, payload):
         return
     w, h = ctl.get('size', [pw, ph])
-    w = pw if w == '100%' else w
-    h = ph if h == '100%' else h
+    w = pw * float(w[:-1]) / 100 if isinstance(w, str) and w.endswith('%') else w
+    h = ph * float(h[:-1]) / 100 if isinstance(h, str) and h.endswith('%') else h
     off = list(ctl.get('offset', [0, 0]))
     anim_alpha = None
     for ref in ctl.get('anims', []):

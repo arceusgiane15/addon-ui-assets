@@ -670,6 +670,43 @@ def screen_grey():
     return Image.new('RGBA', (8, 8), (118, 118, 120, 255))
 
 
+SPECK_LEVELS = 6
+
+
+def specks(level, seed):
+    """sanity: grey flakes and specks drifting over the whole screen. Cumulative: level L holds every speck of the
+    levels below it plus more, so the flakes thicken as sanity falls. Drawn a bit larger than the screen so the
+    drift never shows an edge."""
+    rng = np.random.RandomState(seed)
+    w, h, ss = SCREEN_W, SCREEN_H, 2
+    im = Image.new('RGBA', (w * ss, h * ss))
+    d = ImageDraw.Draw(im)
+    for lv in range(1, level + 1):
+        for _ in range(26 + 16 * lv):
+            x, y = rng.uniform(0, w * ss), rng.uniform(0, h * ss)
+            r = rng.choice([0.9, 1.2, 1.6, 2.2, 3.0], p=[0.3, 0.3, 0.2, 0.14, 0.06]) * ss
+            g = int(rng.uniform(150, 235)) if rng.random_sample() < 0.8 else int(rng.uniform(30, 70))
+            a = int(rng.uniform(110, 220))
+            if rng.random_sample() < 0.25:                  # a flake: a short tilted sliver
+                ang, ln = rng.uniform(0, math.pi), r * rng.uniform(1.8, 3.2)
+                d.line([(x - math.cos(ang) * ln, y - math.sin(ang) * ln), (x + math.cos(ang) * ln, y + math.sin(ang) * ln)],
+                       fill=(g, g, g + 4, a), width=max(1, int(r * 0.8)))
+            else:
+                d.ellipse([x - r, y - r, x + r, y + r], fill=(g, g, g + 4, a))
+    return im.filter(ImageFilter.GaussianBlur(0.9)).resize((w, h), Image.LANCZOS)
+
+
+SPECK_START = 19         # sanity steps: a few flakes from 95 %, more every 5 %
+
+
+def speck_level(step):
+    return max(1, min(SPECK_LEVELS, 1 + (SPECK_START - step) // 3))
+
+
+def speck_alpha(step):
+    return round(0.4 + 0.6 * (SPECK_START - max(0, step)) / SPECK_START, 3)
+
+
 def fb_grain(n=6, seed=31):
     """sanity almost gone: film grain / static (kept light so the game stays playable)"""
     rng = np.random.RandomState(seed)
@@ -686,18 +723,6 @@ def fb_grain(n=6, seed=31):
 
 GREY_START = 14          # sanity steps (of 20) below which the screen starts to grey out (70 %)
 GREY_MAX = 0.88          # grey layer opacity at sanity 0 (heavy: close to black and white)
-
-
-GRAIN_START = 19         # sanity steps: a faint grain from 95 %, growing to the full grain at 15 % and below
-GRAIN_FULL = 3
-
-
-def grain_alpha(step):
-    if step > GRAIN_START:
-        return 0.0
-    if step <= GRAIN_FULL:
-        return 1.0
-    return round(0.08 + 0.92 * ((GRAIN_START - step) / (GRAIN_START - GRAIN_FULL)) ** 1.35, 3)
 
 
 def grey_alpha(step):
@@ -747,6 +772,9 @@ def draw_all(rp):
     screen_dark().save(os.path.join(d, 'screen_dark.png'))
     screen_grey().save(os.path.join(d, 'screen_grey.png'))
     fb_grain().save(os.path.join(d, 'fx_grain.png'))
+    for lv in range(1, SPECK_LEVELS + 1):
+        specks(lv, 51).save(os.path.join(d, f'screen_specks_{lv}.png'))
+        specks(lv, 77).save(os.path.join(d, f'screen_specks_{lv}_b.png'))
     for ch in '0123456789':
         px.save(digit_big(ch), os.path.join(d, f'num_{ch}.png'), 2)
     plate(15, 7).save(os.path.join(d, 'plate_hp.png'))
@@ -935,8 +963,15 @@ def screen_fx():
     for n in range(0, GREY_START):
         ctl.append({f"grey_{n:02d}": full('screen_grey', has(f'S{n:02d}'), 1, alpha=grey_alpha(n))})
     ctl.append({"dark": full('screen_dark', f"{has('Vs1')} or {has('Vs0')}", 2, alpha=f"@{NS}.fx_dark_a")})
-    for n in range(0, GRAIN_START + 1):
-        ctl.append({f"grain_{n:02d}": dict(full('fx_grain', has(f'S{n:02d}'), 3, alpha=grain_alpha(n)), uv_size=[320, 180], uv=f"@{NS}.fb_grain")})
+    # flakes drifting over the whole screen: two layers floating different ways, thicker every 5 % of lost sanity
+    drift = lambda tex, expr, layer, a, anim: dict(img(tex, ("115%", "115%"), (0, 0), layer, expr), keep_ratio=False, alpha=a, anims=[f"@{NS}.{anim}"])
+    for n in range(0, SPECK_START + 1):
+        lv, a = speck_level(n), speck_alpha(n)
+        ctl.append({f"specks_{n:02d}": group(has(f'S{n:02d}'), [
+            {"a": drift(f'screen_specks_{lv}', None, 3, a, 'drift_a1')},
+            {"b": drift(f'screen_specks_{lv}_b', None, 3, round(a * 0.8, 3), 'drift_b1')}])})
+    # the TV grain: only when sanity is almost gone (below 15 %)
+    ctl.append({"grain": dict(full('fx_grain', has('Vs0'), 4), uv_size=[320, 180], uv=f"@{NS}.fb_grain")})
     for n in range(0, RED_START + 1):
         parts = [{"red": full('screen_red', None, 4, alpha=red_alpha(n), anims=[f"@{NS}.heart{n:02d}_a"])}]
         if max(1, n) <= DEEP_START:
@@ -1038,6 +1073,12 @@ def hud_json():
         beat('heart', n, base, min(1.0, base + 0.16 + 0.14 * k))       # red edges
         beat('vein', n, vein_alpha(n) * 0.7, vein_alpha(n))             # veins darken on the beat
         beat('swell', n, 0.0, 0.5 + 0.4 * k)                            # ...and swell
+    # drifting flakes: slow float one way and back, the second layer on another path and pace
+    for name, pts, dur in (('drift_a', [[0, 0], [9, -5], [3, -9], [-6, -3]], 3.4), ('drift_b', [[0, 0], [-8, 4], [-2, 9], [7, 3]], 4.1)):
+        for i, fr in enumerate(pts):
+            to = pts[(i + 1) % len(pts)]
+            anims[f"{name}{i + 1}"] = {"anim_type": "offset", "easing": "in_out_sine", "duration": dur, "from": fr, "to": to,
+                                       "next": f"@{NS}.{name}{(i + 1) % len(pts) + 1}"}
     anims["fb_grain"] = {"anim_type": "flip_book", "initial_uv": [0, 0], "frame_count": 6, "frame_step": 320, "fps": 16, "easing": "linear"}
     for tex, frames in FLIPBOOKS.items():
         anims[f"fb_{tex}"] = {"anim_type": "flip_book", "initial_uv": [0, 0], "frame_count": frames, "frame_step": FX * S4,
