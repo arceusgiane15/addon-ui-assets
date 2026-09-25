@@ -94,8 +94,9 @@ def draw(canvas, rp, anims, ctl, px_, py_, pw, ph, payload, t):
             frame = int(t * fb['fps']) % fb['frame_count']
             im = im.crop((frame * fb['frame_step'], 0, frame * fb['frame_step'] + uw, uh))
         im = im.resize((max(1, round(w * G)), max(1, round(h * G))), Image.LANCZOS)
-        if isinstance(ctl.get('alpha'), str):
-            a = max(0.0, min(1.0, anim_value(ctl['alpha'], anims, t)))
+        if isinstance(ctl.get('alpha'), (str, int, float)):
+            a = ctl['alpha'] if not isinstance(ctl['alpha'], str) else anim_value(ctl['alpha'], anims, t)
+            a = max(0.0, min(1.0, a))
             im = im.copy()
             im.putalpha(im.getchannel('A').point(lambda v: int(v * a)))
         canvas.append((ctl.get('layer', 0), im, (round(x * G), round(y * G))))

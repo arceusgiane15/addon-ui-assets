@@ -95,6 +95,19 @@ await import("./main.js");
   ok("dying heart is stage 0 while food is still full: " + s);
 }
 
+// ---------------------------------------------------------------- screen effects can be turned off per player
+{
+  const { buildPayload } = await import("./succubi/hud.js");
+  const { openPersonal } = await import("./succubi/personal.js");
+  const p = makePlayer({ id: "-170", hp: 20 });
+  assert.ok(!buildPayload(p, 3000).includes("Nx"));
+  answers.push(1, 99);
+  await openPersonal(p);
+  assert.ok(p.hasTag("no_screen_fx"));
+  assert.ok(buildPayload(p, 3010).includes("Nx"));
+  ok("personal menu turns the red aura / grey screen off (Nx)");
+}
+
 // ---------------------------------------------------------------- height rules
 {
   const { openHeightForm } = await import("./height/ui.js");

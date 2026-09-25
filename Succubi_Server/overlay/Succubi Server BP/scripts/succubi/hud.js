@@ -15,6 +15,8 @@ import { isBloodMoon } from "./bloodmoon.js";
 //   G = the health ring before the hit (pale damage trail)       x = h f t s
 //   Vxn = icon stage n (4 full .. 0 almost gone): cracked heart, eaten drumstick, drying drop, warping brain
 //   Er regeneration sparkles, Ea absorption halo, Ef burning, Qh hunger effect, Eb blood moon
+//   whole screen (RP): sanity below 60 % greys the world out step by step, health stage 2/1/0 = red aura
+//   beating at the edges; Nx = this player turned the screen effects off
 //   "shud:off" hides the HUD (tag hide_hud, creative, spectator)
 // Map makers who show their own /title can pause the HUD: /scriptevent succubi:hud_pause 10
 const MARKER = "shud:";
@@ -168,6 +170,7 @@ export function buildPayload(player, tick = system.currentTick) {
   if (thirstOn && thirst <= 6) s += "!t";
   if (sanityOn && sanity <= 6) s += "!s";
   s += flashes(player, { h: hp, hmax: maxHp, f: food, t: thirstRaw, s: sanityRaw }, hpStep, tick);
+  if (player.hasTag("no_screen_fx")) s += "Nx"; // player turned the red aura / grey screen off
   s += effectTokens(player);
   return s;
 }

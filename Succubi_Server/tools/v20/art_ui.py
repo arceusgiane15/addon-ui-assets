@@ -246,6 +246,18 @@ def menu_icons(rp):
     icon_tile(gun.resize((gun.width * 3, gun.height * 3), Image.NEAREST)).save(os.path.join(d, 'gun.png'))
     gear = load_art('pixel_art_native.png', 40)
     icon_tile(gear, edge=(242, 193, 78)).save(os.path.join(d, 'settings.png'))
+    scr = px.from_rows(["############",
+                        "#rr......rr#",
+                        "#r..gggg..r#",
+                        "#..gggggg..#",
+                        "#..gggggg..#",
+                        "#r..gggg..r#",
+                        "#rr......rr#",
+                        "############",
+                        "     ##     ",
+                        "   ######   "],
+                       {'#': (30, 22, 32), 'r': (214, 30, 50), 'g': (150, 146, 156), '.': (70, 60, 80)})
+    icon_tile(px.outline(scr, INK).resize((42, 35), Image.NEAREST)).save(os.path.join(d, 'screen_fx.png'))
 
 
 # ------------------------------------------------------------------------------------------ JSON
