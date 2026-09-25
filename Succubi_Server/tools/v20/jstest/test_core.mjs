@@ -45,7 +45,7 @@ await import("./main.js");
   const { buildPayload } = await import("./succubi/hud.js");
   const p = makePlayer({ hp: 86, equipment: { Chest: "minecraft:iron_chestplate", Head: "minecraft:iron_helmet" } });
   const s = buildPayload(p);
-  assert.match(s, /^shud:H17F20T20S20PnX0Y8Z6AyB0C8Vh4Vf4Vt4Vs4$/, s);
+  assert.match(s, /^shud:H17F20T20S20PnX0Y8Z6Of1Mf0Kf0Ot1Mt0Kt0Os1Ms0Ks0AyB0C8Vh4Vf4Vt4Vs4IhIfItIs$/, s);
   ok("payload normal: " + s);
   p.hp = 20; p.effects = ["poison"];
   const low = buildPayload(p);
@@ -87,6 +87,13 @@ await import("./main.js");
     assert.match(payload, /^shud:[A-Za-z0-9]+$/, payload);
   }
   ok("payload tokens are letters and digits only");
+  assert.ok(hit.includes("Dh") && !hit.includes("Ih") && hit.includes("If"), "a hit replaces the at-rest token: " + hit);
+  assert.ok(later.includes("Ih"), later);
+  ok("at-rest token Ix only while no flash is on");
+  const { percentDigits } = await import("./succubi/hud.js");
+  assert.deepEqual([percentDigits("f", 20, 20), percentDigits("t", 9, 20), percentDigits("s", 3.4, 100), percentDigits("s", 0, 100)],
+    ["Of1Mf0Kf0", "Ot0Mt4Kt5", "Os0Ms0Ks3", "Os0Ms0Ks0"]);
+  ok("food / thirst / sanity numbers in %");
 }
 
 // ---------------------------------------------------------------- icon stages (Don't Starve style)

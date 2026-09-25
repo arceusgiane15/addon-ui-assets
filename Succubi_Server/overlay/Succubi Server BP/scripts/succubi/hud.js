@@ -7,17 +7,20 @@ import { isBloodMoon } from "./bloodmoon.js";
 
 // The HUD is drawn by RP ui/succubi_hud.json (four round gauges). Its data travels in the title, which the RP
 // never displays and keeps (preserves) after the title fades, so a value is only sent when it changes:
-//   shud:H13F18T09S20Pn X0Y8Z6 An Lt Dh G15 Er     (spaces only here for reading)
+//   shud:H13F18T09S20Pn X0Y8Z6 Of0Mf9Kf0 Ot0Mt4Kt5 Os1Ms0Ks0 An Lt Dh If It Is G15 Er     (spaces only here for reading)
 //   H/F/T/S = health / food / thirst / sanity ring, 00-20 (Txx / Sxx = that system is switched off)
-//   P = health colour (n normal, p poison, w wither)   X Y Z = health number digits
+//   P = health colour (n normal, p poison, w wither)   X Y Z = health number digits (HP)
+//   O M K + f/t/s = food / thirst / sanity number digits in % (hundreds, tens, ones)
 //   A = armor (n none, y shown with digits B C)
 //   Lx = low (slow pulse)   Dx = just lost some (red flash, icon shakes)   Ux = just gained (glow, icon pops)
-//   Tokens are letters and digits only: the game's UI expressions choke on symbols inside the quotes
+//   Ix = neither (icon at rest)
+//   Tokens are letters and digits only, and the UI checks one token per condition (the game misread
+//   longer 'and' chains: the health number stuck at 88, the heart stayed wither-grey)
 //   G = the health ring before the hit (pale damage trail)       x = h f t s
 //   Vxn = icon stage n (4 full .. 0 almost gone): cracked heart, eaten drumstick, drying drop, warping brain
 //   Er regeneration sparkles, Ea absorption halo, Ef burning, Qh hunger effect, Eb blood moon
-//   whole screen (RP): sanity below 70 % greys the world out step by step, health stage 2/1/0 = red aura
-//   beating at the edges; Nx = this player turned the screen effects off
+//   whole screen (RP): sanity below 70 % lays a grey filter over the screen step by step; health at 75 % and
+//   below keeps the edges red, deeper at every step (from H); Nx = this player turned the screen effects off
 //   "shud:off" hides the HUD (tag hide_hud, creative, spectator)
 // Map makers who show their own /title can pause the HUD: /scriptevent succubi:hud_pause 10
 const MARKER = "shud:";
@@ -132,8 +135,17 @@ function flashes(player, values, hpStep, tick) {
     if (until > tick) s += flag;
     else delete m.until[flag];
   }
+  for (const k of Object.keys(RULES)) {
+    if (!m.until["D" + k] && !m.until["U" + k]) s += "I" + k; // at rest: the icon's own idle motion
+  }
   if (m.trailUntil > tick && m.trail > hpStep) s += `G${pad2(m.trail)}`;
   return s;
+}
+
+// the faint number under a gauge: O M K = hundreds, tens, ones of the value in %
+export function percentDigits(letter, value, max) {
+  const p = max > 0 && value > 0 ? Math.max(0, Math.min(100, Math.round((value / max) * 100))) : 0;
+  return `O${letter}${Math.floor(p / 100)}M${letter}${Math.floor(p / 10) % 10}K${letter}${p % 10}`;
 }
 
 // 4 full, 3 >= 50 %, 2 >= 30 %, 1 >= 15 %, 0 below (sanity fog starts at 50 / 30 / 15 too)
@@ -161,6 +173,9 @@ export function buildPayload(player, tick = system.currentTick) {
   s += sanityOn ? `S${pad2(sanity)}` : "Sxx";
   s += `P${healthTint(player)}`;
   s += `X${Math.floor(hpNum / 100)}Y${Math.floor(hpNum / 10) % 10}Z${hpNum % 10}`;
+  s += percentDigits("f", food, 20);
+  if (thirstOn) s += percentDigits("t", thirstRaw, THIRST_MAX);
+  if (sanityOn) s += percentDigits("s", sanityRaw, SANITY_MAX);
   s += armor > 0 ? `AyB${Math.floor(armor / 10)}C${armor % 10}` : "An";
   // icon stage (Don't Starve style: the heart cracks, the drumstick gets eaten, the drop dries, the brain warps)
   s += `Vh${stage(hp / maxHp)}Vf${stage(food / 20)}`;

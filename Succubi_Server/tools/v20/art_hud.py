@@ -534,35 +534,114 @@ def plate(w, h):
 SCREEN_W, SCREEN_H = 480, 270          # texture size; stretched over the whole screen
 
 
-def screen_blood():
-    """low health: a red aura that creeps in from the edges, blotchy like blood, clear in the middle"""
+def _edge_glow(reach, power, rgb_edge, rgb_in, peak, seed):
+    """red that creeps in from the screen edges, blotchy like blood, clear in the middle"""
     w, h = SCREEN_W, SCREEN_H
     y, x = np.mgrid[0:h, 0:w] + 0.5
     nx, ny = (x - w / 2) / (w / 2), (y - h / 2) / (h / 2)
     d = np.sqrt((nx * 0.92) ** 2 + (ny * 1.0) ** 2)
-    rng = np.random.RandomState(21)
+    rng = np.random.RandomState(seed)
     ang = np.arctan2(ny, nx)
     wobble = sum(rng.uniform(0.02, 0.06) * np.sin(k * ang + rng.uniform(0, 6.3)) for k in (3, 5, 8, 13, 21))
-    t = np.clip((d + wobble - 0.62) / 0.55, 0, 1) ** 1.35
+    t = np.clip((d + wobble - reach) / (1.25 - reach), 0, 1) ** power
     a = np.zeros((h, w, 4))
-    a[..., 0] = 150 + 80 * t
-    a[..., 1] = 0 + 10 * (1 - t)
-    a[..., 2] = 16 + 14 * (1 - t)
-    a[..., 3] = t * 235
-    # dark veins reaching in from the corners
-    im = Image.fromarray(a.astype('uint8'), 'RGBA')
-    dr = ImageDraw.Draw(im)
-    for cx, cy in ((0, 0), (w, 0), (0, h), (w, h)):
-        for k in range(5):
-            ang0 = math.atan2(h / 2 - cy, w / 2 - cx) + rng.uniform(-0.45, 0.45)
-            px_, py_ = cx, cy
-            for step_ in range(9):
-                ln = rng.uniform(8, 16)
-                ang0 += rng.uniform(-0.35, 0.35)
-                nx_, ny_ = px_ + math.cos(ang0) * ln, py_ + math.sin(ang0) * ln
-                dr.line([(px_, py_), (nx_, ny_)], fill=(70, 0, 8, int(200 * (1 - step_ / 9))), width=max(1, 3 - step_ // 3))
-                px_, py_ = nx_, ny_
-    return im.filter(ImageFilter.GaussianBlur(0.6))
+    for i in range(3):
+        a[..., i] = rgb_in[i] + (rgb_edge[i] - rgb_in[i]) * t
+    a[..., 3] = t * peak
+    return Image.fromarray(a.astype('uint8'), 'RGBA')
+
+
+def screen_red():
+    """hurt: red at the edges (its opacity rises step by step as health drops)"""
+    return _edge_glow(0.62, 1.35, (230, 10, 30), (150, 0, 16), 235, 21)
+
+
+def screen_red_deep():
+    """close to death: a darker, thicker red that reaches further in"""
+    return _edge_glow(0.38, 1.1, (120, 0, 12), (170, 6, 24), 245, 22)
+
+
+VEIN_LEVELS = 7
+
+
+def vein_segments(seed=41):
+    """dark veins growing in from the edges. Every segment gets a 'birth' value 0..1: level L draws the
+    segments born before L / VEIN_LEVELS, so the first levels are a few short veins at the corners and
+    later levels grow them longer, branch them and add new ones along the sides"""
+    w, h = SCREEN_W, SCREEN_H
+    rng = np.random.RandomState(seed)
+    segs = []
+
+    def inward(x, y):
+        return math.atan2(h / 2 - y, w / 2 - x)
+
+    def grow(x, y, ang, b, width, depth):
+        for _ in range(16 - depth * 3):
+            ln = rng.uniform(7, 13)
+            ang += rng.uniform(-0.32, 0.32)
+            nx_, ny_ = x + math.cos(ang) * ln, y + math.sin(ang) * ln
+            if math.hypot((nx_ - w / 2) / (w / 2), (ny_ - h / 2) / (h / 2)) < 0.42 or b > 1:
+                return
+            segs.append((x, y, nx_, ny_, b, width))
+            b += rng.uniform(0.035, 0.06)
+            width = max(0.9, width * 0.9)
+            if depth < 2 and rng.random_sample() < 0.3:
+                grow(nx_, ny_, ang + rng.choice([-1, 1]) * rng.uniform(0.5, 1.0), b + rng.uniform(0.05, 0.2), width * 0.7, depth + 1)
+            x, y = nx_, ny_
+
+    for cx, cy in ((0, 0), (w, 0), (0, h), (w, h)):                       # corners first
+        for k in range(3):
+            grow(cx, cy, inward(cx, cy) + rng.uniform(-0.5, 0.5), k * 0.12 + rng.uniform(0, 0.06), 3.2, 0)
+    for k in range(14):                                                  # then along the sides
+        side = k % 4
+        u = rng.uniform(0.12, 0.88)
+        x, y = [(u * w, 0), (u * w, h), (0, u * h), (w, u * h)][side]
+        grow(x, y, inward(x, y) + rng.uniform(-0.35, 0.35), rng.uniform(0.2, 0.75), 2.6, 0)
+    return segs
+
+
+def screen_veins(level, segs):
+    ss = 2
+    w, h = SCREEN_W * ss, SCREEN_H * ss
+    lim = level / VEIN_LEVELS
+    halo = Image.new('RGBA', (w, h))
+    core = Image.new('RGBA', (w, h))
+    dh, dc = ImageDraw.Draw(halo), ImageDraw.Draw(core)
+    for x0, y0, x1, y1, b, width in segs:
+        if b > lim:
+            continue
+        fade = min(1.0, (lim - b) / 0.08 + 0.35)                          # the newest tips are still faint
+        pts = [(x0 * ss, y0 * ss), (x1 * ss, y1 * ss)]
+        dh.line(pts, fill=(110, 0, 14, int(150 * fade)), width=int(width * ss * 2.6))
+        dc.line(pts, fill=(34, 0, 6, int(235 * fade)), width=max(1, int(width * ss)))
+    halo = halo.filter(ImageFilter.GaussianBlur(3 * ss))
+    halo.alpha_composite(core.filter(ImageFilter.GaussianBlur(0.5)))
+    return halo.resize((SCREEN_W, SCREEN_H), Image.LANCZOS)
+
+
+# red aura by health step (of 20): from RED_START down it is always on, fading in step by step; no flash on a hit
+RED_START = 15           # 75 %
+DEEP_START = 8           # 40 %: the darker layer joins in
+
+
+def red_alpha(n):
+    n = max(1, n)
+    return round(0.24 + 0.72 * ((RED_START - n) / (RED_START - 1)) ** 1.1, 3)
+
+
+def deep_alpha(n):
+    n = max(1, n)
+    return round(0.95 * ((DEEP_START + 1 - n) / DEEP_START) ** 1.25, 3)
+
+
+def vein_level(n):
+    n = max(1, n)
+    return min(VEIN_LEVELS, 1 + (RED_START - n) // 2)
+
+
+def vein_alpha(n):
+    n = max(1, n)
+    return round(0.8 + 0.2 * (RED_START - n) / (RED_START - 1), 3)
 
 
 def screen_dark():
@@ -572,30 +651,31 @@ def screen_dark():
     d = np.sqrt(((x - w / 2) / (w / 2)) ** 2 + ((y - h / 2) / (h / 2)) ** 2)
     a = np.zeros((h, w, 4))
     a[..., :3] = [8, 4, 12]
-    a[..., 3] = np.clip((d - 0.45) / 0.9, 0, 1) ** 1.2 * 255
+    a[..., 3] = np.clip((d - 0.55) / 0.9, 0, 1) ** 1.3 * 255
     return Image.fromarray(a.astype('uint8'), 'RGBA')
 
 
 def screen_grey():
-    return Image.new('RGBA', (8, 8), (128, 126, 132, 255))
+    """the grey filter: a neutral grey laid over the whole screen, thicker as sanity drops"""
+    return Image.new('RGBA', (8, 8), (118, 118, 120, 255))
 
 
 def fb_grain(n=6, seed=31):
-    """sanity almost gone: film grain / static"""
+    """sanity almost gone: film grain / static (kept light so the game stays playable)"""
     rng = np.random.RandomState(seed)
     w, h = 320, 180
     frames = []
     for f in range(n):
-        v = rng.randint(0, 255, (h, w))
+        v = rng.randint(40, 230, (h, w))
         a = np.zeros((h, w, 4), dtype='uint8')
         a[..., 0] = a[..., 1] = a[..., 2] = v
-        a[..., 3] = (rng.random_sample((h, w)) < 0.35) * 70
+        a[..., 3] = (rng.random_sample((h, w)) < 0.24) * 46
         frames.append(Image.fromarray(a, 'RGBA'))
     return strip(frames)
 
 
 GREY_START = 14          # sanity steps (of 20) below which the screen starts to grey out (70 %)
-GREY_MAX = 0.68          # grey layer opacity at sanity 0
+GREY_MAX = 0.7           # grey layer opacity at sanity 0
 
 
 def grey_alpha(step):
@@ -637,7 +717,11 @@ def draw_all(rp):
     dry_cracks().save(os.path.join(d, 'disc_dry.png'))
     madness_swirl().save(os.path.join(d, 'disc_madness.png'))
     glow_ring((200, 0, 30), r0=0.5, r1=R_IN + 0.5, strength=150).save(os.path.join(d, 'disc_bleed.png'))
-    screen_blood().save(os.path.join(d, 'screen_blood.png'))
+    screen_red().save(os.path.join(d, 'screen_red.png'))
+    screen_red_deep().save(os.path.join(d, 'screen_red_deep.png'))
+    segs = vein_segments()
+    for lv in range(1, VEIN_LEVELS + 1):
+        screen_veins(lv, segs).save(os.path.join(d, f'screen_veins_{lv}.png'))
     screen_dark().save(os.path.join(d, 'screen_dark.png'))
     screen_grey().save(os.path.join(d, 'screen_grey.png'))
     fb_grain().save(os.path.join(d, 'fx_grain.png'))
@@ -737,8 +821,27 @@ def group(expr, controls, layer=0):
     return c
 
 
+# number tokens (hundreds, tens, ones) sent by hud.js: health X Y Z (HP), the others O M K + gauge letter (%)
+NUMBER_TOKENS = {'health': ('X', 'Y', 'Z'), 'food': ('Of', 'Mf', 'Kf'), 'thirst': ('Ot', 'Mt', 'Kt'), 'sanity': ('Os', 'Ms', 'Ks')}
+NUM_ALPHA, PLATE_ALPHA = 0.62, 0.42
+
+
+def number_plate(hund, tens, ones):
+    """3 digits at -3.5 / 0 / +3.5, 2 digits at -1.75 / +1.75, 1 digit at 0 - leading zeros hidden.
+    Every condition is a single token check; the digit count is picked by nested panels."""
+    def digits(tok, xoff, skip_zero=False):
+        return [{f"{tok}{d}": img(f'num_{d}', (3.5, 4.5), (xoff, 9.5), 10, has(f'{tok}{d}'), alpha=NUM_ALPHA)}
+                for d in range(10) if not (skip_zero and d == 0)]
+    return group(None, [
+        {"plate": img('plate_hp', (15, 7), (0, 9.5), 9, alpha=PLATE_ALPHA)},
+        {"three": group(hasnt(f'{hund}0'), digits(hund, -3.5, True) + digits(tens, 0) + digits(ones, 3.5))},
+        {"below_100": group(has(f'{hund}0'), [
+            {"two": group(hasnt(f'{tens}0'), digits(tens, -1.75, True) + digits(ones, 1.75))},
+            {"one": group(has(f'{tens}0'), digits(ones, 0))}])}])
+
+
 def gauge(key, letter, x, fills, icons, f):
-    lo, loss, gain = f'L{f}', f'D{f}', f'U{f}'
+    lo, loss, gain, still = f'L{f}', f'D{f}', f'U{f}', f'I{f}'
     ctl = [{"shadow": img('shadow', (FX, FX), (0, 0), 0)},
            {"disc": img('disc', (G, G), (0, 0), 1)},
            {"track": img('track', (G, G), (0, 0), 2)}]
@@ -783,7 +886,7 @@ def gauge(key, letter, x, fills, icons, f):
         tiers = []
         for t in TIERS:
             tex = f'icon_{icon_key}_{t}'
-            idle = img(tex, (ICON, ICON), (0, 0), 6, and_(hasnt(loss), hasnt(gain)),
+            idle = img(tex, (ICON, ICON), (0, 0), 6, has(still),
                        **({"anims": idle_anims(key, t)} if idle_anims(key, t) else {}),
                        **({"alpha": f"@{NS}.flicker_a"} if key == 'sanity' and t == 0 else {}))
             tiers.append({f"stage_{t}": group(has(f'V{f}{t}'), [
@@ -791,21 +894,8 @@ def gauge(key, letter, x, fills, icons, f):
                 {"shake": img(tex, (ICON, ICON), (0, 0), 6, has(loss), anims=[f"@{NS}.shake_a"])},
                 {"pop": img(tex, (ICON, ICON), (0, 0), 6, has(gain), anims=[f"@{NS}.pop_a"])}])})
         ctl.append({f"icons_{icon_key}": group(cond(tok), tiers)})
-    if key == 'health':
-        # health number on a plate under the heart: ones / tens / hundreds, leading zeros hidden
-        ctl.append({"plate": img('plate_hp', (15, 7), (0, 9.5), 9)})
-        # centred on the plate: 3 digits at -3.5 / 0 / +3.5, 2 digits at -1.75 / +1.75, 1 digit at 0
-        counts = {'three': (hasnt('X0'), [('X', -3.5), ('Y', 0), ('Z', 3.5)]),
-                  'two': (and_(has('X0'), hasnt('Y0')), [('Y', -1.75), ('Z', 1.75)]),
-                  'one': (and_(has('X0'), has('Y0')), [('Z', 0)])}
-        for name, (count, slots) in counts.items():
-            digits = []
-            for ld, xoff in slots:
-                for dgt in range(10):
-                    if ld == 'X' and dgt == 0:
-                        continue
-                    digits.append({f"{ld}{dgt}": img(f'num_{dgt}', (3.5, 4.5), (xoff, 9.5), 10, has(f'{ld}{dgt}'))})
-            ctl.append({f"hp_{name}": group(count, digits)})
+    # the value as a faint number on a plate under the gauge: health in HP, the others in %
+    ctl.append({"number": number_plate(*NUMBER_TOKENS[key])})
     body = {"type": "panel", "size": [G, G], "offset": [x, 0], "anchor_from": "top_left", "anchor_to": "top_left", "controls": ctl}
     if key == 'thirst':
         body["bindings"] = vis(hasnt('Txx'))
@@ -816,23 +906,24 @@ def gauge(key, letter, x, fills, icons, f):
 
 def screen_fx():
     """whole-screen effects, drawn under the gauges and under the vanilla HUD:
-    low sanity -> the world greys out step by step (+ dark corners, then grain),
-    low health -> red blood aura at the edges, beating faster the closer to death; a hit flashes the edges"""
-    full = lambda tex, expr, layer, **kw: dict(img(tex, ("100%", "100%"), (0, 0), layer, expr), **kw)
+    low sanity -> a grey filter over the whole screen, thicker step by step (+ dark corners, then light grain),
+    hurt -> red edges that stay on and deepen step by step as health drops, with dark veins growing in.
+    keep_ratio off: the textures stretch over any screen shape (a kept ratio drew the 8 px grey as a square)"""
+    full = lambda tex, expr, layer, **kw: dict(img(tex, ("100%", "100%"), (0, 0), layer, expr), keep_ratio=False, **kw)
     ctl = []
     for n in range(0, GREY_START):
-        a = grey_alpha(n)
-        ctl.append({f"grey_{n:02d}": full('screen_grey', has(f'S{n:02d}'), 1, alpha=a)})
+        ctl.append({f"grey_{n:02d}": full('screen_grey', has(f'S{n:02d}'), 1, alpha=grey_alpha(n))})
     ctl.append({"dark": full('screen_dark', f"{has('Vs1')} or {has('Vs0')}", 2, alpha=f"@{NS}.fx_dark_a")})
     ctl.append({"grain": dict(full('fx_grain', has('Vs0'), 3), uv_size=[320, 180], uv=f"@{NS}.fb_grain")})
-    ctl.append({"blood_2": full('screen_blood', has('Vh2'), 4, alpha=f"@{NS}.fx_blood2_a")})
-    ctl.append({"blood_1": full('screen_blood', has('Vh1'), 4, alpha=f"@{NS}.fx_blood1_a")})
-    ctl.append({"blood_0": full('screen_blood', has('Vh0'), 4, alpha=f"@{NS}.fx_blood0_a")})
-    # a hit flashes the edges, unless the aura is already strong (stage 1 / 0)
-    ctl.append({"hit_gate": group(and_(hasnt('Vh1'), hasnt('Vh0')), [
-        {"hit": full('screen_blood', has('Dh'), 5, alpha=f"@{NS}.fx_hit_a")}])})
-    return {"type": "panel", "size": ["100%", "100%"], "layer": 1, "controls": ctl,
-            "bindings": vis(and_(hasnt('shud:off'), hasnt('Nx')))}
+    for n in range(0, RED_START + 1):
+        parts = [{"red": full('screen_red', None, 4, alpha=red_alpha(n))}]
+        if max(1, n) <= DEEP_START:
+            parts.append({"deep": full('screen_red_deep', None, 5, alpha=deep_alpha(n))})
+        parts.append({"veins": full(f'screen_veins_{vein_level(n)}', None, 6, alpha=vein_alpha(n))})
+        ctl.append({f"blood_{n:02d}": group(has(f'H{n:02d}'), parts)})
+    # shown unless the HUD is off, and only for players who keep the effects on (two nested single checks)
+    return {"type": "panel", "size": ["100%", "100%"], "layer": 1, "bindings": vis(hasnt('shud:off')),
+            "controls": [{"fx_on": group(hasnt('Nx'), ctl)}]}
 
 
 def hud_json():
@@ -903,14 +994,8 @@ def hud_json():
     anims["flicker_a"] = {"anim_type": "alpha", "easing": "linear", "duration": 0.07, "from": 1.0, "to": 0.35, "next": f"@{NS}.flicker_b"}
     anims["flicker_b"] = {"anim_type": "alpha", "easing": "linear", "duration": 0.12, "from": 0.35, "to": 1.0, "next": f"@{NS}.flicker_c"}
     anims["flicker_c"] = {"anim_type": "wait", "duration": 0.5, "next": f"@{NS}.flicker_a"}
-    # screen effects: the blood aura beats with the heart (slow and faint at 30-50 %, racing and solid near death)
-    for t, (lo, hi, period) in {2: (0.10, 0.32, 1.0), 1: (0.35, 0.75, 0.62), 0: (0.65, 1.0, 0.34)}.items():
-        anims[f"fx_blood{t}_a"] = {"anim_type": "alpha", "easing": "out_quad", "duration": period * 0.3, "from": lo, "to": hi, "next": f"@{NS}.fx_blood{t}_b"}
-        anims[f"fx_blood{t}_b"] = {"anim_type": "alpha", "easing": "in_out_sine", "duration": period * 0.7, "from": hi, "to": lo, "next": f"@{NS}.fx_blood{t}_a"}
-    anims["fx_hit_a"] = {"anim_type": "alpha", "easing": "out_quad", "duration": 0.12, "from": 0.2, "to": 0.85, "next": f"@{NS}.fx_hit_b"}
-    anims["fx_hit_b"] = {"anim_type": "alpha", "easing": "in_quad", "duration": 0.45, "from": 0.85, "to": 0.2, "next": f"@{NS}.fx_hit_a"}
-    anims["fx_dark_a"] = {"anim_type": "alpha", "easing": "in_out_sine", "duration": 2.2, "from": 0.55, "to": 0.9, "next": f"@{NS}.fx_dark_b"}
-    anims["fx_dark_b"] = {"anim_type": "alpha", "easing": "in_out_sine", "duration": 2.2, "from": 0.9, "to": 0.55, "next": f"@{NS}.fx_dark_a"}
+    anims["fx_dark_a"] = {"anim_type": "alpha", "easing": "in_out_sine", "duration": 2.2, "from": 0.35, "to": 0.6, "next": f"@{NS}.fx_dark_b"}
+    anims["fx_dark_b"] = {"anim_type": "alpha", "easing": "in_out_sine", "duration": 2.2, "from": 0.6, "to": 0.35, "next": f"@{NS}.fx_dark_a"}
     anims["fb_grain"] = {"anim_type": "flip_book", "initial_uv": [0, 0], "frame_count": 6, "frame_step": 320, "fps": 16, "easing": "linear"}
     for tex, frames in FLIPBOOKS.items():
         anims[f"fb_{tex}"] = {"anim_type": "flip_book", "initial_uv": [0, 0], "frame_count": frames, "frame_step": FX * S4,

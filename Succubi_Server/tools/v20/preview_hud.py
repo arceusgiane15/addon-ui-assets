@@ -97,13 +97,18 @@ def draw(canvas, rp, anims, ctl, px_, py_, pw, ph, payload, t):
             fb = anims[ctl['uv'].split('.')[-1]]
             frame = int(t * fb['fps']) % fb['frame_count']
             im = im.crop((frame * fb['frame_step'], 0, frame * fb['frame_step'] + uw, uh))
-        im = im.resize((max(1, round(w * G)), max(1, round(h * G))), Image.LANCZOS)
+        dw, dh, dx, dy = w, h, 0, 0
+        if ctl.get('keep_ratio', True):          # the game default: the texture keeps its shape, centred
+            k = min(w / im.width, h / im.height)
+            dw, dh = im.width * k, im.height * k
+            dx, dy = (w - dw) / 2, (h - dh) / 2
+        im = im.resize((max(1, round(dw * G)), max(1, round(dh * G))), Image.LANCZOS)
         if isinstance(ctl.get('alpha'), (str, int, float)):
             a = ctl['alpha'] if not isinstance(ctl['alpha'], str) else anim_value(ctl['alpha'], anims, t)
             a = max(0.0, min(1.0, a))
             im = im.copy()
             im.putalpha(im.getchannel('A').point(lambda v: int(v * a)))
-        canvas.append((ctl.get('layer', 0), im, (round(x * G), round(y * G))))
+        canvas.append((ctl.get('layer', 0), im, (round((x + dx) * G), round((y + dy) * G))))
     for c in ctl.get('controls', []):
         (_, body), = c.items()
         draw(canvas, rp, anims, body, x, y, w, h, payload, t)
@@ -132,13 +137,21 @@ def stage(r):
 
 
 def with_stages(payload):
-    """add the icon stage tokens hud.js would send, from the ring steps"""
-    if 'Vh' in payload:
+    """add the tokens hud.js would send that a preview payload leaves out: icon stages, % numbers, at-rest flags"""
+    if payload.endswith('off'):
         return payload
     for letter, flag in (('H', 'h'), ('F', 'f'), ('T', 't'), ('S', 's')):
         m = re.search(letter + r'(\d\d)', payload)
-        if m:
-            payload += f'V{flag}{stage(int(m.group(1)) / 20)}'
+        if not m:
+            continue
+        v = int(m.group(1))
+        if f'V{flag}' not in payload:
+            payload += f'V{flag}{stage(v / 20)}'
+        if flag != 'h' and f'O{flag}' not in payload:
+            p = v * 5
+            payload += f'O{flag}{p // 100}M{flag}{p // 10 % 10}K{flag}{p % 10}'
+        if f'D{flag}' not in payload and f'U{flag}' not in payload and f'I{flag}' not in payload:
+            payload += f'I{flag}'
     return payload
 
 

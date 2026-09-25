@@ -27,7 +27,7 @@ export async function openPersonal(player, note = "") {
     .body(note || "§7ตั้งค่าเฉพาะตัวคุณ ไม่มีผลกับคนอื่น");
   form.button(`§lแถบสถานะ (HUD): ${hidden ? "§cซ่อน" : "§aแสดง"}\n§7เลือด อาหาร น้ำ สติ เหนือช่องของ`, `${UI}hud`);
   const noFx = player.hasTag("no_screen_fx");
-  form.button(`§lเอฟเฟกต์จอ: ${noFx ? "§cปิด" : "§aเปิด"}\n§7ขอบจอแดงตอนใกล้ตาย · จอเทาตอนสติต่ำ`, `${UI}screen_fx`);
+  form.button(`§lเอฟเฟกต์จอ: ${noFx ? "§cปิด" : "§aเปิด"}\n§7ขอบจอแดงตอนเลือดน้อย · จอเทาตอนสติต่ำ`, `${UI}screen_fx`);
   form.button(
     `§lปรับส่วนสูง · ${getHeightCm(player)} ซม.\n§7${lock.seconds ? `เปลี่ยนได้อีกใน ${Math.ceil(lock.seconds / 60)} นาที` : "ส่วนสูงมีผลกับเลือดสูงสุด"}`,
     `${UI}height`

@@ -93,11 +93,13 @@ def pay(h, s, extra=''):
 
 SHOTS = [
     ('ปกติ', pay(18, 18)),
-    ('สติ 50%: ภาพเริ่มซีดเทา', pay(18, 10)),
-    ('สติ 25%: เทาหนัก ขอบจอมืด', pay(18, 5)),
-    ('สติ 5%: เกือบขาวดำ มีเม็ดสัญญาณรบกวน', pay(18, 1)),
-    ('เลือด 25%: ขอบจอแดงเต้นตามหัวใจ', pay(5, 18)),
-    ('เลือด 10%: ออร่าแดงหนา เต้นรัว', pay(2, 18)),
+    ('สติ 50%: ฟิลเตอร์เทาเริ่มคลุมทั้งจอ', pay(18, 10)),
+    ('สติ 25%: เทาหนัก ขอบจอมืดนิดๆ', pay(18, 5)),
+    ('สติ 5%: เกือบขาวดำ เม็ดซ่าบางๆ', pay(18, 1)),
+    ('เลือด 70%: ขอบแดงจางๆ เส้นเลือดนิดเดียว', pay(14, 18)),
+    ('เลือด 50%: แดงขึ้น เส้นเลือดยาวขึ้น', pay(10, 18)),
+    ('เลือด 25%: แดงเข้ม เส้นเลือดเยอะ', pay(5, 18)),
+    ('เลือด 5%: แดงหนาเกือบทั้งจอ', pay(1, 18)),
 ]
 
 if __name__ == '__main__':
@@ -110,18 +112,19 @@ if __name__ == '__main__':
         for i in range(48):
             s = max(0, 20 - i * 20 // 44)
             frames.append(label(render(out, pay(18, s), i / fps, base), f'สติค่อยๆ ลด: {s * 5}%'))
-        for i in range(36):
-            h = max(1, 18 - i // 2)
-            frames.append(label(render(out, pay(h, 18, 'Dh' if i % 6 < 2 else ''), i / fps, base), f'เลือดค่อยๆ ลด: {h * 5}%'))
+        for i in range(60):
+            h = max(1, 20 - i * 19 // 52)
+            frames.append(label(render(out, pay(h, 18), i / fps, base), f'เลือดค่อยๆ ลด: {h * 5}%'))
         for i in range(24):
-            frames.append(label(render(out, pay(2, 18), i / fps, base), 'ใกล้ตาย: ออร่าแดงเต้นรัว'))
+            h = min(20, 1 + i)
+            frames.append(label(render(out, pay(h, 18), i / fps, base), f'ฟื้นเลือด: {h * 5}%'))
         frames = [f.convert('RGB').resize((W * G // 1, H * G // 1)).quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE) for f in frames]
         frames[0].save(target, save_all=True, append_images=frames[1:], duration=int(1000 / fps), loop=0, optimize=True)
         print('saved', target, len(frames))
     else:
         shots = [label(render(out, p, 0.12, base), l) for l, p in SHOTS]
         sw, sh = shots[0].size
-        sheet = Image.new('RGBA', (sw * 2, sh * 3))
+        sheet = Image.new('RGBA', (sw * 2, sh * ((len(shots) + 1) // 2)))
         for i, s in enumerate(shots):
             sheet.alpha_composite(s, ((i % 2) * sw, (i // 2) * sh))
         sheet.save(target)

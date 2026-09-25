@@ -16,7 +16,7 @@ import { initNametags } from "./succubi/nametags.js";
 import { initPackCheck } from "./succubi/packs.js";
 
 /**
- * Succubi Server v1.1.4 - core systems.
+ * Succubi Server v1.1.5 - core systems.
  * Guns live in the separate "Succubi Guns" packs; this pack works with or without them.
  * Menus: the wallet (always in the last hotbar slot) for players, the settings item for admins.
  */
@@ -37,4 +37,4 @@ initHorror();
 initNametags();
 initPackCheck();
 
-console.warn("[Succubi Server] v1.1.4 loaded: wallet, shops, HUD, height, medical, thirst, sanity, horror kit");
+console.warn("[Succubi Server] v1.1.5 loaded: wallet, shops, HUD, height, medical, thirst, sanity, horror kit");
