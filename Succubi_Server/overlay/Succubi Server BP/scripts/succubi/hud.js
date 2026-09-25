@@ -13,6 +13,7 @@ import { isBloodMoon } from "./bloodmoon.js";
 //   A = armor (n none, y shown with digits B C)
 //   !x = low (slow pulse)   -x = just lost some (red flash, icon shakes)   +x = just gained (glow, icon pops)
 //   G = the health ring before the hit (pale damage trail)       x = h f t s
+//   Vxn = icon stage n (4 full .. 0 almost gone): cracked heart, eaten drumstick, drying drop, warping brain
 //   Er regeneration sparkles, Ea absorption halo, Ef burning, Qh hunger effect, Eb blood moon
 //   "shud:off" hides the HUD (tag hide_hud, creative, spectator)
 // Map makers who show their own /title can pause the HUD: /scriptevent succubi:hud_pause 10
@@ -132,6 +133,12 @@ function flashes(player, values, hpStep, tick) {
   return s;
 }
 
+// 4 full, 3 >= 50 %, 2 >= 30 %, 1 >= 15 %, 0 below (sanity fog starts at 50 / 30 / 15 too)
+export function stage(ratio) {
+  if (!(ratio > 0)) return 0;
+  return ratio >= 0.75 ? 4 : ratio >= 0.5 ? 3 : ratio >= 0.3 ? 2 : ratio >= 0.15 ? 1 : 0;
+}
+
 export function buildPayload(player, tick = system.currentTick) {
   const maxHp = getMaxHp(player);
   const hp = capHealth(player, maxHp);
@@ -152,6 +159,10 @@ export function buildPayload(player, tick = system.currentTick) {
   s += `P${healthTint(player)}`;
   s += `X${Math.floor(hpNum / 100)}Y${Math.floor(hpNum / 10) % 10}Z${hpNum % 10}`;
   s += armor > 0 ? `AyB${Math.floor(armor / 10)}C${armor % 10}` : "An";
+  // icon stage (Don't Starve style: the heart cracks, the drumstick gets eaten, the drop dries, the brain warps)
+  s += `Vh${stage(hp / maxHp)}Vf${stage(food / 20)}`;
+  if (thirstOn) s += `Vt${stage(thirstRaw / THIRST_MAX)}`;
+  if (sanityOn) s += `Vs${stage(sanityRaw / SANITY_MAX)}`;
   if (hp <= maxHp * 0.25) s += "!h";
   if (food <= 6) s += "!f";
   if (thirstOn && thirst <= 6) s += "!t";

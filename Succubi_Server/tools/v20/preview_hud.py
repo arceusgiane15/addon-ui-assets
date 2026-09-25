@@ -49,14 +49,19 @@ def anim_value(ref, anims, t):
         name = a.get('next', '').split('.')[-1] if a.get('next') else None
     total = sum(a['duration'] for a in chain)
     t = t % total if name else min(t, total)
+    prev = next((a['to'] for a in reversed(chain) if 'to' in a), None)
     for a in chain:
         if t <= a['duration'] or a is chain[-1]:
+            if a['anim_type'] == 'wait':
+                return prev
             k = EASE.get(a.get('easing', 'linear'), EASE['linear'])(min(1, t / a['duration']))
             f, to = a['from'], a['to']
             if isinstance(f, list):
                 return [f[i] + (to[i] - f[i]) * k for i in range(len(f))]
             return f + (to - f) * k
         t -= a['duration']
+        if 'to' in a:
+            prev = a['to']
 
 
 def tex(rp, path):
@@ -117,7 +122,23 @@ def scene(vanilla_ui):
     return im
 
 
+def stage(r):
+    return 4 if r >= 0.75 else 3 if r >= 0.5 else 2 if r >= 0.3 else 1 if r >= 0.15 else 0
+
+
+def with_stages(payload):
+    """add the icon stage tokens hud.js would send, from the ring steps"""
+    if 'Vh' in payload:
+        return payload
+    for letter, flag in (('H', 'h'), ('F', 'f'), ('T', 't'), ('S', 's')):
+        m = re.search(letter + r'(\d\d)', payload)
+        if m:
+            payload += f'V{flag}{stage(int(m.group(1)) / 20)}'
+    return payload
+
+
 def render(out, vanilla_ui, payload, t=0.0, bg=None):
+    payload = with_stages(payload)
     rp = os.path.join(out, CORE_RP)
     ui = rjson(os.path.join(rp, 'ui/succubi_hud.json'))
     im = (bg or scene(vanilla_ui)).copy()
@@ -138,8 +159,16 @@ def paste_clip(im, tile, pos):
     im.alpha_composite(tile.crop((cx, cy, tile.width, tile.height)), (x + cx, y + cy))
 
 
-BASE = 'shud:H17F18T15S16PnX0Y8Z6An'
+BASE = 'shud:H17F18T15S16PnX0Y8Z6AnVh4Vf4Vt3Vs4'
+STAGES = [('shud:H{h:02d}F{h:02d}T{h:02d}S{h:02d}PnX{x}Y{y}Z{z}AnVh{v}Vf{v}Vt{v}Vs{v}' + ('!h!f!t!s' if v <= 1 else '')).format(
+    h=h, v=v, x=(h * 5) // 100, y=(h * 5) // 10 % 10, z=(h * 5) % 10) for h, v in ((20, 4), (13, 3), (8, 2), (4, 1), (2, 0))]
 STATES = [
+    ('ค่าลดลงเรื่อยๆ: ไอคอนเปลี่ยนรูปตามระดับ', STAGES),
+    ('ไอคอนเปลี่ยนตามค่า: เต็ม', STAGES[0]),
+    ('เหลือครึ่ง: หัวใจร้าว น่องไก่ถูกกัด น้ำพร่อง สมองเริ่มเครียด', STAGES[1]),
+    ('ต่ำ: หัวใจแตกร้าว เหลือเนื้อน้อย น้ำครึ่งหยด สมองมีรอยเย็บ', STAGES[2]),
+    ('วิกฤต: หัวใจฉีก เลือดหยด / ท้องร้อง / หยดน้ำแตก มีไอร้อน / สมองมีตา มือเงาคืบมา', STAGES[3]),
+    ('ใกล้หมด: หัวใจแหลก / เหลือกระดูก แมลงวันตอม / แห้งเป็นฝุ่น / สติหลุด', STAGES[4]),
     ('ปกติ', BASE),
     ('โดนตี: แดงกะพริบ หัวใจสั่น แถบจางๆ บอกเลือดที่เสียไป', 'shud:H11F18T15S16PnX0Y5Z4AyB0C8-hG17'),
     ('ฟื้นเลือด (Regeneration): ประกายวิ่งรอบหัวใจ', 'shud:H14F18T15S16PnX0Y7Z0An+hEr'),
@@ -175,13 +204,15 @@ if __name__ == '__main__':
         frames = []
         fps, per = 12, 1.6
         for label, payload in STATES:
-            for i in range(int(per * fps)):
+            seq = payload if isinstance(payload, list) else [payload]
+            for i in range(int(per * fps * (2.5 if len(seq) > 1 else 1))):
                 t = i / fps
-                frames.append(caption(crop(render(out, vui, payload, t, bg)), label).convert('RGB').quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE))
+                cur = seq[min(len(seq) - 1, int(i / (per * fps * 2.5) * len(seq)))]
+                frames.append(caption(crop(render(out, vui, cur, t, bg)), label).convert('RGB').quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE))
         frames[0].save(target, save_all=True, append_images=frames[1:], duration=int(1000 / fps), loop=0, optimize=True)
         print('saved', target, len(frames), 'frames')
     else:
-        shots = [caption(crop(render(out, vui, p, 0.1, bg)), label) for label, p in STATES]
+        shots = [caption(crop(render(out, vui, p, 0.1, bg)), label) for label, p in STATES if not isinstance(p, list)]
         cols = 3
         w, h = shots[0].size
         sheet = Image.new('RGBA', (w * cols, h * math.ceil(len(shots) / cols)))

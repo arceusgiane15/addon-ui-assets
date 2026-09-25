@@ -16,12 +16,14 @@ from PIL import Image, ImageDraw, ImageFilter
 from registry import step
 from common import wjson, CORE_RP, GUNS_RP
 import pixel as px
+import hud_icons
 
 TEX = 'textures/ui/succubi_hud/'
 S4 = 4                   # texels per GUI unit
 G = 22                   # gauge diameter (units)
 FX = 36                  # effect canvas around a gauge (units)
-ICON = 9
+ICON = 11                # gauge icons (22 x 22 art px); the armor badge keeps its 9-unit shield
+ICON_SMALL = 9
 STEPS = 20
 R_OUT, R_IN = 10.2, 7.0  # ring radii (units)
 INK = (10, 5, 9, 255)
@@ -263,6 +265,134 @@ def fb_flames(n=8, seed=9):
     return strip(frames)
 
 
+def fb_drip(n=10):
+    """heart almost gone: blood drops falling from the tip"""
+    size = FX * S4
+    frames = []
+    for f in range(n):
+        im = Image.new('RGBA', (size, size))
+        d = ImageDraw.Draw(im)
+        for k, (dx, phase) in enumerate(((-0.6, 0.0), (0.7, 0.5))):
+            t = (phase + f / n) % 1.0
+            x = size / 2 + dx * S4
+            y = size / 2 + (4.5 + t * 9) * S4
+            rr = (0.55 + 0.25 * (1 - t)) * S4
+            a = int(255 * (1 - t) ** 0.6)
+            d.ellipse([x - rr, y - rr * 1.4, x + rr, y + rr], fill=(170, 10, 30, a))
+            d.ellipse([x - rr * 0.4, y - rr * 0.9, x, y - rr * 0.3], fill=(255, 120, 130, a))
+        frames.append(im)
+    return strip(frames)
+
+
+def fb_steam(n=10, seed=4):
+    """water almost gone: heat haze rising from the dry drop"""
+    rng = np.random.RandomState(seed)
+    wisps = [(rng.uniform(-3.5, 3.5), rng.uniform(0, 1)) for _ in range(4)]
+    size = FX * S4
+    frames = []
+    for f in range(n):
+        im = Image.new('RGBA', (size, size))
+        d = ImageDraw.Draw(im)
+        for wx, phase in wisps:
+            t = (phase + f / n) % 1.0
+            pts = []
+            for k in range(6):
+                yy = size / 2 + (-3 - t * 10 - k * 0.9) * S4
+                xx = size / 2 + (wx + math.sin(t * 6 + k * 0.9) * 0.9) * S4
+                pts.append((xx, yy))
+            d.line(pts, fill=(255, 236, 210, int(150 * math.sin(t * math.pi))), width=int(S4 * 0.6))
+        frames.append(im.filter(ImageFilter.GaussianBlur(S4 * 0.25)))
+    return strip(frames)
+
+
+def fb_tendrils(n=12, seed=6):
+    """sanity almost gone: shadow hands creeping over the ring from outside"""
+    rng = np.random.RandomState(seed)
+    arms = [(i * 90 + 45 + rng.uniform(-15, 15), rng.uniform(0, 1)) for i in range(4)]
+    size = FX * S4
+    frames = []
+    for f in range(n):
+        im = Image.new('RGBA', (size * 2, size * 2))
+        d = ImageDraw.Draw(im)
+        c = size
+        for a0, phase in arms:
+            t = (phase + f / n) % 1.0
+            reach = 0.5 + 0.5 * math.sin(t * 2 * math.pi)             # creeps in and pulls back
+            a = math.radians(a0 + math.sin(t * 4) * 6)
+            r_out, r_in = (R_OUT + 3.2) * S4 * 2, (R_IN + 0.8 + (1 - reach) * 3.2) * S4 * 2
+            pts = []
+            for k in range(9):
+                u = k / 8
+                rr = r_out + (r_in - r_out) * u
+                wob = math.sin(u * 7 + t * 9) * 0.12
+                pts.append((c + rr * math.sin(a + wob), c - rr * math.cos(a + wob)))
+            for k in range(len(pts) - 1):
+                w = int((1.3 - 0.9 * k / 8) * S4 * 2)
+                d.line([pts[k], pts[k + 1]], fill=(14, 2, 20, 215), width=max(2, w))
+            tip = pts[-1]
+            for fdeg in (-40, 0, 40):                                  # claw fingers
+                fa = a + math.radians(180 + fdeg)
+                d.line([tip, (tip[0] + math.sin(fa) * S4 * 1.6, tip[1] - math.cos(fa) * S4 * 1.6)], fill=(14, 2, 20, 215), width=int(S4 * 0.6))
+        frames.append(im.resize((size, size), Image.LANCZOS))
+    return strip(frames)
+
+
+def fb_flies(n=12):
+    """food gone: two flies buzzing round the bare bone"""
+    size = FX * S4
+    frames = []
+    for f in range(n):
+        im = Image.new('RGBA', (size, size))
+        d = ImageDraw.Draw(im)
+        for k in range(2):
+            a = f / n * 2 * math.pi * (1 if k == 0 else -1) + k * 2.2
+            x = size / 2 + math.cos(a) * 6.5 * S4
+            y = size / 2 + math.sin(a * 2) * 3.5 * S4 - 2 * S4
+            d.ellipse([x - S4 * 0.7, y - S4 * 0.6, x + S4 * 0.7, y + S4 * 0.6], fill=(20, 20, 26, 255))
+            wing = S4 * (0.9 if f % 2 else 0.5)
+            d.ellipse([x - wing, y - S4 * 1.5, x + wing * 0.3, y - S4 * 0.3], fill=(220, 236, 255, 170))
+        frames.append(im)
+    return strip(frames)
+
+
+def dry_cracks():
+    """thirst almost gone: the disc dries out and cracks"""
+    im, n = ss_canvas(G)
+    r, ang = polar_grid(n, G)
+    a = np.zeros((n, n, 4))
+    inside = r <= R_IN - 0.2
+    a[inside, :3] = [96, 70, 44]
+    a[inside, 3] = 120
+    out = Image.fromarray(a.astype('uint8'), 'RGBA')
+    d = ImageDraw.Draw(out)
+    rng = np.random.RandomState(12)
+    c = n / 2
+    for k in range(7):
+        a0 = k * 51 + rng.uniform(-10, 10)
+        pts = [(c, c)]
+        rr = 0
+        while rr < (R_IN - 0.4) * S4 * 4:
+            rr += S4 * 4 * rng.uniform(0.8, 1.6)
+            aa = math.radians(a0 + rng.uniform(-18, 18))
+            pts.append((c + rr * math.sin(aa), c - rr * math.cos(aa)))
+        d.line(pts, fill=(40, 26, 16, 220), width=S4 * 2)
+    return finish_ss(out, G)
+
+
+def madness_swirl():
+    """sanity almost gone: a dark violet swirl fills the disc"""
+    im, n = ss_canvas(G)
+    r, ang = polar_grid(n, G)
+    a = np.zeros((n, n, 4))
+    inside = r <= R_IN - 0.1
+    sw = (np.sin(np.radians(ang * 3) + r * 1.4) * 0.5 + 0.5)
+    a[..., 0] = 60 * sw + 20
+    a[..., 1] = 8
+    a[..., 2] = 80 * sw + 30
+    a[..., 3] = np.where(inside, 150 + 60 * sw, 0)
+    return finish_ss(Image.fromarray(a.astype('uint8'), 'RGBA'), G)
+
+
 def trail_layer(steps):
     return ring_layer(steps, ((255, 255, 255), (255, 214, 226), (255, 190, 206)), alpha=235, glow_edge=False)
 
@@ -357,7 +487,7 @@ def icon_brain():
 
 
 def icon_shield():
-    s = ICON * D
+    s = ICON_SMALL * D
     m = px.canvas(s, s)
     d = ImageDraw.Draw(m)
     d.polygon([(2, 2), (15, 2), (15, 8), (8.5, 16), (2, 8)], fill=(255, 255, 255, 255))
@@ -422,20 +552,25 @@ def draw_all(rp):
     fb_bubbles((200, 214, 90), seed=8).save(os.path.join(d, 'fx_bubbles_hunger.png'))
     fb_smoke().save(os.path.join(d, 'fx_smoke.png'))
     fb_flames().save(os.path.join(d, 'fx_flames.png'))
-    px.save(icon_heart(*STATS['health']), os.path.join(d, 'icon_health.png'), 2)
-    px.save(icon_heart(*STATS['health_poison']), os.path.join(d, 'icon_health_poison.png'), 2)
-    px.save(icon_heart(*STATS['health_wither']), os.path.join(d, 'icon_health_wither.png'), 2)
-    px.save(icon_drumstick(), os.path.join(d, 'icon_food.png'), 2)
-    px.save(icon_drop(), os.path.join(d, 'icon_thirst.png'), 2)
-    px.save(icon_brain(), os.path.join(d, 'icon_sanity.png'), 2)
+    for key, tiers in hud_icons.all_icons(STATS).items():
+        for t, im in tiers.items():
+            px.save(im, os.path.join(d, f'icon_{key}_{t}.png'), 2)
     px.save(icon_shield(), os.path.join(d, 'icon_armor.png'), 2)
+    fb_drip().save(os.path.join(d, 'fx_drip.png'))
+    fb_steam().save(os.path.join(d, 'fx_steam.png'))
+    fb_tendrils().save(os.path.join(d, 'fx_tendrils.png'))
+    fb_flies().save(os.path.join(d, 'fx_flies.png'))
+    dry_cracks().save(os.path.join(d, 'disc_dry.png'))
+    madness_swirl().save(os.path.join(d, 'disc_madness.png'))
+    glow_ring((200, 0, 30), r0=0.5, r1=R_IN + 0.5, strength=150).save(os.path.join(d, 'disc_bleed.png'))
     for ch in '0123456789':
         px.save(digit_big(ch), os.path.join(d, f'num_{ch}.png'), 2)
     plate(15, 7).save(os.path.join(d, 'plate_hp.png'))
     plate(19, 9).save(os.path.join(d, 'plate_armor.png'))
 
 
-FLIPBOOKS = {'fx_sparkles': 12, 'fx_bubbles_poison': 10, 'fx_bubbles_hunger': 10, 'fx_smoke': 10, 'fx_flames': 8}
+FLIPBOOKS = {'fx_sparkles': 12, 'fx_bubbles_poison': 10, 'fx_bubbles_hunger': 10, 'fx_smoke': 10, 'fx_flames': 8,
+             'fx_drip': 10, 'fx_steam': 10, 'fx_tendrils': 12, 'fx_flies': 12}
 
 
 # ------------------------------------------------------------------------------------------ JSON UI
@@ -476,13 +611,28 @@ def fx(tex, expr, layer, fps=12, alpha=None):
 
 
 GAUGES = [
-    # key, token letter, x (left edge in root), fill variants [(stat key, condition)], icon variants, letter for flags
+    # key, token letter, x (left edge in root), fill variants [(stat key, condition)], icon sets [(icon key, condition)], flag letter
     ('health', 'H', 0, [('health', 'Pn'), ('health_poison', 'Pp'), ('health_wither', 'Pw')],
-     [('icon_health', 'Pn'), ('icon_health_poison', 'Pp'), ('icon_health_wither', 'Pw')], 'h'),
-    ('food', 'F', 25, [('food', '!Qh'), ('food_sick', 'Qh')], [('icon_food', None)], 'f'),
-    ('thirst', 'T', 69, [('thirst', None)], [('icon_thirst', None)], 't'),
-    ('sanity', 'S', 94, [('sanity', '!Eb'), ('sanity_blood', 'Eb')], [('icon_sanity', None)], 's'),
+     [('health', 'Pn'), ('health_poison', 'Pp'), ('health_wither', 'Pw')], 'h'),
+    ('food', 'F', 25, [('food', '!Qh'), ('food_sick', 'Qh')], [('food', '!Qh'), ('food_sick', 'Qh')], 'f'),
+    ('thirst', 'T', 69, [('thirst', None)], [('thirst', None)], 't'),
+    ('sanity', 'S', 94, [('sanity', '!Eb'), ('sanity_blood', 'Eb')], [('sanity', None)], 's'),
 ]
+TIERS = range(5)          # V<flag><tier>: 4 full ... 0 almost gone (sent by hud.js)
+
+
+def idle_anims(key, tier):
+    """the icon's own motion at each stage: the heart beats faster, the stomach growls, the brain twitches"""
+    if key == 'health':
+        return [f"@{NS}.beat{tier}_a"]
+    if key == 'food' and tier <= 1:
+        return [f"@{NS}.growl_wait"]
+    if key == 'thirst' and tier <= 1:
+        return [f"@{NS}.wobble_a"]
+    if key == 'sanity' and tier <= 3:
+        return [f"@{NS}.mind{tier}_a"]
+    return []
+
 ROOT_W = 94 + G
 
 
@@ -524,12 +674,30 @@ def gauge(key, letter, x, fills, icons, f):
         ctl.append({"fx_hunger": fx('fx_bubbles_hunger', has('Qh'), 7)})
     if key == 'sanity':
         ctl.append({"halo_blood": img('halo_blood', (FX, FX), (0, 0), 1, has('Eb'), alpha=f"@{NS}.pulse_slow_out")})
-    # icon: still / shaking (lost value) / popping (gained value)
-    for tex, tok in icons:
+    # stage overlays: bleeding heart, dry cracked disc, madness swirl + shadow hands, flies on the bare bone
+    low = lambda t: has(f'V{f}{t}')
+    if key == 'health':
+        ctl.append({"bleed": img('disc_bleed', (FX, FX), (0, 0), 3, f"{low(1)} or {low(0)}", alpha=f"@{NS}.pulse_fast_out")})
+        ctl.append({"fx_drip": fx('fx_drip', f"{low(1)} or {low(0)}", 8)})
+    if key == 'food':
+        ctl.append({"fx_flies": fx('fx_flies', low(0), 8)})
+    if key == 'thirst':
+        ctl.append({"dry": img('disc_dry', (G, G), (0, 0), 3, f"{low(1)} or {low(0)}")})
+        ctl.append({"fx_steam": fx('fx_steam', f"{low(1)} or {low(0)}", 8)})
+    if key == 'sanity':
+        ctl.append({"swirl": img('disc_madness', (G, G), (0, 0), 3, f"{low(1)} or {low(0)}", alpha=f"@{NS}.pulse_slow_out")})
+        ctl.append({"fx_tendrils": fx('fx_tendrils', f"{low(1)} or {low(0)}", 5)})
+    # icon for every stage: still (its own idle motion) / shaking (lost value) / popping (gained value)
+    for icon_key, tok in icons:
         base = cond(tok)
-        ctl.append({f"{tex}": img(tex, (ICON, ICON), (0, 0), 6, and_(base, hasnt(f'-{f}'), hasnt(f'+{f}')))})
-        ctl.append({f"{tex}_shake": img(tex, (ICON, ICON), (0, 0), 6, and_(base, has(f'-{f}')), anims=[f"@{NS}.shake_a"])})
-        ctl.append({f"{tex}_pop": img(tex, (ICON, ICON), (0, 0), 6, and_(base, has(f'+{f}'), hasnt(f'-{f}')), anims=[f"@{NS}.pop_a"])})
+        for t in TIERS:
+            tex = f'icon_{icon_key}_{t}'
+            at = and_(base, has(f'V{f}{t}'))
+            ctl.append({f"{tex}": img(tex, (ICON, ICON), (0, 0), 6, and_(at, hasnt(f'-{f}'), hasnt(f'+{f}')),
+                                      **({"anims": idle_anims(key, t)} if idle_anims(key, t) else {}),
+                                      **({"alpha": f"@{NS}.flicker_a"} if key == 'sanity' and t == 0 else {}))})
+            ctl.append({f"{tex}_shake": img(tex, (ICON, ICON), (0, 0), 6, and_(at, has(f'-{f}')), anims=[f"@{NS}.shake_a"])})
+            ctl.append({f"{tex}_pop": img(tex, (ICON, ICON), (0, 0), 6, and_(at, has(f'+{f}'), hasnt(f'-{f}')), anims=[f"@{NS}.pop_a"])})
     if key == 'health':
         # health number on a plate under the heart: ones / tens / hundreds, leading zeros hidden
         ctl.append({"plate": img('plate_hp', (15, 7), (0, 9.5), 9)})
@@ -554,7 +722,7 @@ def hud_json():
     armor = {"type": "panel", "size": [19, 9], "offset": [-21, 6.5], "anchor_from": "top_left", "anchor_to": "top_left",
              "bindings": vis(has('Ay')),
              "controls": [{"plate": img('plate_armor', (19, 9), (0, 0), 1, anchor='top_left')},
-                          {"icon": img('icon_armor', (ICON, ICON), (0, 0), 3, anchor='top_left')}]}
+                          {"icon": img('icon_armor', (ICON_SMALL, ICON_SMALL), (0, 0), 3, anchor='top_left')}]}
     for dgt in range(10):
         if dgt:
             armor["controls"].append({f"t{dgt}": img(f'num_{dgt}', (3.5, 4.5), (10, 2.25), 4, has(f'B{dgt}'), anchor='top_left')})
@@ -587,6 +755,36 @@ def hud_json():
         "pop_a": {"anim_type": "size", "easing": "out_back", "duration": 0.22, "from": [ICON, ICON], "to": [ICON * 1.45, ICON * 1.45], "next": f"@{NS}.pop_b"},
         "pop_b": {"anim_type": "size", "easing": "in_out_sine", "duration": 0.3, "from": [ICON * 1.45, ICON * 1.45], "to": [ICON, ICON], "next": f"@{NS}.pop_a"},
     }
+    # heart beats: slow and calm when full, racing when almost gone (lub-dub + rest)
+    for t, (period, amp) in enumerate(((0.32, 1.7), (0.45, 1.5), (0.6, 1.3), (0.8, 1.1), (1.05, 0.9))):
+        big = [ICON + amp, ICON + amp]
+        mid = [ICON + amp * 0.55, ICON + amp * 0.55]
+        rest = max(0.01, period - 0.26)
+        anims[f"beat{t}_a"] = {"anim_type": "size", "easing": "out_quad", "duration": 0.06, "from": [ICON, ICON], "to": big, "next": f"@{NS}.beat{t}_b"}
+        anims[f"beat{t}_b"] = {"anim_type": "size", "easing": "in_quad", "duration": 0.08, "from": big, "to": [ICON, ICON], "next": f"@{NS}.beat{t}_c"}
+        anims[f"beat{t}_c"] = {"anim_type": "size", "easing": "out_quad", "duration": 0.05, "from": [ICON, ICON], "to": mid, "next": f"@{NS}.beat{t}_d"}
+        anims[f"beat{t}_d"] = {"anim_type": "size", "easing": "in_quad", "duration": 0.07, "from": mid, "to": [ICON, ICON], "next": f"@{NS}.beat{t}_e"}
+        anims[f"beat{t}_e"] = {"anim_type": "wait", "duration": rest, "next": f"@{NS}.beat{t}_a"}
+    # stomach growl: quiet, then a short rumble
+    anims["growl_wait"] = {"anim_type": "wait", "duration": 1.3, "next": f"@{NS}.growl_a"}
+    for i, (fr, to, nxt) in enumerate((([0, 0], [0.9, 0.3], 'growl_b'), ([0.9, 0.3], [-0.9, -0.3], 'growl_c'), ([-0.9, -0.3], [0.7, 0], 'growl_d'),
+                                        ([0.7, 0], [-0.5, 0.2], 'growl_e'), ([-0.5, 0.2], [0, 0], 'growl_wait'))):
+        anims["growl_" + "abcde"[i]] = {"anim_type": "offset", "easing": "linear", "duration": 0.06, "from": fr, "to": to, "next": f"@{NS}.{nxt}"}
+    # dry drop: heat wobble
+    anims["wobble_a"] = {"anim_type": "offset", "easing": "in_out_sine", "duration": 0.5, "from": [0, 0], "to": [0, -0.6], "next": f"@{NS}.wobble_b"}
+    anims["wobble_b"] = {"anim_type": "offset", "easing": "in_out_sine", "duration": 0.5, "from": [0, -0.6], "to": [0, 0], "next": f"@{NS}.wobble_a"}
+    # mind: a slow sway that turns into twitching as sanity drops
+    for t, (amp, dur) in {3: (0.35, 0.9), 2: (0.7, 0.5), 1: (1.0, 0.09), 0: (1.5, 0.05)}.items():
+        seq = [[0, 0], [amp, -amp * 0.3], [-amp, amp * 0.2], [amp * 0.6, amp * 0.4], [0, 0]]
+        if t <= 1:
+            seq = [[0, 0], [amp, 0.2], [-amp * 0.4, -amp], [-amp, amp * 0.5], [amp * 0.3, amp], [0, 0]]
+        names = [f"mind{t}_{c}" for c in "abcdef"[:len(seq) - 1]]
+        for i in range(len(seq) - 1):
+            anims[names[i]] = {"anim_type": "offset", "easing": "in_out_sine" if t >= 2 else "linear", "duration": dur,
+                               "from": seq[i], "to": seq[i + 1], "next": f"@{NS}.{names[(i + 1) % len(names)]}"}
+    anims["flicker_a"] = {"anim_type": "alpha", "easing": "linear", "duration": 0.07, "from": 1.0, "to": 0.35, "next": f"@{NS}.flicker_b"}
+    anims["flicker_b"] = {"anim_type": "alpha", "easing": "linear", "duration": 0.12, "from": 0.35, "to": 1.0, "next": f"@{NS}.flicker_c"}
+    anims["flicker_c"] = {"anim_type": "wait", "duration": 0.5, "next": f"@{NS}.flicker_a"}
     for tex, frames in FLIPBOOKS.items():
         anims[f"fb_{tex}"] = {"anim_type": "flip_book", "initial_uv": [0, 0], "frame_count": frames, "frame_step": FX * S4,
                               "fps": 12 if tex != 'fx_flames' else 14, "easing": "linear"}

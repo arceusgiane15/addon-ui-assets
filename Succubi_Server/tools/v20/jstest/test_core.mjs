@@ -45,7 +45,7 @@ await import("./main.js");
   const { buildPayload } = await import("./succubi/hud.js");
   const p = makePlayer({ hp: 86, equipment: { Chest: "minecraft:iron_chestplate", Head: "minecraft:iron_helmet" } });
   const s = buildPayload(p);
-  assert.match(s, /^shud:H17F20T20S20PnX0Y8Z6AyB0C8$/, s);
+  assert.match(s, /^shud:H17F20T20S20PnX0Y8Z6AyB0C8Vh4Vf4Vt4Vs4$/, s);
   ok("payload normal: " + s);
   p.hp = 20; p.effects = ["poison"];
   const low = buildPayload(p);
@@ -82,6 +82,17 @@ await import("./main.js");
   const fx = buildPayload(p, 1300);
   assert.ok(fx.includes("Er") && fx.includes("Ea") && fx.includes("Qh"), fx);
   ok("status effects: " + fx);
+}
+
+// ---------------------------------------------------------------- icon stages (Don't Starve style)
+{
+  const { stage, buildPayload } = await import("./succubi/hud.js");
+  assert.deepEqual([1, 0.75, 0.6, 0.5, 0.35, 0.3, 0.2, 0.15, 0.1, 0].map(stage), [4, 4, 3, 3, 2, 2, 1, 1, 0, 0]);
+  ok("stages: >=75% 4, >=50% 3, >=30% 2, >=15% 1, below 0");
+  const p = makePlayer({ id: "-160", hp: 12 });
+  const s = buildPayload(p, 2000);
+  assert.ok(s.includes("Vh0") && s.includes("Vf4"), s);
+  ok("dying heart is stage 0 while food is still full: " + s);
 }
 
 // ---------------------------------------------------------------- height rules
