@@ -274,6 +274,20 @@
         }
       },
       {
+        "succubi_book@succubi_paper.book_panel": {
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§0§9§5§2') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
         "succubi_amulets@succubi_shops.amuletui_panel": {
           "bindings": [
             {

@@ -328,3 +328,35 @@ test("vending machine: shop screen with product names, pays from credit", async 
   // closing pays the change back
   assert.equal(player.getDynamicProperty("succubi:vend_credit"), 0);
 });
+
+test("books: long pages fit the window, news has 4 pages, prev / next / finish", async () => {
+  const books = await import(BP + "succubi/books.js");
+  for (const [id, book] of Object.entries(books.BOOKS)) {
+    const pages = books.fitPages(book.special === "news" ? books.newsPages(["Duck"]) : book.pages);
+    assert.ok(pages.length >= (book.special === "news" ? 4 : 4), `${id} has ${pages.length} pages`);
+    for (const p of pages) {
+      const lines = p.replace(/§./g, "").split("\n").reduce((n, l) => n + Math.max(1, Math.ceil(l.length / 70)), 0);
+      assert.ok(lines <= 12, `${id}: a page of ${lines} lines`);
+    }
+  }
+  assert.ok(!books.newsPages(["Duck"]).join("").includes("{who}"));
+  ui.shown.length = 0;
+  sanity.setSanity(player, 50);
+  const id = "succubi:book_romance";
+  const n = books.fitPages(books.BOOKS[id].pages).length;
+  // next, back, then next to the end and finish
+  ui.answers.push({ canceled: false, selection: 1 }, { canceled: false, selection: 0 });
+  for (let i = 0; i < n; i++) ui.answers.push({ canceled: false, selection: 1 });
+  await books.readBook(player, id);
+  const titles = ui.shown.map((f) => f.parts[0][1]);
+  assert.ok(titles.every((t) => t.includes("§0§9§5§2") && t.includes("§6§6§3")), "book window + romance icon");
+  const bodies = ui.shown.map((f) => f.parts[1][1]);
+  assert.match(bodies[0], /หน้า 1 \//);
+  assert.match(bodies[1], /หน้า 2 \//);
+  assert.match(bodies[2], /หน้า 1 \//, "went back");
+  assert.equal(ui.shown[0].parts.filter((p) => p[0] === "button")[0][2], "textures/ui/succubi_paper/btn_prev_off");
+  assert.ok(sanity.getSanity(player) > 50, "finishing gave sanity");
+  ui.shown.length = 0;
+  await books.readBook(player, "succubi:book_ghost");
+  assert.ok(ui.shown[0].parts[0][1].includes("§8§8§1"), "the black book uses the cursed page");
+});

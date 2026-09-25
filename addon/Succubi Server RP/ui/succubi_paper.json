@@ -242,5 +242,458 @@
         }
       }
     ]
+  },
+  "book_panel": {
+    "type": "panel",
+    "size": [
+      360,
+      240
+    ],
+    "layer": 2,
+    "controls": [
+      {
+        "book_normal": {
+          "type": "image",
+          "texture": "textures/ui/succubi_paper/book_normal",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(((#title_text - '§8§8§1') = #title_text) and ((#title_text - '§8§8§2') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "book_cursed": {
+          "type": "image",
+          "texture": "textures/ui/succubi_paper/book_cursed",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§8§8§1') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "book_news": {
+          "type": "image",
+          "texture": "textures/ui/succubi_paper/book_news",
+          "size": [
+            "100%",
+            "100%"
+          ],
+          "layer": 1,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§8§8§2') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_0": {
+          "type": "image",
+          "texture": "textures/items/extra/book_newspaper",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§0') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_1": {
+          "type": "image",
+          "texture": "textures/items/extra/book_comic",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§1') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_2": {
+          "type": "image",
+          "texture": "textures/items/extra/book_travel",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§2') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_3": {
+          "type": "image",
+          "texture": "textures/items/extra/book_romance",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§3') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_4": {
+          "type": "image",
+          "texture": "textures/items/extra/book_mystery",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§4') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_5": {
+          "type": "image",
+          "texture": "textures/items/extra/book_dharma",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§5') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_6": {
+          "type": "image",
+          "texture": "textures/items/extra/book_prayer",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§6') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_7": {
+          "type": "image",
+          "texture": "textures/items/extra/book_coloring",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§7') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_8": {
+          "type": "image",
+          "texture": "textures/items/extra/book_survival",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§8') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_9": {
+          "type": "image",
+          "texture": "textures/items/extra/book_ghost",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§9') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "icon_10": {
+          "type": "image",
+          "texture": "textures/items/extra/book_custom",
+          "size": [
+            18,
+            18
+          ],
+          "offset": [
+            24,
+            12
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#title_text - '§6§6§a') = #title_text))",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "#title_text",
+          "color": [
+            0.42,
+            0.12,
+            0.08
+          ],
+          "localize": false,
+          "shadow": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            46,
+            17
+          ],
+          "size": [
+            260,
+            12
+          ],
+          "layer": 5,
+          "font_type": "smooth",
+          "font_scale_factor": 1.1,
+          "bindings": [
+            {
+              "binding_name": "#title_text"
+            }
+          ]
+        }
+      },
+      {
+        "body": {
+          "type": "label",
+          "text": "#form_text",
+          "color": [
+            0.18,
+            0.1,
+            0.05
+          ],
+          "localize": false,
+          "shadow": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            24,
+            44
+          ],
+          "size": [
+            300,
+            "default"
+          ],
+          "layer": 5,
+          "font_type": "smooth",
+          "bindings": [
+            {
+              "binding_name": "#form_text"
+            }
+          ]
+        }
+      },
+      {
+        "slots": {
+          "type": "grid",
+          "anchor_from": "bottom_right",
+          "anchor_to": "bottom_right",
+          "offset": [
+            -14,
+            -10
+          ],
+          "size": [
+            213,
+            30
+          ],
+          "grid_dimensions": [
+            3,
+            1
+          ],
+          "grid_item_template": "succubi_paper.cell",
+          "collection_name": "form_buttons",
+          "layer": 5
+        }
+      }
+    ]
   }
 }
