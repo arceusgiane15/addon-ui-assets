@@ -258,6 +258,19 @@ def menu_icons(rp):
                         "   ######   "],
                        {'#': (30, 22, 32), 'r': (214, 30, 50), 'g': (150, 146, 156), '.': (70, 60, 80)})
     icon_tile(px.outline(scr, INK).resize((42, 35), Image.NEAREST)).save(os.path.join(d, 'screen_fx.png'))
+    # pressure sounds: a speaker with a heart-beat wave
+    snd = px.from_rows(["....#.......",
+                        "...##....r..",
+                        "..#w#..r..r.",
+                        "###w#.r.r..r",
+                        "#ww##.r.r..r",
+                        "#ww##.r.r..r",
+                        "###w#.r.r..r",
+                        "..#w#..r..r.",
+                        "...##....r..",
+                        "....#......."],
+                       {'#': (30, 22, 32), 'w': (236, 232, 244), 'r': (232, 51, 94)})
+    icon_tile(px.outline(snd, INK).resize((42, 35), Image.NEAREST)).save(os.path.join(d, 'sound.png'))
 
 
 # ------------------------------------------------------------------------------------------ JSON

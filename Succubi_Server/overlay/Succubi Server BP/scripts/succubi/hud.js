@@ -1,9 +1,8 @@
 import { world, system, EquipmentSlot } from "@minecraft/server";
-import { getThirst, THIRST_MAX } from "./thirst.js";
+import { getThirst, thirstMax } from "./thirst.js";
 import { getSanity, SANITY_MAX } from "./sanity.js";
 import { enabled } from "./settings_store.js";
 import { ARMOR_POINTS } from "./armor_values.js";
-import { isBloodMoon } from "./bloodmoon.js";
 
 // The HUD is drawn by RP ui/succubi_hud.json (four round gauges). Its data travels in the title, which the RP
 // never displays and keeps (preserves) after the title fades, so a value is only sent when it changes:
@@ -18,7 +17,8 @@ import { isBloodMoon } from "./bloodmoon.js";
 //   longer 'and' chains: the health number stuck at 88, the heart stayed wither-grey)
 //   G = the health ring before the hit (pale damage trail)       x = h f t s
 //   Vxn = icon stage n (4 full .. 0 almost gone): cracked heart, eaten drumstick, drying drop, warping brain
-//   Er regeneration sparkles, Ea absorption halo, Ef burning, Qh hunger effect, Eb blood moon
+//   Er regeneration sparkles, Ea absorption halo, Ef burning, Qh hunger effect
+//   Wn = the admins turned the gauge numbers off (settings item -> สถานะและ HUD)
 //   whole screen (RP): sanity below 70 % lays a grey filter over the screen step by step; health at 75 % and
 //   below keeps the edges red, deeper at every step (from H); Nx = this player turned the screen effects off
 //   "shud:off" hides the HUD (tag hide_hud, creative, spectator)
@@ -88,9 +88,6 @@ function effectTokens(player) {
   } catch (e) {}
   try {
     if (player.getComponent("minecraft:onfire")) s += "Ef";
-  } catch (e) {}
-  try {
-    if (enabled("sanity") && isBloodMoon()) s += "Eb";
   } catch (e) {}
   return s;
 }
@@ -163,7 +160,7 @@ export function buildPayload(player, tick = system.currentTick) {
   const sanityOn = enabled("sanity");
   const thirstRaw = thirstOn ? getThirst(player) : undefined;
   const sanityRaw = sanityOn ? getSanity(player) : undefined;
-  const thirst = thirstOn ? toSteps(thirstRaw, THIRST_MAX) : 0;
+  const thirst = thirstOn ? toSteps(thirstRaw, thirstMax()) : 0;
   const sanity = sanityOn ? toSteps(sanityRaw, SANITY_MAX) : 0;
   const hpStep = toSteps(hp, maxHp);
   const armor = armorPoints(player);
@@ -174,19 +171,20 @@ export function buildPayload(player, tick = system.currentTick) {
   s += `P${healthTint(player)}`;
   s += `X${Math.floor(hpNum / 100)}Y${Math.floor(hpNum / 10) % 10}Z${hpNum % 10}`;
   s += percentDigits("f", food, 20);
-  if (thirstOn) s += percentDigits("t", thirstRaw, THIRST_MAX);
+  if (thirstOn) s += percentDigits("t", thirstRaw, thirstMax());
   if (sanityOn) s += percentDigits("s", sanityRaw, SANITY_MAX);
   s += armor > 0 ? `AyB${Math.floor(armor / 10)}C${armor % 10}` : "An";
   // icon stage (Don't Starve style: the heart cracks, the drumstick gets eaten, the drop dries, the brain warps)
   s += `Vh${stage(hp / maxHp)}Vf${stage(food / 20)}`;
-  if (thirstOn) s += `Vt${stage(thirstRaw / THIRST_MAX)}`;
+  if (thirstOn) s += `Vt${stage(thirstRaw / thirstMax())}`;
   if (sanityOn) s += `Vs${stage(sanityRaw / SANITY_MAX)}`;
   if (hp <= maxHp * 0.25) s += "Lh";
   if (food <= 6) s += "Lf";
   if (thirstOn && thirst <= 6) s += "Lt";
   if (sanityOn && sanity <= 6) s += "Ls";
   s += flashes(player, { h: hp, hmax: maxHp, f: food, t: thirstRaw, s: sanityRaw }, hpStep, tick);
-  if (player.hasTag("no_screen_fx")) s += "Nx"; // player turned the red aura / grey screen off
+  if (player.hasTag("no_screen_fx")) s += "Nx";
+  if (!enabled("hud_numbers")) s += "Wn"; // player turned the red aura / grey screen off
   s += effectTokens(player);
   return s;
 }

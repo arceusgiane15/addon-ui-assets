@@ -285,6 +285,26 @@ def ghost_bell():
     return finish(handle, edge_highlight(bell, (220, 255, 235)), runes, clapper)
 
 
+def book_custom():
+    """the admin's writable book: a leather notebook with gold corners, a ribbon and a quill"""
+    pages = shaded(lambda d: d.rounded_rectangle([8, 5, 26, 28], radius=1, fill=255), [(255, 250, 236), (236, 226, 200), (190, 176, 150)])
+    cover = shaded(lambda d: (d.rounded_rectangle([5, 3, 23, 27], radius=2, fill=255)), [(200, 90, 130), (140, 40, 84), (74, 16, 44)])
+    trim = Image.new('RGBA', (N, N))
+    t = ImageDraw.Draw(trim)
+    t.line([(8, 3), (8, 27)], fill=(60, 12, 36, 255), width=1)                  # spine groove
+    for (x, y) in ((20, 4), (20, 24)):
+        t.polygon([(x, y), (x + 3, y), (x + 3, y + 3)] if y < 10 else [(x, y + 3), (x + 3, y + 3), (x + 3, y)], fill=(236, 188, 64, 255))
+    t.rounded_rectangle([11, 10, 20, 15], radius=1, outline=(236, 188, 64, 255))  # title plate
+    t.line([(13, 12), (18, 12)], fill=(255, 226, 140, 255))
+    t.line([(17, 27), (17, 31)], fill=(214, 36, 52, 255), width=2)              # ribbon
+    quill = Image.new('RGBA', (N, N))
+    q = ImageDraw.Draw(quill)
+    q.polygon([(30, 1), (24, 4), (17, 14), (19, 16), (27, 8)], fill=(250, 250, 255, 255))
+    q.line([(29, 2), (18, 15)], fill=(170, 170, 190, 255))
+    q.line([(18, 15), (14, 21)], fill=(40, 30, 40, 255), width=1)
+    return finish(pages, cover, trim, quill)
+
+
 def rule_wand():
     staff = Image.new('RGBA', (N, N))
     s = ImageDraw.Draw(staff)
@@ -376,7 +396,7 @@ def syringe():
 
 
 TOOLS = {
-    'extra/ghost_bell': ghost_bell, 'extra/rule_wand': rule_wand, 'extra/server_settings': server_settings,
+    'extra/book_custom': book_custom, 'extra/rule_wand': rule_wand, 'extra/server_settings': server_settings,
     'height_adjuster': height_adjuster, 'bandage_blackpowder': bandage, 'medkit_blackpowder': medkit, 'syringe_blackpowder': syringe,
 }
 

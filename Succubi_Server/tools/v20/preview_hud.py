@@ -197,7 +197,7 @@ STATES = [
     ('ไฟไหม้ตัว', 'shud:H13F18T15S16PnX0Y6Z5AnEfDh'),
     ('Absorption: วงทองรอบหัวใจ', 'shud:H20F18T15S16PnX1Y0Z0AnEa'),
     ('ติดหิว (Hunger): วงอาหารเขียวคล้ำ', 'shud:H17F09T15S16PnX0Y8Z6AnQhDf'),
-    ('คืนพระจันทร์เลือด + เจอเรื่องแปลก', 'shud:H17F18T15S07PnX0Y8Z6AnEbDs'),
+    ('เจอเรื่องแปลก: สติลดวูบ', 'shud:H17F18T15S07PnX0Y8Z6AnDs'),
     ('ใกล้ตาย / หิว / คอแห้ง / สติหลุด', 'shud:H03F04T03S02PnX0Y1Z5AnLhLfLtLs'),
 ]
 

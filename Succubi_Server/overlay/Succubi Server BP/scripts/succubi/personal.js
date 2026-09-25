@@ -28,8 +28,10 @@ export async function openPersonal(player, note = "") {
   form.button(`§lแถบสถานะ (HUD): ${hidden ? "§cซ่อน" : "§aแสดง"}\n§7เลือด อาหาร น้ำ สติ เหนือช่องของ`, `${UI}hud`);
   const noFx = player.hasTag("no_screen_fx");
   form.button(`§lเอฟเฟกต์จอ: ${noFx ? "§cปิด" : "§aเปิด"}\n§7ขอบจอแดงตอนเลือดน้อย · จอเทาตอนสติต่ำ`, `${UI}screen_fx`);
+  const noSfx = player.hasTag("no_pressure_sfx");
+  form.button(`§lเสียงกดดัน: ${noSfx ? "§cปิด" : "§aเปิด"}\n§7หัวใจเต้น ท้องร้อง หอบ กระซิบ`, `${UI}sound`);
   form.button(
-    `§lปรับส่วนสูง · ${getHeightCm(player)} ซม.\n§7${lock.seconds ? `เปลี่ยนได้อีกใน ${Math.ceil(lock.seconds / 60)} นาที` : "ส่วนสูงมีผลกับเลือดสูงสุด"}`,
+    `§lปรับส่วนสูง · ${getHeightCm(player)} ซม.\n§7${lock.seconds ? `เปลี่ยนได้อีกใน ${Math.ceil(lock.seconds / 60)} นาที` : "ส่วนสูงมีผลกับเลือด ความเร็ว แรงตี"}`,
     `${UI}height`
   );
   if (guns) form.button("§lวิธีใช้ปืน\n§7ยิง เล็ง รีโหลด", `${UI}gun`);
@@ -50,8 +52,13 @@ export async function openPersonal(player, note = "") {
     refreshHud(player);
     return openPersonal(player, noFx ? "§aเปิดเอฟเฟกต์จอแล้ว" : "§eปิดเอฟเฟกต์จอแล้ว (แถบสถานะยังอยู่)");
   }
-  if (sel === 2) return openHeightForm(player);
-  if (guns && sel === 3) return openGunGuide(player);
+  if (sel === 2) {
+    if (noSfx) player.removeTag("no_pressure_sfx");
+    else player.addTag("no_pressure_sfx");
+    return openPersonal(player, noSfx ? "§aเปิดเสียงกดดันแล้ว" : "§eปิดเสียงกดดันแล้ว");
+  }
+  if (sel === 3) return openHeightForm(player);
+  if (guns && sel === 4) return openGunGuide(player);
   return openWallet(player);
 }
 

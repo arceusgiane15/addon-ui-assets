@@ -57,6 +57,8 @@ def build(src, work, target=None, log=print):
     core_c, guns_c = packs.split_catalog(os.path.join(src, CORE_BP, 'item_catalog/crafting_item_catalog.json'), ctx['gun_items'])
     wjson(os.path.join(out, CORE_BP, 'item_catalog/crafting_item_catalog.json'), core_c)
     wjson(os.path.join(out, GUNS_BP, 'item_catalog/crafting_item_catalog.json'), guns_c)
+    with open(os.path.join(out, CORE_BP, 'scripts/height/body.js'), 'w', encoding='utf-8') as f:
+        f.write(packs.body_js())
     with open(os.path.join(out, CORE_BP, 'scripts/succubi/armor_values.js'), 'w', encoding='utf-8') as f:
         f.write(packs.armor_table([os.path.join(out, CORE_BP, 'items'), os.path.join(out, GUNS_BP, 'items')]))
     for p in (CORE_BP, CORE_RP, GUNS_BP, GUNS_RP):
@@ -92,7 +94,7 @@ def pack_zip(out, target, log):
 
 
 # art / UI generators register themselves with @step
-for mod in ('art_hud', 'art_ui', 'art_icons', 'art_models'):
+for mod in ('art_hud', 'art_ui', 'art_icons', 'art_models', 'sfx', 'content'):
     try:
         __import__(mod)
     except ModuleNotFoundError as e:

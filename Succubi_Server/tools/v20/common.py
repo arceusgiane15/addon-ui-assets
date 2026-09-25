@@ -6,7 +6,7 @@ PROJECT = os.path.normpath(os.path.join(HERE, '..', '..'))          # Succubi_Se
 OVERLAY = os.path.join(PROJECT, 'overlay')
 FONT_THAI = os.path.join(PROJECT, 'fonts', 'NotoSansThai.ttf')
 
-VERSION = [1, 1, 5]
+VERSION = [1, 1, 6]
 VERSION_TEXT = '.'.join(map(str, VERSION))
 MIN_ENGINE = [1, 21, 90]
 
@@ -96,3 +96,18 @@ def write_lang(path, rows):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as f:
         f.write('\n'.join(line for _, line in rows).rstrip('\n') + '\n')
+
+# Height -> body. At 180 cm everything is x1; the edges of the player range (140 / 220 cm) get the values below,
+# heights in between scale smoothly (geometric), heights beyond (admins) stay capped at the edge values.
+BODY = {
+    'base_cm': 180, 'range_cm': 40,
+    'hp_base': 100, 'hp_min': 50, 'hp_max': 200,       # 140 cm = 50 HP, 180 = 100, 220 = 200
+    'speed_short': 1.15, 'speed_tall': 0.87,           # walking / running speed
+    'damage_short': 0.77, 'damage_tall': 1.3,          # melee hits (guns keep their own damage)
+    'walk': 0.1,                                       # player.json minecraft:movement at x1
+}
+
+
+def body_factor(cm, short, tall):
+    t = max(-1.0, min(1.0, (cm - BODY['base_cm']) / BODY['range_cm']))
+    return short ** -t if t < 0 else tall ** t

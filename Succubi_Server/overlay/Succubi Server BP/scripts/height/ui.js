@@ -2,8 +2,8 @@ import { system } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { CONFIG } from "./config.js";
 import {
-  getHeightCm, setHeightCm, calculateMaxHp, isHitboxAvailable, hitboxStepFor,
-  limitsFor, clampFor, lockFor, startCooldown, isFree
+  getHeightCm, setHeightCm, isHitboxAvailable, hitboxStepFor,
+  limitsFor, clampFor, lockFor, startCooldown, isFree, bodyStats, percentText
 } from "./height.js";
 
 // Invisible colour codes tell RP ui/server_form.json to draw the height board.
@@ -53,12 +53,14 @@ export async function openHeightForm(player, note = "") {
   const free = isFree(player);
   const lock = lockText(player);
   const changed = draft !== current;
+  const stats = bodyStats(draft);
 
   const form = new ActionFormData()
     .title(`§lปรับส่วนสูง${HEIGHT_FLAG}${silhouetteToken(draft)}${free ? "rA" : "rP"}`)
     .body(
       `§7ที่เลือก §d§l${draft} ซม.§r${changed ? ` §7(ตอนนี้ ${current})` : ""}\n` +
-        `§7เลือดสูงสุด §c§l${calculateMaxHp(draft)} HP§r\n` +
+        `§7เลือดสูงสุด §c§l${stats.hp} HP§r\n` +
+        `§7ความเร็ว §b§l${percentText(stats.speed)}§r §7· แรงตี §6§l${percentText(stats.damage)}§r\n` +
         `§7ปรับได้ ${lo}-${hi} ซม.${free ? "" : ` · ${CONFIG.cooldownSeconds / 60} นาที/ครั้ง`}` +
         (lock ? `\n${lock}` : "") + scaleWarning(player, current) + (note ? `\n${note}` : "")
     );
@@ -107,7 +109,7 @@ export async function openHeightTyped(player) {
   const [lo, hi] = limitsFor(player);
   const form = new ModalFormData()
     .title("พิมพ์ส่วนสูง")
-    .textField(`ส่วนสูงเป็นเซนติเมตร (${lo}-${hi})\n§7ปกติ ${CONFIG.baseCm} ซม. = ${CONFIG.baseHp} HP`, String(CONFIG.baseCm), String(drafts.get(player.id) ?? getHeightCm(player)));
+    .textField(`ส่วนสูงเป็นเซนติเมตร (${lo}-${hi})\n§7ปกติ ${CONFIG.baseCm} ซม. = ${bodyStats(CONFIG.baseCm).hp} HP · ตัวเล็กวิ่งไวแต่ตีเบา ตัวสูงเดินช้าแต่ตีแรง`, String(CONFIG.baseCm), String(drafts.get(player.id) ?? getHeightCm(player)));
   const response = await show(form, player);
   if (!response || response.canceled) return;
   const typed = String(response.formValues?.[0] ?? "").trim();

@@ -25,10 +25,8 @@ export const CONFIG = {
   reapplyIntervalTicks: 40,
   heightTagPrefix: "kotarus:height_",
 
-  // HP: 100 at 180 cm, +1 HP per cm taller, -1 per cm shorter, clamped 50-200
-  // (player range 140-220 cm = 60-140 HP)
-  baseHp: 100,
-  hpPerCm: 1,
-  minHp: 50,
-  maxHp: 200
+  // HP, speed and hit strength come from body.js (generated from tools/v20/common.py BODY) and the settings item
+  // (base HP, and switches for each effect):
+  // 140 cm = 50 HP, runs 15 % faster, hits 23 % lighter / 180 cm = 100 HP / 220 cm = 200 HP, 13 % slower, hits 30 % harder
+  baseHp: 100
 };

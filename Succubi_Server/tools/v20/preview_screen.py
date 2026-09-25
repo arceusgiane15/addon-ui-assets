@@ -93,13 +93,13 @@ def pay(h, s, extra=''):
 
 SHOTS = [
     ('ปกติ', pay(18, 18)),
-    ('สติ 50%: ฟิลเตอร์เทาเริ่มคลุมทั้งจอ', pay(18, 10)),
-    ('สติ 25%: เทาหนัก ขอบจอมืดนิดๆ', pay(18, 5)),
-    ('สติ 5%: เกือบขาวดำ เม็ดซ่าบางๆ', pay(18, 1)),
-    ('เลือด 70%: ขอบแดงจางๆ เส้นเลือดนิดเดียว', pay(14, 18)),
-    ('เลือด 50%: แดงขึ้น เส้นเลือดยาวขึ้น', pay(10, 18)),
-    ('เลือด 25%: แดงเข้ม เส้นเลือดเยอะ', pay(5, 18)),
-    ('เลือด 5%: แดงหนาเกือบทั้งจอ', pay(1, 18)),
+    ('สติ 60%: ฟิลเตอร์เทาเริ่มคลุมทั้งจอ', pay(18, 12)),
+    ('สติ 30%: เทาหนัก ขอบจอมืด', pay(18, 6)),
+    ('สติ 5%: เกือบขาวดำ + เม็ดซ่า', pay(18, 1)),
+    ('เลือด 70%: ขอบแดงจางๆ เต้นช้า', pay(14, 18)),
+    ('เลือด 45%: แดงขึ้น เส้นเลือดยาวขึ้น (มีเสียงหัวใจ)', pay(9, 18)),
+    ('เลือด 25%: แดงเข้ม เส้นเลือดเยอะ เต้นเร็ว', pay(5, 18)),
+    ('เลือด 5%: แดงหนา เต้นรัว เสียงหัวใจดังขึ้น', pay(1, 18)),
 ]
 
 if __name__ == '__main__':
@@ -115,6 +115,8 @@ if __name__ == '__main__':
         for i in range(60):
             h = max(1, 20 - i * 19 // 52)
             frames.append(label(render(out, pay(h, 18), i / fps, base), f'เลือดค่อยๆ ลด: {h * 5}%'))
+        for i in range(36):
+            frames.append(label(render(out, pay(2, 18), i / fps, base), 'ใกล้ตาย: ขอบแดงเต้นรัวตามหัวใจ'))
         for i in range(24):
             h = min(20, 1 + i)
             frames.append(label(render(out, pay(h, 18), i / fps, base), f'ฟื้นเลือด: {h * 5}%'))
@@ -122,7 +124,7 @@ if __name__ == '__main__':
         frames[0].save(target, save_all=True, append_images=frames[1:], duration=int(1000 / fps), loop=0, optimize=True)
         print('saved', target, len(frames))
     else:
-        shots = [label(render(out, p, 0.12, base), l) for l, p in SHOTS]
+        shots = [label(render(out, p, 0.07, base), l) for l, p in SHOTS]
         sw, sh = shots[0].size
         sheet = Image.new('RGBA', (sw * 2, sh * ((len(shots) + 1) // 2)))
         for i, s in enumerate(shots):

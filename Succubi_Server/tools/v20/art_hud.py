@@ -37,7 +37,6 @@ STATS = {
     'food_sick': ((214, 222, 120), (150, 164, 48), (86, 100, 22)),
     'thirst': ((160, 234, 255), (48, 178, 242), (18, 100, 176)),
     'sanity': ((236, 190, 255), (178, 104, 244), (104, 46, 176)),
-    'sanity_blood': ((255, 150, 150), (214, 36, 52), (110, 8, 22)),
 }
 GLOW = {'health': (255, 70, 120), 'food': (255, 176, 60), 'thirst': (60, 180, 255), 'sanity': (190, 110, 255)}
 
@@ -624,6 +623,12 @@ RED_START = 15           # 75 %
 DEEP_START = 8           # 40 %: the darker layer joins in
 
 
+def heart_bpm(n):
+    """72 beats a minute when just hurt (75 %) up to 150 near death; pressure.js uses the same curve"""
+    n = max(1, n)
+    return 72 + 78 * (RED_START - n) / (RED_START - 1)
+
+
 def red_alpha(n):
     n = max(1, n)
     return round(0.24 + 0.72 * ((RED_START - n) / (RED_START - 1)) ** 1.1, 3)
@@ -675,13 +680,13 @@ def fb_grain(n=6, seed=31):
 
 
 GREY_START = 14          # sanity steps (of 20) below which the screen starts to grey out (70 %)
-GREY_MAX = 0.7           # grey layer opacity at sanity 0
+GREY_MAX = 0.88          # grey layer opacity at sanity 0 (heavy: close to black and white)
 
 
 def grey_alpha(step):
     if step >= GREY_START:
         return 0.0
-    return round(GREY_MAX * ((GREY_START - step) / GREY_START) ** 1.15, 3)
+    return round(GREY_MAX * ((GREY_START - step) / GREY_START) ** 0.75, 3)
 
 
 def draw_all(rp):
@@ -700,7 +705,6 @@ def draw_all(rp):
     glow_ring((255, 40, 40), strength=240).save(os.path.join(d, 'glow_hurt.png'))
     glow_ring((255, 255, 255), strength=170).save(os.path.join(d, 'glow_white.png'))
     halo((255, 214, 90)).save(os.path.join(d, 'halo_absorb.png'))
-    halo((214, 36, 52)).save(os.path.join(d, 'halo_blood.png'))
     fb_sparkles().save(os.path.join(d, 'fx_sparkles.png'))
     fb_bubbles((150, 235, 80)).save(os.path.join(d, 'fx_bubbles_poison.png'))
     fb_bubbles((200, 214, 90), seed=8).save(os.path.join(d, 'fx_bubbles_hunger.png'))
@@ -779,7 +783,7 @@ GAUGES = [
      [('health_poison', 'Pp'), ('health_wither', 'Pw'), ('health', 'Pn')], 'h'),
     ('food', 'F', 25, [('food_sick', 'Qh'), ('food', '!Qh')], [('food_sick', 'Qh'), ('food', '!Qh')], 'f'),
     ('thirst', 'T', 69, [('thirst', None)], [('thirst', None)], 't'),
-    ('sanity', 'S', 94, [('sanity_blood', 'Eb'), ('sanity', '!Eb')], [('sanity', None)], 's'),
+    ('sanity', 'S', 94, [('sanity', None)], [('sanity', None)], 's'),
 ]
 TIERS = range(5)          # V<flag><tier>: 4 full ... 0 almost gone (sent by hud.js)
 # flags from hud.js (x = h f t s): Lx low, Dx just lost some, Ux just gained. Letters only: Bedrock's UI
@@ -832,7 +836,8 @@ def number_plate(hund, tens, ones):
     def digits(tok, xoff, skip_zero=False):
         return [{f"{tok}{d}": img(f'num_{d}', (3.5, 4.5), (xoff, 9.5), 10, has(f'{tok}{d}'), alpha=NUM_ALPHA)}
                 for d in range(10) if not (skip_zero and d == 0)]
-    return group(None, [
+    # hidden server-wide when admins turn the numbers off (Wn)
+    return group(hasnt('Wn'), [
         {"plate": img('plate_hp', (15, 7), (0, 9.5), 9, alpha=PLATE_ALPHA)},
         {"three": group(hasnt(f'{hund}0'), digits(hund, -3.5, True) + digits(tens, 0) + digits(ones, 3.5))},
         {"below_100": group(has(f'{hund}0'), [
@@ -865,8 +870,6 @@ def gauge(key, letter, x, fills, icons, f):
         ctl.append({"fx_fire": fx('fx_flames', has('Ef'), 8)})
     if key == 'food':
         ctl.append({"fx_hunger": fx('fx_bubbles_hunger', has('Qh'), 7)})
-    if key == 'sanity':
-        ctl.append({"halo_blood": img('halo_blood', (FX, FX), (0, 0), 1, has('Eb'), alpha=f"@{NS}.pulse_slow_out")})
     # stage overlays: bleeding heart, dry cracked disc, madness swirl + shadow hands, flies on the bare bone
     low = lambda t: has(f'V{f}{t}')
     if key == 'health':
@@ -916,7 +919,7 @@ def screen_fx():
     ctl.append({"dark": full('screen_dark', f"{has('Vs1')} or {has('Vs0')}", 2, alpha=f"@{NS}.fx_dark_a")})
     ctl.append({"grain": dict(full('fx_grain', has('Vs0'), 3), uv_size=[320, 180], uv=f"@{NS}.fb_grain")})
     for n in range(0, RED_START + 1):
-        parts = [{"red": full('screen_red', None, 4, alpha=red_alpha(n))}]
+        parts = [{"red": full('screen_red', None, 4, alpha=red_alpha(n), anims=[f"@{NS}.heart{n:02d}_a"])}]
         if max(1, n) <= DEEP_START:
             parts.append({"deep": full('screen_red_deep', None, 5, alpha=deep_alpha(n))})
         parts.append({"veins": full(f'screen_veins_{vein_level(n)}', None, 6, alpha=vein_alpha(n))})
@@ -996,6 +999,21 @@ def hud_json():
     anims["flicker_c"] = {"anim_type": "wait", "duration": 0.5, "next": f"@{NS}.flicker_a"}
     anims["fx_dark_a"] = {"anim_type": "alpha", "easing": "in_out_sine", "duration": 2.2, "from": 0.35, "to": 0.6, "next": f"@{NS}.fx_dark_b"}
     anims["fx_dark_b"] = {"anim_type": "alpha", "easing": "in_out_sine", "duration": 2.2, "from": 0.6, "to": 0.35, "next": f"@{NS}.fx_dark_a"}
+    # the red edges beat like a heart (lub-dub, then rest): never below the steady red of that health step,
+    # faster the closer to death - the same tempo pressure.js plays the heartbeat sound at
+    for n in range(0, RED_START + 1):
+        base = red_alpha(n)
+        k = (RED_START - max(1, n)) / (RED_START - 1)
+        peak = min(1.0, base + 0.16 + 0.14 * k)
+        mid, peak2 = base + 0.3 * (peak - base), base + 0.7 * (peak - base)
+        rest = max(0.02, 60 / heart_bpm(n) - 0.43)
+        seq = [('a', 'alpha', 0.07, base, peak, 'out_quad'), ('b', 'alpha', 0.09, peak, mid, 'in_quad'),
+               ('c', 'alpha', 0.07, mid, peak2, 'out_quad'), ('d', 'alpha', 0.2, peak2, base, 'in_out_sine')]
+        for i, (c, kind, dur, fr, to, ease) in enumerate(seq):
+            nxt = seq[i + 1][0] if i + 1 < len(seq) else 'e'
+            anims[f"heart{n:02d}_{c}"] = {"anim_type": kind, "easing": ease, "duration": dur, "from": round(fr, 3), "to": round(to, 3),
+                                          "next": f"@{NS}.heart{n:02d}_{nxt}"}
+        anims[f"heart{n:02d}_e"] = {"anim_type": "wait", "duration": round(rest, 3), "next": f"@{NS}.heart{n:02d}_a"}
     anims["fb_grain"] = {"anim_type": "flip_book", "initial_uv": [0, 0], "frame_count": 6, "frame_step": 320, "fps": 16, "easing": "linear"}
     for tex, frames in FLIPBOOKS.items():
         anims[f"fb_{tex}"] = {"anim_type": "flip_book", "initial_uv": [0, 0], "frame_count": frames, "frame_step": FX * S4,

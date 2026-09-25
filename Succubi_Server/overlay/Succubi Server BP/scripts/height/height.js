@@ -1,10 +1,13 @@
 import { CONFIG } from "./config.js";
-import { enabled, isAdmin } from "../succubi/settings_store.js";
+import { hpFor, speedFor, damageFor } from "./body.js";
+import { enabled, isAdmin, num } from "../succubi/settings_store.js";
 
 // Body size comes from player.json: each kotarus:set_h_XXX event adds a component group holding
-// minecraft:scale (XXX / 180) and the matching collision box (10 cm steps). Entity scale covers the whole
-// model, so gun animations that override bones can no longer undo it like the old playanimation scaling did.
+// minecraft:scale (XXX / 180), the matching collision box and the walking speed for that height (10 cm steps).
+// Entity scale covers the whole model, so gun animations that override bones can no longer undo it like the old
+// playanimation scaling did. Speed lives in the same group, so no potion effect is used for it.
 const appliedHitbox = new Map();
+const appliedSpeed = new Map();
 let hitboxAvailable = CONFIG.applyHitbox;
 
 export function clampCm(value) {
@@ -22,10 +25,33 @@ export function cmToScale(cm) {
   return cm / CONFIG.baseCm;
 }
 
-// Base 100 HP at 180 cm, +1 HP per cm, clamped 50-200 HP
+// Base HP (setting, 100) at 180 cm, doubling every 40 cm taller and halving every 40 cm shorter (50-200 by default).
+// With "height changes HP" off everyone has the base HP.
 export function calculateMaxHp(cm) {
-  const targetHp = CONFIG.baseHp + (cm - CONFIG.baseCm) * CONFIG.hpPerCm;
-  return Math.min(CONFIG.maxHp, Math.max(CONFIG.minHp, Math.round(targetHp)));
+  const base = num("hp_base");
+  return enabled("height_hp") ? hpFor(cm, base) : Math.min(200, base);
+}
+
+// the speed group that fits this height (player.json succubi:spd_140 ... spd_220, 180 = normal speed)
+export function speedStepFor(cm) {
+  if (!enabled("height_speed")) return 180;
+  return Math.min(220, Math.max(140, hitboxStepFor(cm)));
+}
+
+// What the body does at this height (speed follows the 10 cm step the player.json group uses)
+export function bodyStats(cm) {
+  const step = hitboxStepFor(cm);
+  return {
+    hp: calculateMaxHp(cm),
+    speed: enabled("height_speed") ? speedFor(speedStepFor(cm)) : 1,
+    damage: enabled("height_damage") ? damageFor(step) : 1
+  };
+}
+
+// "+15 %" / "-23 %" / "ปกติ"
+export function percentText(factor) {
+  const p = Math.round((factor - 1) * 100);
+  return p === 0 ? "ปกติ" : `${p > 0 ? "+" : ""}${p}%`;
 }
 
 export function hitboxStepFor(cm) {
@@ -50,6 +76,16 @@ function applyBody(player, cm, force) {
   }
 }
 
+// walking speed lives in its own group family so it can be switched off without touching body size
+function applySpeed(player, cm, force) {
+  const step = speedStepFor(cm);
+  if (!force && appliedSpeed.get(player.id) === step) return;
+  try {
+    player.triggerEvent("succubi:set_spd_" + String(step).padStart(3, "0"));
+    appliedSpeed.set(player.id, step);
+  } catch (e) {}
+}
+
 function syncHeightTag(player, cm) {
   const wanted = CONFIG.heightTagPrefix + String(hitboxStepFor(cm)).padStart(3, "0");
   try {
@@ -70,9 +106,12 @@ export function applyHpScaling(player, cm) {
   return targetMaxHp;
 }
 
-export function applyHeight(player, force) {
+// periodic = the 2-second re-check: body size is re-sent as before, speed only when it changed
+// (re-adding the speed group while running could make the stride hitch)
+export function applyHeight(player, force, periodic = false) {
   const cm = getHeightCm(player);
   applyBody(player, cm, force === true);
+  applySpeed(player, cm, force === true && !periodic);
   syncHeightTag(player, cm);
   applyHpScaling(player, cm);
   return cm;
@@ -89,6 +128,7 @@ export function setHeightCm(player, value) {
 
 export function forget(playerId, keepFight = false) {
   appliedHitbox.delete(playerId);
+  appliedSpeed.delete(playerId);
   if (!keepFight) lastFight.delete(playerId);
 }
 
